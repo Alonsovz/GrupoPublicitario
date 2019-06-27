@@ -1,0 +1,6 @@
+{
+    "require": {
+        "wisembly/elephant.io": "^3.3",
+        "mpdf/mpdf": "^7.1"
+    }
+}

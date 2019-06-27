@@ -1,0 +1,10 @@
+@font-face {
+    font-family:'google';
+    src:url(../plugins/google/GoogleSans-Regular.ttf);
+}
+
+
+@font-face {
+    font-family:'google-bold';
+    src:url(../plugins/google/GoogleSans-Bold.ttf);
+}
