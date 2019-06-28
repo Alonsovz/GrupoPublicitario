@@ -74,7 +74,7 @@
         <div class="three wide field">
             <label><i class="chart bar icon"></i>Clasificación:</label>
             <select name="clasificacionCmb"  id="clasificacionCmb" class="ui search dropdown">
-           <option value="Seleccione" set selected>Seleccione una opción</option>
+           
             </select>
             </div>
 
@@ -147,7 +147,7 @@
 
             <div class="three wide field">
             <label style="color:#F3F3F1"><i class="dollar icon"></i>Precio:</label>
-            <a class=" ui right floated green labeled icon button" id="guardarOT"> <i class="save icon"></i>Guardar OT</a>
+            <a class=" ui right floated black labeled icon button" id="agregarOT"> <i class="plus icon"></i>Agregar OT</a>
             
             </div>
 
@@ -160,13 +160,127 @@
     <div class="ui divider"></div><br>
    
 </form>
+
+
+<div class="field" id="list" style="display:none;margin-left:10px;margin-right:10px;" >
+                        <div class="fields">
+
+                        <div class="sixteen wide field" style="font-size:16px;">
+                        <br>
+                        
+                <form action="" class="ui form" id="frmLista" >
+                        <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                                <thead>
+                                    <tr>
+                                        <th style="background-color: black; color:white;width:30%;"><i class="list icon"></i>Producto</th>
+                                        <th style="background-color: black; color:white;"><i class="podcast icon"></i>Cantidad</th>
+                                        <th style="background-color: black; color:white;"><i class="pencil icon"></i>Tipo</th>
+                                        <th style="background-color: black; color:white;"><i class="pencil icon"></i>Descipciones</th>
+                                        <th style="background-color: black; color:white;"><i class="dollar icon"></i>Precio</th>
+                                        <th style="background-color: black; color:white;"><i class="trash icon"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(lista, index) in listado">
+                                    <td>  
+                                    <textarea rows="3" v-model="lista.productoRe" name="nombreHer" id="nombreHer" readonly></textarea>
+                                    <input v-model="lista.idProducto" name="idProducto" id="idProducto" type="hidden" readonly>
+                                    <input v-model="lista.idColor" name="idColor" id="idColor" type="hidden" readonly>
+                                    <input v-model="lista.idAcabado" name="idAcabado" id="idAcabado" type="hidden" readonly>
+                                    </td>
+                                   
+                                    <td>  
+                                    <input v-model="lista.cantidadRe" name="cantidadRe" id="cantidadRe" type="text" readonly>
+                                    </td>
+
+                                    <td>  
+                                    <input v-model="lista.tipoRe" name="tipoRe" id="tipoRe" type="text" readonly>
+                                    </td>
+                                   
+
+                                    <td>  
+                                    <textarea rows="3"  v-model="lista.descriRe" name="descriRe" id="descriRe" readonly></textarea>
+                                    </td>
+                                    <td>  
+                                    <input class="requerido" v-model="lista.precioRe" name="precioRe" id="precioRe" type="text" readonly>
+                                    </td>
+                                    
+                                    <td>
+                                    <center>
+                    </form>
+                              <a  @click="eliminarDetalle(index)" class="ui negative mini circular icon button"><i
+                                  class="times icon"></i></a>
+                                  </center>
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    
+                        </div>
+                        <br>
+                        <a class="ui green right floated button" id="guardarOT">Guardar OT</a>
+                        <br>
+                         </div>
+</div>
+
+
 </div>
 </div>
 
+
+<script>
+var app = new Vue({
+        el: "#app",
+        data: {
+            listado:[{
+               productoRe: '',
+                cantidadRe:'',
+                detallesPro:'',
+                descriRe:'',
+                precioRe:'',
+                idProducto:'',
+                idColor:'',
+                idAcabado:'',
+                tipoRe:'',
+            }],
+        },
+        methods: {
+            eliminarDetalle(index) {
+                this.listado.splice(index, 1);
+            },
+            
+            guardarRequisicion() {
+
+            if (this.listado.length) {
+
+                $('#frmLista').addClass('loading');
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        lista: JSON.stringify(this.listado)
+                    },
+                    url: '?1=RequisicionController&2=guardarDetallesRequision',
+                    success: function (r) {
+                        $('#frmLista').removeClass('loading');
+                        if (r == 1) {              
+                        }
+                        
+                    }
+                });
+            }
+
+            },
+
+
+        }
+    });
+</script>
 <script>
     $(document).ready(function(){
     $("#pro").removeClass("ui red button");
-    $("#pro").addClass("ui red basic button");;
+    $("#pro").addClass("ui red basic button");
+    app.eliminarDetalle(0);
     });
 
 </script>
@@ -356,6 +470,35 @@ $(function() {
                 alertify.error('Cancelado');
                 
             }); 
+    });
+
+    $("#agregarOT").click(function(){
+        $("#list").show(1000);
+            var producto ="Clasificación: "+ $("#proFinalCmb option:selected").text() + "\nColor: "+ $("#colorCmb option:selected").text()+ "\nAcabado: " + $("#acabadoCmb option:selected").text();
+            var cantidad = $("#cantidad").val();
+            var desc = $("#descripciones").val();
+            var precio = $("#precio").val();
+            var color= $("#colorCmb option:selected").val();
+            var idPro =$("#proFinalCmb option:selected").val();
+            var acabado = $("#acabadoCmb option:selected").val();
+            var tip = $("input:radio[name=tipo]:checked").val();
+
+        app.listado.push({
+            productoRe: producto,
+            cantidadRe:cantidad,
+            descriRe:desc,
+            precioRe:precio,
+            idProducto : idPro,
+            idColor: color,
+            idAcabado : acabado,
+            tipoRe:tip,
+        }),
+
+        
+        $("#cantidad").val('');       
+        $("#descripciones").val('');
+        $("#precio").val('');
+        $("input:radio[name=tipo]").prop("checked", false);
     });
 </script>
 

@@ -79,7 +79,7 @@
             <div class="three wide field">
             <label><i class="chart bar icon"></i>Clasificación:</label>
             <select name="clasificacionCmb"  id="clasificacionCmb" class="ui search dropdown">
-           <option value="Seleccione" set selected>Seleccione una opción</option>
+           
             </select>
             </div>
 
@@ -136,18 +136,18 @@
 
 
             <div class="two wide field">
-            <label><i class="arrows alternate vertical icon"></i>Alto:</label>
-            <input type="text" name="alto" id="alto">
+            <label><i class="arrows alternate vertical icon"></i>Altura:</label>
+            <input type="text" name="altura" id="altura">
             </div>
 
             <div class="two wide field">
-            <label><i class="arrows alternate horizontal icon"></i>Ancho:</label>
-            <input type="text" name="ancho" id="ancho">
+            <label><i class="arrows alternate horizontal icon"></i>Base:</label>
+            <input type="text" name="base" id="base">
             </div>
 
             <div class="three wide field">
-            <label><i class="arrows alternate icon"></i>Cuadrados de Imp:</label>
-            <input type="text" name="cuadrosImp" id="cuadrosImp" readonly>
+            <label><i class="arrows alternate icon"></i>MTS 2 Imp:</label>
+            <input type="text" name="cuadrosImp" id="cuadrosImp">
             </div>
 
             
@@ -159,11 +159,46 @@
             <input type="checkbox" name="ubicacion" value="Izquierda"> Izquierda &nbsp;&nbsp;&nbsp;
             <input type="checkbox" name="ubicacion" value="Centro"> Centro &nbsp;&nbsp;&nbsp;
             <input type="checkbox" name="ubicacion" value="Derecha"> Derecha &nbsp;&nbsp;&nbsp;
+            <input type="checkbox" name="ubicacion" value="Alrrededor"> Alrrededor &nbsp;&nbsp;&nbsp;
             </div>
 
 
         </div>
     </div>
+
+    <div class="field">
+        <div class="fields">
+            <div class="three wide field">
+            <label><i class="arrows alternate horizontal icon"></i>Ancho:</label>
+            <input type="text" name="ancho" id="ancho">
+            </div>
+
+            <div class="three wide field">
+            <label><i class="arrows alternate icon"></i>Longitud:</label>
+            <input type="text" name="longitud" id="longitud">
+            </div>
+
+            <div class="three wide field">
+            <label><i class="arrows alternate horizontal icon"></i>Ancho de material:</label>
+            <input type="text" name="anchoMaterial" id="anchoMaterial">
+            </div>
+
+            <div class="three wide field">
+            <label><i class="folder icon"></i>Copias:</label>
+            <input type="text" name="copias" id="copias">
+            </div>
+
+            <div class="three wide field">
+            <label><i class="list icon"></i>MTS2:</label>
+            <input type="text" name="mts2" id="mts2">
+            </div>
+
+            <div class="three wide field">
+            <label><i class="trash icon"></i>Desperdicio:</label>
+            <input type="text" name="desperdicio" id="desperdicio">
+            </div>
+        </div>
+        </div>
 
     <div class="ui divider"></div><br>
     <div class="field">
@@ -183,20 +218,162 @@
 
             <div class="seven wide field">
             <label style="color:#F3F3F1"><i class="dollar icon"></i>Precio:</label>
-            <a class=" ui right floated green labeled icon button" id="guardarOT"> <i class="save icon"></i>Guardar OT</a>
+            <a class=" ui right floated black labeled icon button" id="agregarOT"> <i class="plus icon"></i>Agregar OT</a>
             
             </div>
         </div>
     </div>
 </form>
-</div>
+
+<div class="field" id="list" style="display:none;margin-left:10px;margin-right:10px;" >
+                        <div class="fields">
+
+                        <div class="sixteen wide field" style="font-size:16px;">
+                        <br>
+                        
+                <form action="" class="ui form" id="frmLista" >
+                        <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                                <thead>
+                                    <tr>
+                                        <th style="background-color: black; color:white;width:20%;"><i class="list icon"></i>Producto</th>
+                                        <th style="background-color: black; color:white;width:7%;"><i class="podcast icon"></i>Cantidad</th>
+                                        <th style="background-color: black; color:white;width:20%;"><i class="arrows alternate icon"></i>Detalles Generales</th>
+                                        <th style="background-color: black; color:white;"><i class="arrows alternate icon"></i>Def. Medida</th>
+                                        <th style="background-color: black; color:white;"><i class="arrows alternate icon"></i>Imp + Desperdicio</th>
+                                        <th style="background-color: black; color:white;"><i class="pencil icon"></i>Descipciones</th>
+                                        <th style="background-color: black; color:white;width:7%;"><i class="dollar icon"></i>Precio</th>
+                                        <th style="background-color: black; color:white;"><i class="trash icon"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(lista, index) in listado">
+                                    <td>  
+                                    <textarea rows="3" v-model="lista.productoRe" name="nombreHer" id="nombreHer" readonly></textarea>
+                                    <input v-model="lista.idProducto" name="idProducto" id="idProducto" type="hidden" readonly>
+                                    <input v-model="lista.idColor" name="idColor" id="idColor" type="hidden" readonly>
+                                    <input v-model="lista.idAcabado" name="idAcabado" id="idAcabado" type="hidden" readonly>
+                                    </td>
+                                   
+                                    <td>  
+                                    <input v-model="lista.cantidadRe" name="cantidadRe" id="cantidadRe" type="text" readonly>
+                                    </td>
+
+                                    <td>  
+                                    <textarea rows="4" v-model="lista.detallesPro" name="detallesPro" id="detallesPro" readonly></textarea>
+
+                                    <input v-model="lista.alturaRe" name="alturaRe" id="alturaRe" type="hidden" readonly>
+                                    <input v-model="lista.baseRe" name="baseRe" id="baseRe" type="hidden" readonly>
+                                    <input v-model="lista.cuadrosImpr" name="cuadrosImpr" id="cuadrosImpr" type="hidden" readonly>
+                                    <input v-model="lista.ubicRe" name="ubicRe" id="ubicRe" type="text" readonly>
+                                    </td>
+                                    <td>  
+                                    <textarea rows="3" v-model="lista.defMedidas" name="defMedidas" id="defMedidas" readonly></textarea>
+                                    <input v-model="lista.anchoRe" name="anchoRe" id="anchoRe" type="hidden" readonly>
+                                    <input v-model="lista.longitudRe" name="longitudRe" id="longitudRe" type="hidden" readonly>
+                                    <input v-model="lista.anchoMatRe" name="anchoMatRe" id="anchoMatRe" type="hidden" readonly>
+                                    </td>
+                                    <td>  
+                                    <textarea rows="3" v-model="lista.impDesper" name="impDesper" id="impDesper" readonly></textarea>
+
+                                    <input v-model="lista.copiasRe" name="copiasRe" id="copiasRe" type="hidden" readonly>
+                                    <input v-model="lista.mtsDes" name="mtsDes" id="mtsDes" type="hidden" readonly>
+                                    <input v-model="lista.despRe" name="despRe" id="despRe" type="hidden" readonly>
+                                    </td>
+                                   
+
+                                    <td>  
+                                    <textarea rows="3"  v-model="lista.descriRe" name="descriRe" id="descriRe" readonly></textarea>
+                                    </td>
+                                    <td>  
+                                    <input class="requerido" v-model="lista.precioRe" name="precioRe" id="precioRe" type="text"
+                                     placeholder="Nombre completo" readonly>
+                                    </td>
+                                    
+                                    <td>
+                                    <center>
+                    </form>
+                              <a  @click="eliminarDetalle(index)" class="ui negative mini circular icon button"><i
+                                  class="times icon"></i></a>
+                                  </center>
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    
+                        </div>
+                        <br>
+                        <a class="ui green right floated button" id="guardarOT">Guardar OT</a>
+                        <br>
+                         </div>
 </div>
 
+</div>
+</div>
+<script>
+var app = new Vue({
+        el: "#app",
+        data: {
+            listado:[{
+               productoRe: '',
+                cantidadRe:'',
+                detallesPro:'',
+                descriRe:'',
+                precioRe:'',
+                idProducto:'',
+                idColor:'',
+                idAcabado:'',
+                impDesper:'',
+                defMedidas:'',
+                alturaRe:'',
+                baseRe:'',
+                cuadrosImpr:'',
+                anchoMatRe:'',
+                anchoRe:'',
+                longitudRe:'',
+                copiasRe:'',
+                mtsDes:'',
+                despRe:'',
+                ubicRe:'',
+            }],
+        },
+        methods: {
+            eliminarDetalle(index) {
+                this.listado.splice(index, 1);
+            },
+            
+            guardarRequisicion() {
+
+            if (this.listado.length) {
+
+                $('#frmLista').addClass('loading');
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        lista: JSON.stringify(this.listado)
+                    },
+                    url: '?1=RequisicionController&2=guardarDetallesRequision',
+                    success: function (r) {
+                        $('#frmLista').removeClass('loading');
+                        if (r == 1) {              
+                        }
+                        
+                    }
+                });
+            }
+
+            },
+
+
+        }
+    });
+</script>
 
 <script>
     $(document).ready(function(){
     $("#gr").removeClass("ui gray button");
     $("#gr").addClass("ui gray basic button");
+    app.eliminarDetalle(0);
     });
 
 </script>
@@ -402,7 +579,69 @@ $(function() {
 
             var unidad = $("#unidadMedida").val();
 
-            $("#cuadrosImp").val(totalMetros + " " +unidad);
+            $("#cuadrosImp").val(totalMetros);
+    });
+
+    $("#agregarOT").click(function(){
+        $("#list").show(1000);
+            var producto ="Clasificación: "+ $("#proFinalCmb option:selected").text() + "\nColor: "+ $("#colorCmb option:selected").text()+ "\nAcabado: " + $("#acabadoCmb option:selected").text();
+            var cantidad = $("#cantidad").val();
+            var desc = $("#descripciones").val();
+            var precio = $("#precio").val();
+            var color= $("#colorCmb option:selected").val();
+            var idPro =$("#proFinalCmb option:selected").val();
+            var acabado = $("#acabadoCmb option:selected").val();
+            var detallesPro1 = "Altura: "+ $("#altura").val() + "\nBase: "+ $("#base").val()+ "\nMT2 impresión: " + $("#cuadrosImp").val()+ "\nUbicación: " + $("input:checkbox[name=ubicacion]:checked").val();
+            var defMed = "Ancho: "+ $("#ancho").val() + "\nLongitud: "+ $("#longitud").val()+ "\nAncho Material: " + $("#anchoMaterial").val();
+            var impD = "Copias: "+ $("#copias").val() + "\nMTS2: "+ $("#mts2").val()+ "\nDesperdicio: " + $("#desperdicio").val();
+            var altu = $("#altura").val();
+            var bas = $("#base").val();
+            var cuadrosIm = $("#cuadrosImp").val();
+            var anch = $("#ancho").val();
+            var long = $("#longitud").val();
+            var anchoM = $("#anchoMaterial").val();
+            var cop = $("#copias").val();
+            var mt = $("#mts2").val();
+            var des = $("#desperdicio").val();
+            var ubic =$("input:checkbox[name=ubicacion]:checked").val();
+
+        app.listado.push({
+            productoRe: producto,
+            cantidadRe:cantidad,
+            detallesPro : detallesPro1,
+            descriRe:desc,
+            precioRe:precio,
+            idProducto : idPro,
+            idColor: color,
+            idAcabado : acabado,
+            defMedidas : defMed,
+            impDesper:impD,
+            alturaRe : altu,
+            baseRe: bas,
+            cuadrosImpr: cuadrosIm,
+            anchoRe: anch,
+            longitudRe:long,
+            anchoMatRe:anchoM,
+            copiasRe:cop,
+             mtsDes:mt,
+            despRe:des,
+            ubicRe:ubic,
+        }),
+
+        
+        $("#cantidad").val('');       
+        $("#descripciones").val('');
+        $("#precio").val('');
+        $("#altura").val('');
+        $("#base").val('');
+        $("#cuadrosImp").val('');
+        $("#ancho").val('');
+        $("#longitud").val('');
+        $("#anchoMaterial").val('');
+        $("#copias").val('');
+        $("#mts2").val('');
+        $("#desperdicio").val('');
+        $("input:checkbox[name=ubicacion]").prop("checked", false);
     });
 </script>
 
