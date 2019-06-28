@@ -434,4 +434,202 @@ class Funciones extends ControladorBase {
 		}
 
 	}
+
+
+
+
+	public function verDetallesOTIP(){
+		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$idC=$_POST['id'];
+
+		if($_POST['id']){
+			$sql="select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio from detalleOrdenIP d
+			inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+			inner join colores c on c.idColor = d.idColor
+			inner join acabados a on a.idAcabado = d.idAcabado
+			inner join productosMedidas pm on pm.idProductoFinal = d.idProductoFinal
+			inner join medidas m on m.idMedida = pm.idMedida
+			where d.idOrden='".$idC."'";
+	
+			$result=mysqli_query($conexion,$sql);
+	
+			$cadena="
+			<table class='ui selectable very compact celled table' style='width:100%;text-align:left;'>
+			<tr>
+				<th style='background-color:#B40431;color:white;' height='50'>Producto</th>
+				<th style='background-color:#B40431;color:white;'>Cantidad</th>
+				<th style='background-color:#B40431;color:white;'>Tipo</th>
+				<th style='background-color:#B40431;color:white;'>Descripcion</th>
+				<th style='background-color:#B40431;color:white;'>Precio</th>
+				
+			</tr>
+			";
+			while ($ver=mysqli_fetch_row($result)) {
+				$cadena=$cadena.'<tr>
+				<td><b>Producto:</b> '.utf8_encode($ver[10]).'<br>
+					<b>Color:</b> '.utf8_encode($ver[11]).'<br>
+					<b>Acabado:</b> '.utf8_encode($ver[12]).'<br>
+				</td>
+				<td>
+				'.utf8_encode($ver[5]). ' ' .utf8_encode($ver[12]).'
+				</td>
+
+				<td>
+				'.utf8_encode($ver[6]). '
+				</td>
+
+				<td>
+				'.utf8_encode($ver[7]). '
+				</td>
+				
+				<td>
+				$ '.utf8_encode($ver[13]). '
+				</td>
+				</tr>';
+			}
+			$cadena=$cadena."
+			
+			</table>";
+
+			echo  $cadena;
+		}
+
+	}
+
+
+
+	public function verDetallesOTP(){
+		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$idC=$_POST['id'];
+
+		if($_POST['id']){
+			$sql="select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio from detalleOrdenP d
+			inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+			inner join colores c on c.idColor = d.idColor
+			inner join acabados a on a.idAcabado = d.idAcabado
+			inner join productosMedidas pm on pm.idProductoFinal = d.idProductoFinal
+			inner join medidas m on m.idMedida = pm.idMedida
+			where d.idOrden='".$idC."'";
+	
+			$result=mysqli_query($conexion,$sql);
+	
+			$cadena="
+			<table class='ui selectable very compact celled table' style='width:100%;text-align:left;'>
+			<tr>
+				<th style='background-color:#B40431;color:white;' height='50'>Producto</th>
+				<th style='background-color:#B40431;color:white;'>Cantidad</th>
+				<th style='background-color:#B40431;color:white;'>Tipo</th>
+				<th style='background-color:#B40431;color:white;'>Descripcion</th>
+				<th style='background-color:#B40431;color:white;'>Precio</th>
+				
+			</tr>
+			";
+			while ($ver=mysqli_fetch_row($result)) {
+				$cadena=$cadena.'<tr>
+				<td><b>Producto:</b> '.utf8_encode($ver[10]).'<br>
+					<b>Color:</b> '.utf8_encode($ver[11]).'<br>
+					<b>Acabado:</b> '.utf8_encode($ver[12]).'<br>
+				</td>
+				<td>
+				'.utf8_encode($ver[5]). ' ' .utf8_encode($ver[12]).'
+				</td>
+
+				<td>
+				'.utf8_encode($ver[6]). '
+				</td>
+
+				<td>
+				'.utf8_encode($ver[7]). '
+				</td>
+				
+				<td>
+				$ '.utf8_encode($ver[13]). '
+				</td>
+				</tr>';
+			}
+			$cadena=$cadena."
+			
+			</table>";
+
+			echo  $cadena;
+		}
+
+	}
+
+
+
+	public function verDetallesOTGR(){
+		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$idC=$_POST['id'];
+
+		if($_POST['id']){
+			$sql="select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio from detalleOrdenGR d
+			inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+			inner join colores c on c.idColor = d.idColor
+			inner join acabados a on a.idAcabado = d.idAcabado
+			inner join productosMedidas pm on pm.idProductoFinal = d.idProductoFinal
+			inner join medidas m on m.idMedida = pm.idMedida
+			where d.idOrden='".$idC."'";
+	
+			$result=mysqli_query($conexion,$sql);
+	
+			$cadena="
+			<table class='ui selectable very compact celled table' style='width:100%;text-align:left;'>
+			<tr>
+				<th style='background-color:#B40431;color:white;' height='50'>Producto</th>
+				<th style='background-color:#B40431;color:white;'>Cantidad</th>
+				<th style='background-color:#B40431;color:white;'>Detalles Generales</th>
+				<th style='background-color:#B40431;color:white;'>Def Medidas</th>
+				<th style='background-color:#B40431;color:white;'>Imp + Desperdicio</th>
+				<th style='background-color:#B40431;color:white;'>Descripcion</th>
+				<th style='background-color:#B40431;color:white;'>Precio</th>
+				
+			</tr>
+			";
+			while ($ver=mysqli_fetch_row($result)) {
+				$cadena=$cadena.'<tr>
+				<td>
+					<b>Producto:</b> '.utf8_encode($ver[18]).'<br>
+					<b>Color:</b> '.utf8_encode($ver[19]).'<br>
+					<b>Acabado:</b> '.utf8_encode($ver[20]).'<br>
+				</td>
+				<td>
+				'.utf8_encode($ver[5]). ' ' .utf8_encode($ver[21]).'
+				</td>
+
+				<td>
+				    <b>Altura:</b> '.utf8_encode($ver[6]).'<br>
+					<b>Base:</b> '.utf8_encode($ver[7]).'<br>
+					<b>Mts 2 Imp:</b> '.utf8_encode($ver[8]).'<br>
+					<b>Ubicación:</b> '.utf8_encode($ver[9]).'<br>
+				</td>
+
+				<td>
+				    <b>Ancho:</b> '.utf8_encode($ver[10]).'<br>
+					<b>Longitud:</b> '.utf8_encode($ver[11]).'<br>
+					<b>Ancho Material:</b> '.utf8_encode($ver[12]).'<br>
+					
+				</td>
+
+				<td>
+				<b>Copias:</b> '.utf8_encode($ver[13]).'<br>
+				<b>MTS2:</b> '.utf8_encode($ver[14]).'<br>
+				<b>Desperdicio:</b> '.utf8_encode($ver[15]).'<br>
+				</td>
+				<td>
+				$ '.utf8_encode($ver[16]). '
+				</td>
+				<td>
+				$ '.utf8_encode($ver[22]). '
+				</td>
+				</tr>';
+			}
+			$cadena=$cadena."
+			
+			</table>";
+
+			echo  $cadena;
+		}
+
+	}
 }

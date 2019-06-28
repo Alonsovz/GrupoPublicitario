@@ -264,7 +264,7 @@
                                     <input v-model="lista.alturaRe" name="alturaRe" id="alturaRe" type="hidden" readonly>
                                     <input v-model="lista.baseRe" name="baseRe" id="baseRe" type="hidden" readonly>
                                     <input v-model="lista.cuadrosImpr" name="cuadrosImpr" id="cuadrosImpr" type="hidden" readonly>
-                                    <input v-model="lista.ubicRe" name="ubicRe" id="ubicRe" type="text" readonly>
+                                    <input v-model="lista.ubicRe" name="ubicRe" id="ubicRe" type="hidden" readonly>
                                     </td>
                                     <td>  
                                     <textarea rows="3" v-model="lista.defMedidas" name="defMedidas" id="defMedidas" readonly></textarea>

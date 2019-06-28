@@ -28,7 +28,6 @@
                             <th style="background-color: #BDBDBD; color:black;">Fecha Entrega</th>
                             <th style="background-color: #BDBDBD; color:black;">Responsable</th>
                             <th style="background-color: #BDBDBD; color:black;">Cliente</th>
-                            <th style="background-color: #BDBDBD; color:black;">Tipo Producto</th>
                             <th style="background-color: #BDBDBD; color:black;">Acciones</th>
                            
                         </tr>
@@ -78,88 +77,16 @@ Detalles de la OT : <a id="corr" style="background-color:#BDBDBD; color:red;"></
             </div>
 </div>
 </div>
-<br>
-<div class="ui divider"></div>
-<br>
 <div class="field">
-<div class="fields">
-<div class="four wide field">
-            <label><i class="chart bar icon"></i>Clasificación:</label>
-            <input type="text" name="clasificacionCmb"  id="clasificacionCmb" readonly>
-         
-            </div>
-
-            <div class="four wide field">
-            <label> <i class="pencil icon"></i>Producto Final:</label>
-            <input type="text"  name="proFinalCmb"  id="proFinalCmb" readonly>
-            
-            </div>
-
-            <div class="four wide field">
-            <label><i class="arrows alternate icon"></i>Unidad de Medidad:</label>
-            <input type="text" name="unidadMedida" id="unidadMedida" readonly>
-            </div>
-            <div class="four wide field">
-            <label><i class="chart pie icon"></i>Color:</label>
-            <input type="text"  name="colorCmb" id="colorCmb" readonly>
-            </div>
-
-            <div class="four wide field">
-            <label><i class="podcast icon"></i>Acabado Final:</label>
-            <input type="text"  name="acabadoCmb" id="acabadoCmb" readonly>
-            </div>
-</div>
-</div>
-
-<br>
-<div class="ui divider"></div>
-<br>
-<div class="field">
-<div class="fields">
-<div class="four wide field">
-            <label><i class="user icon"></i>Cantidad:</label>
-            <input type="text" name="cantidad" id="cantidad" readonly>
-            
-            </div>
-
-            
-            <div class="four wide field">
-            <label><i class="arrows alternate vertical icon"></i>Alto:</label>
-            <input type="text" name="alto" id="alto" readonly>
-            </div>
-
-            <div class="four wide field">
-            <label><i class="arrows alternate horizontal icon"></i>Ancho:</label>
-            <input type="text" name="ancho" id="ancho" readonly>
-            </div>
-
-            <div class="four wide field">
-            <label><i class="arrows alternate icon"></i>Cuadrados de Imp:</label>
-            <input type="text" name="cuadrosImp" id="cuadrosImp" readonly>
-            </div>
-
-            
-
-            <div class="four wide field">
-            <label><i class="arrows alternate icon"></i>Ubicación:</label>
-            <input type="text" name="ubicacion" id="ubicacion" readonly>
-    
-            </div>
-</div>
-</div>
-
-
-<br>
-<div class="ui divider"></div>
-<br>
-<div class="field">
-<div class="fields">
-<div class="six wide field">
-            <label><i class="pencil icon"></i>Descripciones Adicionales:</label>
-            <textarea rows="3" id="descripciones" name="descripciones" readonly></textarea>
-            
-            </div>
-</div>
+                <div class="fields">
+                
+                    <div class="sixteen wide field">
+                    <hr><br>
+                    <a style="color:black;font-size:22px;font-weight:bold;text-align:center;">Detalles de la OT</a>
+                    <br><br><hr><br>
+                    <div id="detalles"></div>
+                    </div>
+                </div>
 </div>
 </form>
 
@@ -188,7 +115,7 @@ Aprobar la OT : <a id="co" style="background-color:#BDBDBD; color:red;"></a>
                         Cancelar
                     </button>
                     <button class="ui right red button" id="btnFinalizar">
-                        Finalizar
+                        Aprobar
                     </button>
                 </div>
 </div>
@@ -246,17 +173,7 @@ var app = new Vue({
                         $('#frmVerDetalles input[name="fechaEOT"]').val(dat.fechaEntrega);
                         $('#frmVerDetalles input[name="responsable"]').val(dat.nombre);
                         $('#frmVerDetalles input[name="cliente"]').val(dat.nombreC);
-                        $('#frmVerDetalles input[name="clasificacionCmb"]').val(dat.producto);
-                        $('#frmVerDetalles input[name="proFinalCmb"]').val(dat.productoFinal);
-                        $('#frmVerDetalles input[name="colorCmb"]').val(dat.color);
-                        $('#frmVerDetalles input[name="unidadMedida"]').val(dat.medida);
-                        $('#frmVerDetalles input[name="acabadoCmb"]').val(dat.acabado);
-                        $('#frmVerDetalles input[name="cantidad"]').val(dat.cantidad);
-                        $('#frmVerDetalles input[name="alto"]').val(dat.alto);
-                        $('#frmVerDetalles input[name="ancho"]').val(dat.ancho);
-                        $('#frmVerDetalles input[name="cuadrosImp"]').val(dat.cuadrosImp);
-                        $('#frmVerDetalles input[name="ubicacion"]').val(dat.ubicacion);
-                        $('#frmVerDetalles textarea[name="descripciones"]').val(dat.descripciones);
+          
                         
                     })
                     .catch(err => {
@@ -274,11 +191,23 @@ var app = new Vue({
 
 
 var detalles=(ele)=>{
-    $('#verDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
-            $('#idDetalle').val($(ele).attr("id"));
+    var id = $(ele).attr("id");
+    $('#idDetalle').val($(ele).attr("id")); 
             $('#corr').text($(ele).attr("correlativo"));
           app.cargarDatos();
-            
+
+          $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=verDetallesOTGR",
+            data:{
+                id:id
+            },
+        success:function(r){
+				$('#detalles').html(r);
+			}
+        });
+        $('#verDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                
 }
 
 var finalizar=(ele)=>{

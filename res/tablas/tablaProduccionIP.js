@@ -27,9 +27,7 @@ $(function() {
                     "data": "nombreC"             
                 },
 
-                {
-                    "data": "producto"             
-                },
+          
                 
                 {
                     "data": "Acciones"             

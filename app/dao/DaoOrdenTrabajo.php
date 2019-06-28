@@ -125,11 +125,11 @@ class DaoOrdenTrabajo extends DaoBase {
     public function mostrarProduccionGR() {
         $_query = " select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto
+       c.nombre as nombreC
        from ordenTrabajoGR o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
+        
       where o.idEliminado=1 and o.estado=2 and o.correlativo>'OTGR00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
@@ -159,11 +159,11 @@ class DaoOrdenTrabajo extends DaoBase {
     public function mostrarProduccionIP() {
         $_query = "select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto
+       c.nombre as nombreC
        from ordenTrabajoIP o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
+      
       where o.idEliminado=1 and o.estado=2 and o.correlativo>'OTIP00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
@@ -194,11 +194,11 @@ class DaoOrdenTrabajo extends DaoBase {
     public function mostrarProduccionP() {
         $_query = "select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto
+       c.nombre as nombreC
        from ordenTrabajoP o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
+      
       where o.idEliminado=1 and o.estado=2 and o.correlativo>'OTPR00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
@@ -229,17 +229,11 @@ class DaoOrdenTrabajo extends DaoBase {
 
         $_query = "select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto, co.color as color, ac.acabado as acabado, tp.productoFinal as productoFinal,
-       m.medida as medida
+       c.nombre as nombreC
        from ordenTrabajoGR o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
-       inner join productoFinal tp on tp.idProducto = t.idProducto
-       inner join colores co on co.idColor = o.idColor
-       inner join acabados ac on ac.idAcabado = o.idAcabado
-       inner join productosMedidas pm on pm.idProductoFinal = tp.idProductoFinal
-       inner join medidas m on m.idMedida = pm.idMedida
+
        where o.idOrden=".$this->objeto->getIdOrden()." group by idOrden ";
 
         $resultado = $this->con->ejecutar($_query);
@@ -253,17 +247,10 @@ class DaoOrdenTrabajo extends DaoBase {
 
         $_query = "select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto, co.color as color, ac.acabado as acabado, tp.productoFinal as productoFinal,
-       m.medida as medida
+       c.nombre as nombreC
        from ordenTrabajoIP o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
-       inner join productoFinal tp on tp.idProducto = t.idProducto
-       inner join colores co on co.idColor = o.idColor
-       inner join acabados ac on ac.idAcabado = o.idAcabado
-       inner join productosMedidas pm on pm.idProductoFinal = tp.idProductoFinal
-       inner join medidas m on m.idMedida = pm.idMedida
        where o.idOrden=".$this->objeto->getIdOrden()." group by idOrden ";
 
         $resultado = $this->con->ejecutar($_query);
@@ -277,17 +264,11 @@ class DaoOrdenTrabajo extends DaoBase {
 
         $_query = "select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto, co.color as color, ac.acabado as acabado, tp.productoFinal as productoFinal,
-       m.medida as medida
+       c.nombre as nombreC
        from ordenTrabajoP o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
-       inner join productoFinal tp on tp.idProducto = t.idProducto
-       inner join colores co on co.idColor = o.idColor
-       inner join acabados ac on ac.idAcabado = o.idAcabado
-       inner join productosMedidas pm on pm.idProductoFinal = tp.idProductoFinal
-       inner join medidas m on m.idMedida = pm.idMedida
+     
        where o.idOrden=".$this->objeto->getIdOrden()." group by idOrden ";
 
         $resultado = $this->con->ejecutar($_query);
@@ -301,11 +282,11 @@ class DaoOrdenTrabajo extends DaoBase {
     public function mostrarFacturaGR() {
         $_query = " select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto
+       c.nombre as nombreC
        from ordenTrabajoGR o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
+      
       where o.idEliminado=1 and o.estado=3 and o.correlativo>'OTGR00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
@@ -333,11 +314,10 @@ class DaoOrdenTrabajo extends DaoBase {
     public function mostrarFacturaIP() {
         $_query = "select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto
+       c.nombre as nombreC
        from ordenTrabajoIP o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
       where o.idEliminado=1 and o.estado=3 and o.correlativo>'OTIP00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
@@ -367,11 +347,11 @@ class DaoOrdenTrabajo extends DaoBase {
     public function mostrarFacturaP() {
         $_query = "select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto
+       c.nombre as nombreC
        from ordenTrabajoP o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
+       
       where o.idEliminado=1 and o.estado=3 and o.correlativo>'OTPR00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
@@ -533,11 +513,11 @@ class DaoOrdenTrabajo extends DaoBase {
     public function mostrarEliminadaGR() {
         $_query = " select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto
+       c.nombre as nombreC
        from ordenTrabajoGR o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
+      
       where o.idEliminado=2 and o.correlativo>'OTGR00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
@@ -567,11 +547,11 @@ class DaoOrdenTrabajo extends DaoBase {
     public function mostrarEliminadaIP() {
         $_query = "select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto
+       c.nombre as nombreC
        from ordenTrabajoIP o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
+      
       where o.idEliminado=2 and o.correlativo>'OTIP00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
@@ -602,11 +582,11 @@ class DaoOrdenTrabajo extends DaoBase {
     public function mostrarEliminadaP() {
         $_query = "select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto
+       c.nombre as nombreC
        from ordenTrabajoP o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
+       
       where o.idEliminado=2 and o.correlativo>'OTPR00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
@@ -702,11 +682,9 @@ class DaoOrdenTrabajo extends DaoBase {
     public function mostrarPenClientesGR() {
         $_query = " select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto
-       from ordenTrabajoGR o
+       c.nombre as nombreC from ordenTrabajoGR o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
       where o.idEliminado=1 and o.estado=1 and o.correlativo>'OTGR00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
@@ -736,11 +714,9 @@ class DaoOrdenTrabajo extends DaoBase {
     public function mostrarPenClientesIP() {
         $_query = "select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto
-       from ordenTrabajoIP o
+       c.nombre as nombreC from ordenTrabajoIP o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
       where o.idEliminado=1 and o.estado=1 and o.correlativo>'OTIP00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
@@ -771,11 +747,9 @@ class DaoOrdenTrabajo extends DaoBase {
     public function mostrarPenClientesP() {
         $_query = "select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto
-       from ordenTrabajoP o
+       c.nombre as nombreC from ordenTrabajoP o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
       where o.idEliminado=1 and o.estado=1 and o.correlativo>'OTPR00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
