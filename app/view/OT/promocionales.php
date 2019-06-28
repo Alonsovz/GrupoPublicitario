@@ -250,7 +250,7 @@ var app = new Vue({
                 this.listado.splice(index, 1);
             },
             
-            guardarRequisicion() {
+            guardarDetallesOTP() {
 
             if (this.listado.length) {
 
@@ -260,7 +260,7 @@ var app = new Vue({
                     data: {
                         lista: JSON.stringify(this.listado)
                     },
-                    url: '?1=RequisicionController&2=guardarDetallesRequision',
+                    url: '?1=OTController&2=guardarDetallesOTP',
                     success: function (r) {
                         $('#frmLista').removeClass('loading');
                         if (r == 1) {              
@@ -443,7 +443,7 @@ $(function() {
                 data: datosFormulario,
                 success: function(r) {
                     if(r == 1) {
-                        
+                        app.guardarDetallesOTP();
                         swal({
                             title: 'OT registrada',
                             text: 'Guardado con éxito',
@@ -454,7 +454,7 @@ $(function() {
                                 if (result.value) {
                             
                                     location.reload();
-                               window.open('?1=OTController&2=ImprimirFacturaP','_blank');
+                             //  window.open('?1=OTController&2=ImprimirFacturaP','_blank');
                                 return false;
                             }
                         }); 

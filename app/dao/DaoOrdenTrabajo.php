@@ -9,11 +9,34 @@ class DaoOrdenTrabajo extends DaoBase {
 
     public function guardarOTGR() {
         $_query = "insert into ordenTrabajoGR values(null,'".$this->objeto->getCorrelativo()."','".$this->objeto->getFechaOT()."'
-        ,'".$this->objeto->getIdResponsable()."','".$this->objeto->getIdCliente()."','".$this->objeto->getFechaEn()."'
-        ,'".$this->objeto->getIdClasificacion()."','".$this->objeto->getIdProductoFinal()."','".$this->objeto->getColor()."'
-        ,'".$this->objeto->getAcabado()."','".$this->objeto->getCantidad()."','".$this->objeto->getAlto()."'
-        ,'".$this->objeto->getAncho()."','".$this->objeto->getCuadrosImp()."','".$this->objeto->getUbicacion()."'
-        ,'".$this->objeto->getDescripciones()."','".$this->objeto->getPrecio()."','',1,1)";
+        ,'".$this->objeto->getIdResponsable()."','".$this->objeto->getIdCliente()."','".$this->objeto->getFechaEn()."','',1,1)";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function guardarDetalleOTGR() {
+
+        $corr= "(select max(idOrden) as id from ordenTrabajoGR)";
+
+        $resultado1 = $this->con->ejecutar($corr);
+
+        $fila = $resultado1->fetch_assoc();
+        $idReq = $fila['id'];
+
+        $_query = "insert into detalleOrdenGR values(null,'.$idReq.'
+        ,'".$this->objeto->getIdProductoFinal()."','".$this->objeto->getColor()."','".$this->objeto->getAcabado()."'
+        ,'".$this->objeto->getCantidad()."','".$this->objeto->getAltura()."','".$this->objeto->getBase()."'
+        ,'".$this->objeto->getCuadrosImp()."','".$this->objeto->getUbicacion()."','".$this->objeto->getAncho()."'
+        ,'".$this->objeto->getLongitud()."','".$this->objeto->getAnchoMat()."','".$this->objeto->getCopias()."'
+        ,'".$this->objeto->getMts2()."','".$this->objeto->getDesperdicio()."','".$this->objeto->getDescripciones()."'
+        ,'".$this->objeto->getPrecio()."')";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -27,10 +50,31 @@ class DaoOrdenTrabajo extends DaoBase {
 
     public function guardarOTIP() {
         $_query = "insert into ordenTrabajoIP values(null,'".$this->objeto->getCorrelativo()."','".$this->objeto->getFechaOT()."'
-        ,'".$this->objeto->getIdResponsable()."','".$this->objeto->getIdCliente()."','".$this->objeto->getFechaEn()."'
-        ,'".$this->objeto->getIdClasificacion()."','".$this->objeto->getIdProductoFinal()."','".$this->objeto->getColor()."'
-        ,'".$this->objeto->getAcabado()."','".$this->objeto->getCantidad()."','".$this->objeto->getTipo()."'
-        ,'".$this->objeto->getDescripciones()."','".$this->objeto->getPrecio()."','',1,1)";
+        ,'".$this->objeto->getIdResponsable()."','".$this->objeto->getIdCliente()."','".$this->objeto->getFechaEn()."','',1,1)";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function guardarDetalleOTIP() {
+
+        $corr= "(select max(idOrden) as id from ordenTrabajoIP)";
+
+        $resultado1 = $this->con->ejecutar($corr);
+
+        $fila = $resultado1->fetch_assoc();
+        $idReq = $fila['id'];
+
+        $_query = "insert into detalleOrdenIP values(null,'.$idReq.'
+        ,'".$this->objeto->getIdProductoFinal()."','".$this->objeto->getColor()."','".$this->objeto->getAcabado()."'
+        ,'".$this->objeto->getCantidad()."','".$this->objeto->getTipo()."','".$this->objeto->getDescripciones()."'
+        ,'".$this->objeto->getPrecio()."')";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -43,10 +87,31 @@ class DaoOrdenTrabajo extends DaoBase {
 
     public function guardarOTP() {
         $_query = "insert into ordenTrabajoP values(null,'".$this->objeto->getCorrelativo()."','".$this->objeto->getFechaOT()."'
-        ,'".$this->objeto->getIdResponsable()."','".$this->objeto->getIdCliente()."','".$this->objeto->getFechaEn()."'
-        ,'".$this->objeto->getIdClasificacion()."','".$this->objeto->getIdProductoFinal()."','".$this->objeto->getColor()."'
-        ,'".$this->objeto->getAcabado()."','".$this->objeto->getCantidad()."','".$this->objeto->getTipo()."'
-        ,'".$this->objeto->getDescripciones()."','".$this->objeto->getPrecio()."','',1,1)";
+        ,'".$this->objeto->getIdResponsable()."','".$this->objeto->getIdCliente()."','".$this->objeto->getFechaEn()."','',1,1)";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function guardarDetalleOTP() {
+
+        $corr= "(select max(idOrden) as id from ordenTrabajoP)";
+
+        $resultado1 = $this->con->ejecutar($corr);
+
+        $fila = $resultado1->fetch_assoc();
+        $idReq = $fila['id'];
+
+        $_query = "insert into detalleOrdenP values(null,'.$idReq.'
+        ,'".$this->objeto->getIdProductoFinal()."','".$this->objeto->getColor()."','".$this->objeto->getAcabado()."'
+        ,'".$this->objeto->getCantidad()."','".$this->objeto->getTipo()."','".$this->objeto->getDescripciones()."'
+        ,'".$this->objeto->getPrecio()."')";
 
         $resultado = $this->con->ejecutar($_query);
 

@@ -79,20 +79,50 @@ class OTController extends ControladorBase {
         $dao->objeto->setIdResponsable($_REQUEST["idUser"]);
         $dao->objeto->setIdCliente($_REQUEST["cliente"]);
         $dao->objeto->setFechaEn($_REQUEST["fechaEOT"]);
-        $dao->objeto->setIdClasificacion($_REQUEST["clasificacionCmb"]);
-        $dao->objeto->setIdProductoFinal($_REQUEST["proFinalCmb"]);
-        $dao->objeto->setColor($_REQUEST["colorCmb"]);
-        $dao->objeto->setAcabado($_REQUEST["acabadoCmb"]);
-        $dao->objeto->setCantidad($_REQUEST["cantidad"]);
-        $dao->objeto->setAlto($_REQUEST["alto"]);
-        $dao->objeto->setAncho($_REQUEST["ancho"]);
-        $dao->objeto->setCuadrosImp($_REQUEST["cuadrosImp"]);
-        $dao->objeto->setUbicacion($_REQUEST["ubicacion"]);
-        $dao->objeto->setDescripciones($_REQUEST["descripciones"]);
-        $dao->objeto->setPrecio($_REQUEST["precio"]);
+       
 
 
         echo $dao->guardarOTGR();
+    }
+
+
+    public function guardarDetallesOT(){
+        $detalles = json_decode($_REQUEST["lista"]);
+
+        $contador = 0;
+
+        $dao = new DaoOrdenTrabajo();
+
+        foreach($detalles as $detalle) {
+            $dao->objeto->setIdProductoFinal($detalle->idProducto);
+            $dao->objeto->setColor($detalle->idColor);
+            $dao->objeto->setAcabado($detalle->idAcabado);
+            $dao->objeto->setCantidad($detalle->cantidadRe);
+            $dao->objeto->setAltura($detalle->alturaRe);
+            $dao->objeto->setBase($detalle->baseRe);
+            $dao->objeto->setCuadrosImp($detalle->cuadrosImpr);
+            $dao->objeto->setUbicacion($detalle->ubicRe);
+            $dao->objeto->setAncho($detalle->anchoRe);
+            $dao->objeto->setLongitud($detalle->longitudRe);
+            $dao->objeto->setAnchoMat($detalle->anchoMatRe);
+            $dao->objeto->setCopias($detalle->copiasRe);
+            $dao->objeto->setMts2($detalle->mtsDes);
+            $dao->objeto->setDesperdicio($detalle->despRe);
+            $dao->objeto->setDescripciones($detalle->descriRe);
+            $dao->objeto->setPrecio($detalle->precioRe);
+
+            if($dao->guardarDetalleOTGR()) {
+                $contador++;
+            } else {
+                echo 'nell';
+            }
+        }
+
+        if($contador == count($detalles)) {
+            echo 1;
+        } else {
+            echo 2;
+        }
     }
 
     public function guardarOTIP(){
@@ -103,18 +133,40 @@ class OTController extends ControladorBase {
         $dao->objeto->setIdResponsable($_REQUEST["idUser"]);
         $dao->objeto->setIdCliente($_REQUEST["cliente"]);
         $dao->objeto->setFechaEn($_REQUEST["fechaEOT"]);
-        $dao->objeto->setIdClasificacion($_REQUEST["clasificacionCmb"]);
-        $dao->objeto->setIdProductoFinal($_REQUEST["proFinalCmb"]);
-        $dao->objeto->setColor($_REQUEST["colorCmb"]);
-        $dao->objeto->setAcabado($_REQUEST["acabadoCmb"]);
-        $dao->objeto->setCantidad($_REQUEST["cantidad"]);
-        $dao->objeto->setTipo($_REQUEST["tipo"]);
-       
-        $dao->objeto->setDescripciones($_REQUEST["descripciones"]);
-        $dao->objeto->setPrecio($_REQUEST["precio"]);
 
 
         echo $dao->guardarOTIP();
+    }
+
+
+    public function guardarDetallesOTIP(){
+        $detalles = json_decode($_REQUEST["lista"]);
+
+        $contador = 0;
+
+        $dao = new DaoOrdenTrabajo();
+
+        foreach($detalles as $detalle) {
+            $dao->objeto->setIdProductoFinal($detalle->idProducto);
+            $dao->objeto->setColor($detalle->idColor);
+            $dao->objeto->setAcabado($detalle->idAcabado);
+            $dao->objeto->setCantidad($detalle->cantidadRe);
+            $dao->objeto->setTipo($detalle->tipoRe);
+            $dao->objeto->setDescripciones($detalle->descriRe);
+            $dao->objeto->setPrecio($detalle->precioRe);
+
+            if($dao->guardarDetalleOTIP()) {
+                $contador++;
+            } else {
+                echo 'nell';
+            }
+        }
+
+        if($contador == count($detalles)) {
+            echo 1;
+        } else {
+            echo 2;
+        }
     }
 
     public function guardarOTP(){
@@ -125,18 +177,40 @@ class OTController extends ControladorBase {
         $dao->objeto->setIdResponsable($_REQUEST["idUser"]);
         $dao->objeto->setIdCliente($_REQUEST["cliente"]);
         $dao->objeto->setFechaEn($_REQUEST["fechaEOT"]);
-        $dao->objeto->setIdClasificacion($_REQUEST["clasificacionCmb"]);
-        $dao->objeto->setIdProductoFinal($_REQUEST["proFinalCmb"]);
-        $dao->objeto->setColor($_REQUEST["colorCmb"]);
-        $dao->objeto->setAcabado($_REQUEST["acabadoCmb"]);
-        $dao->objeto->setCantidad($_REQUEST["cantidad"]);
-        $dao->objeto->setTipo($_REQUEST["tipo"]);
-       
-        $dao->objeto->setDescripciones($_REQUEST["descripciones"]);
-        $dao->objeto->setPrecio($_REQUEST["precio"]);
 
 
         echo $dao->guardarOTP();
+    }
+
+
+    public function guardarDetallesOTP(){
+        $detalles = json_decode($_REQUEST["lista"]);
+
+        $contador = 0;
+
+        $dao = new DaoOrdenTrabajo();
+
+        foreach($detalles as $detalle) {
+            $dao->objeto->setIdProductoFinal($detalle->idProducto);
+            $dao->objeto->setColor($detalle->idColor);
+            $dao->objeto->setAcabado($detalle->idAcabado);
+            $dao->objeto->setCantidad($detalle->cantidadRe);
+            $dao->objeto->setTipo($detalle->tipoRe);
+            $dao->objeto->setDescripciones($detalle->descriRe);
+            $dao->objeto->setPrecio($detalle->precioRe);
+
+            if($dao->guardarDetalleOTP()) {
+                $contador++;
+            } else {
+                echo 'nell';
+            }
+        }
+
+        if($contador == count($detalles)) {
+            echo 1;
+        } else {
+            echo 2;
+        }
     }
 
     public function finalizarOrdenGR(){

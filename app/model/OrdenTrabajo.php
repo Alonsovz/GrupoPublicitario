@@ -12,14 +12,22 @@ class OrdenTrabajo extends ModeloBase{
     private $color;
     private $acabado;
     private $cantidad;
-    private $alto;
-    private $ancho;
     private $cuadrosImp;
     private $ubicacion;
     private $descripciones;
     private $precio;
     private $tipo;
     private $idOrden;
+
+    private $altura;
+    private $base;
+    private $longitud;
+    private $ancho;
+    private $anchoMat;
+    private $copias;
+    private $mts2;
+    private $desperdicio;
+
 
     public function __construct() {
 
@@ -171,31 +179,7 @@ class OrdenTrabajo extends ModeloBase{
         return $this;
     }
 
-    public function getAlto()
-    {
-        return $this->alto;
-    }
-
     
-    public function setAlto($alto)
-    {
-        $this->alto = $alto;
-
-        return $this;
-    }
-
-    public function getAncho()
-    {
-        return $this->ancho;
-    }
-
-    
-    public function setAncho($ancho)
-    {
-        $this->ancho = $ancho;
-
-        return $this;
-    }
 
 
     public function getCuadrosImp()
@@ -259,6 +243,114 @@ class OrdenTrabajo extends ModeloBase{
     public function setTipo($tipo)
     {
         $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    public function getAltura()
+    {
+        return $this->altura;
+    }
+
+    
+    public function setAltura($altura)
+    {
+        $this->altura = $altura;
+
+        return $this;
+    }
+
+    public function getBase()
+    {
+        return $this->base;
+    }
+
+    
+    public function setBase($base)
+    {
+        $this->base = $base;
+
+        return $this;
+    }
+
+
+    public function getLongitud()
+    {
+        return $this->longitud;
+    }
+
+    
+    public function setLongitud($longitud)
+    {
+        $this->longitud = $longitud;
+
+        return $this;
+    }
+
+    public function getAncho()
+    {
+        return $this->ancho;
+    }
+
+    
+    public function setAncho($ancho)
+    {
+        $this->ancho = $ancho;
+
+        return $this;
+    }
+
+    public function getAnchoMat()
+    {
+        return $this->anchoMat;
+    }
+
+    
+    public function setAnchoMat($anchoMat)
+    {
+        $this->anchoMat = $anchoMat;
+
+        return $this;
+    }
+
+
+    public function getCopias()
+    {
+        return $this->copias;
+    }
+
+    
+    public function setCopias($copias)
+    {
+        $this->copias = $copias;
+
+        return $this;
+    }
+
+
+    public function getMts2()
+    {
+        return $this->mts2;
+    }
+
+    
+    public function setMts2($mts2)
+    {
+        $this->mts2 = $mts2;
+
+        return $this;
+    }
+
+
+    public function getDesperdicio()
+    {
+        return $this->desperdicio;
+    }
+
+    
+    public function setDesperdicio($desperdicio)
+    {
+        $this->desperdicio = $desperdicio;
 
         return $this;
     }

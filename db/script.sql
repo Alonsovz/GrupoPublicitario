@@ -121,21 +121,34 @@ fechaOT date,
 responsable int,
 cliente int,
 fechaEntrega date,
-idClasificacion int,
-idProductoFinal int,
-idColor int,
-idAcabado int,
-cantidad varchar(20),
-alto varchar(20),
-ancho varchar(20),
-cuadrosImp varchar(100),
-ubicacion varchar(100),
-descripciones varchar(500),
-precio double,
 descripcionesE varchar(500),
 estado int,
 idEliminado int
 );
+
+
+
+create table detalleOrdenGR(
+idDetalle int primary key unique auto_increment,
+idOrden int ,
+idProductoFinal int,
+idColor int,
+idAcabado int,
+cantidad varchar(20),
+altura varchar(20),
+base varchar(20),
+cuadrosImp varchar(100),
+ubicacion varchar(100),
+ancho varchar(40),
+longitud varchar(49),
+anchoMat varchar(59),
+copias varchar(50),
+mts2 varchar(50),
+desperdicio varchar(50),
+descripciones varchar(500),
+precio double
+);
+
 
 create table ordenTrabajoIP(
 idOrden int primary key unique auto_increment,
@@ -144,17 +157,21 @@ fechaOT date,
 responsable int,
 cliente int,
 fechaEntrega date,
-idClasificacion int,
+descripcionesE varchar(500),
+estado int,
+idEliminado int
+);
+
+create table detalleOrdenIP(
+idDetalle int primary key unique auto_increment,
+idOrden int ,
 idProductoFinal int,
 idColor int,
 idAcabado int,
 cantidad varchar(20),
 tipo varchar(50),
 descripciones varchar(500),
-precio double,
-descripcionesE varchar(500),
-estado int,
-idEliminado int
+precio double
 );
 
 
@@ -165,17 +182,21 @@ fechaOT date,
 responsable int,
 cliente int,
 fechaEntrega date,
-idClasificacion int,
+descripcionesE varchar(500),
+estado int,
+idEliminado int
+);
+
+create table detalleOrdenP(
+idDetalle int primary key unique auto_increment,
+idOrden int ,
 idProductoFinal int,
 idColor int,
 idAcabado int,
 cantidad varchar(20),
 tipo varchar(50),
 descripciones varchar(500),
-precio double,
-descripcionesE varchar(500),
-estado int,
-idEliminado int
+precio double
 );
 
 create table requisiciones(
@@ -312,9 +333,9 @@ insert into productosColores values(2,4);
 insert into productosMedidas values(2,1);
 insert into productosMedidas values(2,2);
 
-insert into ordenTrabajoGR values(null,'OTGR00',curdate(),1,1,curdate(),1,1,1,1,'','','','','','',0,'',1,1);
-insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,curdate(),1,1,1,1,'','','',0,'',1,1);
-insert into ordenTrabajoP values(null,'OTPR00',curdate(),1,1,curdate(),1,1,1,1,'','','',0,'',1,1);
+insert into ordenTrabajoGR values(null,'OTGR00',curdate(),1,1,curdate(),'',1,1);
+insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,curdate(),'',1,1);
+insert into ordenTrabajoP values(null,'OTPR00',curdate(),1,1,curdate(),'',1,1);
  delimiter $$
  
 create procedure login(
