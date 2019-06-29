@@ -8,8 +8,12 @@
 
         if($_SESSION["descRol"] == 'Administrador/a') {
             require_once 'menuAdmin.php';
-        } else if($_SESSION["descRol"] == 'Maestro/a') {
-            require_once 'menuMaestros.php';
+        }
+        else if($_SESSION["descRol"] == 'Propietario') {
+            require_once 'menuProp.php';
+        }
+        else if($_SESSION["descRol"] == 'Produccion') {
+            require_once 'menuProduccion.php';
         }else{
             require_once 'menuSecretarios.php';
         }

@@ -101,13 +101,7 @@
 
         <div class="menu">
 
-            <div class="item">
-            <a href="?1=RequisicionController&2=granFormato" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
-            <i class="plus icon"></i> <i class="file alternate icon"></i>
-            Nueva Requisición
-            </a>
-
-            </div>
+            
 
             <div class="item">
             <a href="?1=RequisicionController&2=pendAprobarGF" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
@@ -138,42 +132,6 @@
     </div>
 <br>
 
-<div class="ui fluid selection dropdown" style="color:white; background-color:#B40431;">
-    <i class="dropdown icon"></i>
-        <div class="default text" style="color:white; background-color:#B40431;">
-                <i class="calendar alternate icon"></i><i class="cart arrow down icon"></i>
-                <b>Nueva OT</b>       
-        </div>
-
-        <div class="menu">
-
-            <div class="item">
-            <a href="?1=OTController&2=granFormato" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
-            <i class="cart plus icon"></i> <i class="file alternate icon"></i>
-            Gran Formato
-            </a>
-
-            </div>
-
-
-            <div class="item">
-            <a href="?1=OTController&2=impresion" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
-                <i class="cart plus icon"></i><i class="pencil alternate icon"></i>
-            Impresión digital
-            </a>
-
-            </div>
-
-            <div class="item">
-            <a href="?1=OTController&2=promocionales" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
-                <i class="cart plus icon"></i><i class="folder outline icon"></i>
-            Promocionales
-            </a>
-
-            </div>
-        </div>
-
-    </div>
 
 
 

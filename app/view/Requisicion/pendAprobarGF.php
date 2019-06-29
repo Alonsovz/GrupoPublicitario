@@ -111,9 +111,11 @@
     </div>
     <div class="actions">
     
+    <?php if($_SESSION["descRol"] == 'Propietario') { ?>
     <button class="ui red button" id="btnAprobar">Aprobar</button>
     <button class="ui grey  button" id="btnRechazar">Rechazar</button>
-  
+    
+    <?php } ?>
     <br><br>
     <hr>
     <br><br>
