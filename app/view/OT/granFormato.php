@@ -23,6 +23,8 @@
                     <a href="?1=OTController&2=impresion" class="ui black button" id="imp">Impresión Digital</a>
 
                     <a href="?1=OTController&2=promocionales" class="ui red button" id="pro">Promocionales</a>
+
+                    
                     <br><br>
 
                     <font color="#848484" size="5px">
@@ -548,7 +550,7 @@ $(function() {
                                 if (result.value) {
                             
                                location.reload();
-                               //window.open('?1=OTController&2=ImprimirFacturaGR','_blank');
+                               window.open('?1=OTController&2=ImprimirFacturaGR','_blank');
                                 return false;
                             }
                         }); 
@@ -643,6 +645,8 @@ $(function() {
         $("#desperdicio").val('');
         $("input:checkbox[name=ubicacion]").prop("checked", false);
     });
+
+
 </script>
 
 

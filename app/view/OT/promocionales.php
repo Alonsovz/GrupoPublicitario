@@ -454,7 +454,7 @@ $(function() {
                                 if (result.value) {
                             
                                     location.reload();
-                             //  window.open('?1=OTController&2=ImprimirFacturaP','_blank');
+                             window.open('?1=OTController&2=ImprimirFacturaP','_blank');
                                 return false;
                             }
                         }); 

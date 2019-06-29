@@ -339,12 +339,15 @@ class OTController extends ControladorBase {
 
         $reporte = new Reporte();
     
-        $resultado = $dao->imprimirFacturaGR();
+        $resultado = $dao->imprimirEncabezadoOTGR();
+        $resultado1 = $dao->imprimirDetalleOTGR();
         
-        $reporte->imprimirFactura($resultado);
+        $reporte->imprimirFactura($resultado,$resultado1);
     }
 
-    public function ImprimirFacturaIP()
+  
+
+    public function imprimirFacturaIPP()
     {
         $dao = new DaoOrdenTrabajo();
         
@@ -353,23 +356,26 @@ class OTController extends ControladorBase {
 
         $reporte = new Reporte();
     
-        $resultado = $dao->imprimirFacturaIP();
+        $resultado = $dao->imprimirEncabezadoOTIP();
+        $resultado1 = $dao->imprimirDetalleOTIP();
         
-        $reporte->imprimirFactura($resultado);
+        $reporte->imprimirFacturaIPP($resultado,$resultado1);
     }
 
-    public function ImprimirFacturaP()
+
+    public function imprimirFacturaP()
     {
         $dao = new DaoOrdenTrabajo();
         
         
-        require_once './app/reportes/imprimirFacturaIPP.php';
+        require_once './app/reportes/imprimirFacturaP.php';
 
         $reporte = new Reporte();
     
-        $resultado = $dao->imprimirFacturaP();
+        $resultado = $dao->imprimirEncabezadoOTP();
+        $resultado1 = $dao->imprimirDetalleOTP();
         
-        $reporte->imprimirFactura($resultado);
+        $reporte->imprimirFacturaP($resultado,$resultado1);
     }
 
 

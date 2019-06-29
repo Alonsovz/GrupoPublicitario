@@ -9,14 +9,14 @@ class Reporte {
         require_once './vendor/autoload.php';
     }
 
-    public function imprimirFactura($resultado) {
+    public function imprimirFactura($resultado,$resultado1) {
 
         
         $tabla = '';
 
         $tabla .= ' <style>
                         td { 
-                            text-align: center;
+                            text-align: left;
                         }
                         table {
                             width: 100%;
@@ -43,7 +43,7 @@ class Reporte {
             <table style='border: 1px solid white;'>
             <tr>
             <th style='border: 1px solid white; font-size:28px;'>
-                <font color='#172961'>OT pendiente de aprobación del cliente</font> .
+                <font color='#172961'>OT Gran Formato pendiente de aprobación del cliente</font> .
                
             </th>
             <th style='border: 1px solid white;'>
@@ -68,58 +68,71 @@ class Reporte {
                <th>Fecha de Entrega</th>
                </tr>
                <tr>
-               <td>".$fila['correlativo']." </td>
-               <td>".$fila['fechaOT']." </td>
-               <td>".$fila['nombre']."</td>
-               <td>".$fila['nombreC']." </td>
-               <td>".$fila['fechaEntrega']." </td>
+               <td style='text-align: center;'>".$fila['correlativo']." </td>
+               <td style='text-align: center;'>".$fila['fechaOT']." </td>
+               <td style='text-align: center;'>".$fila['nombre']."</td>
+               <td style='text-align: center;'>".$fila['nombreC']." </td>
+               <td style='text-align: center;'>".$fila['fechaEntrega']." </td>
                </tr>
                </table>
-               <br>
-               <hr>
+               <br>";
+        }
+
+        $tabla.= "<hr>
+               
                 <h3>Detalles del producto</h3>
                 <hr>
                <br><br>
                <table>
                <tr>
-               <th style='border:1px solid black;'>Clasificación de producto</th>
-               <th style='border:1px solid black;'>Producto final</th>
-               <th style='border:1px solid black;'>Color</th>
-               <th style='border:1px solid black;'>Acabado</th>
-               <th style='border:1px solid black;'>Cantidad</th>
-               <th style='border:1px solid black;'>Ancho</th>
-               <th style='border:1px solid black;'>Alto</th>
-               <th style='border:1px solid black; width:15%;'>Metros cuadrados</th>
-               <th style='border:1px solid black;'>Ubicación</th>
+               <th style='background-color:black;color:white;'>Producto</th>
+				<th style='background-color:black;color:white;'>Cantidad</th>
+				<th style='background-color:black;color:white;'>Detalles Generales</th>
+				<th style='background-color:black;color:white;'>Def Medidas</th>
+				<th style='background-color:black;color:white;'>Imp + Desperdicio</th>
+				<th style='background-color:black;color:white;'>Descripcion</th>
+				<th style='background-color:black;color:white;'>Precio</th>
                </tr>
-               <tr>
-               
-               <td style='border:1px solid black;'>".$fila['producto']." </td>
-               <td style='border:1px solid black;'>".$fila['productoFinal']." </td>
-               <td style='border:1px solid black;'>".$fila['color']." </td>
-               <td style='border:1px solid black;'>".$fila['acabado']." </td>
-               <td style='border:1px solid black;'>".$fila['cantidad']." </td>
-               <td style='border:1px solid black;'>".$fila['ancho']." </td>
-               <td style='border:1px solid black;'>".$fila['alto']." </td>
-               <td style='border:1px solid black;'>".$fila['cuadrosImp']." </td>
-               <td style='border:1px solid black;'>".$fila['ubicacion']." </td>
-               </tr></table>
-
-               <br><br>
-               <table>
-               <tr>
-               <th style='text-align:left;'>Descripciones:</th>
-               <th style='text-align:left;color:white;'>Precio</th>
-               </tr>
-               <tr>
-               <td style='width:50%;text-align:left;'>".$fila['descripciones']." </td>
-               <td style='text-align:right;font-size:20px;font-weight:bold;'>Precio = $ ".$fila['precio']." </td>
-               </tr></table>
                ";
+        while($fila = $resultado1->fetch_assoc()) {      
+            $tabla.= "
+            <tr>
+               <td style='border:1px solid black;'>
+               Producto: ".$fila['productoFinal']." <br>
+               Color: ".$fila['color']." <br>
+               Acabado: ".$fila['acabado']." 
+               </td>
+               <td style='border:1px solid black;text-align: center;'>".$fila['cantidad']." </td>
+               <td style='border:1px solid black;'>
+                Altura: ".$fila['altura']." <br>
+                Base: ".$fila['base']." <br>
+                MTS 2 Imp: ".$fila['cuadrosImp']."<br>
+                Ubicación: ".$fila['ubicacion']." 
+               </td>
+               <td style='border:1px solid black;'>
+
+                Ancho: ".$fila['ancho']." <br>
+                Longitud: ".$fila['longitud']." <br>
+                Ancho Material: ".$fila['anchoMat']."
+               
+
+               </td>
+               
+               <td style='border:1px solid black;'>
+                Copias: ".$fila['copias']." <br>
+                MTS2: ".$fila['mts2']." <br>
+                Desperdicio: ".$fila['desperdicio']."
+               </td>
+               <td style='border:1px solid black;'>".$fila['descripciones']." </td>
+               <td style='border:1px solid black;text-align: center;'> $ ".$fila['precio']." </td>
+
+               </tr> ";
             
             
             
         }
+
+        $tabla .="</table>";
 
         $tabla .= "<hr><br><br><br><br><table>
                     <tr>

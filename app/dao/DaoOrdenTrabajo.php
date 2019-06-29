@@ -614,20 +614,13 @@ class DaoOrdenTrabajo extends DaoBase {
     }
 
 
-    public function imprimirFacturaGR() {
+    public function imprimirEncabezadoOTGR() {
         $query = " select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto, co.color as color, ac.acabado as acabado, tp.productoFinal as productoFinal,
-       m.medida as medida,format(o.precio,2) as precio
+       c.nombre as nombreC
        from ordenTrabajoGR o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
-       inner join productoFinal tp on tp.idProducto = t.idProducto
-       inner join colores co on co.idColor = o.idColor
-       inner join acabados ac on ac.idAcabado = o.idAcabado
-       inner join productosMedidas pm on pm.idProductoFinal = tp.idProductoFinal
-       inner join medidas m on m.idMedida = pm.idMedida
        where o.idOrden = (select max(idOrden) from ordenTrabajoGR)";
 
         $resultado = $this->con->ejecutar($query);
@@ -635,20 +628,27 @@ class DaoOrdenTrabajo extends DaoBase {
         return $resultado;
     }
 
-    public function imprimirFacturaIP() {
-        $query = " select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
+    public function imprimirDetalleOTGR(){
+        $query = " select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio from detalleOrdenGR d
+        inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+        inner join colores c on c.idColor = d.idColor
+        inner join acabados a on a.idAcabado = d.idAcabado
+        inner join productosMedidas pm on pm.idProductoFinal = d.idProductoFinal
+        inner join medidas m on m.idMedida = pm.idMedida
+        where d.idOrden= (select max(idOrden) from ordenTrabajoGR)";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function imprimirEncabezadoOTIP() {
+        $query = "select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto, co.color as color, ac.acabado as acabado, tp.productoFinal as productoFinal,
-       m.medida as medida,format(o.precio,2) as precio
+       c.nombre as nombreC
        from ordenTrabajoIP o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
-       inner join productoFinal tp on tp.idProducto = t.idProducto
-       inner join colores co on co.idColor = o.idColor
-       inner join acabados ac on ac.idAcabado = o.idAcabado
-       inner join productosMedidas pm on pm.idProductoFinal = tp.idProductoFinal
-       inner join medidas m on m.idMedida = pm.idMedida
        where o.idOrden = (select max(idOrden) from ordenTrabajoIP)";
 
         $resultado = $this->con->ejecutar($query);
@@ -656,21 +656,43 @@ class DaoOrdenTrabajo extends DaoBase {
         return $resultado;
     }
 
-    public function imprimirFacturaP() {
-        $query = " select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
+    public function imprimirDetalleOTIP(){
+        $query = "select d.cantidad,d.tipo,d.descripciones,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio from detalleOrdenIP d
+        inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+        inner join colores c on c.idColor = d.idColor
+        inner join acabados a on a.idAcabado = d.idAcabado
+        inner join productosMedidas pm on pm.idProductoFinal = d.idProductoFinal
+        inner join medidas m on m.idMedida = pm.idMedida
+        where d.idOrden= (select max(idOrden) from ordenTrabajoIP) group by d.idDetalle";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function imprimirEncabezadoOTP() {
+        $query = "select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC, t.nombre as producto, co.color as color, ac.acabado as acabado, tp.productoFinal as productoFinal,
-       m.medida as medida,format(o.precio,2) as precio
+       c.nombre as nombreC
        from ordenTrabajoP o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-       inner join clasificacionProductos t on t.idProducto = o.idClasificacion
-       inner join productoFinal tp on tp.idProducto = t.idProducto
-       inner join colores co on co.idColor = o.idColor
-       inner join acabados ac on ac.idAcabado = o.idAcabado
-       inner join productosMedidas pm on pm.idProductoFinal = tp.idProductoFinal
-       inner join medidas m on m.idMedida = pm.idMedida
        where o.idOrden = (select max(idOrden) from ordenTrabajoP)";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function imprimirDetalleOTP(){
+        $query = "select d.cantidad,d.tipo,d.descripciones,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio 
+        from detalleOrdenP d
+        inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+        inner join colores c on c.idColor = d.idColor
+        inner join acabados a on a.idAcabado = d.idAcabado
+        inner join productosMedidas pm on pm.idProductoFinal = d.idProductoFinal
+        inner join medidas m on m.idMedida = pm.idMedida
+        where d.idOrden= (select max(idOrden) from ordenTrabajoP) group by d.idDetalle";
 
         $resultado = $this->con->ejecutar($query);
 

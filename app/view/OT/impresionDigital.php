@@ -456,7 +456,7 @@ $(function() {
                                 if (result.value) {
                             
                                     location.reload();
-                              // window.open('?1=OTController&2=ImprimirFacturaIP','_blank');
+                              window.open('?1=OTController&2=imprimirFacturaIPP','_blank');
                                 return false;
                             }
                         }); 

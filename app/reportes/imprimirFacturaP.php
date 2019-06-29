@@ -9,7 +9,7 @@ class Reporte {
         require_once './vendor/autoload.php';
     }
 
-    public function imprimirFacturaIPP($resultado,$resultado1) {
+    public function imprimirFacturaP($resultado,$resultado1) {
 
         
         $tabla = '';
@@ -43,7 +43,7 @@ class Reporte {
             <table style='border: 1px solid white;'>
             <tr>
             <th style='border: 1px solid white; font-size:28px;'>
-                <font color='#172961'>OT Impresión Digital pendiente de aprobación del cliente</font> .
+                <font color='#172961'>OT Promocional pendiente de aprobación del cliente</font> .
                
             </th>
             <th style='border: 1px solid white;'>
