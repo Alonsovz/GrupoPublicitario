@@ -11,6 +11,14 @@ class RequisicionController extends ControladorBase {
         require_once './app/view/Requisicion/granFormato.php';
     }
 
+
+    public static function gastosOficina() {
+
+        self::loadMain();
+        
+        require_once './app/view/Requisicion/gastosOficina.php';
+    }
+
     public static function promocionales() {
        
 

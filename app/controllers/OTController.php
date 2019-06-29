@@ -30,6 +30,9 @@ class OTController extends ControladorBase {
         require_once './app/view/OT/promocionales.php';
     }
 
+
+    
+
     public static function impresion() {
         $dao = new DaoClientes();
         $clientes = $dao->mostrarClientesCmb();

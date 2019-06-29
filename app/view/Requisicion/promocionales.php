@@ -6,6 +6,7 @@
                     <a href="?1=RequisicionController&2=granFormato" class="ui gray button" id="gr">Gran Formato</a>
                     <a href="?1=RequisicionController&2=impresion" class="ui black button" id="imp">Impresión Digital</a>
                     <a href="?1=RequisicionController&2=promocionales" class="ui red button" id="pro" style="font-weight:bold;">Promocionales</a>
+                    <a href="?1=RequisicionController&2=gastosOficina" class="ui blue button" id="gastosOf">Gastos de Oficina</a>
                     <br><br>
                 <font color="#B40431" size="5px">
                 <i class="plus icon"></i> <i class="list icon"></i>
