@@ -63,12 +63,37 @@ class DaoUsuario extends DaoBase {
         return $json;
     }
 
-
+    
     public function registrar() {
         $_query = "insert into usuario values(null,'".$this->objeto->getNombre()."', '".$this->objeto->getApellido()."',
-        '".$this->objeto->getNomUsuario()."', '".$this->objeto->getEmail()."', '".$this->objeto->getDireccion()."',
-        '".sha1($this->objeto->getPass())."','".$this->objeto->getTelefono()."','".$this->objeto->getDui()."',
-        '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCodigoRol()."',1)";
+        '".$this->objeto->getDui()."', '".$this->objeto->getNit()."', '".$this->objeto->getFechaNacimiento()."',
+        '".$this->objeto->getTelefono()."', '".$this->objeto->getTelMovil()."', '".$this->objeto->getEmail()."',
+        '".($this->objeto->getDireccion())."','".$this->objeto->getMISS()."','".$this->objeto->getAfiliado()."',
+        '".$this->objeto->getMAFP()."','".$this->objeto->getEstadoFam()."','".$this->objeto->getConyuge()."',
+        '".$this->objeto->getHijos()."','".$this->objeto->getNombrePadre()."','".$this->objeto->getNombreMadre()."',
+        '".$this->objeto->getContacto1()."','".$this->objeto->getContacto1Tel()."','".$this->objeto->getContacto1Tel2()."',
+        '".$this->objeto->getFechaIngreso()."','".$this->objeto->getSueldo()."','".$this->objeto->getCodigoRol()."',
+        '".$this->objeto->getNomUsuario()."','".sha1($this->objeto->getPass())."',1)";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function registrarHijos(){
+        $corr= "(select max(codigoUsuario) as id from usuario)";
+
+        $resultado1 = $this->con->ejecutar($corr);
+
+        $fila = $resultado1->fetch_assoc();
+        $idExp = $fila['id'];
+
+        $_query = "insert into hijosEmp values(".$idExp.",'".$this->objeto->getNombreHijo()."');
+        ";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -220,7 +245,10 @@ class DaoUsuario extends DaoBase {
     }
 
     public function mostrarUsuarios() {
-        $_query = "call mostrarUsuarios()";
+        $_query = "select u.*, r.descRol
+        from usuario u
+        inner join rol r on r.codigoRol = u.codigoRol
+        where u.idEliminado=1 and u.codigoRol!=4;";
 
         $resultado = $this->con->ejecutar($_query);
 

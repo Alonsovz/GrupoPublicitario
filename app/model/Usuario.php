@@ -4,14 +4,34 @@ class Usuario extends ModeloBase{
     private $codigoUsuario;
     private $nombre;
     private $apellido;
-    private $nomUsuario;
-    private $email;
-    private $pass;
-    private $codigoRol;
     private $dui;
-    private $telefono;
-    private $direccion;
+    private $nit;
     private $fechaNacimiento;
+    private $telefono;
+    private $telMovil;
+    private $email;
+    private $direccion;
+    private $MISS;
+    private $afiliado;
+    private $MAFP;
+    private $estadoFam;
+    private $conyuge;
+    private $hijos;
+    private $nombreHijo;
+    private $nombrePadre;
+    private $nombreMadre;
+    private $contacto1;
+    private $contacto1Tel;
+    private $contacto1Tel2;
+    private $fechaIngreso;
+    private $sueldo;
+    private $codigoRol;
+    private $nomUsuario;  
+    private $pass;
+    
+    
+   
+    
     
 
     public function __construct() {
@@ -174,6 +194,18 @@ class Usuario extends ModeloBase{
 
         return $this;
     } 
+    public function getTelMovil()
+    {
+        return $this->telMovil;
+    }
+
+    
+    public function setTelMovil($telMovil)
+    {
+        $this->telMovil = $telMovil;
+
+        return $this;
+    }
 
     public function getDui()
     {
@@ -188,6 +220,23 @@ class Usuario extends ModeloBase{
     public function setDui($dui)
     {
         $this->dui = $dui;
+
+        return $this;
+    }
+
+    public function getNit()
+    {
+        return $this->nit;
+    }
+
+    /**
+     * Set the value of codigoUsuario
+     *
+     * @return  self
+     */ 
+    public function setNit($nit)
+    {
+        $this->nit = $nit;
 
         return $this;
     }
@@ -226,6 +275,209 @@ class Usuario extends ModeloBase{
 
         return $this;
     }
+
+    public function getMISS()
+    {
+        return $this->MISS;
+    }
+
+    /**
+     * Set the value of apellido
+     *
+     * @return  self
+     */ 
+    public function setMISS($MISS)
+    {
+        $this->MISS = $MISS;
+
+        return $this;
+    }
+
+    public function getAfiliado()
+    {
+        return $this->afiliado;
+    }
+
+    /**
+     * Set the value of apellido
+     *
+     * @return  self
+     */ 
+    public function setAfiliado($afiliado)
+    {
+        $this->afiliado = $afiliado;
+
+        return $this;
+    }
+
+    public function getMAFP()
+    {
+        return $this->MAFP;
+    }
+
+    /**
+     * Set the value of apellido
+     *
+     * @return  self
+     */ 
+    public function setMAFP($MAFP)
+    {
+        $this->MAFP = $MAFP;
+
+        return $this;
+    }
+
+
+    public function getEstadoFam()
+    {
+        return $this->estadoFam;
+    }
+
+  
+    public function setEstadoFam($estadoFam)
+    {
+        $this->estadoFam = $estadoFam;
+
+        return $this;
+    }
+
+
+    public function getConyuge()
+    {
+        return $this->conyuge;
+    }
+
+  
+    public function setConyuge($conyuge)
+    {
+        $this->conyuge = $conyuge;
+
+        return $this;
+    }
+
+    public function getHijos()
+    {
+        return $this->hijos;
+    }
+
+  
+    public function setHijos($hijos)
+    {
+        $this->hijos = $hijos;
+
+        return $this;
+    }
+
+    public function getNombreHijo()
+    {
+        return $this->nombreHijo;
+    }
+
+  
+    public function setNombreHijo($nombreHijo)
+    {
+        $this->nombreHijo = $nombreHijo;
+
+        return $this;
+    }
+
+    public function getNombreMadre()
+    {
+        return $this->nombreMadre;
+    }
+
+   
+    public function setNombreMadre($nombreMadre)
+    {
+        $this->nombreMadre = $nombreMadre;
+
+        return $this;
+    }
+
+
+    public function getNombrePadre()
+    {
+        return $this->nombrePadre;
+    }
+
+   
+    public function setNombrePadre($nombrePadre)
+    {
+        $this->nombrePadre = $nombrePadre;
+
+        return $this;
+    }
+
+    public function getContacto1()
+    {
+        return $this->contacto1;
+    }
+
+    
+
+   
+    public function setContacto1($contacto1)
+    {
+        $this->contacto1 = $contacto1;
+
+        return $this;
+    }
+
+    public function getContacto1Tel()
+    {
+        return $this->contacto1Tel;
+    }
+
+   
+    public function setContacto1Tel($contacto1Tel)
+    {
+        $this->contacto1Tel = $contacto1Tel;
+
+        return $this;
+    }
+
+    public function getContacto1Tel2()
+    {
+        return $this->contacto1Tel2;
+    }
+
+   
+    public function setContacto1Tel2($contacto1Tel2)
+    {
+        $this->contacto1Tel2 = $contacto1Tel2;
+
+        return $this;
+    }
+
+
+    public function getFechaIngreso()
+    {
+        return $this->fechaIngreso;
+    }
+
+    
+    public function setFechaIngreso($fechaIngreso)
+    {
+        $this->fechaIngreso = $fechaIngreso;
+
+        return $this;
+    }
+
+    public function getSueldo()
+    {
+        return $this->sueldo;
+    }
+
+    public function setSueldo($sueldo)
+    {
+        $this->sueldo = $sueldo;
+
+        return $this;
+    }
+
+
+
+
 
 
   

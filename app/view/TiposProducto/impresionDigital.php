@@ -230,7 +230,7 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                         <th style="background-color: #20AD10; color:white;"><i class="chart bar icon"></i>Color</th>
                                         <th style="background-color: #20AD10; color:white;"><i class="podcast icon"></i>Acabado</th>
                                         <th style="background-color: #20AD10; color:white;"><i class="arrows alternate icon"></i>Unidad de Medida</th>
-                                    
+                                        <th style="background-color: #20AD10; color:white;"><i class="dollar icon"></i>Precio Unitario</th>
                                 </thead>
                                 <tbody style="background-color:#F0F2EF;">
                                     <tr v-for="(detalle, index) in detalles">
@@ -308,14 +308,12 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                     </td>
 
                                     <td>  
-                                    <span style="float:right;">
-                                    <a @click="agregarDetalleU" class="ui red circular icon button"><i class="plus icon"></i></a>
-                                    </span>        <br><br>
+                                          <br><br>
                                     <form action="" class="ui form" id="frmNuevoDetalleUnidad" >
                                     <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                                             <thead>
                                             <th style="background-color: #B40431; color:white; text-align:center;"><i class="arrows alternate icon"></i>Unidad de Medida</th>
-                                                <th style="background-color: #B40431; color:white;text-align:center;"><i class="trash icon"></i></th>
+                                               
                                             </thead>
                                             <tbody>
                                                 <tr v-for="(detalleU, index) in detallesUnidad">
@@ -326,14 +324,10 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                             <option v-for="option in medidasOps" :value="option.idMedida">{{option.medida}}</option>
                                         </select>
                                                 </td>
-
-                                                <td>
-                                                <center>
+                                              
                                     </form>
-                                            <a  @click="eliminarDetalleU(index)" class="ui red mini circular icon button"><i
-                                                class="times icon"></i></a>
-                                                </center>
-                                            </td>
+                                            
+                                           
                                             </tr>
                                         </tbody>
                                     </table>
@@ -341,7 +335,10 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                     
                                     
                     </form>
-                              
+                    <td>  
+                            <input class="requerido" v-model="detalle.precioUnitario" name="precioUnitario" id="precioUnitario" type="text"
+                             placeholder="Precio Unitario">
+                         </td>
                             </tr>
                         </tbody>
                     </table>
@@ -519,7 +516,7 @@ var app = new Vue({
                 color: '',
                 acabado: '',
                 unidad: '',
-               
+                precioUnitario: '',
                
             }],
 
@@ -576,7 +573,7 @@ var app = new Vue({
                 color: '',
                 acabado: '',
                 unidad: '',
-            
+                precioUnitario: '',
                 });
             
             },
@@ -685,6 +682,7 @@ var app = new Vue({
                                         color: '',
                                         acabado: '',
                                         unidad: '',
+                                        precioUnitario: '',
                                     }];
                                     
                                     app.guardarColor();

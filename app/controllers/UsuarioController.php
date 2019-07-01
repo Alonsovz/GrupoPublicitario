@@ -95,18 +95,67 @@ class UsuarioController extends ControladorBase {
 
         $dao->objeto->setNombre($_REQUEST["nombre"]);
         $dao->objeto->setApellido($_REQUEST["apellido"]);
-        $dao->objeto->setNomUsuario($_REQUEST["usuario"]);
-        $dao->objeto->setPass($_REQUEST["pass"]);
+        $dao->objeto->setDui($_REQUEST["dui"]);
+        $dao->objeto->setNit($_REQUEST["nit"]);
+        $dao->objeto->setFechaNacimiento($_REQUEST["fechaNac"]);
+        $dao->objeto->setTelefono($_REQUEST["telefono"]);
+        $dao->objeto->setTelMovil($_REQUEST["celular"]);
         $dao->objeto->setEmail($_REQUEST["correo"]);
         $dao->objeto->setDireccion($_REQUEST["direccion"]);
-        $dao->objeto->setDui($_REQUEST["dui"]);
-        $dao->objeto->setTelefono($_REQUEST["telefono"]);
-        $dao->objeto->setFechaNacimiento($_REQUEST["fechaNac"]);
+        $dao->objeto->setMISS($_REQUEST["MISSS"]);
+        $dao->objeto->setAfiliado($_REQUEST["afiliado"]);
+        $dao->objeto->setMAFP($_REQUEST["MAFP"]);
+        $dao->objeto->setEstadoFam($_REQUEST["estadoFam"]);
+
+        if($_REQUEST["conyuge"] == ""){
+            $dao->objeto->setConyuge($_REQUEST["conyuge"]);
+        }else{
+            $dao->objeto->setConyuge("No definido");
+        }
+       
+        $dao->objeto->setHijos($_REQUEST["hijos"]);
+        $dao->objeto->setNombrePadre($_REQUEST["padre"]);
+        $dao->objeto->setNombreMadre($_REQUEST["madre"]);
+
+        $dao->objeto->setContacto1($_REQUEST["emergencia"]);
+        $dao->objeto->setContacto1Tel($_REQUEST["telefonoEme"]);
+        $dao->objeto->setContacto1Tel2($_REQUEST["telefonoEme"]);
+
+        $dao->objeto->setFechaIngreso($_REQUEST["fechaIng"]);
+        $dao->objeto->setSueldo($_REQUEST["salario"]);
+
+        $dao->objeto->setNomUsuario($_REQUEST["usuario"]);
+        $dao->objeto->setPass($_REQUEST["pass"]);
         $dao->objeto->setCodigoRol($_REQUEST["codigoRol"]);
 
 
         echo $dao->registrar();
 
+    }
+
+    public function guardarHijos(){
+        $detalles = json_decode($_REQUEST["lista"]);
+
+        $contador = 0;
+
+        $dao = new DaoUsuario();
+
+        foreach($detalles as $detalle) {
+            $dao->objeto->setNombreHijo($detalle->nombreHijo);
+    
+
+            if($dao->registrarHijos()) {
+                $contador++;
+            } else {
+                echo 'nell';
+            }
+        }
+
+        if($contador == count($detalles)) {
+            echo 1;
+        } else {
+            echo 2;
+        }
     }
 
     public function cargarDatosNomUsuario() {
