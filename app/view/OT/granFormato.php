@@ -572,8 +572,8 @@ $(function() {
     $("#cuadrosImp").click(function(){
             var cantidad = $("#cantidad").val();
 
-            var alto = $("#alto").val();
-            var ancho = $("#ancho").val();
+            var alto = $("#altura").val();
+            var ancho = $("#base").val();
 
             var metros = alto * ancho;
 

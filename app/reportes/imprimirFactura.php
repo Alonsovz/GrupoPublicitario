@@ -88,8 +88,7 @@ class Reporte {
                <th style='background-color:black;color:white;'>Producto</th>
 				<th style='background-color:black;color:white;'>Cantidad</th>
 				<th style='background-color:black;color:white;'>Detalles Generales</th>
-				<th style='background-color:black;color:white;'>Def Medidas</th>
-				<th style='background-color:black;color:white;'>Imp + Desperdicio</th>
+
 				<th style='background-color:black;color:white;'>Descripcion</th>
 				<th style='background-color:black;color:white;'>Precio</th>
                </tr>
@@ -109,20 +108,7 @@ class Reporte {
                 MTS 2 Imp: ".$fila['cuadrosImp']."<br>
                 Ubicación: ".$fila['ubicacion']." 
                </td>
-               <td style='border:1px solid black;'>
-
-                Ancho: ".$fila['ancho']." <br>
-                Longitud: ".$fila['longitud']." <br>
-                Ancho Material: ".$fila['anchoMat']."
-               
-
-               </td>
-               
-               <td style='border:1px solid black;'>
-                Copias: ".$fila['copias']." <br>
-                MTS2: ".$fila['mts2']." <br>
-                Desperdicio: ".$fila['desperdicio']."
-               </td>
+             
                <td style='border:1px solid black;'>".$fila['descripciones']." </td>
                <td style='border:1px solid black;text-align: center;'> $ ".$fila['precio']." </td>
 

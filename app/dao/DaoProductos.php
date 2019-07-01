@@ -579,7 +579,7 @@ class DaoProductos extends DaoBase {
 
 
     public function mostrarGranFormatoInventario() {
-        $_query = "select * from clasificacionProductos where idClasificacion = 1 and idEliminado=1;";
+        $_query = "select * from clasificacionProductos where idClasificacion = 1 and idEliminado=1 and idProducto>1";
 
         $resultado = $this->con->ejecutar($_query);
 

@@ -45,16 +45,16 @@
         </div>
     </div>
 
-<div class="ui  modal" id="modalAgregarUsuario" style="width:60%;">
+<div class="ui  fullscreen modal" id="modalAgregarUsuario" style="width:60%;">
 
     <div class="header" style="background-color:black; color:white;">
     <i class="users icon"></i><i class="plus icon"></i> Agregar nuevo usuario
     </div>
-    <div class="content" class="ui equal width form" style="background-color:#F2F2F2; color:black;">
+    <div class="scrolling content" class="ui equal width form" style="background-color:#F2F2F2; color:black;">
         <form class="ui form" style="font-size:15px;"  id="frmUsuario" method="POST" method="POST" enctype="multipart/form-data" action='?1=UsuarioController&2=registrar'> 
             <div class="field">
                 <div class="fields">
-                        <div class="eight wide field">
+                        <div class="five wide field">
                             <label><i class="user icon"></i>Nombre</label>
                             <input type="text" name="nombre" placeholder="Nombre del usuario" id="nombre">
                                 
@@ -62,25 +62,26 @@
                                 style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                                 Completa este campo</div>
                         </div>
-                        <div class="eight wide field">
+                        <div class="five wide field">
                             <label><i class="user icon"></i>Apellidos</label>
                             <input type="text" name="apellido" placeholder="Apellidos" id="apellido">
                             <div class="ui red pointing label"  id="labelApellido"
                             style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                             Completa este campo</div>
                         </div>     
-                </div>
-            </div>  
-            <div class="field">
-                <div class="fields">
-                            <div class="five wide field">
-                                <label><i class="calendar icon"></i>Fecha de Nacimiento</label>
-                                    <input type="date" id="fechaNac" name="fechaNac">
-                                        <div class="ui red pointing label"  id="labelFecha"
-                                            style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                                            Completa este campo</div>
-                                </div>     
-                            <div class="five wide field">
+
+                        <div class="five wide field">
+                        <label><i class="address card icon"></i>NIT:</label>
+                        <input type="text" name="nit"  id="nit" placeholder="NIT de proveedor">
+                        
+
+                        <div class="ui red pointing label"  id="labelNitEx"
+                        style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                        Nit ya existe
+                        </div>
+                        </div>
+
+                        <div class="five wide field">
                             <label><i class="address card icon"></i>DUI</label>
                                 <input type="text" name="dui" placeholder="DUI del usuario" id="dui">
                                         <div class="ui red pointing label"  id="labelDui"
@@ -92,6 +93,19 @@
                                         Dui ya existe
                                         </div>
                             </div>  
+                </div>
+            </div>  
+            <div class="ui divider"></div>
+            <div class="field">
+                <div class="fields">
+                            <div class="five wide field">
+                                <label><i class="calendar icon"></i>Fecha de Nacimiento</label>
+                                    <input type="date" id="fechaNac" name="fechaNac">
+                                        <div class="ui red pointing label"  id="labelFecha"
+                                            style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                            Completa este campo</div>
+                                </div>     
+                           
                             
                             <div class="six wide field">
                                 
@@ -103,10 +117,156 @@
                                 </div>
                             </div>
                             
+                            <div class="six wide field">
+                                
+                                <b><label><i class="phone icon"></i>Celular:</label></b>
+                                <input type="text" id="Celular" name="Celular" placeholder="Tel. del usuario">
+                               
+                            </div>
+
                             </div>
                             
-                </div>   
-                
+                </div>  
+
+                <div class="ui divider"></div>
+            <div class="field">
+                <div class="fields">
+                            <div class="five wide field">
+                                <label><i class="address card  icon"></i>M. ISSS</label>
+                                    <input type="text" id="fechaNac" name="fechaNac">
+                                        
+                                </div>     
+                           
+                            
+                            <div class="six wide field">
+                                
+                                <b><label><i class="address card icon"></i>Afiliado AFP:</label></b>
+                                <input type="text" id="telefono" name="telefono" >
+                             
+                            </div>
+                            
+                            <div class="six wide field">
+                                
+                                <b><label><i class="address card  icon"></i>M.AFP:</label></b>
+                                <input type="text" id="Celular" name="Celular">
+                               >
+                            </div>
+
+                            </div>
+                            
+                </div> 
+
+
+                <div class="ui divider"></div>
+            <div class="field">
+                <div class="fields">
+                            <div class="five wide field">
+                                <label><i class="calendar icon"></i>Fecha de Nacimiento</label>
+                                    <input type="date" id="fechaNac" name="fechaNac">
+                                        <div class="ui red pointing label"  id="labelFecha"
+                                            style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                            Completa este campo</div>
+                                </div>     
+                           
+                            
+                            <div class="six wide field">
+                                
+                                <b><label><i class="phone icon"></i>Teléfono:</label></b>
+                                <input type="text" id="telefono" name="telefono" placeholder="Tel. del usuario">
+                              
+                            </div>
+                            
+                            <div class="six wide field">
+                                
+                                <b><label><i class="phone icon"></i>Celular:</label></b>
+                                <input type="text" id="Celular" name="Celular" placeholder="Tel. del usuario">
+                               
+                            </div>
+
+                            </div>
+                            
+                </div>  
+                <div class="ui divider"></div>
+            <div class="field">
+                <div class="fields">
+                <div class="three wide field">
+                                <label><i class="heart icon"></i>Estado familiar:</label>
+                                <select name="estadoFam" id="estadoFam" class="ui dropdown">
+                                    <option value="Casado/a">Casado/a</option>
+                                    <option value="Soltero/a">Soltero/a</option>
+                                    <option value="Divoricado/a">Divoricado/a</option>
+                                    <option value="Viudo/a">Viudo/a</option>
+                                    <option value="Soltero/a">Soltero/a</option>
+                                </select>
+                            </div>  
+                           
+                            
+                            <div class="five wide field">
+                                
+                                <b><label><i class="female card icon"></i>Nombre del conyugé:</label></b>
+                                <input type="text" id="telefono" name="telefono" >
+                               
+                            </div>
+                            
+                            <div class="five wide field">
+                                
+                                <b><label><i class="users card icon"></i>Número de hijos:</label></b>
+                                <input type="text" id="telefono" name="telefono" >
+                                
+                            </div>
+
+                            <div class="three wide field">
+                                
+                                <b><label><i class="users card icon"></i>Nombre de los hijos:</label></b>
+                                <input type="text" id="telefono" name="telefono" >
+                               
+                            </div>
+
+                            </div>
+                            
+                </div>    
+
+                <div class="ui divider"></div>
+            <div class="field">
+                <div class="fields">
+                            <div class="five wide field">
+                                <label><i class="address card  icon"></i>Nombre de los padres</label>
+                                    <input type="text" id="fechaNac" name="fechaNac">
+                                     
+                                </div>     
+                           
+                            
+                            <div class="six wide field">
+                                
+                                <b><label><i class="address card icon"></i>En caso de emergencia llamar a:</label></b>
+                                <input type="text" id="telefono" name="telefono" >
+                                
+                            </div>
+                            
+                            <div class="six wide field">
+                                
+                                <b><label><i class="phone icon"></i>Teléfono:</label></b>
+                                <input type="text" id="telefono" name="telefono">
+                               
+                            </div>
+                            
+                            <div class="six wide field">
+                                
+                                <b><label><i class="phone icon"></i>Celular:</label></b>
+                                <input type="text" id="Celular" name="Celular" >
+                                <div class="ui red pointing label"  id="labelTelefono"
+                                        style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                        Completa este campo
+                                </div>
+                            </div>
+
+                            </div>
+                            
+                </div> 
+
+                 
+
+                <div class="ui divider"></div>
                     <div class="field">
                             <div class="fields">
                             
@@ -124,7 +284,7 @@
                                     </div>
                             </div>
                             
-                            <div class="ten wide field">
+                            <div class="six wide field">
                             <label><i class="address card icon"></i>Dirección:</label>
                                 <textarea rows="3" name="direccion" placeholder="Dirección" id="direccion"></textarea>
                                         <div class="ui red pointing label"  id="labelDireccion"
@@ -132,6 +292,19 @@
                                         Completa este campo
                                         </div>
                                         
+                            </div>
+
+                            <div class="six wide field">
+                                <label><i class="calendar icon"></i>Fecha de Ingreso</label>
+                                    <input type="date" id="fechaNac" name="fechaNac">
+                                          
+                           
+                            
+                            <div class="six wide field">
+                                
+                                <b><label><i class="dollar icon"></i>Salario:</label></b>
+                                <input type="text" id="telefono" name="telefono">
+                                
                             </div>
                         
 

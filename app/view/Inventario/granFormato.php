@@ -37,6 +37,42 @@
                 </table>
             </div>
         </div>
+
+
+        <div class="ui modal" id="detallesProducto">
+        <div class="header" style="background-color:black;color:white;">
+        Inventario del producto: <a id="nameP" style="color:red;"></a>
+        </div>
+        <div class="scrolling content">
+            <table class="ui celled striped  table"  style="text-align:center; width:100%; margin:auto;" class="ui selectable very compact celled table" >
+            <tr>
+            <th style="background-color: #B40431; color:white;" height="50">Producto</th>
+            <th style="background-color: #B40431; color:white;">Color</th>
+            <th style="background-color: #B40431; color:white;">Acabado</th>
+            <th style="background-color: #B40431; color:white;">Cantidad en existencia(Metros)</th>
+            <th style="background-color: #B40431; color:white;">Precio Unitario</th>
+            </tr>
+            <tr>
+            <td>LONA-BANNER</td>
+            <td>Blanco</td>
+            <td>De Fábrica</td>
+            <td>20.5</td>
+            <td>$0.50</td>
+            </tr>
+
+            <tr>
+            <td>FilmBacklite</td>
+            <td>De Fábrica</td>
+            <td>BRILLANTE/GLOSSY</td>
+            <td>15.5</td>
+            <td>$0.75</td>
+            </tr>
+            </table>
+        </div>  
+        <div class="actions">
+        <button class="ui black deny button">Listo</button>
+        </div>
+        </div>
   
 </div> 
 
@@ -50,7 +86,8 @@
 
 
     var detalles =(ele)=>{
-       
+        $('#nameP').text($(ele).attr("nombre"));
+        $('#detallesProducto').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
     }
 </script>
 

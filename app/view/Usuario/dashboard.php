@@ -32,7 +32,7 @@
  } else if($_SESSION["descRol"] == 'Produccion') {
     require_once 'dashboardProduccion.php';
 }else if($_SESSION["descRol"] == 'Propietario') {
-    require_once 'dashboardAdmin.php';
+    require_once 'dashboardProp.php';
 }
 
 ?>
