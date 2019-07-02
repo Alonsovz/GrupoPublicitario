@@ -189,14 +189,19 @@ class Funciones extends ControladorBase {
 	
 
 	if($_POST['idC']){
-		$sql="select format(precioUnitario,2) from productoFinal where productoFinal='".$idPro."'";
+		$sql="select p.idProductoFinal,format(p.precioUnitario,2)  from productosPrecio p
+		inner join productoFinal pr on pr.idProductoFinal = p.idProductoFinal
+		where pr.productoFinal='".$idPro."'";
 
 		$result=mysqli_query($conexion,$sql);
 
 		$cadena="";
 		while ($ver=mysqli_fetch_row($result)) {
 			$cadena=$cadena.'<tr><td style="border:1px solid black;width:100%;">
-			$ '.utf8_encode($ver[0]).'</td>
+			$ '.utf8_encode($ver[1]).'</td>
+
+			<td style="border:1px solid black;width:100%;">
+			<a id= '.utf8_encode($ver[0]).' precio =  '.utf8_encode($ver[1]).' class="ui icon purple small button" onclick="editarPrecio(this)"><i class="edit icon"></i></a></td>
 			</tr>';
 		}
 
@@ -214,7 +219,7 @@ class Funciones extends ControladorBase {
 		$sql="select a.idAcabado, a.acabado  from acabados a
 		inner join productosAcabados pc on pc.idAcabado = a.idAcabado
 		inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
-		 where p.productoFinal='".$idPro."' group by acabado order by idAcabado asc";
+		 where p.productoFinal='".$idPro."' order by idAcabado asc";
 
 		$result=mysqli_query($conexion,$sql);
 
@@ -243,7 +248,7 @@ class Funciones extends ControladorBase {
 		$sql="select a.idMedida, a.medida  from medidas a
 		inner join productosMedidas pc on pc.idMedida = a.idMedida
 		inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
-		 where p.productoFinal='".$idPro."' group by medida order by idMedida asc";
+		 where p.productoFinal='".$idPro."' order by idMedida asc";
 
 		$result=mysqli_query($conexion,$sql);
 
@@ -648,6 +653,37 @@ class Funciones extends ControladorBase {
 				$ '.utf8_encode($ver[22]). '
 				</td>
 				</tr>';
+			}
+			$cadena=$cadena."
+			
+			</table>";
+
+			echo  $cadena;
+		}
+
+	}
+
+
+	public function gastosOficina(){
+		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$idC=$_POST['idCla'];
+
+		if($_POST['idCla']){
+			$sql="select idGasto,nombre from gastosOficina where idEliminado=1";
+	
+			$result=mysqli_query($conexion,$sql);
+	
+			$cadena="
+			<table class='ui selectable very compact celled table' style='width:80%;text-align:center;'>
+			<tr>
+				<th style='font-size:15px;background-color:#110991;color:white;' height='40'>Nombre de Gasto</th>
+				<th style='font-size:20px;background-color:#110991;color:white;'><i class='cogs icon'></i></th>
+			</tr>
+			";
+			while ($ver=mysqli_fetch_row($result)) {
+				$cadena=$cadena.'<tr><td>'.utf8_encode($ver[1]).'</td>
+				<td><a id='.$ver[0].' nombre="'.utf8_encode($ver[1]).'" class="ui icon red small button" onclick="eliminarGasto(this)">
+				<i class="trash icon"></i></a></td></tr>';
 			}
 			$cadena=$cadena."
 			

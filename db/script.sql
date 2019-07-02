@@ -81,7 +81,11 @@ cantidadExistencia double
 create table productoFinal(
 idProductoFinal int primary key  auto_increment,
 productoFinal varchar(100),
-idProducto int,
+idProducto int
+);
+
+create table productosPrecio(
+idProductoFinal int,
 precioUnitario double
 );
 
@@ -254,6 +258,22 @@ precio double,
 idEliminado int
 );
 
+create table gastosOficina(
+idGasto int primary key auto_increment,
+nombre varchar(100),
+idEliminado int
+);
+
+create table gastos(
+idDetalle int primary key auto_increment,
+idGasto int,
+descripcion varchar(500),
+precio double,
+fecha date,
+estado int
+);
+
+
 
 alter table usuario add constraint fk_usuario_rol foreign key (codigoRol) references rol(codigoRol);
 
@@ -342,13 +362,16 @@ insert into medidas values(null,'UNIDAD',3,1);
 
 
 
-insert into productoFinal values(null,'Seleccione una opcion',0,0);
+insert into productoFinal values(null,'Seleccione una opcion',0);
 
 
 
 insert into ordenTrabajoGR values(null,'OTGR00',curdate(),1,1,curdate(),'',1,1);
 insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,curdate(),'',1,1);
 insert into ordenTrabajoP values(null,'OTPR00',curdate(),1,1,curdate(),'',1,1);
+
+insert into gastosOficina values(null,'Internet',1);
+	
  delimiter $$
  
 create procedure login(
@@ -402,3 +425,6 @@ begin
     where idEliminado=1;
 end
 $$
+update gastos set estado=1 where idDetalle=1
+
+select * from gastos

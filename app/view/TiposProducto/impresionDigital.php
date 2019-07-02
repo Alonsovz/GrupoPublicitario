@@ -276,7 +276,7 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                             
                                                 <td>  
                                               
-                                        <select v-model="detalleC.colorN" class="ui search selection dropdown" id="colorN" name="colorN">
+                                        <select v-model="detalleC.colorN" class="ui  dropdown" id="colorN" name="colorN">
                                             <option v-for="option in colorOps" :value="option.idColor">{{option.color}}</option>
                                         </select>
                                        
@@ -310,7 +310,7 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                                 
                                             
                                                 <td>  
-                                                <select v-model="detalleAC.acabado" class="ui search selection dropdown" id="acabado" name="acabado">
+                                                <select v-model="detalleAC.acabado" class="ui  dropdown" id="acabado" name="acabado">
                                             <option v-for="option in acabadosOps" :value="option.idAcabado">{{option.acabado}}</option>
                                         </select>
                                                 </td>
@@ -328,33 +328,69 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                     </td>
 
                                     <td>  
-                                          <br><br>
+                                    <span style="float:right;">
+                                    <a style="background-color:#8F8F91;color:white;" @click="agregarDetalleU" class="ui gray circular icon button"><i class="plus icon"></i></a>
+                                    </span><br><br>
                                     <form action="" class="ui form" id="frmNuevoDetalleUnidad" >
                                     <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                                             <thead>
                                             <th style="background-color: #B40431; color:white; text-align:center;"><i class="arrows alternate icon"></i>Unidad de Medida</th>
-                                               
+                                            <th style="background-color: #B40431; color:white; text-align:center;"><i class="trash icon"></i></th>
                                             </thead>
                                             <tbody>
                                                 <tr v-for="(detalleU, index) in detallesUnidad">
                                                 
                                             
                                                 <td>  
-                                                <select v-model="detalleU.unidad" class="ui search selection dropdown" id="unidad" name="unidad">
+                                                <select v-model="detalleU.unidad" class="ui  dropdown" id="unidad" name="unidad">
                                             <option v-for="option in medidasOps" :value="option.idMedida">{{option.medida}}</option>
                                         </select>
-                                                </td>
-                                              
-                                    </form>
+                                                </td> 
+                                                <td>
+                                                <center>
+                                    
+                                            <a style="background-color:#8F8F91;color:white;"  @click="eliminarDetalleU(index)" class="ui gray mini circular icon button"><i
+                                                class="times icon"></i></a>
+                                                </center>
+                                            </td>
+                                            </td>
                                             
-                                           
                                             </tr>
                                         </tbody>
                                     </table>
-                                    </td>
+                                    </form>
+
                                     <td>  
-                            <input class="requerido" v-model="detalle.precioUnitario" name="precioUnitario" id="precioUnitario" type="text"
-                             placeholder="Precio Unitario">
+                                    <span style="float:right;">
+                                    <a style="background-color:#8F8F91;color:white;" @click="agregarDetallePre" class="ui gray circular icon button"><i class="plus icon"></i></a>
+                                    </span><br><br>
+                         <form action="" class="ui form" id="frmNuevoDetallePrecio" >
+                                    <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                                            <thead>
+                                            <th style="background-color: #B40431; color:white; text-align:center;"><i class="dollar icon"></i>Precio Unitario</th>
+                                            <th style="background-color: #B40431; color:white; text-align:center;"><i class="trash icon"></i></th>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(detallePre, index) in detallesPrecio">
+                                                
+                                            
+                                                <td>  
+                                                <input class="requerido" v-model="detallePre.precioUnitario" name="precioUnitario" id="precioUnitario" type="text"
+                                     placeholder="Precio Producto">
+                                                </td> 
+                                                <td>
+                                                <center>
+                                    
+                                            <a style="background-color:#8F8F91;color:white;"  @click="eliminarDetallePre(index)" class="ui gray mini circular icon button"><i
+                                                class="times icon"></i></a>
+                                                </center>
+                                            </td>
+                                            </td>
+                                            
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </form>
                          </td>           
                                     
                     </form>
@@ -497,11 +533,29 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
         </form>
     </div>
     <div class="actions">
-        <button class="ui black deny button">Cancelar</button>
+        <button class="ui black  button" id="btnCN">Cancelar</button>
         <button class="ui red button" id="btnEditarN">Guardar</button>
     </div>
 </div>
 
+
+<div class="ui tiny modal" id="editarPrecioPro">
+    <div class="header" style="background-color:black; color:white;">
+    Precio unitario actual del producto <a id="nameActualP" style="color:white"></a> :  <a id="precioAc" style="color:red"></a>
+    </div>
+    <div class="content">
+    <input type="hidden" id="idModiP" name="idModiP">
+    <input type="hidden" id="idClaP" name="idClaP">
+        <form class="ui form">
+        <label><i class="pencil icon"></i>Nuevo Precio:</label>
+        <input type="text" id="newPrecio" name="newPrecio" placeholder="Nuevo precio $$">
+        </form>
+    </div>
+    <div class="actions">
+        <button class="ui black  button" id="btnCP">Cancelar</button>
+        <button class="ui red button" id="btnEditarP">Guardar</button>
+    </div>
+</div>
 
 </div>
 
@@ -514,7 +568,8 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
 
 $(document).ready(function(){
     $("#imp").removeClass("ui black button");
-    $("#imp").addClass("ui black basic button");;
+    $("#imp").addClass("ui black basic button");
+    $('#newPrecio').mask("###0.00", {reverse: true});
     });
 
     var detalles=(ele)=>{
@@ -554,6 +609,11 @@ var app = new Vue({
                 color: '',
                 acabado: '',
                 unidad: '',
+              
+               
+            }],
+            detallesPrecio: [{
+                
                 precioUnitario: '',
                
             }],
@@ -615,13 +675,24 @@ var app = new Vue({
                 });
             
             },
+            agregarDetallePre() {
+                this.detallesPrecio.push({
+               
+                    precioUnitario : '' ,
+            
+                });
+            
+            },
+            eliminarDetallePre(index) {
+                this.detallesPrecio.splice(index, 1);
+            },
             eliminarDetalleC(index) {
                 this.detallesColor.splice(index, 1);
             },
             agregarDetalleC() {
                 this.detallesColor.push({
                
-                    colorN : '1' ,
+                    colorN : '6' ,
             
                 });
             
@@ -632,7 +703,7 @@ var app = new Vue({
             agregarDetalleAC() {
                 this.detallesAcabado.push({
                
-                acabado: '1',
+                acabado: '6',
             
                 });
             
@@ -644,13 +715,13 @@ var app = new Vue({
             agregarDetalleU() {
                 this.detallesUnidad.push({
                
-                unidad: '',
+                unidad: '4',
             
                 });
             
             },
             refrescarTabla() {
-                tablaImpresion.ajax.reload();
+                tablaGranFormato.ajax.reload();
             },
             modalRegistrar() {
                 $('#modalRegistrar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal(
@@ -722,10 +793,10 @@ var app = new Vue({
                                         unidad: '',
                                         precioUnitario: '',
                                     }];
-                                    
                                     app.guardarColor();
                                     app.guardarAcabado();
                                     app.guardarMedida();
+                                    app.guardarPrecio();
                                     $('#proFin').html('');
                                     $.ajax({
                                     type:"POST",
@@ -781,6 +852,33 @@ var app = new Vue({
                     }
 
                 },
+                guardarPrecio(){
+
+            if (this.detallesPrecio.length) {
+
+            $('#frmNuevoDetallePrecio').addClass('loading');
+            $.ajax({
+                type: 'POST',
+                data: {
+                    detallesPro: JSON.stringify(this.detallesPrecio)
+                },
+                url: '?1=ProductosController&2=guardarPrecio',
+                success: function (r) {
+                    $('#frmNuevoDetallePrecio').removeClass('loading');
+                    if (r == 1) {
+                        
+                                app.detallesPrecio = [{
+                                    precioUnitario : '' ,
+
+                                } ]
+                                    
+                    }
+                    
+                }
+            });
+            }
+
+            },
                 guardarAcabado(){
 
                 if (this.detallesAcabado.length) {
@@ -1042,6 +1140,74 @@ $("#editarNom").click(function(){
     $('#editarNamePro').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 });
 
+var editarPrecio=(ele)=>{
+    var id= $(ele).attr("id");
+    var name = $("#titleDe").text();
+    var idC = $("#IDtipoProducto").val();
+    var precio = $(ele).attr("precio");
+
+    $("#idModiP").val(id);
+    $("#idClaP").val(idC);
+    $("#nameActualP").text(name);
+    $("#precioAc").text("$ " +precio);
+
+    $('#editarPrecioPro').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+
+
+    }
+
+$("#btnCP").click(function(){
+    var idC = $("#idClaP").val();
+        $("#IDtipoProducto").val(idC);
+        $("#botonNuevo").hide();
+        $("#tablaProductos").hide();
+        $('#proFin').html('');
+        $.ajax({
+                type:"POST",
+                url:"?1=Funciones&2=verDetallesProFinal",
+                data:{
+                id:idC
+                },
+            success:function(r){
+            $('#proFin').html(r);
+            }
+        });
+        $('#detallesProductos').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+        $("#nuevoDetalle").hide();
+        $("#colorDiv").show();
+        $("#acabadoDiv").show();
+        $("#medidadDiv").show();
+        $("#title").show();
+        $("#verDe").show();
+});
+
+
+$("#btnCN").click(function(){
+    var idC = $("#idCla").val();
+        $("#IDtipoProducto").val(idC);
+        $("#botonNuevo").hide();
+        $("#tablaProductos").hide();
+        $('#proFin').html('');
+        $.ajax({
+                type:"POST",
+                url:"?1=Funciones&2=verDetallesProFinal",
+                data:{
+                id:idC
+                },
+            success:function(r){
+            $('#proFin').html(r);
+            }
+        });
+        $('#detallesProductos').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+        $("#nuevoDetalle").hide();
+        $("#colorDiv").show();
+        $("#acabadoDiv").show();
+        $("#medidadDiv").show();
+        $("#title").show();
+        $("#verDe").show();
+});
+
+
 $("#btnEditarN").click(function(){
 var idProducto = $("#idModi").val();
 var newN = $("#newName").val();
@@ -1061,6 +1227,59 @@ var idC = $("#idCla").val();
                             swal({
                              title: 'Nombre actualizado',
                             text: 'Guardada con éxito',
+                            type: 'success',
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                if(result.value){
+                                    $("#IDtipoProducto").val(idC);
+                                    $("#botonNuevo").show();
+                                    $("#tablaProductos").show();
+                                    $('#proFin').html('');
+                                    $.ajax({
+                                            type:"POST",
+                                            url:"?1=Funciones&2=verDetallesProFinal",
+                                            data:{
+                                                id:idC
+                                            },
+                                        success:function(r){
+                                                $('#proFin').html(r);
+                                            }
+                                        });
+                                    $('#detallesProductos').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                                    $("#nuevoDetalle").hide();
+                                    $("#colorDiv").hide();
+                                    $("#acabadoDiv").hide();
+                                    $("#medidadDiv").hide();
+                                    $("#title").hide();
+                                    $("#verDe").hide();
+                                }
+                               
+                            });           
+                        }
+                        
+                    }
+                });
+});
+
+$("#btnEditarP").click(function(){
+var idProducto = $("#idModiP").val();
+var newN = $("#newPrecio").val();
+var idC = $("#idClaP").val();
+
+            $.ajax({
+                    type: 'POST',
+                    data: {
+    
+                        idProducto : idProducto,
+                        newN: newN,
+                    },
+                    url: '?1=ProductosController&2=nuevoPrecio',
+                    success: function (r) {
+                        $('#editarPrecioPro').modal('hide');
+                        if (r == 1) {
+                            swal({
+                             title: 'Precio actualizado',
+                            text: 'Guardado con éxito',
                             type: 'success',
                             showConfirmButton: true,
                             }).then((result) => {

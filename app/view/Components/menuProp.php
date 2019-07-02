@@ -114,7 +114,7 @@
             <div class="item">
             <a href="?1=RequisicionController&2=pendRecibirGF" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
                 <i class="dollar icon"></i>
-                Pendientes de pagar-recibir
+                Aprobadas
             </a>
 
             </div>

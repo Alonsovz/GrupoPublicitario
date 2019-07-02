@@ -20,6 +20,21 @@ class DaoProductos extends DaoBase {
         }
     }
 
+    public function cambiarPrecio()
+    {
+        $_query = "update productoFinal set precioUnitario = '".$this->objeto->getPrecio()."'
+        where idProductoFinal = ".$this->objeto->getIdProducto();
+
+        
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     public function mostrarGranFormato() {
         $_query = "select * from clasificacionProductos where idClasificacion = 1 and idEliminado=1 and idProducto>1;";
 
@@ -362,8 +377,7 @@ class DaoProductos extends DaoBase {
 
 
     public function guardarProductoFinal(){
-        $_query = "insert into productoFinal values(null,'".$this->objeto->getNombre()."', '".$this->objeto->getIdProducto()."',
-        '".$this->objeto->getPrecio()."')";
+        $_query = "insert into productoFinal values(null,'".$this->objeto->getNombre()."', '".$this->objeto->getIdProducto()."')";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -424,6 +438,26 @@ class DaoProductos extends DaoBase {
         $idExp = $fila['id'];
 
         $_query = "insert into productosMedidas values(".$idExp.", '".$this->objeto->getUnidadMedida()."')";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function guardarPrecio(){
+
+        $corr= "(select max(idProductoFinal) as id from productoFinal)";
+
+        $resultado1 = $this->con->ejecutar($corr);
+
+        $fila = $resultado1->fetch_assoc();
+        $idExp = $fila['id'];
+
+        $_query = "insert into productosPrecio values(".$idExp.", '".$this->objeto->getPrecio()."')";
 
         $resultado = $this->con->ejecutar($_query);
 

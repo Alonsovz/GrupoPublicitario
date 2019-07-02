@@ -13,6 +13,8 @@ class RequisicionController extends ControladorBase {
 
 
     public static function gastosOficina() {
+        $daoP = new DaoRequisicion();
+        $gastos = $daoP->mostrarGastosCMB();
 
         self::loadMain();
         
@@ -38,6 +40,10 @@ class RequisicionController extends ControladorBase {
         require_once './app/view/Requisicion/impresionDigital.php';
     }
 
+    public static function pendAprobarGastos() {
+        self::loadMain();
+        require_once './app/view/Requisicion/pendAprobarGastos.php';
+    }
 
     public static function pendAprobarGF() {
         self::loadMain();
@@ -85,6 +91,18 @@ class RequisicionController extends ControladorBase {
         require_once './app/view/Requisicion/rechazadasP.php';
     }
 
+    public static function gastosRechazados() {
+        self::loadMain();
+        
+        require_once './app/view/Requisicion/gastosRechazados.php';
+    }
+
+    public static function gastosAprobados() {
+        self::loadMain();
+        
+        require_once './app/view/Requisicion/gastosAprobados.php';
+    }
+
     public static function rechazadasIP() {
      
         self::loadMain();
@@ -110,6 +128,23 @@ class RequisicionController extends ControladorBase {
         echo $dao->mostrarPenAprobarP();
     }
 
+    public function mostrarPenAprobarGastos() {
+        $dao = new DaoRequisicion();
+
+        echo $dao->mostrarPenAprobarGastos();
+    }
+
+    public function mostrarGastosAprobados() {
+        $dao = new DaoRequisicion();
+
+        echo $dao->mostrarGastosAprobados();
+    }
+
+    public function mostrarGastosRechazados() {
+        $dao = new DaoRequisicion();
+
+        echo $dao->mostrarGastosRechazados();
+    }
 
     public function mostrarPenRecibirGF() {
         $dao = new DaoRequisicion();
@@ -211,6 +246,55 @@ class RequisicionController extends ControladorBase {
        
         
         echo $dao->rechazarRequisicion();
+    }
+
+
+    public function aprobarGasto(){
+        $dao = new DaoRequisicion();
+
+        $dao->objeto->setIdOrden($_REQUEST["id"]);
+       
+        
+        echo $dao->aprobarGasto();
+    }
+
+    public function rechazarGasto(){
+        $dao = new DaoRequisicion();
+
+        $dao->objeto->setIdOrden($_REQUEST["id"]);
+       
+        
+        echo $dao->rechazarGasto();
+    }
+
+    public function guardarGasto(){
+        $dao = new DaoRequisicion();
+
+        $dao->objeto->setDescripciones($_REQUEST["gasto"]);
+       
+        
+        echo $dao->guardarGasto();
+    }
+
+    public function quitarGasto(){
+        $dao = new DaoRequisicion();
+
+        $dao->objeto->setIdOrden($_REQUEST["idGasto"]);
+       
+        
+        echo $dao->quitarGasto();
+    }
+
+    public function guardarGastoReq(){
+        $dao = new DaoRequisicion();
+
+        $dao->objeto->setIdOrden($_REQUEST["gastosCmb"]);
+        $dao->objeto->setDescripciones($_REQUEST["descripcion"]);
+        $dao->objeto->setPrecio($_REQUEST["precio"]);
+        $dao->objeto->setFechaReq($_REQUEST["fecha"]);
+       
+        
+        echo $dao->gastos();
     }
     
 

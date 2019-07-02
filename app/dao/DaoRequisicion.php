@@ -134,6 +134,97 @@ class DaoRequisicion extends DaoBase {
     }
 
 
+    public function mostrarPenAprobarGastos() {
+        $_query = "select g.*,DATE_FORMAT(g.fecha, '%d/%m/%Y') as fecha, CONCAT('$',format(g.precio,2)) as precio,
+        go.nombre as gasto
+               from gastos g
+               inner join gastosOficina go on go.idGasto = g.idGasto
+                where g.estado=1";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+            $btnEditar = '<button id=\"'.$fila["idDetalle"].'\" fecha=\"'.$fila["fecha"].'\" precio=\"'.$fila["precio"].'\" gasto=\"'.$fila["gasto"].'\" descripcion=\"'.$fila["descripcion"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEliminar = '<button id=\"'.$fila["idDetalle"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
+
+            $acciones = ', "Acciones": "'.$btnEditar.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
+    public function mostrarGastosAprobados() {
+        $_query = "select g.*,DATE_FORMAT(g.fecha, '%d/%m/%Y') as fecha, CONCAT('$',format(g.precio,2)) as precio,
+        go.nombre as gasto
+               from gastos g
+               inner join gastosOficina go on go.idGasto = g.idGasto
+                where g.estado=2";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+            $btnEditar = '<button id=\"'.$fila["idDetalle"].'\" fecha=\"'.$fila["fecha"].'\" precio=\"'.$fila["precio"].'\" gasto=\"'.$fila["gasto"].'\" descripcion=\"'.$fila["descripcion"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEliminar = '<button id=\"'.$fila["idDetalle"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
+
+            $acciones = ', "Acciones": "'.$btnEditar.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
+    public function mostrarGastosRechazados() {
+        $_query = "select g.*,DATE_FORMAT(g.fecha, '%d/%m/%Y') as fecha, CONCAT('$',format(g.precio,2)) as precio,
+        go.nombre as gasto
+               from gastos g
+               inner join gastosOficina go on go.idGasto = g.idGasto
+                where g.estado=3";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+            $btnEditar = '<button id=\"'.$fila["idDetalle"].'\" fecha=\"'.$fila["fecha"].'\" precio=\"'.$fila["precio"].'\" gasto=\"'.$fila["gasto"].'\" descripcion=\"'.$fila["descripcion"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEliminar = '<button id=\"'.$fila["idDetalle"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
+
+            $acciones = ', "Acciones": "'.$btnEditar.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
+
 
 
     public function mostrarPenRecibirGF() {
@@ -341,6 +432,88 @@ class DaoRequisicion extends DaoBase {
         } else {
             return 0;
         }
+    }
+
+
+    public function aprobarGasto() {
+        $_query = "update gastos set estado=2 where idDetalle=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function rechazarGasto() {
+        $_query = "update gastos set estado=3 where idDetalle=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function guardarGasto() {
+        $_query = "insert into gastosOficina values(null,'".$this->objeto->getDescripciones()."',1)";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function gastos() {
+        $_query = "insert into gastos values(null,'".$this->objeto->getIdOrden()."',
+        '".$this->objeto->getDescripciones()."','".$this->objeto->getPrecio()."','".$this->objeto->getFechaReq()."',1)";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function quitarGasto() {
+        $_query = "update gastosOficina set idEliminado=2 where idGasto=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function mostrarGastosCMB() {
+
+        $_query = "select * from gastosOficina where  idEliminado=1";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= json_encode($fila).',';
+        }
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return '['.$json.']';
     }
 
 }

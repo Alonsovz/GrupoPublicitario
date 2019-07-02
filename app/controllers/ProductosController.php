@@ -144,6 +144,19 @@ class ProductosController extends ControladorBase {
         echo $dao->cambiarNombre();
     }
 
+    public function nuevoPrecio() {
+        $id = $_REQUEST["idProducto"];
+        $newP = $_REQUEST["newN"];
+    
+
+        $dao = new DaoProductos();
+
+        $dao->objeto->setPrecio($newP);
+        $dao->objeto->setIdProducto($id);
+     
+        echo $dao->cambiarPrecio();
+    }
+
 
     public function guardarNuevoProducto(){
 
@@ -158,10 +171,40 @@ class ProductosController extends ControladorBase {
         foreach($detalles as $detalle) {
             $dao->objeto->setNombre($detalle->productoFinal);
             $dao->objeto->setIdProducto($nombreP);
-            $dao->objeto->setPrecio($detalle->precioUnitario);
           
 
             if($dao->guardarProductoFinal()) {
+                $contador++;
+            } else {
+                echo 'nell';
+            }
+        }
+
+        if($contador == count($detalles)) {
+            echo 1;
+        } else {
+            echo 2;
+        }
+
+    }
+
+
+    public function guardarPrecio(){
+
+        $detalles = json_decode($_REQUEST["detallesPro"]);
+      //  $nombreP = $_REQUEST["nombreP"];
+      //  $precio = $_REQUEST["precioU"];
+
+        $contador = 0;
+
+        $dao = new DaoProductos();
+
+        foreach($detalles as $detalle) {
+            $dao->objeto->setPrecio($detalle->precioUnitario);
+          //  $dao->objeto->setIdProducto($nombreP);
+          
+
+            if($dao->guardarPrecio()) {
                 $contador++;
             } else {
                 echo 'nell';

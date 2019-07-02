@@ -8,6 +8,7 @@
                     <a href="?1=RequisicionController&2=pendRecibirIP" class="ui black button" id="imp">Impresión Digital</a>
 
                     <a href="?1=RequisicionController&2=pendRecibirP" class="ui red button" id="pro">Promocionales</a>
+                    <a href="?1=RequisicionController&2=gastosAprobados" class="ui blue button" id="gast">Gastos de Oficina</a>
                     <br><br>
                 <font color="#B40431" size="5px">
                 <i class="user icon"></i> <i class="list icon"></i>

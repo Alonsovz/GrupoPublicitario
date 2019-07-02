@@ -8,6 +8,7 @@
                     <a href="?1=RequisicionController&2=pendAprobarIP" class="ui black button" id="imp">Impresión Digital</a>
 
                     <a href="?1=RequisicionController&2=pendAprobarP" class="ui red button" id="pro">Promocionales</a>
+                    <a href="?1=RequisicionController&2=pendAprobarGastos" class="ui blue button" >Gastos de Oficina</a>
                     <br><br>
                 <font color="#B40431" size="5px">
                 <i class="user icon"></i> <i class="list icon"></i>
@@ -108,8 +109,11 @@
     </div>
     <div class="actions">
     
+    <?php if($_SESSION["descRol"] == 'Propietario') { ?>
     <button class="ui red button" id="btnAprobar">Aprobar</button>
     <button class="ui grey  button" id="btnRechazar">Rechazar</button>
+    
+    <?php } ?>
     
     <br><br>
     <hr>
