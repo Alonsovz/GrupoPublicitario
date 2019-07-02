@@ -7,6 +7,18 @@ class DaoProductos extends DaoBase {
         $this->objeto = new Productos();
     }
 
+    public function cambiarNombre()
+    {
+        $_query = "update productoFinal set productoFinal = '".$this->objeto->getNombre()."' 
+        where idProductoFinal = ".$this->objeto->getIdProducto();
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 
     public function mostrarGranFormato() {
         $_query = "select * from clasificacionProductos where idClasificacion = 1 and idEliminado=1 and idProducto>1;";
@@ -350,7 +362,8 @@ class DaoProductos extends DaoBase {
 
 
     public function guardarProductoFinal(){
-        $_query = "insert into productoFinal values(null,'".$this->objeto->getNombre()."', '".$this->objeto->getIdProducto()."')";
+        $_query = "insert into productoFinal values(null,'".$this->objeto->getNombre()."', '".$this->objeto->getIdProducto()."',
+        '".$this->objeto->getPrecio()."')";
 
         $resultado = $this->con->ejecutar($_query);
 

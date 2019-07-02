@@ -107,7 +107,10 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                 <div class="field">
             <div class="fields">
                 <div class="sixteen wide field" id="title" style="display:none; font-weight: bold; font-size:18px; color: black;">
-            <center>Detalles del producto: <a id="titleDe" style="font-weight: bold; font-size:18px; color: red;"></a></center>
+                <center>Detalles del producto: <a id="titleDe" style="font-weight: bold; font-size:18px; color: red;"></a>
+            &nbsp;&nbsp;
+            <a id="editarNom" class="ui green button">Editar Nombre</a>
+            </center>
             <input type="hidden" id="idProductoF">
             </div>
             </div></div>
@@ -190,6 +193,23 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
             <a class="ui green button" id="guardarMedidaPro" style="margin-left:68%;"><i class="save icon"></i>Guardar</a>
             </div>
             <br><br>
+                </div>
+
+                <div class="eight wide field" id="precioDiv" style="margin-right:20px;">
+                <table class="ui selectable very compact celled table" style="border: 1px solid black;">
+                    <thead>
+                       <tr>
+                           <th style="background-color:black; color:white;"><label><i class="dollar icon"></i>Precio Unitario</label></th>
+                           
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+                            <td id="precioPro"></td>
+                        
+                    
+                        </tbody>
+                </table>
                 </div>
 
                 
@@ -336,12 +356,12 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                     </table>
                                     </td>
                                     
-                                    
-                    </form>
-                    <td>  
+                                    <td>  
                             <input class="requerido" v-model="detalle.precioUnitario" name="precioUnitario" id="precioUnitario" type="text"
                              placeholder="Precio Unitario">
-                         </td>
+                         </td>          
+                    </form>
+                    
                             </tr>
                         </tbody>
                     </table>
@@ -464,6 +484,25 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
 </div>
 
 </div>
+
+<div class="ui tiny modal" id="editarNamePro">
+    <div class="header" style="background-color:black; color:white;">
+    Nombre actual del producto: <a id="nameActual" style="color:red"></a>
+    </div>
+    <div class="content">
+    <input type="hidden" id="idModi" name="idModi">
+    <input type="hidden" id="idCla" name="idCla">
+        <form class="ui form">
+        <label><i class="pencil icon"></i>Nuevo nombre:</label>
+        <input type="text" id="newName" name="newName" placeholder="Nuevo nombre">
+        </form>
+    </div>
+    <div class="actions">
+        <button class="ui black deny button">Cancelar</button>
+        <button class="ui red button" id="btnEditarN">Guardar</button>
+    </div>
+</div>
+
 
 </div>
 
@@ -835,12 +874,76 @@ $("#btnNuevoColor").click(function(){
  $("#tablaProductos").hide(1000);
 });
 
+$("#editarNom").click(function(){
+    var id= $("#idProductoF").val();
+    var name = $("#titleDe").text();
+    var idC = $("#IDtipoProducto").val();
+    $("#idModi").val(id);
+    $("#idCla").val(idC);
+    $("#nameActual").text(name);
+    $('#editarNamePro').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+});
+
+$("#btnEditarN").click(function(){
+var idProducto = $("#idModi").val();
+var newN = $("#newName").val();
+var idC = $("#idCla").val();
+
+            $.ajax({
+                    type: 'POST',
+                    data: {
+    
+                        idProducto : idProducto,
+                        newN: newN,
+                    },
+                    url: '?1=ProductosController&2=nuevoNombre',
+                    success: function (r) {
+                        $('#editarNamePro').modal('hide');
+                        if (r == 1) {
+                            swal({
+                             title: 'Nombre actualizado',
+                            text: 'Guardada con éxito',
+                            type: 'success',
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                if(result.value){
+                                    $("#IDtipoProducto").val(idC);
+                                    $("#botonNuevo").show();
+                                    $("#tablaProductos").show();
+                                    $('#proFin').html('');
+                                    $.ajax({
+                                            type:"POST",
+                                            url:"?1=Funciones&2=verDetallesProFinal",
+                                            data:{
+                                                id:idC
+                                            },
+                                        success:function(r){
+                                                $('#proFin').html(r);
+                                            }
+                                        });
+                                    $('#detallesProductos').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                                    $("#nuevoDetalle").hide();
+                                    $("#colorDiv").hide();
+                                    $("#acabadoDiv").hide();
+                                    $("#medidadDiv").hide();
+                                    $("#title").hide();
+                                    $("#verDe").hide();
+                                }
+                               
+                            });           
+                        }
+                        
+                    }
+                });
+});
+
 var detallePro=(ele)=>{
     
     $("#nuevoDetalle").hide(1000);
        $("#colorDiv").hide();
        $("#acabadoDiv").hide();
        $("#medidadDiv").hide();
+       $("#precioDiv").hide();
        $("#botonNuevo").hide(1000);
        $("#tablaProductos").hide(1000);
      
@@ -885,11 +988,23 @@ var detallePro=(ele)=>{
 			}
         });
 
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=verPrecios",
+            data:{
+                idC:idBtn
+            },
+        success:function(r){
+				$('#precioPro').html(r);
+			}
+        });
+
         $("#colorDiv").show(1000);
         $("#acabadoDiv").show(1000);
         $("#medidadDiv").show(1000);
         $("#title").show(1000);
         $("#verDe").show(1000);
+        $("#precioDiv").show(1000);
 
 }
 

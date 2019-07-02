@@ -131,10 +131,25 @@ class ProductosController extends ControladorBase {
     }
 
 
+    public function nuevoNombre() {
+        $id = $_REQUEST["idProducto"];
+        $newN = $_REQUEST["newN"];
+    
+
+        $dao = new DaoProductos();
+
+        $dao->objeto->setNombre($newN);
+        $dao->objeto->setIdProducto($id);
+     
+        echo $dao->cambiarNombre();
+    }
+
+
     public function guardarNuevoProducto(){
 
         $detalles = json_decode($_REQUEST["detallesPro"]);
         $nombreP = $_REQUEST["nombreP"];
+      //  $precio = $_REQUEST["precioU"];
 
         $contador = 0;
 
@@ -143,6 +158,7 @@ class ProductosController extends ControladorBase {
         foreach($detalles as $detalle) {
             $dao->objeto->setNombre($detalle->productoFinal);
             $dao->objeto->setIdProducto($nombreP);
+            $dao->objeto->setPrecio($detalle->precioUnitario);
           
 
             if($dao->guardarProductoFinal()) {

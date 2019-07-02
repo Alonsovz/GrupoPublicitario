@@ -113,7 +113,10 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                 <div class="field">
             <div class="fields">
                 <div class="sixteen wide field" id="title" style="display:none; font-weight: bold; font-size:18px; color: black;">
-            <center>Detalles del producto: <a id="titleDe" style="font-weight: bold; font-size:18px; color: red;"></a></center>
+            <center>Detalles del producto: <a id="titleDe" style="font-weight: bold; font-size:18px; color: red;"></a>
+            &nbsp;&nbsp;
+            <a id="editarNom" class="ui green button">Editar Nombre</a>
+            </center>
             <input type="hidden" id="idProductoF">
             </div>
             </div></div>
@@ -196,6 +199,23 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
             <a class="ui green button" id="guardarMedidaPro" style="margin-left:68%;"><i class="save icon"></i>Guardar</a>
             </div>
             <br><br>
+                </div>
+
+                <div class="eight wide field" id="precioDiv" style="margin-right:20px;">
+                <table class="ui selectable very compact celled table" style="border: 1px solid black;">
+                    <thead>
+                       <tr>
+                           <th style="background-color:black; color:white;"><label><i class="dollar icon"></i>Precio Unitario</label></th>
+                           
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+                            <td id="precioPro"></td>
+                        
+                    
+                        </tbody>
+                </table>
                 </div>
 
                 
@@ -282,6 +302,7 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                         </tbody>
                                     </table>
                                     </form>
+
                                     </td>
 
                                     <td>  
@@ -290,30 +311,31 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                     </span>        <br><br>
                                     <form action="" class="ui form" id="frmNuevoDetalleAcabado" >
                                     <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
-                                            <thead>
-                                            <th style="background-color: black; color:white; text-align:center;"><i class="podcast icon"></i>Acabado</th>
-                                                <th style="background-color: black; color:white;text-align:center;"><i class="trash icon"></i></th>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="(detalleAC, index) in detallesAcabado">
+                                                <thead>
+                                                <th style="background-color: black; color:white; text-align:center;"><i class="podcast icon"></i>Acabado</th>
+                                                    <th style="background-color: black; color:white;text-align:center;"><i class="trash icon"></i></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(detalleAC, index) in detallesAcabado">
+                                                    
                                                 
-                                            
-                                                <td>  
-                                                <select v-model="detalleAC.acabado" class="ui search selection dropdown" id="acabado" name="acabado">
-                                            <option v-for="option in acabadosOps" :value="option.idAcabado">{{option.acabado}}</option>
-                                        </select>
-                                                </td>
+                                                    <td>  
+                                                    <select v-model="detalleAC.acabado" class="ui search selection dropdown" id="acabado" name="acabado">
+                                                <option v-for="option in acabadosOps" :value="option.idAcabado">{{option.acabado}}</option>
+                                            </select>
+                                                    </td>
 
-                                                <td>
-                                                <center>
-                                    </form>
-                                            <a  @click="eliminarDetalleAC(index)" class="ui black mini circular icon button"><i
-                                                class="times icon"></i></a>
-                                                </center>
-                                            </td>
-                                            </tr>
-                                        </tbody>
+                                                    <td>
+                                                    <center>
+                                       
+                                                <a  @click="eliminarDetalleAC(index)" class="ui black mini circular icon button"><i
+                                                    class="times icon"></i></a>
+                                                    </center>
+                                                </td>
+                                                </tr>
+                                            </tbody>
                                     </table>
+                                    </form>
                                     </td>
 
                                     <td>  
@@ -331,26 +353,22 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                                 <select v-model="detalleU.unidad" class="ui search selection dropdown" id="unidad" name="unidad">
                                             <option v-for="option in medidasOps" :value="option.idMedida">{{option.medida}}</option>
                                         </select>
-                                                </td>
-
-                                               
-
-                                               
-                                    </form>
-                                            
+                                                </td> 
                                             </td>
                                             
                                             </tr>
                                         </tbody>
                                     </table>
-                                    </td>
+                                    </form>
                                     
                                     
-                    </form>
-                    <td>  
-                            <input class="requerido" v-model="detalle.precioUnitario" name="precioUnitario" id="precioUnitario" type="text"
+                                    
+                         <td> 
+                    <input class="requerido" v-model="detalle.precioUnitario" name="precioUnitario" id="precioUnitario" type="text"
                              placeholder="Precio Unitario">
-                         </td>
+                         </td>         
+                    </form>
+                    
                             </tr>
                         </tbody>
                     </table>
@@ -473,6 +491,25 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
 </div>
 
 </div>
+
+<div class="ui tiny modal" id="editarNamePro">
+    <div class="header" style="background-color:black; color:white;">
+    Nombre actual del producto: <a id="nameActual" style="color:red"></a>
+    </div>
+    <div class="content">
+    <input type="hidden" id="idModi" name="idModi">
+    <input type="hidden" id="idCla" name="idCla">
+        <form class="ui form">
+        <label><i class="pencil icon"></i>Nuevo nombre:</label>
+        <input type="text" id="newName" name="newName" placeholder="Nuevo nombre">
+        </form>
+    </div>
+    <div class="actions">
+        <button class="ui black deny button">Cancelar</button>
+        <button class="ui red button" id="btnEditarN">Guardar</button>
+    </div>
+</div>
+
 
 </div>
 
@@ -847,6 +884,69 @@ $("#btnNuevoColor").click(function(){
  $("#tablaProductos").hide(1000);
 });
 
+$("#editarNom").click(function(){
+    var id= $("#idProductoF").val();
+    var name = $("#titleDe").text();
+    var idC = $("#IDtipoProducto").val();
+    $("#idModi").val(id);
+    $("#idCla").val(idC);
+    $("#nameActual").text(name);
+    $('#editarNamePro').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+});
+
+$("#btnEditarN").click(function(){
+var idProducto = $("#idModi").val();
+var newN = $("#newName").val();
+var idC = $("#idCla").val();
+
+            $.ajax({
+                    type: 'POST',
+                    data: {
+    
+                        idProducto : idProducto,
+                        newN: newN,
+                    },
+                    url: '?1=ProductosController&2=nuevoNombre',
+                    success: function (r) {
+                        $('#editarNamePro').modal('hide');
+                        if (r == 1) {
+                            swal({
+                             title: 'Nombre actualizado',
+                            text: 'Guardada con éxito',
+                            type: 'success',
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                if(result.value){
+                                    $("#IDtipoProducto").val(idC);
+                                    $("#botonNuevo").show();
+                                    $("#tablaProductos").show();
+                                    $('#proFin').html('');
+                                    $.ajax({
+                                            type:"POST",
+                                            url:"?1=Funciones&2=verDetallesProFinal",
+                                            data:{
+                                                id:idC
+                                            },
+                                        success:function(r){
+                                                $('#proFin').html(r);
+                                            }
+                                        });
+                                    $('#detallesProductos').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                                    $("#nuevoDetalle").hide();
+                                    $("#colorDiv").hide();
+                                    $("#acabadoDiv").hide();
+                                    $("#medidadDiv").hide();
+                                    $("#title").hide();
+                                    $("#verDe").hide();
+                                }
+                               
+                            });           
+                        }
+                        
+                    }
+                });
+});
+
 var detallePro=(ele)=>{
     
     $("#nuevoDetalle").hide(1000);
@@ -854,6 +954,7 @@ var detallePro=(ele)=>{
        $("#acabadoDiv").hide();
        $("#medidadDiv").hide();
        $("#botonNuevo").hide(1000);
+       $("#precioDiv").hide();
        $("#tablaProductos").hide(1000);
     var idBtn = $(ele).attr("id");
 
@@ -896,11 +997,24 @@ var detallePro=(ele)=>{
 				$('#medidas').html(r);
 			}
         });
-        $("#verDe").show(1000);
-        $("#title").show(1000);
+
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=verPrecios",
+            data:{
+                idC:idBtn
+            },
+        success:function(r){
+				$('#precioPro').html(r);
+			}
+        });
+
         $("#colorDiv").show(1000);
         $("#acabadoDiv").show(1000);
         $("#medidadDiv").show(1000);
+        $("#title").show(1000);
+        $("#verDe").show(1000);
+        $("#precioDiv").show(1000);
         
         
 

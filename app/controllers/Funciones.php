@@ -151,6 +151,9 @@ class Funciones extends ControladorBase {
 
 	}
 
+
+	
+
 	public function verDetallesColor(){
         $conexion= new mysqli('localhost','root','','grupoPublicitario');
 		$idPro=$_POST['idC'];
@@ -173,6 +176,28 @@ class Funciones extends ControladorBase {
 			 <i class="trash icon"></i></a>
 			 
 			 </td></tr>';
+		}
+
+		echo  $cadena;
+	}
+
+	}
+
+	public function verPrecios(){
+        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$idPro=$_POST['idC'];
+	
+
+	if($_POST['idC']){
+		$sql="select format(precioUnitario,2) from productoFinal where productoFinal='".$idPro."'";
+
+		$result=mysqli_query($conexion,$sql);
+
+		$cadena="";
+		while ($ver=mysqli_fetch_row($result)) {
+			$cadena=$cadena.'<tr><td style="border:1px solid black;width:100%;">
+			$ '.utf8_encode($ver[0]).'</td>
+			</tr>';
 		}
 
 		echo  $cadena;

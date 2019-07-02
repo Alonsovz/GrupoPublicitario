@@ -4,27 +4,46 @@ create database grupoPublicitario;
 use grupoPublicitario;
 
 create table rol(
-codigoRol int primary key unique auto_increment,
+codigoRol int primary key auto_increment,
 descRol varchar(50)
 );
 
 create table usuario (
-    codigoUsuario int primary key unique auto_increment,
+    codigoUsuario int primary key auto_increment,
     nombre varchar(50),
     apellido varchar(50),
-    nomUsuario varchar(75),
-    email varchar(100),
-    direccion varchar(500),
-    pass varchar(75),
-    telefono varchar(50),
+    nit varchar(20),
     dui varchar(10),
     fechaNac date,
+    telefono varchar(50),
+    celular varchar(50),
+    email varchar(100),
+    direccion varchar(500),
+    MISSS varchar(50),
+    afiliado varchar(60),
+    MAFP varchar(50),
+    estadoCivil varchar(30),
+    conyuge varchar(100),
+    hijos int,
+    nomPadre varchar(60),
+    nomMadre varchar(60),
+    nomEmergencia varchar(60),
+    telEmergencia varchar(10),
+    celEmergenecia varchar(10),
+    fechaIngreso date,
+    salario double,
     codigoRol int,
+    nomUsuario varchar(75),
+    pass varchar(75),
     idEliminado int
+);
+create table hijosEmp(
+codigoUsuario int,
+nombreHijo varchar(50)
 );
 
 create table clientes(
-idCliente int primary key unique auto_increment,
+idCliente int primary key  auto_increment,
 nombre varchar(100),
 nit varchar(40),
 nrc varchar(40),
@@ -42,20 +61,28 @@ idEliminado int
 );
 
 create table tipoProductos(
-idClasificacion int primary key unique auto_increment,
+idClasificacion int primary key  auto_increment,
 clasificacion varchar(40)
 );
 create table clasificacionProductos(
-idProducto int primary key unique auto_increment,
+idProducto int primary key auto_increment,
 nombre varchar(100),
 idClasificacion int,
 idEliminado int
 );
 
+create table inventario(
+idProducto int,
+idColor int,
+idAcabado int,	
+cantidadExistencia double
+);
+
 create table productoFinal(
-idProductoFinal int primary key unique auto_increment,
+idProductoFinal int primary key  auto_increment,
 productoFinal varchar(100),
-idProducto int
+idProducto int,
+precioUnitario double
 );
 
 create table productosColores(
@@ -74,28 +101,28 @@ idMedida int
 );
 
 create table colores(
-idColor int primary key unique auto_increment,
+idColor int primary key auto_increment,
 color varchar(100),
 idClasificacion int,
 idEliminado int
 );
 
 create table acabados(
-idAcabado int primary key unique auto_increment,
+idAcabado int primary key auto_increment,
 acabado varchar(100),
 idClasificacion int,
 idEliminado int
 );
 
 create table medidas(
-idMedida int primary key unique auto_increment,
+idMedida int primary key auto_increment,
 medida varchar(100),
 idClasificacion int,
 idEliminado int
 );
  
  create table proveedores(
-idProveedor int primary key unique auto_increment,
+idProveedor int primary key auto_increment,
 nombre varchar(100),
 nit varchar(40),
 nrc varchar(40),
@@ -115,7 +142,7 @@ idEliminado int
 
 
 create table ordenTrabajoGR(
-idOrden int primary key unique auto_increment,
+idOrden int primary key auto_increment,
 correlativo varchar(20),
 fechaOT date,
 responsable int,
@@ -129,7 +156,7 @@ idEliminado int
 
 
 create table detalleOrdenGR(
-idDetalle int primary key unique auto_increment,
+idDetalle int primary key auto_increment,
 idOrden int ,
 idProductoFinal int,
 idColor int,
@@ -151,7 +178,7 @@ precio double
 
 
 create table ordenTrabajoIP(
-idOrden int primary key unique auto_increment,
+idOrden int primary key auto_increment,
 correlativo varchar(20),
 fechaOT date,
 responsable int,
@@ -163,7 +190,7 @@ idEliminado int
 );
 
 create table detalleOrdenIP(
-idDetalle int primary key unique auto_increment,
+idDetalle int primary key auto_increment,
 idOrden int ,
 idProductoFinal int,
 idColor int,
@@ -176,7 +203,7 @@ precio double
 
 
 create table ordenTrabajoP(
-idOrden int primary key unique auto_increment,
+idOrden int primary key auto_increment,
 correlativo varchar(20),
 fechaOT date,
 responsable int,
@@ -188,7 +215,7 @@ idEliminado int
 );
 
 create table detalleOrdenP(
-idDetalle int primary key unique auto_increment,
+idDetalle int primary key auto_increment,
 idOrden int ,
 idProductoFinal int,
 idColor int,
@@ -200,7 +227,7 @@ precio double
 );
 
 create table requisiciones(
-idRequisicion int primary key unique auto_increment,
+idRequisicion int primary key auto_increment,
 fecha date,
 responsable int,
 tipoCompra varchar(50),
@@ -215,7 +242,7 @@ idEliminado int
 
 
 create table detalleRequisicion(
-idDetalle int primary key unique auto_increment,
+idDetalle int primary key auto_increment,
 idRequisicion int,
 idProductoFinal int,
 color int,
@@ -232,16 +259,16 @@ alter table usuario add constraint fk_usuario_rol foreign key (codigoRol) refere
 
  insert into rol values(1,'Administrador/a');
 insert into rol values(2,'Produccion');
-insert into rol values(3,'Asistente');
-
-
-
-insert into usuario values(null,'Fabio','Mejia','fabio','fabiomejiash@gmail.com','San Juan Opico',sha1('123'),'7121-1231','01211242-1','1999-12-02',1,1);
+insert into rol values(3,'Secretaria/o');
+ insert into rol values(4,'Propietario');
  
- insert into usuario values(null,'Juan','Perez','juan','juan@gmail.com','Santa Tecla',sha1('123'),'7912-7680','01234324-1','1980-09-04',2,1);
 
- insert into usuario values(null,'Juana','Lopez','juana','juan123@gmail.com','San Salvador',sha1('123'),'7912-1241','09237913-1','1997-02-02',3,1);
- 
+
+insert into usuario values(null,'Fabio','Mejia','8187-239817-239-8','01234567-8',
+'1980-12-10','2312-2312','7121-1231','fabiomejiash@gmail.com','San Juan Opico','09123-1','AFP Crecer','123413-2',
+'Soltero/a','',1,'Jose Lepoldo Mejia','Rebeca de Mejia','Juan Jose Lopez Maravilla','2314-5312','7980-1352',curdate(),450.00,4,'fabio',sha1(1234),1);
+
+insert into hijosEmp values(1,'Carlos Mejia');
 
 
 insert into clientes values(null,'Adriana Marina Panameno','0614-110475-120-7','123642-2','BLOCK630SDA9-A URB, NUEVO LOURDESNº6 COLON ','La Libertad ','VENTA ALA POR MAYOR DE PRODUCTOS MEDICINALES','Frecuente','01234','Fiscal','2312-1231','7123-4324','Fabio Mejia','fabiomejiash@gmail.com',1);
@@ -315,23 +342,9 @@ insert into medidas values(null,'UNIDAD',3,1);
 
 
 
-insert into productoFinal values(null,'Seleccione una opcion',0);
-insert into productoFinal values(null,'LONA BANNER',4);
-insert into productoFinal values(null,'FILM BACKLITE',4);
-insert into productoFinal values(null,'LAMINADOR FILM',5);
+insert into productoFinal values(null,'Seleccione una opcion',0,0);
 
-insert into productoFinal values(null,'PAPEL FOLCOTE',6);
-insert into productoFinal values(null,'Diseno',7);
 
-insert into productoFinal values(null,'Taza de ceramica',8);
-insert into productoFinal values(null,'VASOS DE ACRILICO',9);
-
-insert into productosAcabados values(2,2);
-insert into productosAcabados values(2,3);
-insert into productosColores values(2,3);
-insert into productosColores values(2,4);
-insert into productosMedidas values(2,1);
-insert into productosMedidas values(2,2);
 
 insert into ordenTrabajoGR values(null,'OTGR00',curdate(),1,1,curdate(),'',1,1);
 insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,curdate(),'',1,1);
@@ -389,7 +402,3 @@ begin
     where idEliminado=1;
 end
 $$
-
-select r.*, p.nombre as proveedor from requisiciones r
-inner join proveedor p on p.idProveedor = r.idProveedor
- where r.idEliminado=1 and r.idClasificacion=1

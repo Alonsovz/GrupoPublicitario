@@ -8,6 +8,7 @@ class Productos extends ModeloBase{
     private $unidadMedida;
     private $color;
     private $acabado;
+    private $precio;
 
     public function __construct() {
 
@@ -88,6 +89,19 @@ class Productos extends ModeloBase{
     public function setAcabado($acabado)
     {
         $this->acabado = $acabado;
+
+        return $this;
+    }
+
+    public function getPrecio()
+    {
+        return $this->precio;
+    }
+
+    
+    public function setPrecio($precio)
+    {
+        $this->precio = $precio;
 
         return $this;
     }
