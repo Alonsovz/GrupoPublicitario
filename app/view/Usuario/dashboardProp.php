@@ -10,6 +10,77 @@ $(function() {
 });
 </script>
 
+<?php
+  require_once './vendor/autoload.php';
+  $mysqli = new mysqli("localhost","root","","grupoPublicitario");
+  $ordenGRC = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoGR where estado=1 and idOrden!=1 ");
+  $ordenIPC = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoIP where estado=1 and idOrden!=1 ");
+  $ordenPC = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoP where estado=1 and idOrden!=1 ");
+
+  $fila1 = $ordenGRC->fetch_assoc();
+    $OTGRC = $fila1['total'];
+
+    $fila2 = $ordenIPC->fetch_assoc();
+    $OTIPC = $fila2['total'];
+
+    $fila3 = $ordenPC->fetch_assoc();
+    $OTPC = $fila3['total'];
+
+    $OTPenClientes = $OTGRC + $OTIPC + $OTPC;
+
+    $ordenGRP = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoGR where estado=2 and idOrden!=1 ");
+  $ordenIPP = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoIP where estado=2 and idOrden!=1 ");
+  $ordenPP = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoP where estado=2 and idOrden!=1 ");
+
+  $fila4 = $ordenGRP->fetch_assoc();
+    $OTGRP = $fila4['total'];
+
+    $fila5 = $ordenIPP->fetch_assoc();
+    $OTIPP = $fila5['total'];
+
+    $fila6 = $ordenPP->fetch_assoc();
+    $OTPP = $fila6['total'];
+
+    $OTPro = $OTGRP + $OTIPP + $OTPP;
+
+    $ordenGRF = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoGR where estado=3 and idOrden!=1 ");
+  $ordenIPF = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoIP where estado=3 and idOrden!=1 ");
+  $ordenPF = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoP where estado=3 and idOrden!=1 ");
+
+  $fila7 = $ordenGRF->fetch_assoc();
+    $OTGRF = $fila7['total'];
+
+    $fila8 = $ordenIPF->fetch_assoc();
+    $OTIPF = $fila8['total'];
+
+    $fila9 = $ordenPF->fetch_assoc();
+    $OTPF = $fila9['total'];
+
+    $OTFac = $OTGRF + $OTIPF + $OTPF;
+
+    $req = $mysqli -> query ("select count(idRequisicion) as total from requisiciones where estado=1");
+      $fila10 = $req->fetch_assoc();
+      $requi = $fila10['total'];
+  
+      $gas = $mysqli -> query ("select count(idDetalle) as total from gastos where estado=1");
+      $fila11 = $gas->fetch_assoc();
+      $gasto = $fila11['total'];
+
+      $totalReq = $requi + $gasto;
+
+
+      $reqre = $mysqli -> query ("select count(idRequisicion) as total from requisiciones where estado=2");
+      $fila12 = $reqre->fetch_assoc();
+      $require = $fila12['total'];
+  
+      $regas = $mysqli -> query ("select count(idDetalle) as total from gastos where estado=2");
+      $fila13 = $regas->fetch_assoc();
+      $gastore = $fila13['total'];
+
+      $totalReqRe = $require + $gastore;
+
+   ?>
+
     <div class="row tiles" id="contenedor-tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
 
         <button class="ui black button" style="width:22%;height:50px;" id="1"><i class="list icon"></i><i class="pencil icon"></i></button>
@@ -27,19 +98,7 @@ $(function() {
     <form class="ui form">
     <h3>Datos generales del día (OT):</h3>
     <div class="ui divider"></div>
-        <div class="field">
-
-            <div class="fields">
-                <div class="eight wide field">
-                    <i class="pencil icon"></i>Ventas realizadas:
-                </div>
-                <div class="eight wide field">
-                    <div class="ui input" style="width:20%;">
-                        <input type="text" value="10" readonly>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
         <div class="ui divider"></div>
         <div class="field">
 
@@ -50,7 +109,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:20%;">
-                         <input type="text" value="2" readonly>
+                         <input type="text" value="<?php  echo $OTPenClientes; ?>" readonly>
                         </div>
                      </div>
             </div>
@@ -64,7 +123,7 @@ $(function() {
                     </div>
                     <div class="eight wide field">
                     <div class="ui input" style="width:20%;">
-                     <input type="text" value="3" readonly>
+                     <input type="text" value="<?php  echo $OTPro; ?>" readonly>
                     </div>
                     </div>
             </div>
@@ -78,7 +137,7 @@ $(function() {
                     </div>
                     <div class="eight wide field">
                     <div class="ui input" style="width:20%;">
-                     <input type="text" value="2" readonly>
+                     <input type="text" value="<?php  echo $OTFac; ?>" readonly>
                     </div>
                     </div>
             </div>
@@ -101,7 +160,7 @@ $(function() {
                 </div>
                 <div class="eight wide field">
                     <div class="ui input" style="width:20%;">
-                        <input type="text" value="3" readonly>
+                        <input type="text" value="<?php  echo $totalReq; ?>" readonly>
                     </div>
                 </div>
             </div>
@@ -116,7 +175,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:20%;">
-                         <input type="text" value="2" readonly>
+                         <input type="text" value="<?php  echo $totalReqRe; ?>" readonly>
                         </div>
                      </div>
             </div>
