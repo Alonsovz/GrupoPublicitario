@@ -201,22 +201,7 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
             <br><br>
                 </div>
 
-                <div class="eight wide field" id="precioDiv" style="margin-right:20px;">
-                <table class="ui selectable very compact celled table" style="border: 1px solid black;">
-                    <thead>
-                       <tr>
-                           <th style="background-color:black; color:white;"><label><i class="dollar icon"></i>Precio Unitario</label></th>
-                           
-                        </tr>
-                        </thead>
-                        <tbody>
-                        
-                            <td id="precioPro"></td>
-                        
-                    
-                        </tbody>
-                </table>
-                </div>
+                
 
                 
                 
@@ -257,7 +242,7 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                         <th style="background-color: #20AD10; color:white;"><i class="chart bar icon"></i>Color</th>
                                         <th style="background-color: #20AD10; color:white;"><i class="podcast icon"></i>Acabado</th>
                                         <th style="background-color: #20AD10; color:white;"><i class="arrows alternate icon"></i>Unidad de Medida</th>
-                                        <th style="background-color: #20AD10; color:white;"><i class="dollar icon"></i>Precio Unitario</th>
+                                      
                                 </thead>
                                 <tbody style="background-color:#F0F2EF;">
                                     <tr v-for="(detalle, index) in detalles">
@@ -373,38 +358,7 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                     
                                     
                                     
-                         <td> 
-                         <span style="float:right;">
-                                    <a style="background-color:#8F8F91;color:white;" @click="agregarDetallePre" class="ui gray circular icon button"><i class="plus icon"></i></a>
-                                    </span><br><br>
-                         <form action="" class="ui form" id="frmNuevoDetallePrecio" >
-                                    <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
-                                            <thead>
-                                            <th style="background-color: #B40431; color:white; text-align:center;"><i class="dollar icon"></i>Precio Unitario</th>
-                                            <th style="background-color: #B40431; color:white; text-align:center;"><i class="trash icon"></i></th>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="(detallePre, index) in detallesPrecio">
-                                                
-                                            
-                                                <td>  
-                                                <input class="requerido" v-model="detallePre.precioUnitario" name="precioUnitario" id="precioUnitario" type="text"
-                                     placeholder="Precio Producto">
-                                                </td> 
-                                                <td>
-                                                <center>
-                                    
-                                            <a style="background-color:#8F8F91;color:white;"  @click="eliminarDetallePre(index)" class="ui gray mini circular icon button"><i
-                                                class="times icon"></i></a>
-                                                </center>
-                                            </td>
-                                            </td>
-                                            
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    </form>
-                         </td>         
+                              
                     </form>
                     
                             </tr>
@@ -813,7 +767,7 @@ var app = new Vue({
                                     app.guardarColor();
                                     app.guardarAcabado();
                                     app.guardarMedida();
-                                    app.guardarPrecio();
+                                 //   app.guardarPrecio();
                                     $('#proFin').html('');
                                     $.ajax({
                                     type:"POST",
@@ -1183,7 +1137,7 @@ var detallePro=(ele)=>{
        $("#precioDiv").hide();
        $("#tablaProductos").hide(1000);
     var idBtn = $(ele).attr("id");
-
+    
     $("#titleDe").text(idBtn);
     $("#idProductoF").val($(ele).attr("idP"));
 

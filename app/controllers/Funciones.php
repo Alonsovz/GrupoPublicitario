@@ -137,7 +137,7 @@ class Funciones extends ControladorBase {
 		$sql="SELECT idProductoFinal,
 			 productoFinal
 		from productoFinal 
-		where idProducto='$idPro' order by idProductoFinal asc";
+		where idProducto='$idPro' group by productoFinal order by idProductoFinal asc";
 
 		$result=mysqli_query($conexion,$sql);
 
@@ -691,6 +691,140 @@ class Funciones extends ControladorBase {
 
 			echo  $cadena;
 		}
+
+	}
+
+
+	public function verDetallesProFinalInventario(){
+        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$idPro=$_POST['id'];
+		
+
+	if($_POST['id']){
+		$sql="SELECT idProductoFinal,
+			 productoFinal
+		from productoFinal 
+		where idProducto='$idPro'  group by productoFinal order by idProductoFinal asc";
+
+		$result=mysqli_query($conexion,$sql);
+
+
+		
+
+		$cadena="";
+		while ($ver=mysqli_fetch_row($result)) {
+			$cadena=$cadena.'<a class="ui black button" idP="'.utf8_encode($ver[0]).'" id="'.utf8_encode($ver[1]).'"
+			 onclick = detallePro(this)>'.utf8_encode($ver[1]).'</a>&nbsp;&nbsp;&nbsp;';
+		}
+
+		echo  $cadena;
+	}
+
+	}
+
+
+	public function verDetallesInventario(){
+        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$idPro=$_POST['idC'];
+	
+
+		if($_POST['idC']){
+		$sqlColor="select a.idColor, a.color  from colores a
+		inner join productosColores pc on pc.idColor = a.idColor
+		inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
+		where pc.idProductoFinal=".$idPro." order by idColor asc ";
+
+		$resultColor=mysqli_query($conexion,$sqlColor);
+
+		$sqlAcabado="select a.idAcabado, a.acabado  from acabados a
+		inner join productosAcabados pc on pc.idAcabado = a.idAcabado
+		inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
+		 where pc.idProductoFinal='".$idPro."' order by idAcabado asc";
+
+		$resultAcabado=mysqli_query($conexion,$sqlAcabado);
+
+		$sqlMedidas="select a.idMedida, a.medida  from medidas a
+		inner join productosMedidas pc on pc.idMedida = a.idMedida
+		inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
+		 where pc.idProductoFinal='".$idPro."' order by idMedida asc";
+
+		$resultMedidas=mysqli_query($conexion,$sqlMedidas);
+
+		
+
+		$cadena="
+
+		<table>
+		<tr>
+		<th></th>
+		<th></th>
+		<th></th>
+		</tr>
+		<tr>
+<td>
+		<table border='1px solid black'>
+		<tr>
+		<th>Color</th>
+	
+		</tr>
+		";		
+			while ($ver=mysqli_fetch_row($resultColor)) {
+				$cadena.='<tr>
+				
+				<td>
+				'.utf8_encode($ver[1]).'</td>
+				
+				</tr>';
+			}
+
+			$cadena.='</table></td>';
+			$cadena.="
+			<td><table border='1px solid black'>
+			<tr>
+			<th>Acabado</th>
+		
+			</tr>
+			";		
+				while ($ver=mysqli_fetch_row($resultAcabado)) {
+					$cadena.='<tr>
+					
+					<td>
+					'.utf8_encode($ver[1]).'</td>
+					
+					</tr>';
+				}
+	
+				$cadena.='</table></td>';
+
+				$cadena.="
+				<td><table border='1px solid black'>
+				<tr>
+				<th>Medida</th>
+			
+				</tr>
+				";		
+					while ($ver=mysqli_fetch_row($resultMedidas)) {
+						$cadena.='<tr>
+						
+						<td>
+						'.utf8_encode($ver[1]).'</td>
+						
+						</tr>';
+					}
+		
+					$cadena.='</table>';
+		
+		
+		$cadena.='</table>
+		
+		
+		</td>
+		</tr>
+		</table>';
+
+		echo  $cadena;
+	}
+	
 
 	}
 }

@@ -39,35 +39,62 @@
         </div>
 
 
-        <div class="ui modal" id="detallesProducto">
+        <div class="ui fullscreen modal" id="detallesProducto">
         <div class="header" style="background-color:black;color:white;">
         Inventario del producto: <a id="nameP" style="color:red;"></a>
         </div>
         <div class="scrolling content">
-            <table class="ui celled striped  table"  style="text-align:center; width:100%; margin:auto;" class="ui selectable very compact celled table" >
-            <tr>
-            <th style="background-color: #B40431; color:white;" height="50">Producto</th>
-            <th style="background-color: #B40431; color:white;">Color</th>
-            <th style="background-color: #B40431; color:white;">Acabado</th>
-            <th style="background-color: #B40431; color:white;">Cantidad en existencia(Metros)</th>
-            <th style="background-color: #B40431; color:white;">Precio Unitario</th>
-            </tr>
-            <tr>
-            <td>LONA-BANNER</td>
-            <td>Blanco</td>
-            <td>De Fábrica</td>
-            <td>20.5</td>
-            <td>$0.50</td>
-            </tr>
+        <form class="ui form" style="font-size:16px;">
+            <input type="hidden" id="IDtipoProducto" name="IDtipoProducto">
 
-            <tr>
-            <td>FilmBacklite</td>
-            <td>De Fábrica</td>
-            <td>BRILLANTE/GLOSSY</td>
-            <td>15.5</td>
-            <td>$0.75</td>
-            </tr>
-            </table>
+
+            <div class="field" id="tablaProductos">
+            <div class="fields">
+            
+                
+                <div class="sixteen wide field">
+                    
+                    <table class="ui selectable very compact celled table">
+                    <thead>
+                       <tr>
+                           <th style="background-color:#C60D0D; color:white;"><label><i class="list icon"></i>Producto Final</label></th>
+                           
+                        </tr>
+                        </thead>
+                        <tbody style="background-color:#E4E4E7;">
+                        <tr>
+                            <td id="proFin"></td>
+                        
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                </div>
+
+                <div style="background-color:#EBEDEB;display:none;" id="verDe">
+                    <div class="field">
+                    <div class="fields">
+                        <div class="sixteen wide field" id="title" style="display:none; font-weight: bold; font-size:18px; color: black;">
+                <center>Detalles del producto: <a id="titleDe" style="font-weight: bold; font-size:18px; color: red;"></a></center>
+                
+                    <input type="hidden" id="idProductoF">
+
+                    
+                    </div>
+                    
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="fields">
+                        <div class="sixteen wide field">
+                        <div id="respuesta"></div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </form>
         </div>  
         <div class="actions">
         <button class="ui black deny button">Listo</button>
@@ -86,9 +113,56 @@
 
 
     var detalles =(ele)=>{
+        var idProducto = $(ele).attr("id");
         $('#nameP').text($(ele).attr("nombre"));
+
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=verDetallesProFinalInventario",
+            data:{
+                id:idProducto
+            },
+        success:function(r){
+				$('#proFin').html(r);
+			}
+        });
+
+      
+
         $('#detallesProducto').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
     }
+
+
+
+    var detallePro=(ele)=>{
+    
+    
+    var idBtn = $(ele).attr("id");
+        var idP = $(ele).attr("idP");
+    
+    $("#titleDe").text(idBtn);
+    
+    $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=verDetallesInventario",
+            data:{
+                idC:idP
+            },
+        success:function(r){
+				$('#respuesta').html(r);
+			}
+        });
+
+        $("#verDe").show(1000);
+        $("#title").show(1000);
+
+       
+
+        
+        
+        
+
+}
 </script>
 
 
