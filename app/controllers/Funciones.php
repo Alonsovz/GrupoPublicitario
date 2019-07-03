@@ -754,17 +754,19 @@ class Funciones extends ControladorBase {
 
 		$cadena="
 
-		<table>
+		<table style='width:100%;' class='ui celled table'>
 		<tr>
-		<th></th>
-		<th></th>
-		<th></th>
+		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Color</th>
+		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Acabado</th>
+		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Unidad de Medida</th>
+		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Existencia</th>
+		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Precio Unitario</th>
 		</tr>
 		<tr>
-<td>
-		<table border='1px solid black'>
+		<td style='width:20%;'>
+		<table style='width:100%;'>
 		<tr>
-		<th>Color</th>
+		<th></th>
 	
 		</tr>
 		";		
@@ -779,9 +781,10 @@ class Funciones extends ControladorBase {
 
 			$cadena.='</table></td>';
 			$cadena.="
-			<td><table border='1px solid black'>
+			<td style='width:20%;' class='ui celled table'>
+			<table style='width:100%;'>
 			<tr>
-			<th>Acabado</th>
+			<th></th>
 		
 			</tr>
 			";		
@@ -797,9 +800,56 @@ class Funciones extends ControladorBase {
 				$cadena.='</table></td>';
 
 				$cadena.="
-				<td><table border='1px solid black'>
+				<td style='width:20%;' class='ui celled table'>
+				<table style='width:100%;'>
 				<tr>
-				<th>Medida</th>
+				<th></th>
+			
+				</tr>
+				";		
+					while ($ver=mysqli_fetch_row($resultMedidas)) {
+						$cadena.='<tr>
+						
+						<td>
+						'.utf8_encode($ver[1]).'</td>
+						
+						</tr>';
+					}
+		
+					$cadena.='</table>';
+		
+		
+		
+
+
+		$cadena.="
+		<td style='width:20%;'>
+				<table style='width:100%;' class='ui celled table'>
+				<tr>
+				
+				<th></th>
+				</tr>
+				";		
+					while ($ver=mysqli_fetch_row($resultMedidas)) {
+						$cadena.='<tr>
+						
+						<td>
+						'.utf8_encode($ver[1]).'</td>
+						
+						</tr>';
+					}
+		
+					$cadena.='</table>';
+		
+		
+		
+
+
+		$cadena.="
+				<td style='width:20%;'>
+				<table style='width:100%;' class='ui celled table'>
+				<tr>
+				<th></th>
 			
 				</tr>
 				";		
@@ -816,10 +866,10 @@ class Funciones extends ControladorBase {
 		
 		
 		$cadena.='</table>
+		</td>';
+
 		
-		
-		</td>
-		</tr>
+		$cadena.='</tr>
 		</table>';
 
 		echo  $cadena;

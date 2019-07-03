@@ -89,6 +89,14 @@
 
 </div>
 
+<div class="item">
+<hr><br>
+        <a href="?1=FacturacionController&2=notaCredito"  style="color:white; ">
+           <i class="list icon"></i> Nota de Crédito 
+        </a>
+
+</div>
+
 
 <br>
 

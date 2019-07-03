@@ -10,6 +10,15 @@ class FacturacionController extends ControladorBase {
         require_once './app/view/Facturacion/granFormato.php';
     }
 
+
+    public static function notaCredito() {
+      
+        
+        self::loadMain();
+        
+        require_once './app/view/Facturacion/notaCredito.php';
+    }
+
     public static function impresion() {
 
       

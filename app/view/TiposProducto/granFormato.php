@@ -271,7 +271,7 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                         <select v-model="detalleC.colorN" class="ui dropdown" id="colorN" name="colorN">
                                             <option v-for="option in colorOps" :value="option.idColor">{{option.color}}</option>
                                         </select>
-                                       
+                                        
                                                 </td>
 
                                                 
@@ -767,7 +767,7 @@ var app = new Vue({
                                     app.guardarColor();
                                     app.guardarAcabado();
                                     app.guardarMedida();
-                                 //   app.guardarPrecio();
+                               //   app.guardarInventario();
                                     $('#proFin').html('');
                                     $.ajax({
                                     type:"POST",
@@ -823,17 +823,18 @@ var app = new Vue({
                     }
 
                 },
-                guardarPrecio(){
+                guardarInventario(){
 
-            if (this.detallesPrecio.length) {
+            if (this.detallesColor.length) {
 
             $('#frmNuevoDetallePrecio').addClass('loading');
             $.ajax({
                 type: 'POST',
                 data: {
-                    detallesPro: JSON.stringify(this.detallesPrecio)
+                    listaColor: JSON.stringify(this.detallesColor),
+                    listaAcabado: JSON.stringify(this.detallesAcabado)
                 },
-                url: '?1=ProductosController&2=guardarPrecio',
+                url: '?1=ProductosController&2=guardarParaInventario',
                 success: function (r) {
                     $('#frmNuevoDetallePrecio').removeClass('loading');
                     if (r == 1) {

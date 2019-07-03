@@ -306,6 +306,45 @@ class ProductosController extends ControladorBase {
     }
 
 
+    public function guardarParaInventario(){
+
+        $detallesC = json_decode($_REQUEST["listaColor"]);
+        $detallesA = json_decode($_REQUEST["listaAcabado"]);
+
+        $contador = 0;
+
+        $dao = new DaoProductos();
+
+       
+
+        foreach($detallesC as $detalle) {
+            $dao->objeto->setColor($detalle->colorN);
+              
+            
+            
+        }
+
+        foreach($detallesA as $detalleA) {
+            $dao->objeto->setAcabado($detalleA->acabado);
+              
+           
+        }
+
+         if($dao->guardarInventario()) {
+                    $contador++;
+                } else {
+                    echo 'nell';
+            }
+
+        if($contador == count($detallesC)) {
+            echo 1;
+        } else {
+            echo 2;
+        }
+
+    }
+
+
     public function guardarColorNew() {
 
         $color = $_REQUEST["color"];

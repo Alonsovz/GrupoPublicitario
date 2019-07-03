@@ -448,7 +448,7 @@ class DaoProductos extends DaoBase {
         }
     }
 
-    public function guardarPrecio(){
+    public function guardarInventario(){
 
         $corr= "(select max(idProductoFinal) as id from productoFinal)";
 
@@ -457,7 +457,8 @@ class DaoProductos extends DaoBase {
         $fila = $resultado1->fetch_assoc();
         $idExp = $fila['id'];
 
-        $_query = "insert into productosPrecio values(".$idExp.", '".$this->objeto->getPrecio()."')";
+        $_query = "insert into inventario values(".$idExp.", '".$this->objeto->getColor()."',
+        '".$this->objeto->getAcabado()."',0.0,0.0)";
 
         $resultado = $this->con->ejecutar($_query);
 
