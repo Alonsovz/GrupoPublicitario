@@ -49,6 +49,29 @@ class InventarioController extends ControladorBase {
         echo $dao->mostrarPromocionalInventario();
     }
 
+
+    public function definirExistencia(){
+        $dao = new DaoProductos();
+
+        $dao->objeto->setIdProducto($_REQUEST["id"]);
+        $dao->objeto->setColor($_REQUEST["idColor"]);
+        $dao->objeto->setAcabado($_REQUEST["idAcabado"]);
+        $dao->objeto->setExistencia($_REQUEST["exis"]);
+        
+        echo $dao->definirExistencia();
+    }
+
+    public function definirPrecio(){
+        $dao = new DaoProductos();
+
+        $dao->objeto->setIdProducto($_REQUEST["id"]);
+        $dao->objeto->setColor($_REQUEST["idColor"]);
+        $dao->objeto->setAcabado($_REQUEST["idAcabado"]);
+        $dao->objeto->setPrecio($_REQUEST["precio"]);
+        
+        echo $dao->definirPrecio();
+    }
+
 }
 
 ?>

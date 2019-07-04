@@ -431,6 +431,6 @@ inner join colores c on c.idColor = i.idColor
 inner join acabados a on a.idAcabado = i.idAcabado
 inner join medidas m on m.idMedida = pc.idMedida
 inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
-where p.idProductoFinal = 
+
 group by i.idProducto,i.idColor,i.idAcabado
 

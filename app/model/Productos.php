@@ -9,6 +9,7 @@ class Productos extends ModeloBase{
     private $color;
     private $acabado;
     private $precio;
+    private $existencia;
 
     public function __construct() {
 
@@ -102,6 +103,19 @@ class Productos extends ModeloBase{
     public function setPrecio($precio)
     {
         $this->precio = $precio;
+
+        return $this;
+    }
+
+    public function getExistencia()
+    {
+        return $this->existencia;
+    }
+
+    
+    public function setExistencia($existencia)
+    {
+        $this->existencia = $existencia;
 
         return $this;
     }

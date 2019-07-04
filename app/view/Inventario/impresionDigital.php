@@ -96,21 +96,76 @@
         </div>
         </div>
   
+  <div id="modalExistencia" class="ui tiny modal">
+    <div class="header" style="color:white;background-color:black;">
+        Definir existencia para el producto : <a id="proE" style="color:yellow"></a><br>
+        Acabado : <a id="acaE" style="color:yellow"></a><br>
+        Color : <a id="colE" style="color:yellow"></a><br>
+        Medida : <a id="medE" style="color:yellow"></a>
+    </div>
+    <div class="content">
+    <input type="hidden" id="colorE" name="colorE">
+    <input type="hidden" id="acabadoE" name="acabadoE">
+    <input type="hidden" id="productoE" name="productoE">
+        <form class="ui form">
+            <div class="field">
+                <div class="fields">
+                    <div class="sixteen wide field">
+                    <label><i class="arrows alternate icon"></i> Cantidad en existencia:</label>
+                    <input type="text" id="exis" name="exis" placeholder="Definir existencia">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <button class="ui black  button" id="btnE">Cancelar</button>
+        <button class="ui red button" id="guardarE">Guardar</button>
+    </div>
+</div>
+
+
+<div id="modalPrecio" class="ui tiny modal">
+    <div class="header" style="color:white;background-color:black;">
+        Definir precio para el producto : <a id="proP" style="color:yellow"></a><br>
+        Acabado : <a id="acaP" style="color:yellow"></a><br>
+        Color : <a id="colP" style="color:yellow"></a><br>
+        Medida : <a id="medP" style="color:yellow"></a>
+    </div>
+    <div class="content">
+    <input type="hidden" id="colorP" name="colorP">
+    <input type="hidden" id="acabadoP" name="acabadoP">
+    <input type="hidden" id="productoP" name="productoP">
+        <form class="ui form">
+            <div class="field">
+                <div class="fields">
+                    <div class="sixteen wide field">
+                    <label><i class="dollar icon"></i> Precio Unitario:</label>
+                    <input type="text" id="precio" name="precio" placeholder="Definir Precio Unitario">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <button class="ui black  button" id="btnP">Cancelar</button>
+        <button class="ui red button" id="guardarP">Guardar</button>
+    </div>
+</div>
 </div> 
-
-
 <script src="./res/tablas/tablaImpresionInventario.js"></script>
 <script>
     $(document).ready(function(){
     $("#imp").removeClass("ui black button");
-    $("#imp").addClass("ui black basic button");;
+    $("#imp").addClass("ui black basic button");
+    $('#precio').mask("###0.00", {reverse: true});
+    $('#exis').mask("###0.00", {reverse: true});
     });
-
 
     var detalles =(ele)=>{
         var idProducto = $(ele).attr("id");
         $('#nameP').text($(ele).attr("nombre"));
-
+        
         $.ajax({
 			type:"POST",
 			url:"?1=Funciones&2=verDetallesProFinalInventario",
@@ -134,7 +189,7 @@
     
     var idBtn = $(ele).attr("id");
         var idP = $(ele).attr("idP");
-    
+        $("#idProductoF").val(idP);
     $("#titleDe").text(idBtn);
     
     $.ajax({
@@ -150,17 +205,226 @@
 
         $("#verDe").show(1000);
         $("#title").show(1000);
-
-       
-
-        
-        
-        
+   
 
 }
+
+$("#btnE").click(function(){
+
+   
+        var idP =  $("#idProductoF").val();;
+    
+    $("#titleDe").text();
+    
+    $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=verDetallesInventario",
+            data:{
+                idC:idP
+            },
+        success:function(r){
+				$('#respuesta').html(r);
+			}
+        });
+
+        $("#verDe").show(1000);
+        $("#title").show(1000);
+        $('#detallesProducto').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+});
+
+
+$("#btnP").click(function(){
+
+   
+var idP =  $("#idProductoF").val();;
+
+$("#titleDe").text();
+
+$.ajax({
+    type:"POST",
+    url:"?1=Funciones&2=verDetallesInventario",
+    data:{
+        idC:idP
+    },
+success:function(r){
+        $('#respuesta').html(r);
+    }
+});
+
+$("#verDe").show(1000);
+$("#title").show(1000);
+$('#detallesProducto').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+});
+
+var agregarExistencia=(ele)=>{
+    var id = $(ele).attr("id");
+    var idColor = $(ele).attr("idColor");
+    var idAcabado = $(ele).attr("idAcabado");
+
+    $("#proE").text($("#titleDe").text());
+    $("#colE").text($(ele).attr("color"));
+    $("#acaE").text($(ele).attr("acabado"));
+    $("#medE").text($(ele).attr("medida"));
+
+    $("#colorE").val(idColor);
+    $("#acabadoE").val(idAcabado);
+    $("#productoE").val(id);
+    $('#modalExistencia').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+}
+
+
+$("#guardarE").click(function(){
+    
+  var idColor=  $("#colorE").val();
+   var idAcabado= $("#acabadoE").val();
+   var id= $("#productoE").val();
+   var exis = $("#exis").val();
+
+    alertify.confirm("¿Desea guardar la existencia para el producto: " +$("#proE").text()+ "  Acabado: " + $("#acaE").text() + "  Color: " + $("#colE").text() + "?",
+            function(){
+    $.ajax({
+			type:"POST",
+			url:"?1=InventarioController&2=definirExistencia",
+            data:{
+                id:id,
+                idColor:idColor,
+                idAcabado:idAcabado,
+                exis:exis,
+            },
+            success: function(r) {
+                    if(r == 1) {
+                        $('#modalExistencia').modal('hide');
+                        $('#respuesta').html('');
+                        swal({
+                            title: 'Existencia actualizada',
+                            text: 'Guardado con éxito',
+                            type: 'success',
+                            
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                if (result.value) {
+                            
+                                    var idP =  $("#idProductoF").val();;
+                                
+                                $("#titleDe").text();
+                                
+                                $.ajax({
+                                        type:"POST",
+                                        url:"?1=Funciones&2=verDetallesInventario",
+                                        data:{
+                                            idC:idP
+                                        },
+                                    success:function(r){
+                                            $('#respuesta').html(r);
+                                        }
+                                    });
+
+                                    $("#verDe").show(1000);
+                                    $("#title").show(1000);
+                                    $('#detallesProducto').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                               
+                            }
+                        }); 
+                        
+                    } 
+                }
+        });
+
+    },
+            function(){
+               
+                alertify.error('Cancelado');
+                
+            }); 
+    
+});
+
+
+
+var agregarPrecio=(ele)=>{
+    var id = $(ele).attr("id");
+    var idColor = $(ele).attr("idColor");
+    var idAcabado = $(ele).attr("idAcabado");
+
+    $("#proP").text($("#titleDe").text());
+    $("#colP").text($(ele).attr("color"));
+    $("#acaP").text($(ele).attr("acabado"));
+    $("#medP").text($(ele).attr("medida"));
+
+
+    $("#colorP").val(idColor);
+    $("#acabadoP").val(idAcabado);
+    $("#productoP").val(id);
+    $('#modalPrecio').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+}
+    
+
+
+$("#guardarP").click(function(){
+    
+    var idColor=  $("#colorP").val();
+     var idAcabado= $("#acabadoP").val();
+     var id= $("#productoP").val();
+     var precio = $("#precio").val();
+  
+      alertify.confirm("¿Desea guardar el precio para el producto: " +$("#proP").text()+ "  Acabado: " + $("#acaP").text() + "  Color: " + $("#colP").text() + "?",
+              function(){
+      $.ajax({
+              type:"POST",
+              url:"?1=InventarioController&2=definirPrecio",
+              data:{
+                  id:id,
+                  idColor:idColor,
+                  idAcabado:idAcabado,
+                  precio:precio,
+              },
+              success: function(r) {
+                      if(r == 1) {
+                        $('#modalPrecio').modal('hide');
+                          $('#respuesta').html('');
+                          swal({
+                              title: 'Precio actualizado',
+                              text: 'Guardado con éxito',
+                              type: 'success',
+                              
+                              showConfirmButton: true,
+                              }).then((result) => {
+                                  if (result.value) {
+                              
+                                      var idP =  $("#idProductoF").val();;
+                                  
+                                  $("#titleDe").text();
+                                  
+                                  $.ajax({
+                                          type:"POST",
+                                          url:"?1=Funciones&2=verDetallesInventario",
+                                          data:{
+                                              idC:idP
+                                          },
+                                      success:function(r){
+                                              $('#respuesta').html(r);
+                                          }
+                                      });
+  
+                                      $("#verDe").show(1000);
+                                      $("#title").show(1000);
+                                      $('#detallesProducto').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                                 
+                              }
+                          }); 
+                          
+                      } 
+                  }
+          });
+  
+      },
+              function(){
+                 
+                  alertify.error('Cancelado');
+                  
+              }); 
+      
+  });
 </script>
-
-
-
-
+  
 
