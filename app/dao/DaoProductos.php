@@ -388,7 +388,9 @@ class DaoProductos extends DaoBase {
         }
     }
 
-    public function guardarColor(){
+    
+
+    public function guardarDetalleProducto(){
 
         $corr= "(select max(idProductoFinal) as id from productoFinal)";
 
@@ -397,7 +399,8 @@ class DaoProductos extends DaoBase {
         $fila = $resultado1->fetch_assoc();
         $idExp = $fila['id'];
 
-        $_query = "insert into productosColores values(".$idExp.", '".$this->objeto->getColor()."')";
+        $_query = "insert into productosDetalle values(".$idExp.", '".$this->objeto->getColor()."',
+        '".$this->objeto->getAcabado()."','".$this->objeto->getUnidadMedida()."')";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -408,45 +411,7 @@ class DaoProductos extends DaoBase {
         }
     }
 
-    public function guardarAcabado(){
-
-        $corr= "(select max(idProductoFinal) as id from productoFinal)";
-
-        $resultado1 = $this->con->ejecutar($corr);
-
-        $fila = $resultado1->fetch_assoc();
-        $idExp = $fila['id'];
-
-        $_query = "insert into productosAcabados values(".$idExp.", '".$this->objeto->getAcabado()."')";
-
-        $resultado = $this->con->ejecutar($_query);
-
-        if($resultado) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    public function guardarMedida(){
-
-        $corr= "(select max(idProductoFinal) as id from productoFinal)";
-
-        $resultado1 = $this->con->ejecutar($corr);
-
-        $fila = $resultado1->fetch_assoc();
-        $idExp = $fila['id'];
-
-        $_query = "insert into productosMedidas values(".$idExp.", '".$this->objeto->getUnidadMedida()."')";
-
-        $resultado = $this->con->ejecutar($_query);
-
-        if($resultado) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
+    
 
     public function guardarInventario(){
 
@@ -650,6 +615,59 @@ class DaoProductos extends DaoBase {
 
         return '{"data": ['.$_json .']}';
     }
+
+
+    public function mostrarImpresionInventario() {
+        $_query = "select * from clasificacionProductos where idClasificacion = 2 and idEliminado=1 and idProducto>2";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+           $btnDetalles = '<button id=\"'.$fila["idProducto"].'\" nombre=\"'.$fila["nombre"].'\"  class=\"ui icon blue small button\" onclick=\"detalles(this)\"><i class=\"list icon\"></i> Detalles</button>';
+
+            $acciones = ', "Acciones": "'.$btnDetalles.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
+
+    public function mostrarPromocionalInventario() {
+        $_query = "select * from clasificacionProductos where idClasificacion = 3 and idEliminado=1 and idProducto>3";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+           $btnDetalles = '<button id=\"'.$fila["idProducto"].'\" nombre=\"'.$fila["nombre"].'\"  class=\"ui icon blue small button\" onclick=\"detalles(this)\"><i class=\"list icon\"></i> Detalles</button>';
+
+            $acciones = ', "Acciones": "'.$btnDetalles.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
 
 
 

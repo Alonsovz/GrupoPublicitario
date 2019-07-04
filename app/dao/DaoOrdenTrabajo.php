@@ -633,9 +633,9 @@ class DaoOrdenTrabajo extends DaoBase {
         inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
         inner join colores c on c.idColor = d.idColor
         inner join acabados a on a.idAcabado = d.idAcabado
-        inner join productosMedidas pm on pm.idProductoFinal = d.idProductoFinal
+        inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
         inner join medidas m on m.idMedida = pm.idMedida
-        where d.idOrden= (select max(idOrden) from ordenTrabajoGR)";
+        where d.idOrden= (select max(idOrden) from ordenTrabajoGR) group by d.idDetalle";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -661,7 +661,7 @@ class DaoOrdenTrabajo extends DaoBase {
         inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
         inner join colores c on c.idColor = d.idColor
         inner join acabados a on a.idAcabado = d.idAcabado
-        inner join productosMedidas pm on pm.idProductoFinal = d.idProductoFinal
+        inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
         inner join medidas m on m.idMedida = pm.idMedida
         where d.idOrden= (select max(idOrden) from ordenTrabajoIP) group by d.idDetalle";
 
@@ -690,7 +690,7 @@ class DaoOrdenTrabajo extends DaoBase {
         inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
         inner join colores c on c.idColor = d.idColor
         inner join acabados a on a.idAcabado = d.idAcabado
-        inner join productosMedidas pm on pm.idProductoFinal = d.idProductoFinal
+        inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
         inner join medidas m on m.idMedida = pm.idMedida
         where d.idOrden= (select max(idOrden) from ordenTrabajoP) group by d.idDetalle";
 

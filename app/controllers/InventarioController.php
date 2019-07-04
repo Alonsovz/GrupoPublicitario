@@ -37,6 +37,18 @@ class InventarioController extends ControladorBase {
         echo $dao->mostrarGranFormatoInventario();
     }
 
+    public function mostrarImpresion() {
+        $dao = new DaoProductos();
+
+        echo $dao->mostrarImpresionInventario();
+    }
+
+    public function mostrarPromocional() {
+        $dao = new DaoProductos();
+
+        echo $dao->mostrarPromocionalInventario();
+    }
+
 }
 
 ?>

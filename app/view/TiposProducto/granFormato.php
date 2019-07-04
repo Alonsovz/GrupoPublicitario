@@ -239,9 +239,9 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                 <thead>
                                     <tr>
                                         <th style="background-color: #20AD10; color:white;"><i class="building icon"></i>Producto Final</th>
-                                        <th style="background-color: #20AD10; color:white;"><i class="chart bar icon"></i>Color</th>
-                                        <th style="background-color: #20AD10; color:white;"><i class="podcast icon"></i>Acabado</th>
-                                        <th style="background-color: #20AD10; color:white;"><i class="arrows alternate icon"></i>Unidad de Medida</th>
+                                        
+                                        <th style="background-color: #20AD10; color:white;"><i class="podcast icon"></i>Detalles</th>
+                                       
                                       
                                 </thead>
                                 <tbody style="background-color:#F0F2EF;">
@@ -254,50 +254,14 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                     <td style="">  
                                             
                                     <span style="float:right;">
-                                    <a style="background-color:#8F8F91;color:white;" @click="agregarDetalleC" class="ui gray circular icon button"><i class="plus icon"></i></a>
-                                    </span>        <br><br>
-                                    <form action="" class="ui form" id="frmNuevoColor" >
-                                    <table class="ui selectable very compact celled table" style="margin:auto;font-size:14px;">
-                                            <thead>
-                                            <th style="background-color: #8F8F91; color:white; text-align:center;"><i class="pencil icon"></i>Color</th>
-                                                <th style="background-color: #8F8F91; color:white;text-align:center;"><i class="trash icon"></i></th>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="(detalleC, index) in detallesColor">
-                                                
-                                            
-                                                <td>  
-                                              
-                                        <select v-model="detalleC.colorN" class="ui dropdown" id="colorN" name="colorN">
-                                            <option v-for="option in colorOps" :value="option.idColor">{{option.color}}</option>
-                                        </select>
-                                        
-                                                </td>
-
-                                                
-
-                                                <td>
-                                                <center>
-                                    
-                                            <a style="background-color:#8F8F91;color:white;"  @click="eliminarDetalleC(index)" class="ui gray mini circular icon button"><i
-                                                class="times icon"></i></a>
-                                                </center>
-                                            </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    </form>
-
-                                    </td>
-
-                                    <td>  
-                                    <span style="float:right;">
                                     <a @click="agregarDetalleAC" class="ui black circular icon button"><i class="plus icon"></i></a>
                                     </span>        <br><br>
                                     <form action="" class="ui form" id="frmNuevoDetalleAcabado" >
                                     <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                                                 <thead>
                                                 <th style="background-color: black; color:white; text-align:center;"><i class="podcast icon"></i>Acabado</th>
+                                                <th style="background-color: black; color:white; text-align:center;"><i class="podcast icon"></i>Color</th>
+                                                <th style="background-color: black; color:white; text-align:center;"><i class="podcast icon"></i>Medida</th>
                                                     <th style="background-color: black; color:white;text-align:center;"><i class="trash icon"></i></th>
                                                 </thead>
                                                 <tbody>
@@ -310,6 +274,20 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                             </select>
                                                     </td>
 
+                                                    <td>  
+                                              
+                                        <select v-model="detalleAC.colorN" class="ui dropdown" id="colorN" name="colorN">
+                                            <option v-for="option in colorOps" :value="option.idColor">{{option.color}}</option>
+                                        </select>
+                                        
+                                                </td>
+
+                                                <td>  
+                                                <select v-model="detalleAC.unidad" class="ui  dropdown" id="unidad" name="unidad">
+                                            <option v-for="option in medidasOps" :value="option.idMedida">{{option.medida}}</option>
+                                        </select>
+                                                </td> 
+
                                                     <td>
                                                     <center>
                                        
@@ -321,40 +299,10 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                             </tbody>
                                     </table>
                                     </form>
+
                                     </td>
 
-                                    <td>  
-                                    <span style="float:right;">
-                                    <a style="background-color:#8F8F91;color:white;" @click="agregarDetalleU" class="ui gray circular icon button"><i class="plus icon"></i></a>
-                                    </span><br><br>
-                                    <form action="" class="ui form" id="frmNuevoDetalleUnidad" >
-                                    <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
-                                            <thead>
-                                            <th style="background-color: #B40431; color:white; text-align:center;"><i class="arrows alternate icon"></i>Unidad de Medida</th>
-                                            <th style="background-color: #B40431; color:white; text-align:center;"><i class="trash icon"></i></th>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="(detalleU, index) in detallesUnidad">
-                                                
-                                            
-                                                <td>  
-                                                <select v-model="detalleU.unidad" class="ui  dropdown" id="unidad" name="unidad">
-                                            <option v-for="option in medidasOps" :value="option.idMedida">{{option.medida}}</option>
-                                        </select>
-                                                </td> 
-                                                <td>
-                                                <center>
                                     
-                                            <a style="background-color:#8F8F91;color:white;"  @click="eliminarDetalleU(index)" class="ui gray mini circular icon button"><i
-                                                class="times icon"></i></a>
-                                                </center>
-                                            </td>
-                                            </td>
-                                            
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    </form>
                                     
                                     
                                     
@@ -589,19 +537,13 @@ var app = new Vue({
                
             }],
 
-            detallesColor: [{
-                colorN : '1' ,
-            }],
             detallesAcabado: [{
                 acabado: '1',
-               
-            }],
-            detallesUnidad: [{
                 unidad: '1',
-               
-               
+                colorN : '1' ,
                
             }],
+           
             colorOps: <?php echo $colores?>,
             acabadosOps: <?php echo $acabados?>,
             medidasOps: <?php echo $medidas?>,
@@ -646,49 +588,19 @@ var app = new Vue({
                 });
             
             },
-            agregarDetallePre() {
-                this.detallesPrecio.push({
-               
-                    precioUnitario : '' ,
-            
-                });
-            
-            },
-            eliminarDetallePre(index) {
-                this.detallesPrecio.splice(index, 1);
-            },
-            eliminarDetalleC(index) {
-                this.detallesColor.splice(index, 1);
-            },
-            agregarDetalleC() {
-                this.detallesColor.push({
-               
-                    colorN : '1' ,
-            
-                });
-            
-            },
             eliminarDetalleAC(index) {
                 this.detallesAcabado.splice(index, 1);
+                
             },
             agregarDetalleAC() {
                 this.detallesAcabado.push({
                
                 acabado: '1',
-            
-                });
-            
-            },
-
-            eliminarDetalleU(index) {
-                this.detallesUnidad.splice(index, 1);
-            },
-            agregarDetalleU() {
-                this.detallesUnidad.push({
-               
+                colorN : '1' ,
                 unidad: '1',
-            
                 });
+
+               
             
             },
             refrescarTabla() {
@@ -764,10 +676,10 @@ var app = new Vue({
                                         unidad: '',
                                         precioUnitario: '',
                                     }];
-                                    app.guardarColor();
+                                    
                                     app.guardarAcabado();
-                                    app.guardarMedida();
-                               //   app.guardarInventario();
+                                
+                               app.guardarInventario();
                                     $('#proFin').html('');
                                     $.ajax({
                                     type:"POST",
@@ -796,61 +708,7 @@ var app = new Vue({
                 
             }); 
                 },
-                guardarColor(){
-
-                    if (this.detallesColor.length) {
-
-                    $('#frmNuevoColor').addClass('loading');
-                    $.ajax({
-                        type: 'POST',
-                        data: {
-                            detallesPro: JSON.stringify(this.detallesColor)
-                        },
-                        url: '?1=ProductosController&2=guardarColor',
-                        success: function (r) {
-                            $('#frmNuevoColor').removeClass('loading');
-                            if (r == 1) {
-                                
-                                        app.detallesColor = [{
-                                            colorN : '1' ,
-        
-                                        } ]
-                                            
-                            }
-                            
-                        }
-                    });
-                    }
-
-                },
-                guardarInventario(){
-
-            if (this.detallesColor.length) {
-
-            $('#frmNuevoDetallePrecio').addClass('loading');
-            $.ajax({
-                type: 'POST',
-                data: {
-                    listaColor: JSON.stringify(this.detallesColor),
-                    listaAcabado: JSON.stringify(this.detallesAcabado)
-                },
-                url: '?1=ProductosController&2=guardarParaInventario',
-                success: function (r) {
-                    $('#frmNuevoDetallePrecio').removeClass('loading');
-                    if (r == 1) {
-                        
-                                app.detallesPrecio = [{
-                                    precioUnitario : '' ,
-
-                                } ]
-                                    
-                    }
-                    
-                }
-            });
-            }
-
-            },
+                
                 guardarAcabado(){
 
                 if (this.detallesAcabado.length) {
@@ -867,8 +725,10 @@ var app = new Vue({
                         if (r == 1) {
                             
                                     app.detallesAcabado = [{
+                                       
+                                        acabado: '1',
                                         colorN : '1' ,
-
+                                        unidad: '1',
                                     } ]
                                         
                         }
@@ -878,24 +738,27 @@ var app = new Vue({
                 }
 
                 },
-                guardarMedida(){
+               
+                guardarInventario(){
 
-                if (this.detallesUnidad.length) {
+                if (this.detallesAcabado.length) {
 
-                $('#frmNuevoDetalleUnidad').addClass('loading');
+                $('#frmNuevoDetalleAcabado').addClass('loading');
                 $.ajax({
                     type: 'POST',
                     data: {
-                        detallesPro: JSON.stringify(this.detallesUnidad)
+                        detallesPro: JSON.stringify(this.detallesAcabado)
                     },
-                    url: '?1=ProductosController&2=guardarMedida',
+                    url: '?1=ProductosController&2=guardarInventario',
                     success: function (r) {
-                        $('#frmNuevoDetalleUnidad').removeClass('loading');
+                        $('#frmNuevoDetalleAcabado').removeClass('loading');
                         if (r == 1) {
                             
-                                    app.detallesUnidad = [{
-                                        unidad : '1' ,
-
+                                    app.detallesAcabado = [{
+                                    
+                                        acabado: '1',
+                                        colorN : '1' ,
+                                        unidad: '1',
                                     } ]
                                         
                         }
@@ -953,46 +816,9 @@ $("#editarNom").click(function(){
     $('#editarNamePro').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 });
 
-var editarPrecio=(ele)=>{
-    var id= $(ele).attr("id");
-    var name = $("#titleDe").text();
-    var idC = $("#IDtipoProducto").val();
-    var precio = $(ele).attr("precio");
-
-    $("#idModiP").val(id);
-    $("#idClaP").val(idC);
-    $("#nameActualP").text(name);
-    $("#precioAc").text("$ " +precio);
-
-    $('#editarPrecioPro').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 
 
-    }
 
-$("#btnCP").click(function(){
-    var idC = $("#idClaP").val();
-        $("#IDtipoProducto").val(idC);
-        $("#botonNuevo").hide();
-        $("#tablaProductos").hide();
-        $('#proFin').html('');
-        $.ajax({
-                type:"POST",
-                url:"?1=Funciones&2=verDetallesProFinal",
-                data:{
-                id:idC
-                },
-            success:function(r){
-            $('#proFin').html(r);
-            }
-        });
-        $('#detallesProductos').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
-        $("#nuevoDetalle").hide();
-        $("#colorDiv").show();
-        $("#acabadoDiv").show();
-        $("#medidadDiv").show();
-        $("#title").show();
-        $("#verDe").show();
-});
 
 
 $("#btnCN").click(function(){
@@ -1075,58 +901,7 @@ var idC = $("#idCla").val();
 
 
 
-$("#btnEditarP").click(function(){
-var idProducto = $("#idModiP").val();
-var newN = $("#newPrecio").val();
-var idC = $("#idClaP").val();
 
-            $.ajax({
-                    type: 'POST',
-                    data: {
-    
-                        idProducto : idProducto,
-                        newN: newN,
-                    },
-                    url: '?1=ProductosController&2=nuevoPrecio',
-                    success: function (r) {
-                        $('#editarPrecioPro').modal('hide');
-                        if (r == 1) {
-                            swal({
-                             title: 'Precio actualizado',
-                            text: 'Guardado con éxito',
-                            type: 'success',
-                            showConfirmButton: true,
-                            }).then((result) => {
-                                if(result.value){
-                                    $("#IDtipoProducto").val(idC);
-                                    $("#botonNuevo").show();
-                                    $("#tablaProductos").show();
-                                    $('#proFin').html('');
-                                    $.ajax({
-                                            type:"POST",
-                                            url:"?1=Funciones&2=verDetallesProFinal",
-                                            data:{
-                                                id:idC
-                                            },
-                                        success:function(r){
-                                                $('#proFin').html(r);
-                                            }
-                                        });
-                                    $('#detallesProductos').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
-                                    $("#nuevoDetalle").hide();
-                                    $("#colorDiv").hide();
-                                    $("#acabadoDiv").hide();
-                                    $("#medidadDiv").hide();
-                                    $("#title").hide();
-                                    $("#verDe").hide();
-                                }
-                               
-                            });           
-                        }
-                        
-                    }
-                });
-});
 
 var detallePro=(ele)=>{
     
@@ -1137,9 +912,9 @@ var detallePro=(ele)=>{
        $("#botonNuevo").hide(1000);
        $("#precioDiv").hide();
        $("#tablaProductos").hide(1000);
-    var idBtn = $(ele).attr("id");
-    
-    $("#titleDe").text(idBtn);
+    var idBtnN = $(ele).attr("id");
+    var idBtn = $(ele).attr("idP");
+    $("#titleDe").text(idBtnN);
     $("#idProductoF").val($(ele).attr("idP"));
 
     

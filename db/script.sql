@@ -71,12 +71,15 @@ idClasificacion int,
 idEliminado int
 );
 
+
 create table inventario(
 idProducto int,
 idColor int,
 idAcabado int,	
-cantidadExistencia double
+cantidadExistencia double,
+precioUnitario double
 );
+
 
 create table productoFinal(
 idProductoFinal int primary key  auto_increment,
@@ -84,25 +87,13 @@ productoFinal varchar(100),
 idProducto int
 );
 
-create table productosPrecio(
+create table productosDetalle(
 idProductoFinal int,
-precioUnitario double
-);
-
-create table productosColores(
-idProductoFinal int,
-idColor int
-);
-
-create table productosAcabados(
-idProductoFinal int,
-idAcabado int
-);
-
-create table productosMedidas(
-idProductoFinal int,
+idColor int,
+idAcabado int,
 idMedida int
 );
+
 
 create table colores(
 idColor int primary key auto_increment,
@@ -291,6 +282,12 @@ insert into usuario values(null,'Fabio','Mejia','8187-239817-239-8','01234567-8'
 insert into hijosEmp values(1,'Carlos Mejia');
 
 
+insert into usuario values(null,'Alonso','Velasquez','8187-239817-239-8','01234567-8',
+'1980-12-10','2312-2312','7121-1231','mejiafabio383@gmail.com','San Juan Opico','09123-1','AFP Crecer','123413-2',
+'Soltero/a','',1,'Jose Lepoldo Mejia','Rebeca de Mejia','Juan Jose Lopez Maravilla','2314-5312','7980-1352',curdate(),450.00,1,'alonso',sha1(1234),1);
+
+
+
 insert into clientes values(null,'Adriana Marina Panameno','0614-110475-120-7','123642-2','BLOCK630SDA9-A URB, NUEVO LOURDESNº6 COLON ','La Libertad ','VENTA ALA POR MAYOR DE PRODUCTOS MEDICINALES','Frecuente','01234','Fiscal','2312-1231','7123-4324','Fabio Mejia','fabiomejiash@gmail.com',1);
  insert into clientes values(null,'Juan Jose','0614-110475-120-7','123642-2','BLOCK630SDA9-A URB, NUEVO LOURDESNº6 COLON ','La Union ','VENTA ALA POR MAYOR DE PRODUCTO','Especial','012345','Factura','2461-1231','7912-4324','Juan Mejia','juan@gmail.com',1);
  
@@ -366,9 +363,9 @@ insert into productoFinal values(null,'Seleccione una opcion',0);
 
 
 
-insert into ordenTrabajoGR values(null,'OTGR00',curdate(),1,1,curdate(),'',1,1);
-insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,curdate(),'',1,1);
-insert into ordenTrabajoP values(null,'OTPR00',curdate(),1,1,curdate(),'',1,1);
+insert into ordenTrabajoGR values(null,'OTGR00',curdate(),1,1,curdate(),'',9,1);
+insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,curdate(),'',9,1);
+insert into ordenTrabajoP values(null,'OTPR00',curdate(),1,1,curdate(),'',9,1);
 
 insert into gastosOficina values(null,'Internet',1);
 	
@@ -425,6 +422,15 @@ begin
     where idEliminado=1;
 end
 $$
-update gastos set estado=1 where idDetalle=1
 
-select * from gastos
+
+
+select i.*,c.*,a.*,m.* from inventario i
+inner join productosDetalle pc on pc.idProductoFinal = i.idProducto
+inner join colores c on c.idColor = i.idColor
+inner join acabados a on a.idAcabado = i.idAcabado
+inner join medidas m on m.idMedida = pc.idMedida
+inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
+where p.idProductoFinal = 
+group by i.idProducto,i.idColor,i.idAcabado
+

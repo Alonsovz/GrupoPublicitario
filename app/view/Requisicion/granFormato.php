@@ -394,7 +394,7 @@ $(function() {
 		$.ajax({
 			type:"POST",
 			url:"?1=Funciones&2=acabado",
-			data:"idPro=" + $('#proFinalCmb option:selected').text(),
+			data:"idPro=" + $('#proFinalCmb option:selected').val(),
 			success:function(r){
 				$('#acabadoCmb').html(r);
 			}
@@ -409,7 +409,7 @@ $(function() {
 		$.ajax({
 			type:"POST",
 			url:"?1=Funciones&2=color",
-			data:"idPro=" + $('#proFinalCmb option:selected').text(),
+			data:"idPro=" + $('#proFinalCmb option:selected').val(),
 			success:function(r){
 				$('#colorCmb').html(r);
 			}
@@ -421,7 +421,7 @@ $(function() {
 		$.ajax({
 			type:"POST",
 			url:"?1=Funciones&2=unidadMedida",
-			data:"idPro=" + $('#proFinalCmb option:selected').text(),
+			data:"idPro=" + $('#proFinalCmb option:selected').val(),
 			success:function(r){
                 $('#unidadMedida').val(r);
                 $("#medi").show(1000);

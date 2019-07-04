@@ -220,33 +220,6 @@ class ProductosController extends ControladorBase {
     }
 
 
-    public function guardarColor(){
-
-        $detalles = json_decode($_REQUEST["detallesPro"]);
-
-        $contador = 0;
-
-        $dao = new DaoProductos();
-
-        foreach($detalles as $detalle) {
-            $dao->objeto->setColor($detalle->colorN);
-           
-          
-
-            if($dao->guardarColor()) {
-                $contador++;
-            } else {
-                echo 'nell';
-            }
-        }
-
-        if($contador == count($detalles)) {
-            echo 1;
-        } else {
-            echo 2;
-        }
-
-    }
 
 
     public function guardarAcabado(){
@@ -259,10 +232,10 @@ class ProductosController extends ControladorBase {
 
         foreach($detalles as $detalle) {
             $dao->objeto->setAcabado($detalle->acabado);
-           
-          
+            $dao->objeto->setColor($detalle->colorN);
+            $dao->objeto->setUnidadMedida($detalle->unidad);
 
-            if($dao->guardarAcabado()) {
+            if($dao->guardarDetalleProducto()) {
                 $contador++;
             } else {
                 echo 'nell';
@@ -277,8 +250,12 @@ class ProductosController extends ControladorBase {
 
     }
 
-    public function guardarMedida(){
+   
 
+
+    public function guardarInventario(){
+
+        
         $detalles = json_decode($_REQUEST["detallesPro"]);
 
         $contador = 0;
@@ -286,11 +263,11 @@ class ProductosController extends ControladorBase {
         $dao = new DaoProductos();
 
         foreach($detalles as $detalle) {
-            $dao->objeto->setUnidadMedida($detalle->unidad);
+            $dao->objeto->setAcabado($detalle->acabado);
+            $dao->objeto->setColor($detalle->colorN);
            
-          
 
-            if($dao->guardarMedida()) {
+            if($dao->guardarInventario()) {
                 $contador++;
             } else {
                 echo 'nell';
@@ -303,44 +280,6 @@ class ProductosController extends ControladorBase {
             echo 2;
         }
 
-    }
-
-
-    public function guardarParaInventario(){
-
-        $detallesC = json_decode($_REQUEST["listaColor"]);
-        $detallesA = json_decode($_REQUEST["listaAcabado"]);
-
-        $contador = 0;
-
-        $dao = new DaoProductos();
-
-       
-
-        foreach($detallesC as $detalle) {
-            $dao->objeto->setColor($detalle->colorN);
-              
-            
-            
-        }
-
-        foreach($detallesA as $detalleA) {
-            $dao->objeto->setAcabado($detalleA->acabado);
-              
-           
-        }
-
-         if($dao->guardarInventario()) {
-                    $contador++;
-                } else {
-                    echo 'nell';
-            }
-
-        if($contador == count($detallesC)) {
-            echo 1;
-        } else {
-            echo 2;
-        }
 
     }
 

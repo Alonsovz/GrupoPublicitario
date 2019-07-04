@@ -144,7 +144,7 @@
     
     $.ajax({
 			type:"POST",
-			url:"?1=Funciones&2=verDetallesInventario",
+			url:"?1=Funciones&2=verDetallesInventarioGR",
             data:{
                 idC:idP
             },
