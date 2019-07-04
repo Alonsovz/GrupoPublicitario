@@ -13,7 +13,8 @@ class FacturacionController extends ControladorBase {
 
     public static function notaCredito() {
       
-        
+        $dao = new DaoClientes();
+        $clientes = $dao->mostrarClientesCmb();
         self::loadMain();
         
         require_once './app/view/Facturacion/notaCredito.php';

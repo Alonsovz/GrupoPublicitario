@@ -10,13 +10,15 @@
         </div>
 </div>
 
-<div class="content">
-    <form class="ui form">
+<div class="content" style="text-align:center; border: 1px solid black; background-color: #F3F3F1;">
+    <br>
+    <form class="ui form" style="font-size:16px;margin-left:20px;margin-right:20px; ">
         <div class="field">
             <div class="fields">
                 <div class="four wide field">
                     <label>Cliente</label>
                     <select name="cliente" id="cliente" class="ui search dropdown">
+                    <option value="seleccione" set selected>Seleccione una opción</option>
                     </select>
                 </div>
                 <div class="four wide field">
@@ -29,7 +31,7 @@
                 </div>
                 <div class="four wide field">
                 <label><i class="address card icon"></i>Dirección:</label>
-                    <textarea rows="3" name="direccion" id="direccion" readonly></textarea>
+                    <textarea rows="2" name="direccion" id="direccion" readonly></textarea>
                 </div>
             </div>
         </div>
@@ -38,7 +40,7 @@
             <div class="fields">
                 <div class="four wide field">
                     <label>Depertamento:</label>
-                    <input type="text" name="departamento" id="depertamento" readonly>
+                    <input type="text" name="departamento" id="departamento" readonly>
                     </select>
                 </div>
                 
@@ -46,9 +48,9 @@
                 <label><i class="adress card icon"></i>NIT:</label>
                     <input type="text" name="nit" id="nit"> 
                 </div>
-                <div class="four wide field">
+                <div class="six wide field">
                 <label><i class="address card icon"></i>Giro:</label>
-                <input type="text" name="giro" id="giro">
+                <textarea rows="2" name="giro" id="giro" readonly></textarea>
                 </div>
                 <div class="four wide field">
                 <label><i class="folder icon"></i>N° registro:</label>
@@ -148,8 +150,8 @@
                             </tr>
                         </tbody>
                     </table>
-                    
-                    
+                        <br>
+                        <a class="ui blue right floated button">Guardar</a>
                         </div>
                         
                          </div>
@@ -195,7 +197,7 @@ var app = new Vue({
             },
                 guardarAcabado(){
 
-                if (this.listad.length) {
+                if (this.listado.length) {
 
                 $('#frmLista').addClass('loading');
                 $.ajax({
@@ -203,16 +205,19 @@ var app = new Vue({
                     data: {
                         detalles: JSON.stringify(this.listado)
                     },
-                    url: '?1=ProductosController&2=guardarAcabado',
+                    url: '?1=FacturacionController&2=guardarNotaCredito',
                     success: function (r) {
-                        $('#frmNuevoDetalleAcabado').removeClass('loading');
+                        $('#frmLista').removeClass('loading');
                         if (r == 1) {
                             
-                                    app.detallesAcabado = [{
+                                    app.listado = [{
                                        
-                                        acabado: '1',
-                                        colorN : '1' ,
-                                        unidad: '1',
+                                        cantidadRe: '',
+                                        descripcionRe: '',
+                                        precioUnitarioRe: '',
+                                        ventasNoSujetas: '',
+                                        ventasExentas: '',
+                                        ventasGravadas: '',
                                     } ]
                                         
                         }
@@ -226,5 +231,61 @@ var app = new Vue({
                 
         
         }
+    });
+
+    $(function() {
+        
+
+        var option = '';
+        var cliente = '<?php echo $clientes?>';
+
+        $.each(JSON.parse(cliente), function() {
+            option = `<option value="${this.idCliente}">${this.nombre}</option>`;
+
+            $('#cliente').append(option);
+        });
+    });
+
+    $("#cliente").change(function(){
+        var id = $(this).val();
+
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=clienteDirec",
+			data:"id=" + $('#cliente option:selected').val(),
+			success:function(r){
+				$('#direccion').val(r);
+			}
+        });
+
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=clienteDepar",
+			data:"id=" + $('#cliente option:selected').val(),
+			success:function(r){
+				$('#departamento').val(r);
+			}
+        });
+        
+        
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=clienteNit",
+			data:"id=" + $('#cliente option:selected').val(),
+			success:function(r){
+				$('#nit').val(r);
+			}
+        });
+
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=clienteGiro",
+			data:"id=" + $('#cliente option:selected').val(),
+			success:function(r){
+				$('#giro').val(r);
+			}
+        });
+        
+
     });
 </script>

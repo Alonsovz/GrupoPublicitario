@@ -42,6 +42,82 @@ class Funciones extends ControladorBase {
 	}
 
 	echo  $cadena;
+	}
+	
+	public function clienteDirec(){
+        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $idCliente=$_POST['id'];
+
+	$sql="SELECT direccion
+		from clientes 
+		where idCliente='$idCliente' and idEliminado=1";
+
+	$result=mysqli_query($conexion,$sql);
+
+	$cadena="";
+
+	while ($ver=mysqli_fetch_row($result)) {
+		$cadena=$cadena.''.utf8_encode($ver[0]).'';
+	}
+
+	echo  $cadena;
+	}
+	
+	public function clienteDepar(){
+        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $idCliente=$_POST['id'];
+
+	$sql="SELECT departamento
+		from clientes 
+		where idCliente='$idCliente' and idEliminado=1";
+
+	$result=mysqli_query($conexion,$sql);
+
+	$cadena="";
+
+	while ($ver=mysqli_fetch_row($result)) {
+		$cadena=$cadena.''.utf8_encode($ver[0]).'';
+	}
+
+	echo  $cadena;
+	}
+	
+	public function clienteNit(){
+        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $idCliente=$_POST['id'];
+
+	$sql="SELECT nit
+		from clientes 
+		where idCliente='$idCliente' and idEliminado=1";
+
+	$result=mysqli_query($conexion,$sql);
+
+	$cadena="";
+
+	while ($ver=mysqli_fetch_row($result)) {
+		$cadena=$cadena.''.utf8_encode($ver[0]).'';
+	}
+
+	echo  $cadena;
+	}
+	
+	public function clienteGiro(){
+        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $idCliente=$_POST['id'];
+
+	$sql="SELECT giro
+		from clientes 
+		where idCliente='$idCliente' and idEliminado=1";
+
+	$result=mysqli_query($conexion,$sql);
+
+	$cadena="";
+
+	while ($ver=mysqli_fetch_row($result)) {
+		$cadena=$cadena.''.utf8_encode($ver[0]).'';
+	}
+
+	echo  $cadena;
     }
 
 

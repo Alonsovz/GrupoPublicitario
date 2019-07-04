@@ -267,6 +267,28 @@ fecha date,
 estado int
 );
 
+create table notaCredito(
+idNota int primary key auto_increment,
+idCliente int,
+fechaNota date,
+nNota varchar(50),
+nRegistro varchar(50),
+ventaCuenta varchar(500),
+condOper varchar(500),
+nNotaAn varchar(500),
+fechaNotaAn date
+);
+
+create table detalleNota(
+idDetalle int primary key auto_increment,
+idNota int,
+cantidad double,
+descripcion varchar(500),
+precioUni double,
+ventasNo double,
+ventasEx double,
+ventasGra double
+);
 
 
 alter table usuario add constraint fk_usuario_rol foreign key (codigoRol) references rol(codigoRol);
