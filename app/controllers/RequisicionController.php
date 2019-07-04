@@ -215,6 +215,7 @@ class RequisicionController extends ControladorBase {
             $dao->objeto->setMedidas($detalle->medidaRe);
             $dao->objeto->setDescripciones($detalle->descriRe);
             $dao->objeto->setPrecio($detalle->precioRe);
+            $dao->objeto->setPrecioTotal($detalle->precioTotalRe);
 
             if($dao->guardarDetallesReq()) {
                 $contador++;
@@ -295,6 +296,21 @@ class RequisicionController extends ControladorBase {
        
         
         echo $dao->gastos();
+    }
+
+    public function recibir(){
+        $dao = new DaoRequisicion();
+
+        $dao->objeto->setIdOrden($_REQUEST["idD"]);
+        $dao->objeto->setIdProductoFinal($_REQUEST["idP"]);
+        $dao->objeto->setColor($_REQUEST["color"]);
+        $dao->objeto->setAcabado($_REQUEST["acabado"]);
+        $dao->objeto->setCantidad($_REQUEST["cantidad"]);
+        $dao->objeto->setPrecio($_REQUEST["precio"]);
+       
+        
+        echo $dao->recibir();
+        echo $dao->agregarInventario();
     }
     
 

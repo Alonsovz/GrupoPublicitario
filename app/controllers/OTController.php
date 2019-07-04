@@ -344,8 +344,9 @@ class OTController extends ControladorBase {
     
         $resultado = $dao->imprimirEncabezadoOTGR();
         $resultado1 = $dao->imprimirDetalleOTGR();
+        $resultado2 = $dao->totalFactura();
         
-        $reporte->imprimirFactura($resultado,$resultado1);
+        $reporte->imprimirFactura($resultado,$resultado1,$resultado2);
     }
 
   
@@ -361,8 +362,9 @@ class OTController extends ControladorBase {
     
         $resultado = $dao->imprimirEncabezadoOTIP();
         $resultado1 = $dao->imprimirDetalleOTIP();
+        $resultado2 = $dao->totalFacturaIP();
         
-        $reporte->imprimirFacturaIPP($resultado,$resultado1);
+        $reporte->imprimirFacturaIPP($resultado,$resultado1,$resultado2);
     }
 
 
@@ -377,8 +379,9 @@ class OTController extends ControladorBase {
     
         $resultado = $dao->imprimirEncabezadoOTP();
         $resultado1 = $dao->imprimirDetalleOTP();
+        $resultado2 = $dao->totalFacturaP();
         
-        $reporte->imprimirFacturaP($resultado,$resultado1);
+        $reporte->imprimirFacturaP($resultado,$resultado1,$resultado2);
     }
 
 

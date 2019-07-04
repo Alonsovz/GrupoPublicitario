@@ -116,6 +116,30 @@
         </div>
     </div>
 
+    <div class="ui divider"></div>
+
+    <div class="field" style="display:none"  id="verDetalle">
+        <div class="fields" >
+        <div class="four wide field">
+            <label><br></label>
+            <a class="ui blue button" id="btnDetalle">Detalle del producto</a>
+        </div>
+
+        
+
+        <div class="six wide field" id="prec" style="display:none;">
+            <label><i class="dollar icon"></i>Precio Unitario:</label>
+            <input type="text" id="precioU" name="precioU" readonly>
+        </div>
+
+        <div class="six wide field" id="ex" style="display:none;">
+            <label><i class="arrows alternate icon"></i>Existencia</label>
+            <input type="text" id="existencia" name="existencia" readonly>
+        </div>
+
+        </div>
+        </div>
+
     <div class="ui divider"></div><br>
 
     <div class="field">
@@ -284,6 +308,41 @@ $(document).ready(function(){
     app.eliminarDetalle(0);
     });
 
+    $("#btnDetalle").click(function(){
+        var idPro = $('#proFinalCmb option:selected').val();
+        var idColor = $('#colorCmb option:selected').val();
+        var idAcabado = $('#acabadoCmb option:selected').val();
+
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=precioUnitario",
+			data:{
+                idPro : idPro,
+                idColor : idColor,
+                idAcabado : idAcabado,
+            },
+			success:function(r){
+                $('#precioU').val(r);
+                $("#prec").show(1000);
+                
+			}
+        });
+        
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=existencia",
+			data:{
+                idPro : idPro,
+                idColor : idColor,
+                idAcabado : idAcabado,
+            },
+			success:function(r){
+                $('#existencia').val(r);
+                $("#ex").show(1000);
+                
+			}
+		});
+    });
 </script>
 <script>
 $(document).ready(function(){
@@ -342,8 +401,18 @@ $(function() {
                 $("#col").hide(1000);
                 $("#aca").hide(1000);
             
-		});
-	})
+        });
+        
+
+        $("#cantidad").keyup(function(){
+            var can = $(this).val();
+            var precio = $("#precioU").val();
+
+            var total = can * precio;
+
+            $("#precio").val(total.toFixed(2));
+        });
+	});
 </script>
 <script type="text/javascript">
 	function recargarLista(){
@@ -404,7 +473,8 @@ $(function() {
 			url:"?1=Funciones&2=acabado",
 			data:"idPro=" + $('#proFinalCmb option:selected').val(),
 			success:function(r){
-				$('#acabadoCmb').html(r);
+                $('#acabadoCmb').html(r);
+                $("#verDetalle").show();
 			}
 		});
 	}

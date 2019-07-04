@@ -132,12 +132,37 @@
                         </select>
                         </div>
                      </div>
+
+
+                     <div class="ui divider"></div>
+
+    <div class="field" style="display:none"  id="verDetalle">
+        <div class="fields" >
+        <div class="four wide field">
+            <label><br></label>
+            <a class="ui blue button" id="btnDetalle">Detalle del producto</a>
+        </div>
+
+        
+
+        <div class="six wide field" id="prec" style="display:none;">
+            <label><i class="dollar icon"></i>Precio Unitario:</label>
+            <input type="text" id="precioU" name="precioU" readonly>
+        </div>
+
+        <div class="six wide field" id="ex" style="display:none;">
+            <label><i class="arrows alternate icon"></i>Existencia</label>
+            <input type="text" id="existencia" name="existencia" readonly>
+        </div>
+
+        </div>
+        </div>
                  
                 <div class="ui divider"></div>
                  <div class="field" id="can" style="display:none">
                     <div class="fields">
                     <div class="four wide field"  >
-                        <label><i class="podcast icon"></i>Cantidad en: <a id="canText"></a></label>
+                        <label><i class="podcast icon"></i>Cantidad  a pedir en: <a id="canText"></a></label>
                         <input type="text" name="cantidad" id="cantidad" placeholder="Cantidad a pedir">
                     </div>
                     
@@ -154,8 +179,14 @@
                     </div>
 
                     <div class="four wide field">
-                        <label><i class="dollar icon"></i>Precio</label>
-                        <input type="text" name="precio" id="precio" placeholder="Precio">
+                        <label><i class="dollar icon"></i>Precio Unitario</label>
+                        <input type="text" name="precio" id="precio" placeholder="Precio Total">
+                    </div>
+
+
+                    <div class="four wide field">
+                        <label><i class="dollar icon"></i>Precio Final: </label>
+                        <input type="text" name="precioTotal" id="precioTotal" placeholder="Precio Total">
                     </div>
 
                     
@@ -186,7 +217,8 @@
                                         <th style="background-color: black; color:white;"><i class="podcast icon"></i>Cantidad</th>
                                         <th style="background-color: black; color:white;"><i class="arrows alternate icon"></i>Medidas</th>
                                         <th style="background-color: black; color:white;"><i class="pencil icon"></i>Descipciones</th>
-                                        <th style="background-color: black; color:white;"><i class="dollar icon"></i>Precio</th>
+                                        <th style="background-color: black; color:white;"><i class="dollar icon"></i>Precio Unitario</th>
+                                        <th style="background-color: black; color:white;"><i class="dollar icon"></i>Precio Total</th>
                                         <th style="background-color: black; color:white;"><i class="trash icon"></i>Eliminar</th>
                                     </tr>
                                 </thead>
@@ -212,6 +244,11 @@
                                     </td>
                                     <td>  
                                     <input class="requerido" v-model="lista.precioRe" name="precioRe" id="precioRe" type="text"
+                                     placeholder="Nombre completo" readonly>
+                                    </td>
+
+                                    <td>  
+                                    <input class="requerido" v-model="lista.precioTotalRe" name="precioTotalRe" id="precioTotalRe" type="text"
                                      placeholder="Nombre completo" readonly>
                                     </td>
                                     
@@ -249,6 +286,7 @@ var app = new Vue({
                 medidasRe:'',
                 descriRe:'',
                 precioRe:'',
+                precioTotalRe:'',
                 idProducto:'',
                 idColor:'',
                 idAcabado:'',
@@ -289,6 +327,9 @@ var app = new Vue({
     $(document).ready(function(){
     $("#gr").removeClass("ui gray button");
     $("#gr").addClass("ui gray basic button");
+    $('#precio').mask("###0.00", {reverse: true});
+    $('#precioTotal').mask("###0.00", {reverse: true});
+    $('#cantidad').mask("###0.00", {reverse: true});
     app.eliminarDetalle(0);
     });
 
@@ -411,7 +452,8 @@ $(function() {
 			url:"?1=Funciones&2=color",
 			data:"idPro=" + $('#proFinalCmb option:selected').val(),
 			success:function(r){
-				$('#colorCmb').html(r);
+                $('#colorCmb').html(r);
+                $("#verDetalle").show();
 			}
 		});
     }
@@ -440,6 +482,7 @@ $(function() {
             var medidas = $("#medidas").val();
             var desc = $("#descripcion").val();
             var precio = $("#precio").val();
+            var precioTotal = $("#precioTotal").val();
             var color= $("#colorCmb option:selected").val();
             var idPro =$("#proFinalCmb option:selected").val();
             var acabado = $("#acabadoCmb option:selected").val();
@@ -453,6 +496,7 @@ $(function() {
             idProducto : idPro,
             idColor: color,
             idAcabado : acabado,
+            precioTotalRe:precioTotal,
         }),
 
         
@@ -460,6 +504,17 @@ $(function() {
         $("#medidas").val('');
         $("#descripcion").val('');
         $("#precio").val('');
+        $("#precioTotal").val('');
+    });
+
+    $("#precio").keyup(function(){
+        var precio = $(this).val();
+        var cantidad = $("#cantidad").val();
+
+        var total = precio * cantidad;
+
+        $("#precioTotal").val(total.toFixed(2));
+        
     });
 
 $("#guardarRequisicion").click(function(){
@@ -505,4 +560,41 @@ $("#guardarRequisicion").click(function(){
             
         }); 
 });
+
+
+$("#btnDetalle").click(function(){
+        var idPro = $('#proFinalCmb option:selected').val();
+        var idColor = $('#colorCmb option:selected').val();
+        var idAcabado = $('#acabadoCmb option:selected').val();
+
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=precioUnitario",
+			data:{
+                idPro : idPro,
+                idColor : idColor,
+                idAcabado : idAcabado,
+            },
+			success:function(r){
+                $('#precioU').val(r);
+                $("#prec").show(1000);
+                
+			}
+        });
+        
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=existencia",
+			data:{
+                idPro : idPro,
+                idColor : idColor,
+                idAcabado : idAcabado,
+            },
+			success:function(r){
+                $('#existencia').val(r);
+                $("#ex").show(1000);
+                
+			}
+		});
+    });
 </script>

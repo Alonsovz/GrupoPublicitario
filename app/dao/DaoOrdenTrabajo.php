@@ -642,6 +642,15 @@ class DaoOrdenTrabajo extends DaoBase {
         return $resultado;
     }
 
+    public function totalFactura(){
+        $query = "select format(SUM(precio),2) as precio  from detalleOrdenGR 
+        where idOrden= (select max(idOrden) from ordenTrabajoGR);";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
     public function imprimirEncabezadoOTIP() {
         $query = "select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
@@ -657,13 +666,22 @@ class DaoOrdenTrabajo extends DaoBase {
     }
 
     public function imprimirDetalleOTIP(){
-        $query = "select d.cantidad,d.tipo,d.descripciones,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio from detalleOrdenIP d
+        $query = "select d.cantidad,d.tipo,d.descripciones,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio 
+        from detalleOrdenIP d
         inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
         inner join colores c on c.idColor = d.idColor
         inner join acabados a on a.idAcabado = d.idAcabado
         inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
         inner join medidas m on m.idMedida = pm.idMedida
         where d.idOrden= (select max(idOrden) from ordenTrabajoIP) group by d.idDetalle";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+    public function totalFacturaIP(){
+        $query = "select format(SUM(precio),2) as precio  from detalleOrdenIP
+        where idOrden= (select max(idOrden) from ordenTrabajoIP);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -693,6 +711,15 @@ class DaoOrdenTrabajo extends DaoBase {
         inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
         inner join medidas m on m.idMedida = pm.idMedida
         where d.idOrden= (select max(idOrden) from ordenTrabajoP) group by d.idDetalle";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function totalFacturaP(){
+        $query = "select format(SUM(precio),2) as precio  from detalleOrdenP
+        where idOrden= (select max(idOrden) from ordenTrabajoP);";
 
         $resultado = $this->con->ejecutar($query);
 

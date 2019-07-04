@@ -31,7 +31,8 @@ class DaoRequisicion extends DaoBase {
 
         $_query = "insert into detalleRequisicion values(null,'.$idReq.','".$this->objeto->getIdProductoFinal()."'
         ,'".$this->objeto->getColor()."','".$this->objeto->getAcabado()."','".$this->objeto->getCantidad()."'
-        ,'".$this->objeto->getMedidas()."','".$this->objeto->getDescripciones()."','".$this->objeto->getPrecio()."',1)";
+        ,'".$this->objeto->getMedidas()."','".$this->objeto->getDescripciones()."','".$this->objeto->getPrecio()."',
+        '".$this->objeto->getPrecioTotal()."',1,1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -424,6 +425,36 @@ class DaoRequisicion extends DaoBase {
 
     public function rechazarRequisicion() {
         $_query = "update requisiciones set estado=3 where idRequisicion=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function agregarInventario() {
+        $_query = "update inventario set cantidadExistencia = cantidadExistencia +".$this->objeto->getCantidad().",
+            precioUnitario = ".$this->objeto->getPrecio()."        
+        where idProducto=".$this->objeto->getIdProductoFinal()." and idColor=".$this->objeto->getColor()." and
+        idAcabado = ".$this->objeto->getAcabado();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function recibir() {
+        $_query = "update detalleRequisicion set estado=2         
+        where idDetalle=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 

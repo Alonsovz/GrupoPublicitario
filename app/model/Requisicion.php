@@ -14,6 +14,7 @@ class Requisicion extends ModeloBase{
     private $medidas;
     private $descripciones;
     private $precio;
+    private $precioTotal;
     private $fechaEn;
     private $idClasificacion;
 
@@ -191,6 +192,21 @@ class Requisicion extends ModeloBase{
     public function setPrecio($precio)
     {
         $this->precio = $precio;
+
+        return $this;
+    }
+
+
+
+    public function getPrecioTotal()
+    {
+        return $this->precioTotal;
+    }
+
+    
+    public function setPrecioTotal($precioTotal)
+    {
+        $this->precioTotal = $precioTotal;
 
         return $this;
     }

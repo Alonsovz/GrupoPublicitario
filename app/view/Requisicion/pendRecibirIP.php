@@ -56,6 +56,7 @@
                         <input type="text" name="fechaRe" id="fechaRe" readonly>
                         <input type="hidden" id="idUser" name="idUser">
                         <input type="hidden" id="idClasi" name="idClasi" value="1">
+                        <input type="hidden" id="id" name="id">
                     </div>
 
                     <div class="four wide field">
@@ -121,6 +122,28 @@
     </div>
 </div>
 
+<div class="ui tiny modal" id="modalRecibir">
+        <div class="header" style="color:white;background-color:black;">
+            Producto: <a id="prT" style="color:yellow"></a><br>
+            Color: <a id="coT"  style="color:yellow"></a><br>
+            Acabado: <a id="acT"  style="color:yellow"></a><br>
+            Cantidad: <a id="caT"  style="color:yellow"></a>
+        </div>
+        <div class="content">
+            <input type="hidden" id="idP" name="idP">
+            <input type="hidden" id="idD" name="idD">
+            <input type="hidden" id="idR" name="idR">
+            <input type="hidden" id="color" name="color">
+            <input type="hidden" id="acabado" name="acabado">
+            <input type="hidden" id="cantidad" name="cantidad">
+            <input type="hidden" id="precio" name="precio">
+            <h3>¿Recibir producto?</h3>
+        </div>
+        <div class="actions">
+            <button id="btnCa" class="ui red button">Cancelar</button>
+            <button id="btnRe" class="ui black button">Recibir</button>
+        </div>
+    </div>
 
 
 </div>
@@ -135,6 +158,7 @@ $(document).ready(function(){
     var detalles=(ele)=>{
        var id= $(ele).attr("id");
     
+       $("#id").val(id);
        $("#fechaRe").val($(ele).attr("fecha"));
        $("#responsable").val($(ele).attr("responsable"));
        $("#tipoCompra").val($(ele).attr("tipoCompra"));
@@ -146,7 +170,7 @@ $(document).ready(function(){
 
        $.ajax({
 			type:"POST",
-			url:"?1=Funciones&2=verDetallesRequisicion",
+			url:"?1=Funciones&2=verDetallesRequisicionAp",
             data:{
                 id:id
             },
@@ -156,4 +180,99 @@ $(document).ready(function(){
         });
        $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
     }
+
+
+    var recibir=(ele)=>{
+       var idP= $(ele).attr("idPr");
+       var idD= $(ele).attr("idD");
+       var color= $(ele).attr("color");
+       var acabado= $(ele).attr("acabado");
+       var cantidad= $(ele).attr("cantidad");
+       var precio= $(ele).attr("precio");
+    
+      $("#idP").val(idP);
+      $("#idD").val(idD);
+      $("#color").val(color);
+      $("#acabado").val(acabado);
+      $("#cantidad").val(cantidad);
+      $("#precio").val(precio);
+      $("#idR").val($("#id").val());
+
+
+      $("#prT").text($(ele).attr("pro"));
+      $("#coT").text($(ele).attr("co"));
+      $("#acT").text($(ele).attr("ac"));
+      $("#caT").text($(ele).attr("cantidad") +" "+$(ele).attr("me"));
+
+      $("#modalRecibir").modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+    }
+
+    $("#btnCa").click(function(){
+        $("#modalRecibir").modal('hide');
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=verDetallesRequisicionAp",
+            data:{
+                id:$("#id").val()
+            },
+        success:function(r){
+				$('#detalles').html(r);
+			}
+        });
+       $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+    });
+
+    $("#btnRe").click(function(){
+
+
+
+      $.ajax({
+			type:"POST",
+			url:"?1=RequisicionController&2=recibir",
+            data:{
+                idP:$("#idP").val(),
+                color: $("#color").val(),
+                acabado :$("#acabado").val(),
+                cantidad :$("#cantidad").val(),
+                precio : $("#precio").val(),
+                idD :$("#idD").val(),
+            },
+        success:function(r){
+            if(r == 11) {
+                $('#detalles').html('');
+                        $('#modalRecibir').modal('hide');
+                        swal({
+                            title: 'Producto Recibido',
+                            text: 'Agregado al inventario',
+                            type: 'success',
+                            showConfirmButton: true
+
+                        }).then((result) => {
+                            if(result.value){
+                                $.ajax({
+                            type:"POST",
+                            url:"?1=Funciones&2=verDetallesRequisicionAp",
+                            data:{
+                                id:$("#id").val()
+                            },
+                        success:function(r){
+                                $('#detalles').html(r);
+                                
+                            }
+                        });
+                        $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                            }
+                           
+                         
+                        }); 
+                        
+                        
+                    } 
+			}
+        });
+      
+    });
+
+
+    
     </script>

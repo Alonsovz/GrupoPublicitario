@@ -245,9 +245,12 @@ acabado int,
 cantidad varchar(50),
 medidas varchar(50),
 descripcion varchar(500),
-precio double,
+precioUnitario double,
+total double,
+estado int,
 idEliminado int
 );
+
 
 create table gastosOficina(
 idGasto int primary key auto_increment,
@@ -422,15 +425,4 @@ begin
     where idEliminado=1;
 end
 $$
-
-
-
-select i.*,c.*,a.*,m.* from inventario i
-inner join productosDetalle pc on pc.idProductoFinal = i.idProducto
-inner join colores c on c.idColor = i.idColor
-inner join acabados a on a.idAcabado = i.idAcabado
-inner join medidas m on m.idMedida = pc.idMedida
-inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
-
-group by i.idProducto,i.idColor,i.idAcabado
 

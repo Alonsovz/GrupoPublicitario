@@ -387,13 +387,14 @@ class Funciones extends ControladorBase {
 		$idC=$_POST['id'];
 
 		if($_POST['id']){
-			$sql="select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio from detalleRequisicion d
+			$sql="select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precioUnitario,2) as precio,
+			format(d.total,2) as precioTotal from detalleRequisicion d
 			inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
 			inner join colores c on c.idColor = d.color
 			inner join acabados a on a.idAcabado = d.acabado
-			inner join productosMedidas pm on pm.idProductoFinal = d.idProductoFinal
+			inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 			inner join medidas m on m.idMedida = pm.idMedida
-			where d.idRequisicion='".$idC."'";
+			where d.idRequisicion='".$idC."' group by d.idDetalle ";
 	
 			$result=mysqli_query($conexion,$sql);
 	
@@ -405,17 +406,18 @@ class Funciones extends ControladorBase {
 				<th style='background-color:#B40431;color:white;'>Medidas</th>
 				<th style='background-color:#B40431;color:white;'>Descripcion</th>
 				<th style='background-color:#B40431;color:white;'>Precio</th>
+				<th style='background-color:#B40431;color:white;'>Precio Total</th>
 				
 			</tr>
 			";
 			while ($ver=mysqli_fetch_row($result)) {
 				$cadena=$cadena.'<tr>
-				<td><b>Producto:</b> '.utf8_encode($ver[10]).'<br>
-					<b>Color:</b> '.utf8_encode($ver[11]).'<br>
-					<b>Acabado:</b> '.utf8_encode($ver[12]).'<br>
+				<td><b>Producto:</b> '.utf8_encode($ver[12]).'<br>
+					<b>Color:</b> '.utf8_encode($ver[13]).'<br>
+					<b>Acabado:</b> '.utf8_encode($ver[14]).'<br>
 				</td>
 				<td>
-				'.utf8_encode($ver[5]). ' ' .utf8_encode($ver[13]).'
+				'.utf8_encode($ver[5]). ' ' .utf8_encode($ver[15]).'
 				</td>
 
 				<td>
@@ -427,7 +429,82 @@ class Funciones extends ControladorBase {
 				</td>
 				
 				<td>
-				$ '.utf8_encode($ver[14]). '
+				$ '.utf8_encode($ver[16]). '
+				</td>
+				<td>
+				$ '.utf8_encode($ver[17]). '
+				</td>
+				</tr>';
+			}
+			$cadena=$cadena."
+			
+			</table>";
+
+			echo  $cadena;
+		}
+
+	}
+
+
+	public function verDetallesRequisicionAp(){
+		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$idC=$_POST['id'];
+
+		if($_POST['id']){
+			$sql="select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precioUnitario,2) as precio,
+			format(d.total,2) as precioTotal from detalleRequisicion d
+			inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+			inner join colores c on c.idColor = d.color
+			inner join acabados a on a.idAcabado = d.acabado
+			inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
+			inner join medidas m on m.idMedida = pm.idMedida
+			where d.idRequisicion='".$idC."' and d.estado=1 group by d.idDetalle";
+	
+			$result=mysqli_query($conexion,$sql);
+	
+			$cadena="
+			<table class='ui selectable very compact celled table' style='width:100%;text-align:left;'>
+			<tr>
+				<th style='background-color:#B40431;color:white;' height='50'>Producto</th>
+				<th style='background-color:#B40431;color:white;'>Cantidad</th>
+				<th style='background-color:#B40431;color:white;'>Medidas</th>
+				<th style='background-color:#B40431;color:white;'>Descripcion</th>
+				<th style='background-color:#B40431;color:white;'>Precio Unitario</th>
+				<th style='background-color:#B40431;color:white;'>Precio Total</th>
+				<th style='background-color:#B40431;color:white; width:5%;'><i class='cogs icon'></i></th>
+			</tr>
+			";
+			while ($ver=mysqli_fetch_row($result)) {
+				$cadena=$cadena.'<tr>
+				<td><b>Producto:</b> '.utf8_encode($ver[12]).'<br>
+					<b>Color:</b> '.utf8_encode($ver[13]).'<br>
+					<b>Acabado:</b> '.utf8_encode($ver[14]).'<br>
+				</td>
+				<td>
+				'.utf8_encode($ver[5]). ' ' .utf8_encode($ver[15]).'
+				</td>
+
+				<td>
+				'.utf8_encode($ver[6]). '
+				</td>
+
+				<td>
+				'.utf8_encode($ver[7]). '
+				</td>
+				
+				<td>
+				$ '.utf8_encode($ver[16]). '
+				</td>
+				<td>
+				$ '.utf8_encode($ver[17]). '
+				</td>
+				<td>
+				<a class="ui green small icon button" idD='.utf8_encode($ver[0]). '
+				idPr='.utf8_encode($ver[2]). ' color='.utf8_encode($ver[3]). ' acabado='.utf8_encode($ver[4]). '
+				pro="'.utf8_encode($ver[12]). '" co="'.utf8_encode($ver[13]). '" ac="'.utf8_encode($ver[14]). '"
+				me="'.utf8_encode($ver[15]). '"
+				cantidad ="'.utf8_encode($ver[5]). '" precio ="'.utf8_encode($ver[8]). '" onclick="recibir(this)"
+				><i class="pencil icon"></i></a>
 				</td>
 				</tr>';
 			}
@@ -789,6 +866,47 @@ class Funciones extends ControladorBase {
 	}
 	
 
+	}
+
+
+	public function precioUnitario(){
+        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$idPro=$_POST['idPro'];
+		$idColor=$_POST['idColor'];
+		$idAcabado=$_POST['idAcabado'];
+
+	$sql="SELECT format(precioUnitario,2) from inventario
+			where idProducto='$idPro' and idColor = '$idColor' and idAcabado = '$idAcabado'";
+
+	$result=mysqli_query($conexion,$sql);
+
+	$cadena="";
+
+	while ($ver=mysqli_fetch_row($result)) {
+		$cadena=$cadena.''.$ver[0].'';
+	}
+
+	echo  $cadena;
+	}
+
+	public function existencia(){
+        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$idPro=$_POST['idPro'];
+		$idColor=$_POST['idColor'];
+		$idAcabado=$_POST['idAcabado'];
+
+	$sql="SELECT cantidadExistencia from inventario
+			where idProducto='$idPro' and idColor = '$idColor' and idAcabado = '$idAcabado'";
+
+	$result=mysqli_query($conexion,$sql);
+
+	$cadena="";
+
+	while ($ver=mysqli_fetch_row($result)) {
+		$cadena=$cadena.''.$ver[0].'';
+	}
+
+	echo  $cadena;
 	}
 
 
