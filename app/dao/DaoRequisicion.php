@@ -244,9 +244,9 @@ class DaoRequisicion extends DaoBase {
             $object = json_encode($fila);
 
             $btnEditar = '<button id=\"'.$fila["idRequisicion"].'\" fecha=\"'.$fila["fecha"].'\" responsable=\"'.$fila["nombre"].'\" tipoCompra=\"'.$fila["tipoCompra"].'\" proveedor=\"'.$fila["proveedor"].'\" tipoDoc=\"'.$fila["tipoDoc"].'\" condicionCredito=\"'.$fila["condicionCredito"].'\" fechaEntrega=\"'.$fila["fechaEntrega"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
-            $btnEliminar = '<button id=\"'.$fila["idRequisicion"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
+            $btnEliminar = '<button id=\"'.$fila["idRequisicion"].'\"  class=\"ui btnEliminar icon negative small button\" onclick=\"finalizar(this)\"><i class=\"check icon\"></i> Finalizar</button>';
 
-            $acciones = ', "Acciones": "'.$btnEditar.'"';
+            $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
 
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
@@ -274,9 +274,9 @@ class DaoRequisicion extends DaoBase {
             $object = json_encode($fila);
 
             $btnEditar = '<button id=\"'.$fila["idRequisicion"].'\" fecha=\"'.$fila["fecha"].'\" responsable=\"'.$fila["nombre"].'\" tipoCompra=\"'.$fila["tipoCompra"].'\" proveedor=\"'.$fila["proveedor"].'\" tipoDoc=\"'.$fila["tipoDoc"].'\" condicionCredito=\"'.$fila["condicionCredito"].'\" fechaEntrega=\"'.$fila["fechaEntrega"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
-            $btnEliminar = '<button id=\"'.$fila["idRequisicion"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
+            $btnEliminar = '<button id=\"'.$fila["idRequisicion"].'\"  class=\"ui btnEliminar icon negative small button\" onclick=\"finalizar(this)\"><i class=\"check icon\"></i> Finalizar</button>';
 
-            $acciones = ', "Acciones": "'.$btnEditar.'"';
+            $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
 
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
@@ -304,9 +304,9 @@ class DaoRequisicion extends DaoBase {
             $object = json_encode($fila);
 
             $btnEditar = '<button id=\"'.$fila["idRequisicion"].'\" fecha=\"'.$fila["fecha"].'\" responsable=\"'.$fila["nombre"].'\" tipoCompra=\"'.$fila["tipoCompra"].'\" proveedor=\"'.$fila["proveedor"].'\" tipoDoc=\"'.$fila["tipoDoc"].'\" condicionCredito=\"'.$fila["condicionCredito"].'\" fechaEntrega=\"'.$fila["fechaEntrega"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
-            $btnEliminar = '<button id=\"'.$fila["idRequisicion"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
+            $btnEliminar = '<button id=\"'.$fila["idRequisicion"].'\"  class=\"ui btnEliminar icon negative small button\" onclick=\"finalizar(this)\"><i class=\"check icon\"></i> Finalizar</button>';
 
-            $acciones = ', "Acciones": "'.$btnEditar.'"';
+            $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
 
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
@@ -468,6 +468,19 @@ class DaoRequisicion extends DaoBase {
 
     public function aprobarGasto() {
         $_query = "update gastos set estado=2 where idDetalle=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function finalizarRe() {
+        $_query = "update requisiciones set estado=5       
+        where idRequisicion=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 

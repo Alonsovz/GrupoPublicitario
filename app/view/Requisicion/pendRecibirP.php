@@ -111,13 +111,7 @@
     </div>
     <div class="actions">
     
-    <button class="ui red button" id="btnAprobar">Recibir</button>
-
-
-    
-    <br><br>
-    <hr>
-    <br><br>
+   
     <button class="ui black deny button">Cancelar</button>
     </div>
 </div>
@@ -142,6 +136,22 @@
         <div class="actions">
             <button id="btnCa" class="ui red button">Cancelar</button>
             <button id="btnRe" class="ui black button">Recibir</button>
+        </div>
+    </div>
+
+
+    <div class="ui tiny modal" id="modalFinalizar">
+        <div class="header" style="color:white;background-color:black;">
+            Finalizar requisición
+        </div>
+        <div class="content">
+            <input type="hidden" id="idRe" name="idRe">
+            
+            <h3>¿Completar requisción?</h3>
+        </div>
+        <div class="actions">
+            <button  class="ui red deny button">Cancelar</button>
+            <button id="btnCom" class="ui black button">Completar</button>
         </div>
     </div>
 
@@ -179,6 +189,13 @@
        $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
     }
 
+    var finalizar=(ele)=>{
+       var id= $(ele).attr("id");
+    
+       $("#idRe").val(id);
+       
+       $('#modalFinalizar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+    }
 
     var recibir=(ele)=>{
        var idP= $(ele).attr("idPr");
@@ -272,5 +289,38 @@
     });
 
 
-    
+    $("#btnCom").click(function(){
+
+
+
+$.ajax({
+      type:"POST",
+      url:"?1=RequisicionController&2=finalizarRe",
+      data:{
+          idRe:$("#idRe").val(),
+
+      },
+  success:function(r){
+      if(r == 1) {
+         
+                  $('#modalFinalizar').modal('hide');
+                  swal({
+                      title: 'Requisición finalizada',
+                      type: 'success',
+                      showConfirmButton: true
+
+                  }).then((result) => {
+                      if(result.value){
+                        $('#dtPenPagoGF').DataTable().ajax.reload();
+                    }
+                     
+                   
+                  }); 
+                  
+                  
+              } 
+      }
+  });
+
+});
     </script>
