@@ -458,7 +458,7 @@ class Funciones extends ControladorBase {
 			inner join acabados a on a.idAcabado = d.acabado
 			inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 			inner join medidas m on m.idMedida = pm.idMedida
-			where d.idRequisicion='".$idC."' and d.estado=1 group by d.idDetalle";
+			where d.idRequisicion='".$idC."' group by d.idDetalle";
 	
 			$result=mysqli_query($conexion,$sql);
 	
@@ -497,16 +497,21 @@ class Funciones extends ControladorBase {
 				</td>
 				<td>
 				$ '.utf8_encode($ver[17]). '
-				</td>
-				<td>
-				<a class="ui green small icon button" idD='.utf8_encode($ver[0]). '
-				idPr='.utf8_encode($ver[2]). ' color='.utf8_encode($ver[3]). ' acabado='.utf8_encode($ver[4]). '
-				pro="'.utf8_encode($ver[12]). '" co="'.utf8_encode($ver[13]). '" ac="'.utf8_encode($ver[14]). '"
-				me="'.utf8_encode($ver[15]). '"
-				cantidad ="'.utf8_encode($ver[5]). '" precio ="'.utf8_encode($ver[8]). '" onclick="recibir(this)"
-				><i class="pencil icon"></i></a>
-				</td>
-				</tr>';
+				</td>';
+				if(utf8_encode($ver[10])==1){
+					$cadena=$cadena.'<td>
+					<a class="ui green small icon button" idD='.utf8_encode($ver[0]). '
+					idPr='.utf8_encode($ver[2]). ' color='.utf8_encode($ver[3]). ' acabado='.utf8_encode($ver[4]). '
+					pro="'.utf8_encode($ver[12]). '" co="'.utf8_encode($ver[13]). '" ac="'.utf8_encode($ver[14]). '"
+					me="'.utf8_encode($ver[15]). '"
+					cantidad ="'.utf8_encode($ver[5]). '" precio ="'.utf8_encode($ver[8]). '" onclick="recibir(this)"
+					><i class="pencil icon"></i></a>
+					</td>';
+				}else{
+					$cadena=$cadena.'<td><a class="ui blue small icon button"><i class="check icon"></i></a></td>';
+				}
+				
+				$cadena=$cadena.'</tr>';
 			}
 			$cadena=$cadena."
 			

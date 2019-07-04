@@ -1,21 +1,23 @@
 <div id="app">
-<div class="ui grid">
-        <div class="row">
-        <div class="titulo">
-        <a href="?1=RequisicionController&2=pendRecibirGF" class="ui gray button" id="gr" style="color:black; font-weight:bold;">
+    <div class="ui grid">
+            <div class="row">
+                    <div class="titulo">
+                    <a href="?1=RequisicionController&2=finalizadasGF" class="ui gray button" id="gr" style="color:black; font-weight:bold;">
                     Gran Formato</a>
 
-                    <a href="?1=RequisicionController&2=pendRecibirIP" class="ui black button" id="imp">Impresión Digital</a>
+                    <a href="?1=RequisicionController&2=finalizadasIP" class="ui black button" id="imp">Impresión Digital</a>
 
-                    <a href="?1=RequisicionController&2=pendRecibirP" class="ui red button" id="pro">Promocionales</a>
-                    <a href="?1=RequisicionController&2=gastosAprobados" class="ui blue button" id="gast">Gastos de Oficina</a>
+                    <a href="?1=RequisicionController&2=finalizadasP" class="ui red button" id="pro">Promocionales</a>
+                   
                     <br><br>
-                <font color="#B40431" size="5px">
-                <i class="user icon"></i> <i class="list icon"></i>
-                   Requisición de Productos  promocionales pendientes de recibir</font><font color="black" size="20px">.</font>
-                </div>
 
-                <div class="row">
+                    <font color="#848484" size="5px">
+                    <i class="user icon"></i> <i class="list icon"></i>
+                        Requisición de productos de Gran Formato finalizadas</font><font color="black" size="20px">.</font>
+                    </div>
+            </div>
+
+            <div class="row">
             <div class="sixteen wide column">
                 <table id="dtPenPagoGF" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                     <thead>
@@ -39,7 +41,8 @@
         </div>
     </div>
 
-    <div class="ui fullscreen modal" id="modalDetalles">
+
+<div class="ui fullscreen modal" id="modalDetalles">
     <div class="header">
     Detalles de solicitud de requisición
     </div>
@@ -111,12 +114,12 @@
     </div>
     <div class="actions">
     
-   
+    
     <button class="ui black deny button">Cancelar</button>
     </div>
-</div>
+    </div>
 
-<div class="ui tiny modal" id="modalRecibir">
+    <div class="ui tiny modal" id="modalRecibir">
         <div class="header" style="color:white;background-color:black;">
             Producto: <a id="prT" style="color:yellow"></a><br>
             Color: <a id="coT"  style="color:yellow"></a><br>
@@ -157,10 +160,11 @@
 
 </div>
 <script src="./res/tablas/tablaFinalizadasP.js"></script>
-<script>
+    <script>
     $(document).ready(function(){
-    $("#pro").removeClass("ui red button");
-    $("#pro").addClass("ui red basic button");;
+    $("#gr").removeClass("ui gray button");
+    $("#gr").addClass("ui gray basic button");
+ 
     });
 
     var detalles=(ele)=>{
@@ -189,6 +193,7 @@
        $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
     }
 
+
     var finalizar=(ele)=>{
        var id= $(ele).attr("id");
     
@@ -196,6 +201,7 @@
        
        $('#modalFinalizar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
     }
+
 
     var recibir=(ele)=>{
        var idP= $(ele).attr("idPr");
@@ -323,4 +329,7 @@ $.ajax({
   });
 
 });
+
+
+    
     </script>

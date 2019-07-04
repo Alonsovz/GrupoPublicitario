@@ -134,6 +134,14 @@
             </div>
 
             <div class="item">
+            <a href="?1=RequisicionController&2=finalizadasGF" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
+                <i class="clock icon"></i><i class="file alternate icon"></i>
+                Finalizadas
+            </a>
+
+            </div>
+
+            <div class="item">
             <a href="?1=RequisicionController&2=rechazadasGF" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
                 <i class="close icon"></i><i class="file alternate icon"></i>
                 Rechazadas

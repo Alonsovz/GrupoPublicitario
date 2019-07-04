@@ -2,17 +2,16 @@
 <div class="ui grid">
         <div class="row">
         <div class="titulo">
-        <a href="?1=RequisicionController&2=pendRecibirGF" class="ui gray button" id="gr" style="color:black; font-weight:bold;">
+        <a href="?1=RequisicionController&2=finalizadasGF" class="ui gray button" id="gr" style="color:black; font-weight:bold;">
                     Gran Formato</a>
 
-                    <a href="?1=RequisicionController&2=pendRecibirIP" class="ui black button" id="imp">Impresión Digital</a>
+                    <a href="?1=RequisicionController&2=finalizadasIP" class="ui black button" id="imp">Impresión Digital</a>
 
-                    <a href="?1=RequisicionController&2=pendRecibirP" class="ui red button" id="pro">Promocionales</a>
-                    <a href="?1=RequisicionController&2=gastosAprobados" class="ui blue button" id="gast">Gastos de Oficina</a>
+                    <a href="?1=RequisicionController&2=finalizadasP" class="ui red button" id="pro">Promocionales</a>
                     <br><br>
                 <font color="#B40431" size="5px">
                 <i class="user icon"></i> <i class="list icon"></i>
-                   Requisición de Productos  promocionales pendientes de recibir</font><font color="black" size="20px">.</font>
+                   Requisición de Productos  promocionales finalizadas</font><font color="black" size="20px">.</font>
                 </div>
 
                 <div class="row">

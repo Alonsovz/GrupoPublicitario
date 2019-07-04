@@ -80,6 +80,23 @@ class RequisicionController extends ControladorBase {
         require_once './app/view/Requisicion/pendRecibirIP.php';
     }
 
+    public static function finalizadasGF() {
+        self::loadMain();
+        require_once './app/view/Requisicion/finalizadasGF.php';
+    }
+
+    public static function finalizadasP() {
+        self::loadMain();
+        
+        require_once './app/view/Requisicion/finalizadasP.php';
+    }
+
+    public static function finalizadasIP() {
+     
+        self::loadMain();
+        require_once './app/view/Requisicion/finalizadasIP.php';
+    }
+
     public static function rechazadasGF() {
         self::loadMain();
         require_once './app/view/Requisicion/rechazadasGF.php';
@@ -183,6 +200,26 @@ class RequisicionController extends ControladorBase {
         $dao = new DaoRequisicion();
 
         echo $dao->mostrarRechazadasP();
+    }
+
+
+    public function mostrarFinalizadasGF() {
+        $dao = new DaoRequisicion();
+
+        echo $dao->mostrarFinalizadasGF();
+    }
+
+    public function mostrarFinalizadasIP() {
+        $dao = new DaoRequisicion();
+
+        echo $dao->mostrarFinalizadasIP();
+    }
+
+
+    public function mostrarFinalizadasP() {
+        $dao = new DaoRequisicion();
+
+        echo $dao->mostrarFinalizadasP();
     }
 
 
