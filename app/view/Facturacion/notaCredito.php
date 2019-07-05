@@ -12,7 +12,7 @@
 
 <div class="content" style="text-align:center; border: 1px solid black; background-color: #F3F3F1;">
     <br>
-    <form class="ui form" style="font-size:16px;margin-left:20px;margin-right:20px; ">
+    <form class="ui form" style="font-size:16px;margin-left:20px;margin-right:20px; " id="frmNota" method="POST" enctype="multipart/form-data">
         <div class="field">
             <div class="fields">
                 <div class="four wide field">
@@ -151,7 +151,7 @@
                         </tbody>
                     </table>
                         <br>
-                        <a class="ui blue right floated button">Guardar</a>
+                        <a class="ui blue right floated button" id="btnGuardarTodo">Guardar</a>
                         </div>
                         
                          </div>
@@ -195,7 +195,7 @@ var app = new Vue({
                
             
             },
-                guardarAcabado(){
+                guardarDetalle(){
 
                 if (this.listado.length) {
 
@@ -205,7 +205,7 @@ var app = new Vue({
                     data: {
                         detalles: JSON.stringify(this.listado)
                     },
-                    url: '?1=FacturacionController&2=guardarNotaCredito',
+                    url: '?1=FacturacionController&2=guardarDetalleNota',
                     success: function (r) {
                         $('#frmLista').removeClass('loading');
                         if (r == 1) {
@@ -286,6 +286,54 @@ var app = new Vue({
 			}
         });
         
+
+    });
+
+
+    $('#btnGuardarTodo').click(function() {
+
+alertify.confirm("¿Desea emitar la nota de crédito?",
+    function(){
+        
+        const form = $('#frmNota');
+
+        const datosFormulario = new FormData(form[0]);
+ 
+
+    $.ajax({
+        enctype: 'multipart/form-data',
+        contentType: false,
+        processData: false,
+        cache: false,
+        type: 'POST',
+        url: '?1=FacturacionController&2=guardarNota',
+        data: datosFormulario,
+        success: function(r) {
+            if(r == 1) {
+                app.guardarDetalle();
+                swal({
+                    title: 'Nota de crédito emitada con éxito',
+                    text: 'Guardada con éxito',
+                    type: 'success',
+                    showConfirmButton: true,
+
+                }).then((result) => {
+                    if (result.value) {
+                        location.reload();
+                        window.open('?1=FacturacionController&2=imprimirNota','_blank');
+                                return false;
+                    }
+                }); 
+                
+            } 
+        }
+    });
+},
+    function(){
+        //$("#modalCalendar").modal('toggle');
+        alertify.error('Cancelado');
+        
+    }); 
 
     });
 </script>

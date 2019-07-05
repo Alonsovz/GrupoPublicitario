@@ -11,6 +11,23 @@ class FacturacionController extends ControladorBase {
     }
 
 
+    public static function baseCompras() {
+      
+        
+        self::loadMain();
+        
+        require_once './app/view/Facturacion/baseCompras.php';
+    }
+
+    public static function cuentasPorCobrar() {
+      
+        
+        self::loadMain();
+        
+        require_once './app/view/Facturacion/cuentasPorCobrar.php';
+    }
+
+
     public static function notaCredito() {
       
         $dao = new DaoClientes();
@@ -53,6 +70,75 @@ class FacturacionController extends ControladorBase {
 
         echo $dao->mostrarFacturaP();
     }
+
+
+
+
+    public function guardarNota(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdCliente($_REQUEST["cliente"]);
+        $dao->objeto->setFecha($_REQUEST["fecha"]);
+        $dao->objeto->setNCFF($_REQUEST["nuCorre"]);
+        $dao->objeto->setNRE($_REQUEST["registro"]);
+        $dao->objeto->setVentaCuenta($_REQUEST["venta"]);
+        $dao->objeto->setCondAn($_REQUEST["condAn"]);
+        $dao->objeto->setNNotaAn($_REQUEST["notaAnterior"]);
+        $dao->objeto->setFechaEmAn($_REQUEST["fechaNotaAn"]);
+       
+        
+
+        echo $dao->guardarNota();
+    }
+
+
+    
+    public function guardarDetalleNota(){
+        $detalles = json_decode($_REQUEST["detalles"]);
+
+        $contador = 0;
+
+        $dao = new DaoNotaCredito();
+
+        foreach($detalles as $detalle) {
+            $dao->objeto->setCantidad($detalle->cantidadRe);
+            $dao->objeto->setDescripciones($detalle->descripcionRe);
+            $dao->objeto->setPrecio($detalle->precioUnitarioRe);
+            $dao->objeto->setVentasNo($detalle->ventasNoSujetas);
+            $dao->objeto->setVentasEx($detalle->ventasExentas);
+            $dao->objeto->setventasGra($detalle->ventasGravadas);
+   
+
+            if($dao->guardarDetalleNota()) {
+                $contador++;
+            } else {
+                echo 'nell';
+            }
+        }
+
+        if($contador == count($detalles)) {
+            echo 1;
+        } else {
+            echo 2;
+        }
+    }
+
+    public function imprimirNota()
+    {
+        $dao = new DaoNotaCredito();
+        
+        
+        require_once './app/reportes/notaCredito.php';
+
+        $reporte = new Reporte();
+    
+        $resultado = $dao->imprimirEncabezadoNota();
+        $resultado1 = $dao->imprimirDetalleNota();
+      //  $resultado2 = $dao->totalNota();
+        
+        $reporte->notaCredito($resultado,$resultado1);
+    }
+
 
 }
 ?>

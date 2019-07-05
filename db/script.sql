@@ -279,6 +279,12 @@ nNotaAn varchar(500),
 fechaNotaAn date
 );
 
+select o.*,DATE_FORMAT(o.fechaNota, '%d/%m/%Y') as fecha,DATE_FORMAT(o.fechaNotaAn, '%d/%m/%Y') as fechaNotaAn,
+        c.*
+       from notaCredito o
+       inner join clientes c on c.idCliente = o.idCliente
+       where o.idNota = (select max(idNota) from notaCredito)
+
 create table detalleNota(
 idDetalle int primary key auto_increment,
 idNota int,
@@ -289,6 +295,8 @@ ventasNo double,
 ventasEx double,
 ventasGra double
 );
+
+
 
 
 alter table usuario add constraint fk_usuario_rol foreign key (codigoRol) references rol(codigoRol);
@@ -448,3 +456,7 @@ begin
 end
 $$
 
+select r.*, d.* ,p.* from detalleRequisicion d
+inner join requisiciones r on r.idRequisicion = d.idRequisicion
+inner join proveedores p on p.idProveedor = r.idProveedor
+where r.estado=5;

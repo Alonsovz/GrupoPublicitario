@@ -13,7 +13,14 @@
                 </div>
         </div>
 
-</div>
+        <div class="row title-bar">
+            <div class="sixteen wide column">
+            <a href="./app/view/Inventario/pdfP.php" class="ui right floated green labeled icon button">
+                    <i class="list icon"></i>
+                    Inventario excel
+            </a>
+            </div>
+        </div>
 
 <div class="row">
             <div class="sixteen wide column">
@@ -31,6 +38,7 @@
                     </tbody>
                 </table>
             </div>
+        </div>
         </div>
 
 

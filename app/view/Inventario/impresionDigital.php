@@ -12,8 +12,15 @@
             Inventario de productos de Impresión digital </font><font color="black" size="20px">.</font>
             </div>
         </div>
-</div>
 
+        <div class="row title-bar">
+            <div class="sixteen wide column">
+            <a href="./app/view/Inventario/pdfIP.php" class="ui right floated green labeled icon button">
+                    <i class="list icon"></i>
+                    Inventario excel
+            </a>
+            </div>
+        </div>
 
 <div class="row">
             <div class="sixteen wide column">
@@ -32,7 +39,7 @@
                 </table>
             </div>
         </div>
-
+        </div>
 
         <div class="ui fullscreen modal" id="detallesProducto">
         <div class="header" style="background-color:black;color:white;">

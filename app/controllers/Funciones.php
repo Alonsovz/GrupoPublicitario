@@ -528,12 +528,13 @@ class Funciones extends ControladorBase {
 
 		if($_POST['id']){
 			$sql="select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precioUnitario,2) as precio,
-			format(d.total,2) as precioTotal from detalleRequisicion d
+			format(d.total,2) as precioTotal, format(d.precioUnitario/d.cantidad,2) as precioIn from detalleRequisicion d
 			inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
 			inner join colores c on c.idColor = d.color
 			inner join acabados a on a.idAcabado = d.acabado
 			inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 			inner join medidas m on m.idMedida = pm.idMedida
+            inner join inventario i on i.idProducto = p.idProductoFinal
 			where d.idRequisicion='".$idC."' group by d.idDetalle";
 	
 			$result=mysqli_query($conexion,$sql);
@@ -547,6 +548,7 @@ class Funciones extends ControladorBase {
 				<th style='background-color:#B40431;color:white;'>Descripcion</th>
 				<th style='background-color:#B40431;color:white;'>Precio Unitario</th>
 				<th style='background-color:#B40431;color:white;'>Precio Total</th>
+				<th style='background-color:#B40431;color:white;'>Nuevo Precio</th>
 				<th style='background-color:#B40431;color:white; width:5%;'><i class='cogs icon'></i></th>
 			</tr>
 			";
@@ -573,14 +575,18 @@ class Funciones extends ControladorBase {
 				</td>
 				<td>
 				$ '.utf8_encode($ver[17]). '
-				</td>';
+				</td>
+				<td>
+				$ '.utf8_encode($ver[18]). '
+				</td>
+				';
 				if(utf8_encode($ver[10])==1){
 					$cadena=$cadena.'<td>
 					<a class="ui green small icon button" idD='.utf8_encode($ver[0]). '
 					idPr='.utf8_encode($ver[2]). ' color='.utf8_encode($ver[3]). ' acabado='.utf8_encode($ver[4]). '
 					pro="'.utf8_encode($ver[12]). '" co="'.utf8_encode($ver[13]). '" ac="'.utf8_encode($ver[14]). '"
 					me="'.utf8_encode($ver[15]). '"
-					cantidad ="'.utf8_encode($ver[5]). '" precio ="'.utf8_encode($ver[8]). '" onclick="recibir(this)"
+					cantidad ="'.utf8_encode($ver[5]). '" precio ="'.utf8_encode($ver[18]). '" onclick="recibir(this)"
 					><i class="pencil icon"></i></a>
 					</td>';
 				}else{
@@ -780,7 +786,7 @@ class Funciones extends ControladorBase {
 				<b>Desperdicio:</b> '.utf8_encode($ver[15]).'<br>
 				</td>
 				<td>
-				$ '.utf8_encode($ver[16]). '
+				 '.utf8_encode($ver[16]). '
 				</td>
 				<td>
 				$ '.utf8_encode($ver[22]). '

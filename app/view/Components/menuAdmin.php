@@ -317,6 +317,55 @@
 </div>
 
 
+<br>
+<div class="ui fluid selection dropdown" style="color:black; background-color:white;">
+<i class="dropdown icon"></i>
+    <div class="default text" style="color:black; background-color:white;">
+            <i class="list icon"></i> <i class="check icon"></i>
+            <b>Libros de Información</b>       
+    </div>
+
+    <div class="menu">
+    
+    
+
+    <div class="item">
+    <a href="?1=FacturacionController&2=baseCompras" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
+    <i class="cogs icon"></i> <i class="file alternate icon"></i>
+      Compras-Gastos
+    </a>
+
+    </div>
+
+    <div class="item">
+    <a href="?1=FacturacionController&2=cuentasPorCobrar" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
+    <i class="cogs icon"></i> <i class="file alternate icon"></i>
+      Cuentas por cobrar
+    </a>
+
+    </div>
+
+    <div class="item">
+    <a href="?1=FacturacionController&2=cuentasPorCobrar" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
+        <i class="cogs icon"></i><i class="pencil alternate icon"></i>
+      Consumidor final
+    </a>
+
+    </div>
+
+    <div class="item">
+    <a href="?1=FacturacionController&2=promocionales" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
+        <i class="cogs icon"></i><i class="folder outline icon"></i>
+       Reporte de Ventas
+    </a>
+
+    </div>
+
+
+    </div>
+</div>
+
+
 
 
 

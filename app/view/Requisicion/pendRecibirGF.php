@@ -134,6 +134,7 @@
             <input type="hidden" id="acabado" name="acabado">
             <input type="hidden" id="cantidad" name="cantidad">
             <input type="hidden" id="precio" name="precio">
+            <input type="hidden" id="precioIn" name="precioIn">
             <h3>¿Recibir producto?</h3>
         </div>
         <div class="actions">
@@ -210,6 +211,7 @@
        var acabado= $(ele).attr("acabado");
        var cantidad= $(ele).attr("cantidad");
        var precio= $(ele).attr("precio");
+      
     
       $("#idP").val(idP);
       $("#idD").val(idD);
@@ -217,6 +219,7 @@
       $("#acabado").val(acabado);
       $("#cantidad").val(cantidad);
       $("#precio").val(precio);
+     
       $("#idR").val($("#id").val());
 
 
@@ -229,7 +232,7 @@
     }
 
     $("#btnCa").click(function(){
-        $("#modalRecibir").modal('hide');
+       
         $.ajax({
 			type:"POST",
 			url:"?1=Funciones&2=verDetallesRequisicionAp",

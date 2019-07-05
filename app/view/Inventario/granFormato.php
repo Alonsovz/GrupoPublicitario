@@ -17,8 +17,19 @@
                         Inventario de productos de Gran Formato </font><font color="black" size="20px">.</font>
                     </div>
             </div>
-    </div>
 
+            <div class="row title-bar">
+            <div class="sixteen wide column">
+            <a href="./app/view/Inventario/pdfGR.php" class="ui right floated green labeled icon button">
+                    <i class="list icon"></i>
+                    Inventario excel
+            </a>
+            </div>
+        </div>
+        
+    
+    
+<div class="ui divider"></div>
 
         <div class="row">
             <div class="sixteen wide column">
@@ -38,7 +49,7 @@
             </div>
         </div>
 
-
+</div>
         <div class="ui fullscreen modal" id="detallesProducto">
         <div class="header" style="background-color:black;color:white;">
         Inventario del producto: <a id="nameP" style="color:red;"></a>
