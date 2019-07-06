@@ -77,7 +77,8 @@ idProducto int,
 idColor int,
 idAcabado int,	
 cantidadExistencia double,
-precioUnitario double
+precioUnitario double,
+precioDesperdicio double
 );
 
 
@@ -168,7 +169,9 @@ copias varchar(50),
 mts2 varchar(50),
 desperdicio varchar(50),
 descripciones varchar(500),
-precio double
+tipoVenta varchar(40),
+precio double,
+estado int
 );
 
 
@@ -193,7 +196,9 @@ idAcabado int,
 cantidad varchar(20),
 tipo varchar(50),
 descripciones varchar(500),
-precio double
+tipoVenta varchar(40),
+precio double,
+estado int
 );
 
 
@@ -218,7 +223,9 @@ idAcabado int,
 cantidad varchar(20),
 tipo varchar(50),
 descripciones varchar(500),
-precio double
+tipoVenta varchar(40),
+precio double,
+estado int
 );
 
 create table requisiciones(
@@ -279,11 +286,7 @@ nNotaAn varchar(500),
 fechaNotaAn date
 );
 
-select o.*,DATE_FORMAT(o.fechaNota, '%d/%m/%Y') as fecha,DATE_FORMAT(o.fechaNotaAn, '%d/%m/%Y') as fechaNotaAn,
-        c.*
-       from notaCredito o
-       inner join clientes c on c.idCliente = o.idCliente
-       where o.idNota = (select max(idNota) from notaCredito)
+
 
 create table detalleNota(
 idDetalle int primary key auto_increment,
@@ -303,7 +306,7 @@ alter table usuario add constraint fk_usuario_rol foreign key (codigoRol) refere
 
  insert into rol values(1,'Administrador/a');
 insert into rol values(2,'Produccion');
-insert into rol values(3,'Secretaria/o');
+insert into rol values(3,'Asistente');
  insert into rol values(4,'Propietario');
  
 
@@ -419,10 +422,10 @@ $$
 delimiter $$
 create procedure mostrarUsuarios()
 begin
-	select u.*, r.descRol
-	from usuario u
-	inner join rol r on r.codigoRol = u.codigoRol
-    where u.idEliminado=1;
+		select u.*, r.descRol
+		from usuario u
+		inner join rol r on r.codigoRol = u.codigoRol
+		where u.idEliminado=1;
 end
 $$
 
@@ -456,7 +459,11 @@ begin
 end
 $$
 
-select r.*, d.* ,p.* from detalleRequisicion d
-inner join requisiciones r on r.idRequisicion = d.idRequisicion
-inner join proveedores p on p.idProveedor = r.idProveedor
-where r.estado=5;
+select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio from detalleOrdenP d
+			inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+			inner join colores c on c.idColor = d.idColor
+			inner join acabados a on a.idAcabado = d.idAcabado
+			inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
+			inner join medidas m on m.idMedida = pm.idMedida
+            
+            update detalleOrdenP set estado=1 where idDetalle=2

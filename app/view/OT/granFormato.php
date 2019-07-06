@@ -140,6 +140,11 @@
             <input type="text" id="existencia" name="existencia" readonly>
         </div>
 
+        <div class="six wide field" id="precioDesDiv" style="display:none;">
+            <label><i class="dollar icon"></i>Precio por desperdicio</label>
+            <input type="text" id="precioDesp" name="precioDesp" readonly>
+        </div>
+
         </div>
         </div>
 
@@ -232,13 +237,24 @@
             
             </div>
 
+            <div class="four wide field">
+            <label><i class="dollar icon"></i>Tipo de venta:</label>
+            <select name="tipoVenta" id="tipoVenta" class="ui  dropdown">
+            <option value="Seleccione" set selected>Seleccione una opción</option>
+            <option value="Venta Gravada">Ventas Gravada</option>
+            <option value="Venta No Sujeta">Venta No Sujeta</option>
+            <option value="Venta Gravada">Venta Gravada</option>
+            </select>
+            
+            </div>
+
             <div class="three wide field">
             <label><i class="dollar icon"></i>Precio:</label>
             <input type="text" name="precio" id="precio">
             
             </div>
 
-            <div class="seven wide field">
+            <div class="three wide field">
             <label style="color:#F3F3F1"><i class="dollar icon"></i>Precio:</label>
             <a class=" ui right floated black labeled icon button" id="agregarOT"> <i class="plus icon"></i>Agregar OT</a>
             
@@ -257,12 +273,13 @@
                         <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: black; color:white;width:20%;"><i class="list icon"></i>Producto</th>
+                                        <th style="background-color: black; color:white;width:15%;"><i class="list icon"></i>Producto</th>
                                         <th style="background-color: black; color:white;width:7%;"><i class="podcast icon"></i>Cantidad</th>
                                         <th style="background-color: black; color:white;width:20%;"><i class="arrows alternate icon"></i>Detalles Generales</th>
                                         <th style="background-color: black; color:white;"><i class="arrows alternate icon"></i>Def. Medida</th>
                                         <th style="background-color: black; color:white;"><i class="arrows alternate icon"></i>Imp + Desperdicio</th>
                                         <th style="background-color: black; color:white;"><i class="pencil icon"></i>Descipciones</th>
+                                        <th style="background-color: black; color:white;width:10%;"><i class="dollar icon"></i>Tipo Venta</th>
                                         <th style="background-color: black; color:white;width:7%;"><i class="dollar icon"></i>Precio</th>
                                         <th style="background-color: black; color:white;"><i class="trash icon"></i></th>
                                     </tr>
@@ -307,8 +324,12 @@
                                     <textarea rows="3"  v-model="lista.descriRe" name="descriRe" id="descriRe" readonly></textarea>
                                     </td>
                                     <td>  
+                                    <textarea rows="3" class="requerido" v-model="lista.tipoVentaRe" name="tipoVentaRe" id="tipoVentaRe"
+                                     readonly></textarea>
+                                    </td>
+                                    <td>  
                                     <input class="requerido" v-model="lista.precioRe" name="precioRe" id="precioRe" type="text"
-                                     placeholder="Nombre completo" readonly>
+                                     readonly>
                                     </td>
                                     
                                     <td>
@@ -357,6 +378,7 @@ var app = new Vue({
                 mtsDes:'',
                 despRe:'',
                 ubicRe:'',
+                tipoVentaRe:'',
             }],
         },
         methods: {
@@ -540,6 +562,21 @@ $(function() {
                 
 			}
 		});
+
+        $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=precioDes",
+			data:{
+                idPro : idPro,
+                idColor : idColor,
+                idAcabado : idAcabado,
+            },
+			success:function(r){
+                $('#precioDesp').val(r);
+                $("#precioDesDiv").show(1000);
+                
+			}
+		});
     });
 </script>
 <script type="text/javascript">
@@ -658,7 +695,7 @@ $(function() {
 
             var unidad = $("#unidadMedida").val();
 
-            $("#cuadrosImp").val(totalMetros);
+            $("#cuadrosImp").val(totalMetros.toFixed(2));
     });
 
     $("#agregarOT").click(function(){
@@ -683,6 +720,7 @@ $(function() {
             var mt = $("#mts2").val();
             var des = $("#desperdicio").val();
             var ubic =$("input:checkbox[name=ubicacion]:checked").val();
+            var tipoV=$("#tipoVenta option:selected").val();
 
         app.listado.push({
             productoRe: producto,
@@ -705,6 +743,7 @@ $(function() {
              mtsDes:mt,
             despRe:des,
             ubicRe:ubic,
+            tipoVentaRe:tipoV,
         }),
 
         

@@ -36,7 +36,7 @@ class DaoOrdenTrabajo extends DaoBase {
         ,'".$this->objeto->getCuadrosImp()."','".$this->objeto->getUbicacion()."','".$this->objeto->getAncho()."'
         ,'".$this->objeto->getLongitud()."','".$this->objeto->getAnchoMat()."','".$this->objeto->getCopias()."'
         ,'".$this->objeto->getMts2()."','".$this->objeto->getDesperdicio()."','".$this->objeto->getDescripciones()."'
-        ,'".$this->objeto->getPrecio()."')";
+        ,'".$this->objeto->getVentaCuenta()."','".$this->objeto->getPrecio()."',1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -74,7 +74,7 @@ class DaoOrdenTrabajo extends DaoBase {
         $_query = "insert into detalleOrdenIP values(null,'.$idReq.'
         ,'".$this->objeto->getIdProductoFinal()."','".$this->objeto->getColor()."','".$this->objeto->getAcabado()."'
         ,'".$this->objeto->getCantidad()."','".$this->objeto->getTipo()."','".$this->objeto->getDescripciones()."'
-        ,'".$this->objeto->getPrecio()."')";
+        ,'".$this->objeto->getVentaCuenta()."','".$this->objeto->getPrecio()."',1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -111,7 +111,7 @@ class DaoOrdenTrabajo extends DaoBase {
         $_query = "insert into detalleOrdenP values(null,'.$idReq.'
         ,'".$this->objeto->getIdProductoFinal()."','".$this->objeto->getColor()."','".$this->objeto->getAcabado()."'
         ,'".$this->objeto->getCantidad()."','".$this->objeto->getTipo()."','".$this->objeto->getDescripciones()."'
-        ,'".$this->objeto->getPrecio()."')";
+        ,'".$this->objeto->getVentaCuenta()."','".$this->objeto->getPrecio()."',1)";
 
         $resultado = $this->con->ejecutar($_query);
 

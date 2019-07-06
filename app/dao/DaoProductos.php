@@ -423,7 +423,7 @@ class DaoProductos extends DaoBase {
         $idExp = $fila['id'];
 
         $_query = "insert into inventario values(".$idExp.", '".$this->objeto->getColor()."',
-        '".$this->objeto->getAcabado()."',0.0,0.0)";
+        '".$this->objeto->getAcabado()."',0.0,0.0,0.0)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -687,6 +687,61 @@ class DaoProductos extends DaoBase {
         $_query = "update inventario set precioUnitario=".$this->objeto->getPrecio()." 
         where idProducto=".$this->objeto->getIdProducto()." and idColor=".$this->objeto->getColor()."
          and idAcabado=".$this->objeto->getAcabado()." ";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function definirPrecioDes() {
+        $_query = "update inventario set precioDesperdicio=".$this->objeto->getPrecio()." 
+        where idProducto=".$this->objeto->getIdProducto()." and idColor=".$this->objeto->getColor()."
+         and idAcabado=".$this->objeto->getAcabado()." ";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function restarProducto() {
+        $_query = "update inventario set cantidadExistencia= cantidadExistencia -".$this->objeto->getExistencia()." 
+        where idProducto=".$this->objeto->getIdProducto()." and idColor=".$this->objeto->getColor()."
+         and idAcabado=".$this->objeto->getAcabado()." ";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function cambiarEstadoIP() {
+        $_query = "update detalleOrdenIP set estado=2 
+        where idDetalle=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function cambiarEstadoP() {
+        $_query = "update detalleOrdenP set estado=2 
+        where idDetalle=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 

@@ -27,6 +27,7 @@ class OrdenTrabajo extends ModeloBase{
     private $copias;
     private $mts2;
     private $desperdicio;
+    private $ventaCuenta;
 
 
     public function __construct() {
@@ -259,6 +260,20 @@ class OrdenTrabajo extends ModeloBase{
 
         return $this;
     }
+
+    public function getVentaCuenta()
+    {
+        return $this->ventaCuenta;
+    }
+
+    
+    public function setVentaCuenta($ventaCuenta)
+    {
+        $this->ventaCuenta = $ventaCuenta;
+
+        return $this;
+    }
+
 
     public function getBase()
     {

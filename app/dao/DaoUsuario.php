@@ -9,7 +9,10 @@ class DaoUsuario extends DaoBase {
 
 
     public function login() {
-        $_query = "call login('".$this->objeto->getNomUsuario()."', '".sha1($this->objeto->getPass())."')";
+        $_query = "select u.*, r.descRol
+        from usuario u
+        inner join rol r on r.codigoRol = u.codigoRol
+        where u.nomUsuario ='".$this->objeto->getNomUsuario()."' and u.pass= '".sha1($this->objeto->getPass())."' and u.idEliminado=1";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -74,6 +77,30 @@ class DaoUsuario extends DaoBase {
         '".$this->objeto->getContacto1()."','".$this->objeto->getContacto1Tel()."','".$this->objeto->getContacto1Tel2()."',
         '".$this->objeto->getFechaIngreso()."','".$this->objeto->getSueldo()."','".$this->objeto->getCodigoRol()."',
         '".$this->objeto->getNomUsuario()."','".sha1($this->objeto->getPass())."',1)";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function editarU(){
+        $_query = "update usuario set nombre='".$this->objeto->getNombre()."',
+        apellido= '".$this->objeto->getApellido()."',
+        dui='".$this->objeto->getDui()."', nit= '".$this->objeto->getNit()."', fechaNac= '".$this->objeto->getFechaNacimiento()."',
+        telefono='".$this->objeto->getTelefono()."', celular='".$this->objeto->getTelMovil()."', email='".$this->objeto->getEmail()."',
+        direccion='".($this->objeto->getDireccion())."', MISSS='".$this->objeto->getMISS()."', afiliado='".$this->objeto->getAfiliado()."',
+        MAFP='".$this->objeto->getMAFP()."',estadoCivil='".$this->objeto->getEstadoFam()."',conyuge='".$this->objeto->getConyuge()."',
+        hijos='".$this->objeto->getHijos()."', nomPadre='".$this->objeto->getNombrePadre()."',nomMadre='".$this->objeto->getNombreMadre()."',
+        nomEmergencia='".$this->objeto->getContacto1()."',telEmergencia='".$this->objeto->getContacto1Tel()."',
+        celEmergenecia='".$this->objeto->getContacto1Tel2()."',
+        fechaIngreso='".$this->objeto->getFechaIngreso()."',salario='".$this->objeto->getSueldo()."',
+        codigoRol='".$this->objeto->getCodigoRol()."',
+        nomUsuario='".$this->objeto->getNomUsuario()."'
+        where codigoUsuario=".$this->objeto->getCodigoUsuario();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -197,17 +224,7 @@ class DaoUsuario extends DaoBase {
         }
     }
 
-    public function editar() {
-        $_query = "call editarUsuario('".$this->objeto->getNombre()."', '".$this->objeto->getApellido()."','".$this->objeto->getNomUsuario()."', '".$this->objeto->getEmail()."', ".$this->objeto->getCodigoRol().", ".$this->objeto->getCodigoArea().", ".$this->objeto->getCodigoUsuario().")";
-
-        $resultado = $this->con->ejecutar($_query);
-
-        if($resultado) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
+    
 
     public function editarUser() {
         $_query = "update usuario set nomUsuario='".$this->objeto->getNomUsuario()."' where codigoUsuario = ".$this->objeto->getCodigoUsuario();
@@ -245,7 +262,7 @@ class DaoUsuario extends DaoBase {
     }
 
     public function mostrarUsuarios() {
-        $_query = "select u.*, r.descRol
+        $_query = "select u.*, r.descRol, format(u.salario,2) as salarioE
         from usuario u
         inner join rol r on r.codigoRol = u.codigoRol
         where u.idEliminado=1 and u.codigoRol!=4;";
@@ -258,7 +275,7 @@ class DaoUsuario extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnEditar = '<button id=\"'.$fila["codigoUsuario"].'\" nombre=\"'.$fila["nombre"].'\" apellido=\"'.$fila["apellido"].'\" fechaNac=\"'.$fila["fechaNac"].'\" dui=\"'.$fila["dui"].'\" telefono=\"'.$fila["telefono"].'\" correo=\"'.$fila["email"].'\" direccion=\"'.$fila["direccion"].'\" descRol=\"'.$fila["descRol"].'\"  class=\"ui btnEditar icon black small button\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEditar = '<button id=\"'.$fila["codigoUsuario"].'\" rol=\"'.$fila["codigoRol"].'\" usuario=\"'.$fila["nomUsuario"].'\" salario=\"'.$fila["salarioE"].'\"  fechaIngreso=\"'.$fila["fechaIngreso"].'\" nomMadre=\"'.$fila["nomMadre"].'\" nomPadre=\"'.$fila["nomPadre"].'\" nomEmergencia=\"'.$fila["nomEmergencia"].'\" telEmergencia=\"'.$fila["telEmergencia"].'\" celEmergenecia=\"'.$fila["celEmergenecia"].'\" nit=\"'.$fila["nit"].'\" hijos=\"'.$fila["hijos"].'\"  conyuge=\"'.$fila["conyuge"].'\" estadoCivil=\"'.$fila["estadoCivil"].'\" afiliado=\"'.$fila["afiliado"].'\" MAFP=\"'.$fila["MAFP"].'\" MISSS=\"'.$fila["MISSS"].'\" celular=\"'.$fila["celular"].'\" nombre=\"'.$fila["nombre"].'\" apellido=\"'.$fila["apellido"].'\" fechaNac=\"'.$fila["fechaNac"].'\" dui=\"'.$fila["dui"].'\" telefono=\"'.$fila["telefono"].'\" correo=\"'.$fila["email"].'\" direccion=\"'.$fila["direccion"].'\" descRol=\"'.$fila["descRol"].'\"  class=\"ui btnEditar icon black small button\"><i class=\"edit icon\"></i> Ver Detalles</button>';
             $btnEliminar = '<button id=\"'.$fila["codigoUsuario"].'\" nombre=\"'.$fila["nombre"].'\" apellido=\"'.$fila["apellido"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';

@@ -143,6 +143,37 @@ Eliminat la OT : <a id="cor" style="background-color:#BDBDBD; color:red;"></a>
                     </button>
                 </div>
 </div>
+
+<div class="ui tiny modal" id="modalRecibir">
+<div class="header" style="background-color:#BDBDBD; color:black;">
+Finalizar producto
+</div>
+                <div class="content" style="text-align:center;background-color:#EBEAE8;">
+                    <h3>¿Desea finalizar el producto?</h3>
+                    <div class="ui divider"></div>
+                    <form action="" class="ui equal width form">
+                        <div class="fields">
+                            <div  class="field">
+                                <input type="hidden" name="idPr" id="idPr">
+                                <input type="hidden" name="idOrd" id="idOrd">
+                                <input type="hidden" name="idC" id="idC">
+                                <input type="hidden" name="idAc" id="idAc">
+                                <input type="hidden" name="cantid" id="cantid">
+                                <input type="hidden" name="idDet" id="idDet">
+                            </div>
+                        </div>
+                    </form>        
+                </div>
+                <div class="actions">
+                    <button class="ui black deny button" id="btnCerrarRec">
+                        Cancelar
+                    </button>
+                    <button class="ui right red button" id="btnRecibirIn">
+                        Finalizar
+                    </button>
+                </div>
+</div>
+
 </div>
 <script src="./res/tablas/tablaProduccionP.js"></script>
 <script>
@@ -217,10 +248,79 @@ var finalizar=(ele)=>{
 var eliminar=(ele)=>{
     $('#modalEliminar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
             $('#idEliminar').val($(ele).attr("id"));
-            $('#cor').text($(ele).attr("correlativo"));
-        
-            
+            $('#cor').text($(ele).attr("correlativo"));  
 }
+
+var recibirPro=(ele)=>{
+    $('#modalRecibir').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+            $('#idPr').val($(ele).attr("idProducto"));
+            $('#idC').val($(ele).attr("idColor"));
+            $('#idAc').val($(ele).attr("idAcabado"));
+            $('#idOrd').val($(ele).attr("idOrden"));
+            $('#cantid').val($(ele).attr("cantidad"));
+            $('#idDet').val($(ele).attr("idDetalle"));
+}
+
+$("#btnCerrarRec").click(function(){
+    var idOrden = $('#idOrd').val();
+    $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=verDetallesOTP",
+            data:{
+                id:idOrden
+            },
+        success:function(r){
+				$('#detalles').html(r);
+			}
+        });
+        $('#verDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+});
+
+
+$("#btnRecibirIn").click(function(){
+        var idPr=$('#idPr').val();
+        var idColor =$('#idC').val();
+        var idAcabado = $('#idAc').val();
+        var cantidad = $('#cantid').val();
+        var idOrden = $('#idOrd').val();
+        var idDetalle=$('#idDet').val();
+    $.ajax({
+              
+                url: '?1=InventarioController&2=restarProductoP',
+                data: {idPr:idPr,
+                      idColor:idColor,
+                      idAcabado:idAcabado,
+                      cantidad:cantidad,
+                      idDetalle:idDetalle,
+                },
+                success: function(r) {
+                    if(r == 11) {
+                        $("#modalRecibir").modal('hide');
+                        swal({
+                            title: 'Producto finalizado',
+                            type: 'success',
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                if (result.value) {
+                                    $.ajax({
+                                    type:"POST",
+                                    url:"?1=Funciones&2=verDetallesOTP",
+                                    data:{
+                                        id:idOrden
+                                    },
+                                success:function(r){
+                                        $('#detalles').html(r);
+                                    }
+                                });
+                                $('#verDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                                                    }
+                                                }); 
+                        
+                    } 
+                }
+            
+        });
+});
 
 $("#btnFinalizar").click(function(){
         var id=$("#idFin").val();

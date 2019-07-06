@@ -165,6 +165,17 @@
             
             </div>
 
+            <div class="four wide field">
+            <label><i class="dollar icon"></i>Tipo de venta:</label>
+            <select name="tipoVenta" id="tipoVenta" class="ui  dropdown">
+            <option value="Seleccione" set selected>Seleccione una opción</option>
+            <option value="Venta Gravada">Ventas Gravada</option>
+            <option value="Venta No Sujeta">Venta No Sujeta</option>
+            <option value="Venta Gravada">Venta Gravada</option>
+            </select>
+            
+            </div>
+
 
             <div class="three wide field">
             <label><i class="dollar icon"></i>Precio:</label>
@@ -201,6 +212,7 @@
                                         <th style="background-color: black; color:white;"><i class="podcast icon"></i>Cantidad</th>
                                         <th style="background-color: black; color:white;"><i class="pencil icon"></i>Tipo</th>
                                         <th style="background-color: black; color:white;"><i class="pencil icon"></i>Descipciones</th>
+                                        <th style="background-color: black; color:white;"><i class="pencil icon"></i>Tipo Venta</th>
                                         <th style="background-color: black; color:white;"><i class="dollar icon"></i>Precio</th>
                                         <th style="background-color: black; color:white;"><i class="trash icon"></i></th>
                                     </tr>
@@ -225,6 +237,9 @@
 
                                     <td>  
                                     <textarea rows="3"  v-model="lista.descriRe" name="descriRe" id="descriRe" readonly></textarea>
+                                    </td>
+                                    <td>  
+                                    <input v-model="lista.tipoVentaRe" name="tipoVentaRe" id="tipoVentaRe" type="text" readonly>
                                     </td>
                                     <td>  
                                     <input class="requerido" v-model="lista.precioRe" name="precioRe" id="precioRe" type="text" readonly>
@@ -267,6 +282,7 @@ var app = new Vue({
                 idColor:'',
                 idAcabado:'',
                 tipoRe:'',
+                tipoVentaRe:'',
             }],
         },
         methods: {
@@ -555,17 +571,19 @@ $(function() {
             var idPro =$("#proFinalCmb option:selected").val();
             var acabado = $("#acabadoCmb option:selected").val();
             var tip = $("input:radio[name=tipo]:checked").val();
+            var tipoV=$("#tipoVenta option:selected").val();
 
-        app.listado.push({
-            productoRe: producto,
-            cantidadRe:cantidad,
-            descriRe:desc,
-            precioRe:precio,
-            idProducto : idPro,
-            idColor: color,
-            idAcabado : acabado,
-            tipoRe:tip,
-        }),
+            app.listado.push({
+                productoRe: producto,
+                cantidadRe:cantidad,
+                descriRe:desc,
+                precioRe:precio,
+                idProducto : idPro,
+                idColor: color,
+                idAcabado : acabado,
+                tipoRe:tip,
+                tipoVentaRe:tipoV,
+            }),
 
         
         $("#cantidad").val('');       

@@ -168,6 +168,35 @@
         <button class="ui red button" id="guardarP">Guardar</button>
     </div>
 </div>
+
+<div id="modalPrecioDes" class="ui tiny modal">
+    <div class="header" style="color:white;background-color:black;">
+        Definir precio de desperdicio para el producto : <a id="proPD" style="color:yellow"></a><br>
+        Acabado : <a id="acaPD" style="color:yellow"></a><br>
+        Color : <a id="colPD" style="color:yellow"></a><br>
+        Medida : <a id="medPD" style="color:yellow"></a>
+    </div>
+    <div class="content">
+    <input type="hidden" id="colorPD" name="colorPD">
+    <input type="hidden" id="acabadoPD" name="acabadoPD">
+    <input type="hidden" id="productoPD" name="productoPD">
+        <form class="ui form">
+            <div class="field">
+                <div class="fields">
+                    <div class="sixteen wide field">
+                    <label><i class="dollar icon"></i> Precio Unitario:</label>
+                    <input type="text" id="precioD" name="precioD" placeholder="Definir Precio de desperdicio">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <button class="ui black  button" id="btnPD">Cancelar</button>
+        <button class="ui red button" id="guardarPD">Guardar</button>
+    </div>
+</div>
+
 </div> 
 
 
@@ -177,6 +206,7 @@
     $("#gr").removeClass("ui gray button");
     $("#gr").addClass("ui gray basic button");
     $('#precio').mask("###0.00", {reverse: true});
+    $('#precioD').mask("###0.00", {reverse: true});
     $('#exis').mask("###0.00", {reverse: true});
     });
 
@@ -213,7 +243,7 @@
     
     $.ajax({
 			type:"POST",
-			url:"?1=Funciones&2=verDetallesInventario",
+			url:"?1=Funciones&2=verDetallesInventarioGR",
             data:{
                 idC:idP
             },
@@ -237,7 +267,7 @@ $("#btnE").click(function(){
     
     $.ajax({
 			type:"POST",
-			url:"?1=Funciones&2=verDetallesInventario",
+			url:"?1=Funciones&2=verDetallesInventarioGR",
             data:{
                 idC:idP
             },
@@ -261,7 +291,7 @@ $("#titleDe").text();
 
 $.ajax({
     type:"POST",
-    url:"?1=Funciones&2=verDetallesInventario",
+    url:"?1=Funciones&2=verDetallesInventarioGR",
     data:{
         idC:idP
     },
@@ -329,7 +359,7 @@ $("#guardarE").click(function(){
                                 
                                 $.ajax({
                                         type:"POST",
-                                        url:"?1=Funciones&2=verDetallesInventario",
+                                        url:"?1=Funciones&2=verDetallesInventarioGR",
                                         data:{
                                             idC:idP
                                         },
@@ -378,6 +408,24 @@ var agregarPrecio=(ele)=>{
 }
     
 
+var agregarPrecioDesper=(ele)=>{
+    var id = $(ele).attr("id");
+    var idColor = $(ele).attr("idColor");
+    var idAcabado = $(ele).attr("idAcabado");
+
+    $("#proPD").text($("#titleDe").text());
+    $("#colPD").text($(ele).attr("color"));
+    $("#acaPD").text($(ele).attr("acabado"));
+    $("#medPD").text($(ele).attr("medida"));
+
+
+    $("#colorPD").val(idColor);
+    $("#acabadoPD").val(idAcabado);
+    $("#productoPD").val(id);
+    $('#modalPrecioDes').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+}
+    
+
 
 $("#guardarP").click(function(){
     
@@ -416,7 +464,74 @@ $("#guardarP").click(function(){
                                   
                                   $.ajax({
                                           type:"POST",
-                                          url:"?1=Funciones&2=verDetallesInventario",
+                                          url:"?1=Funciones&2=verDetallesInventarioGR",
+                                          data:{
+                                              idC:idP
+                                          },
+                                      success:function(r){
+                                              $('#respuesta').html(r);
+                                          }
+                                      });
+  
+                                      $("#verDe").show(1000);
+                                      $("#title").show(1000);
+                                      $('#detallesProducto').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                                 
+                              }
+                          }); 
+                          
+                      } 
+                  }
+          });
+  
+      },
+              function(){
+                 
+                  alertify.error('Cancelado');
+                  
+              }); 
+      
+  });
+
+
+  $("#guardarPD").click(function(){
+    
+    var idColor=  $("#colorPD").val();
+     var idAcabado= $("#acabadoPD").val();
+     var id= $("#productoPD").val();
+     var precio = $("#precioD").val();
+  
+      alertify.confirm("¿Desea guardar el precio de desperdicio para el producto: " +$("#proPD").text()+ "  Acabado: " + $("#acaPD").text() + "  Color: " + $("#colPD").text() + "?",
+              function(){
+      $.ajax({
+              type:"POST",
+              url:"?1=InventarioController&2=definirPrecioDes",
+              data:{
+                  id:id,
+                  idColor:idColor,
+                  idAcabado:idAcabado,
+                  precio:precio,
+              },
+              success: function(r) {
+                      if(r == 1) {
+                        $('#modalPrecioDes').modal('hide');
+                          $('#respuesta').html('');
+                          swal({
+                              title: 'Precio actualizado',
+                              text: 'Guardado con éxito',
+                              type: 'success',
+                              
+                              showConfirmButton: true,
+                              }).then((result) => {
+                                  if (result.value) {
+                              
+                                      var idP =  $("#idProductoF").val();;
+                                  
+                                  $("#titleDe").text();
+                                  
+                                  $.ajax({
+                                          type:"POST",
+                                          url:"?1=Funciones&2=verDetallesInventarioGR",
                                           data:{
                                               idC:idP
                                           },

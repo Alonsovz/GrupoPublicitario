@@ -10,9 +10,23 @@ class Productos extends ModeloBase{
     private $acabado;
     private $precio;
     private $existencia;
+    private $idOrden;
 
     public function __construct() {
 
+    }
+
+    public function getIdOrden()
+    {
+        return $this->idOrden;
+    }
+
+    
+    public function setIdOrden($idOrden)
+    {
+        $this->idOrden = $idOrden;
+
+        return $this;
     }
 
     public function getIdProducto()

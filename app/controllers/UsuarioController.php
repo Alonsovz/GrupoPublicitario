@@ -125,11 +125,57 @@ class UsuarioController extends ControladorBase {
         $dao->objeto->setSueldo($_REQUEST["salario"]);
 
         $dao->objeto->setNomUsuario($_REQUEST["usuario"]);
-        $dao->objeto->setPass($_REQUEST["pass"]);
+        $dao->objeto->setPass(123);
         $dao->objeto->setCodigoRol($_REQUEST["codigoRol"]);
 
 
         echo $dao->registrar();
+
+    }
+
+
+
+    public function editar() {
+       
+        $dao = new DaoUsuario();
+
+        $dao->objeto->setNombre($_REQUEST["nombre"]);
+        $dao->objeto->setApellido($_REQUEST["apellido"]);
+        $dao->objeto->setDui($_REQUEST["dui"]);
+        $dao->objeto->setNit($_REQUEST["nit"]);
+        $dao->objeto->setFechaNacimiento($_REQUEST["fechaNac"]);
+        $dao->objeto->setTelefono($_REQUEST["telefono"]);
+        $dao->objeto->setTelMovil($_REQUEST["celular"]);
+        $dao->objeto->setEmail($_REQUEST["correo"]);
+        $dao->objeto->setDireccion($_REQUEST["direccion"]);
+        $dao->objeto->setMISS($_REQUEST["MISSS"]);
+        $dao->objeto->setAfiliado($_REQUEST["afiliado"]);
+        $dao->objeto->setMAFP($_REQUEST["MAFP"]);
+        $dao->objeto->setEstadoFam($_REQUEST["estadoFam"]);
+
+        if($_REQUEST["conyuge"] == ""){
+            $dao->objeto->setConyuge($_REQUEST["conyuge"]);
+        }else{
+            $dao->objeto->setConyuge("No definido");
+        }
+       
+        $dao->objeto->setHijos($_REQUEST["hijos"]);
+        $dao->objeto->setNombrePadre($_REQUEST["padre"]);
+        $dao->objeto->setNombreMadre($_REQUEST["madre"]);
+
+        $dao->objeto->setContacto1($_REQUEST["emergencia"]);
+        $dao->objeto->setContacto1Tel($_REQUEST["telefonoEme"]);
+        $dao->objeto->setContacto1Tel2($_REQUEST["telefonoEme"]);
+
+        $dao->objeto->setFechaIngreso($_REQUEST["fechaIng"]);
+        $dao->objeto->setSueldo($_REQUEST["salario"]);
+
+        $dao->objeto->setNomUsuario($_REQUEST["usuario"]);
+       
+        $dao->objeto->setCodigoRol($_REQUEST["codigoRol"]);
+        $dao->objeto->setCodigoUsuario($_REQUEST["idDetalle"]);
+
+        echo $dao->editarU();
 
     }
 
@@ -282,23 +328,7 @@ class UsuarioController extends ControladorBase {
         echo $dao->eliminarCuenta();
     }
 
-    public function editar() {
-        $datos = $_REQUEST["datos"];
-
-        $datos = json_decode($datos);
-
-        $dao = new DaoUsuario();
-
-        $dao->objeto->setNombre($datos->nombre);
-        $dao->objeto->setApellido($datos->apellido);
-        $dao->objeto->setNomUsuario($datos->user);
-        $dao->objeto->setEmail($datos->correo);
-        $dao->objeto->setCodigoRol($datos->rol);
-        $dao->objeto->setCodigoArea($datos->area);
-        $dao->objeto->setCodigoUsuario($datos->idDetalle);
-
-        echo $dao->editar();
-    }
+    
 
     public function autorizar() {
 

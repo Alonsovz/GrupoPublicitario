@@ -12,7 +12,7 @@
 
 <?php
 require_once './vendor/autoload.php';
-$mysqli = new mysqli('localhost','root','','grupopublicitario');
+$mysqli = new mysqli('localhost','id10007886_root','12345','id10007886_grupopublicitario');
 $listado = $mysqli -> query ("select r.*, d.* ,p.* from detalleRequisicion d
 inner join requisiciones r on r.idRequisicion = d.idRequisicion
 inner join proveedores p on p.idProveedor = r.idProveedor

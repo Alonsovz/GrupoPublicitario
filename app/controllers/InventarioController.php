@@ -72,6 +72,43 @@ class InventarioController extends ControladorBase {
         echo $dao->definirPrecio();
     }
 
+    public function definirPrecioDes(){
+        $dao = new DaoProductos();
+
+        $dao->objeto->setIdProducto($_REQUEST["id"]);
+        $dao->objeto->setColor($_REQUEST["idColor"]);
+        $dao->objeto->setAcabado($_REQUEST["idAcabado"]);
+        $dao->objeto->setPrecio($_REQUEST["precio"]);
+        
+        echo $dao->definirPrecioDes();
+    }
+
+    public function restarProductoIP(){
+        $dao = new DaoProductos();
+
+        $dao->objeto->setIdProducto($_REQUEST["idPr"]);
+        $dao->objeto->setColor($_REQUEST["idColor"]);
+        $dao->objeto->setAcabado($_REQUEST["idAcabado"]);
+        $dao->objeto->setExistencia($_REQUEST["cantidad"]);
+        $dao->objeto->setIdOrden($_REQUEST["idDetalle"]);
+        
+        echo $dao->restarProducto();
+        echo $dao->cambiarEstadoIP();
+    }
+
+    public function restarProductoP(){
+        $dao = new DaoProductos();
+
+        $dao->objeto->setIdProducto($_REQUEST["idPr"]);
+        $dao->objeto->setColor($_REQUEST["idColor"]);
+        $dao->objeto->setAcabado($_REQUEST["idAcabado"]);
+        $dao->objeto->setExistencia($_REQUEST["cantidad"]);
+        $dao->objeto->setIdOrden($_REQUEST["idDetalle"]);
+        
+        echo $dao->restarProducto();
+        echo $dao->cambiarEstadoP();
+    }
+
 }
 
 ?>

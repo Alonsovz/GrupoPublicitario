@@ -113,6 +113,7 @@ class OTController extends ControladorBase {
             $dao->objeto->setDesperdicio($detalle->despRe);
             $dao->objeto->setDescripciones($detalle->descriRe);
             $dao->objeto->setPrecio($detalle->precioRe);
+            $dao->objeto->setVentaCuenta($detalle->tipoVentaRe);
 
             if($dao->guardarDetalleOTGR()) {
                 $contador++;
@@ -157,6 +158,7 @@ class OTController extends ControladorBase {
             $dao->objeto->setTipo($detalle->tipoRe);
             $dao->objeto->setDescripciones($detalle->descriRe);
             $dao->objeto->setPrecio($detalle->precioRe);
+            $dao->objeto->setVentaCuenta($detalle->tipoVentaRe);
 
             if($dao->guardarDetalleOTIP()) {
                 $contador++;
@@ -201,6 +203,7 @@ class OTController extends ControladorBase {
             $dao->objeto->setTipo($detalle->tipoRe);
             $dao->objeto->setDescripciones($detalle->descriRe);
             $dao->objeto->setPrecio($detalle->precioRe);
+            $dao->objeto->setVentaCuenta($detalle->tipoVentaRe);
 
             if($dao->guardarDetalleOTP()) {
                 $contador++;
