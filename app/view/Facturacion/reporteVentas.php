@@ -5,9 +5,10 @@
             
             <font color="black" size="5px">
             <i class="list icon"></i> <i class="dollar icon"></i>
-            Cuentas por Cobrar</font><font color="black" size="20px">.</font>
+            Reporte de Ventas</font><font color="black" size="20px">.</font>
             </div>
         </div>
+
         <div class="row title-bar">
             <div class="sixteen wide column">
                 <a href="" class="ui right floated green labeled icon button">
@@ -15,6 +16,7 @@
                     Descargar Excel
                 </a>
             </div>
+            
         </div>
         
 </div>
@@ -32,22 +34,22 @@ where r.estado=5;");
 <table class="ui table bordered">
     <tr style="border:1px solid black;text-align:center;" height="40">
     
-    <th  style="border:1px solid black;">Fecha</th>
-    <th  style="border:1px solid black;">Tipo de documento</th>
-    <th  style="border:1px solid black;">N° Doc</th>
-    <th  style="border:1px solid black;">Tipo Producto</th>
+    <th  style="border:1px solid black;">Tipo de Producto</th>
     <th  style="border:1px solid black;">Clasificación</th>
-
     <th  style="text-align:center;border:1px solid black;">Nombre de Cliente</th>
     <th  style="text-align:center;border:1px solid black;">Detalle</th>
-    <th  style="text-align:center;border:1px solid black;">Total Saldo</th>
-    <th  style="text-align:center;border:1px solid white;color:white; background-color:black;">Cartera Corriente</th>
-    <th  style="text-align:center;border:1px solid white;color:white; background-color:black;">1 a 30 días</th>
-    <th  style="text-align:center;border:1px solid white;color:white; background-color:black;">31 a 60 días</th>
-    <th  style="text-align:center;border:1px solid white;color:white; background-color:black;">61 a 90 días</th>
-    <th  style="text-align:center;border:1px solid white;color:white; background-color:black;">61 a 90 días</th>
-    <th  style="text-align:center;border:1px solid white;color:white; background-color:black;">91 a 180 días</th>    
-    <th  style="text-align:center;border:1px solid white;color:white; background-color:black;">181 a 360 días</th>
+    <th  style="text-align:center;border:1px solid black;">N° NRC</th>
+    <th  style="text-align:center;border:1px solid black;">N° NIT</th>
+    <th  style="text-align:center;border:1px solid black;">Cantidad</th>
+
+    <th  style="text-align:center;border:1px solid black;">IVA</th>
+    <th  style="text-align:center;border:1px solid black;">Estatus</th>
+    <th  style="text-align:center;border:1px solid black;">Dias de morosidad</th>
+    <th  style="text-align:center;border:1px solid black;">Total Cobrado</th>
+    <th  style="text-align:center;border:1px solid black;">Fecha de Cobro</th>
+    <th  style="text-align:center;border:1px solid black;">Estatus</th>
+    <th  style="text-align:center;border:1px solid black;"><i class="book icon"></i></th>
+
     
 </tr>
 

@@ -3,16 +3,26 @@
         <div class="row">
             <div class="titulo">
             
+            
             <font color="black" size="5px">
             <i class="list icon"></i> <i class="dollar icon"></i>
             Base de Compras-Gastos</font><font color="black" size="20px">.</font>
             </div>
         </div>
+        <div class="row title-bar">
+            <div class="sixteen wide column">
+                <a href="" class="ui right floated green labeled icon button">
+                    <i class="download icon"></i>
+                    Descargar Excel
+                </a>
+            </div>
+        </div>
+      
 </div>
 
 <?php
 require_once './vendor/autoload.php';
-$mysqli = new mysqli('localhost','id10007886_root','12345','id10007886_grupopublicitario');
+$mysqli = new mysqli('localhost','root','','grupoPublicitario');
 $listado = $mysqli -> query ("select r.*, d.* ,p.* from detalleRequisicion d
 inner join requisiciones r on r.idRequisicion = d.idRequisicion
 inner join proveedores p on p.idProveedor = r.idProveedor

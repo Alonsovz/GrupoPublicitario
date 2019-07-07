@@ -282,7 +282,9 @@ class ProductosController extends ControladorBase {
 
 
     }
-
+    public function agregarNuevoDetallePro(){
+        
+    }
 
     public function guardarColorNew() {
 

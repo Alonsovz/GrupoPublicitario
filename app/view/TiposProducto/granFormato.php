@@ -124,6 +124,31 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
             <div class="field">
             <div class="fields">
 
+            <div class="eight wide field" id="acabadoDiv" style="display:none;">
+                <table class="ui selectable very compact celled table" style="border: 1px solid black;">
+                    <thead>
+                       <tr>
+                           <th style="background-color:black; color:white;"><label><i class="list icon"></i>Acabados</label></th>
+                           
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+                            <td id="acabados"></td>
+                        
+                    
+                        </tbody>
+                </table>
+                <a class="ui icon black small button" id="btnNuevoColor" style="margin-left:90%;"><i class="plus icon"></i></a>
+                <div id="nuevoAcabadoPro" style="margin-left:15%;display:none;">
+           <br>
+            <label style="font-size:17px; font-weight:bold;" ><i class="podcast icon"></i> Nueva acabado:</label>
+            <select id="nuAcabadoPro" name="nuAcabadoPro" class="ui search dropdown"></select>
+            <br><br>
+            <a class="ui green button" id="guardarColorPro" style="margin-left:65%;"><i class="save icon"></i>Guardar</a>
+            </div>
+                </div>
+
                 <div class="eight wide field" id="colorDiv" style="display:none;margin-left:20px;">
                 <table class="ui selectable very compact celled table" style="border: 1px solid black;">
                     <thead>
@@ -139,40 +164,17 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                         
                         </tbody>
                 </table>
-                <a class="ui icon black small button" id="btnNuevoColor" style="margin-left:90%;"><i class="plus icon"></i></a>
+               
                 <div id="nuevoColorPro" style="margin-left:18%;display:none;">
-            <br>
+            <br><br><br>
             <label style="font-size:17px; font-weight:bold;" ><i class="pencil icon"></i> Nuevo Color:</label>
             <select id="nuColorPro" name="nuColorPro" class="ui search dropdown"></select>
             <br><br>
-            <a class="ui green button" id="guardarColorPro" style="margin-left:65%;"><i class="save icon"></i>Guardar</a>
+            
             </div>
                 </div>
 <br>
-                <div class="eight wide field" id="acabadoDiv" style="display:none;">
-                <table class="ui selectable very compact celled table" style="border: 1px solid black;">
-                    <thead>
-                       <tr>
-                           <th style="background-color:black; color:white;"><label><i class="list icon"></i>Acabados</label></th>
-                           
-                        </tr>
-                        </thead>
-                        <tbody>
-                        
-                            <td id="acabados"></td>
-                        
-                    
-                        </tbody>
-                </table>
-                <a class="ui icon black small button" id="btnNuevoAcabado" style="margin-left:90%;"><i class="plus icon"></i></a>
-                <div id="nuevoAcabadoPro" style="margin-left:15%;display:none;">
-            <br>
-            <label style="font-size:17px; font-weight:bold;" ><i class="podcast icon"></i> Nueva acabado:</label>
-            <select id="nuAcabadoPro" name="nuAcabadoPro" class="ui search dropdown"></select>
-            <br><br>
-            <a class="ui green button" id="guardarAcabadoPro" style="margin-left:68%;"><i class="save icon"></i>Guardar</a>
-            </div>
-                </div>
+                
 <br>
 
                 <div class="eight wide field" id="medidadDiv" style="display:none;margin-right:20px;">
@@ -190,13 +192,13 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                         
                         </tbody>
                 </table>
-                <a class="ui icon black small button" id="btnNuevaMedida" style="margin-left:90%;"><i class="plus icon"></i></a>
+                <br><br>
                 <div id="nuevaMedidaPro" style="margin-left:17%;display:none;">
             <br>
             <label style="font-size:17px; font-weight:bold;" ><i class="arrows alternate icon"></i> Nueva Medida:</label>
             <select id="nuMedidaPro" name="nuMedidaPro" class="ui search dropdown"></select>
             <br><br>
-            <a class="ui green button" id="guardarMedidaPro" style="margin-left:68%;"><i class="save icon"></i>Guardar</a>
+            
             </div>
             <br><br>
                 </div>
@@ -803,7 +805,8 @@ $("#btnNuevoAcabado").click(function(){
 
 $("#btnNuevoColor").click(function(){
  $("#nuevoColorPro").show(1000);
- $("#tablaProductos").hide(1000);
+ $("#nuevoAcabadoPro").show(1000);
+ $("#nuevaMedidaPro").show(1000);
 });
 
 $("#editarNom").click(function(){
@@ -1551,20 +1554,24 @@ var eliminarAcabado=(ele)=>{
         var idProducto = $("#idProductoF").val();
         var idColor = $("#nuColorPro").val();
         var nombrePro = $("#titleDe").text();
+        var idAcabado = $("#nuAcabadoPro").val();
+        var idMedida = $("#nuMedidaPro").val();
 
         $.ajax({
                
                type: 'POST',
-               url: '?1=ProductosController&2=agregarColorPro',
+               url: '?1=ProductosController&2=agregarNuevoDetallePro',
                data: {
                   idProducto:idProducto,
                   idColor:idColor,
+                  idMedida:idMedida,
+                  idAcabado:idAcabado,
               },
                success: function(r) {
                    if(r == 1) {
                     $("#nuevoColorPro").hide();
                        swal({
-                           title: 'Color agregado al producto '+$("#titleDe").text(),
+                           title: 'Detalle agregado al producto '+$("#titleDe").text(),
                            type: 'success',
                            showConfirmButton: true,
                            }).then((result) => {
@@ -1583,43 +1590,8 @@ var eliminarAcabado=(ele)=>{
                                        
                                    }
                                });
-                           }
-                       }); 
-                       
-                   } 
-               }
-           
-       });
-    });
 
-
-
-    $("#guardarMedidaPro").click(function(){
-        var idProducto = $("#idProductoF").val();
-        var idMedida = $("#nuMedidaPro").val();
-        var nombrePro = $("#titleDe").text();
-
-        $.ajax({
-               
-               type: 'POST',
-               url: '?1=ProductosController&2=agregarMedidaPro',
-               data: {
-                  idProducto:idProducto,
-                  idMedida:idMedida,
-              },
-               success: function(r) {
-                   if(r == 1) {
-                    $("#nuevaMedidaPro").hide();
-                       swal({
-                           title: 'Medida agregada al producto '+$("#titleDe").text(),
-                           type: 'success',
-                           showConfirmButton: true,
-                           }).then((result) => {
-                               $('#medidas').html('');
-                               
-                               if (result.value) {
-                           
-                                   $.ajax({
+                               $.ajax({
                                    type:"POST",
                                    url:"?1=Funciones&2=verDetallesMedidas",
                                    data:{
@@ -1630,42 +1602,8 @@ var eliminarAcabado=(ele)=>{
                                        
                                    }
                                });
-                           }
-                       }); 
-                       
-                   } 
-               }
-           
-       });
-    });
 
-
-    $("#guardarAcabadoPro").click(function(){
-        var idProducto = $("#idProductoF").val();
-        var idAcabado = $("#nuAcabadoPro").val();
-        var nombrePro = $("#titleDe").text();
-
-        $.ajax({
-               
-               type: 'POST',
-               url: '?1=ProductosController&2=agregarAcabadoPro',
-               data: {
-                  idProducto:idProducto,
-                  idAcabado:idAcabado,
-              },
-               success: function(r) {
-                   if(r == 1) {
-                    $("#nuevoAcabadoPro").hide();
-                       swal({
-                           title: 'Acabado agregado al producto '+$("#titleDe").text(),
-                           type: 'success',
-                           showConfirmButton: true,
-                           }).then((result) => {
-                               $('#acabados').html('');
-                               
-                               if (result.value) {
-                           
-                                   $.ajax({
+                               $.ajax({
                                    type:"POST",
                                    url:"?1=Funciones&2=verDetallesAcabados",
                                    data:{
@@ -1684,8 +1622,7 @@ var eliminarAcabado=(ele)=>{
            
        });
     });
-</script>
 
 
 
-
+   </script>

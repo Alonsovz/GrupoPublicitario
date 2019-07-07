@@ -331,7 +331,7 @@
 
     <div class="item">
     <a href="?1=FacturacionController&2=baseCompras" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
-    <i class="cogs icon"></i> <i class="file alternate icon"></i>
+    <i class="book icon"></i> <i class="file alternate icon"></i>
       Compras-Gastos
     </a>
 
@@ -339,29 +339,37 @@
 
     <div class="item">
     <a href="?1=FacturacionController&2=cuentasPorCobrar" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
-    <i class="cogs icon"></i> <i class="file alternate icon"></i>
+    <i class="book icon"></i> <i class="file alternate icon"></i>
       Cuentas por cobrar
     </a>
 
     </div>
 
     <div class="item">
-    <a href="?1=FacturacionController&2=cuentasPorCobrar" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
-        <i class="cogs icon"></i><i class="pencil alternate icon"></i>
+    <a href="?1=FacturacionController&2=libroConsumidor" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
+        <i class="book icon"></i><i class="pencil alternate icon"></i>
       Consumidor final
     </a>
 
     </div>
 
     <div class="item">
-    <a href="?1=FacturacionController&2=promocionales" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
-        <i class="cogs icon"></i><i class="folder outline icon"></i>
+    <a href="?1=FacturacionController&2=libroVentasContri" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
+        <i class="book icon"></i><i class="pencil alternate icon"></i>
+     Contribuyentes
+    </a>
+
+    </div>
+
+    <div class="item">
+    <a href="?1=FacturacionController&2=reporteVentas" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
+        <i class="book icon"></i><i class="folder outline icon"></i>
        Reporte de Ventas
     </a>
 
     </div>
 
-
+    
     </div>
 </div>
 
