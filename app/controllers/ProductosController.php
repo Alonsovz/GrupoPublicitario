@@ -265,6 +265,7 @@ class ProductosController extends ControladorBase {
         foreach($detalles as $detalle) {
             $dao->objeto->setAcabado($detalle->acabado);
             $dao->objeto->setColor($detalle->colorN);
+            $dao->objeto->setPrecio($detalle->precioSugerido);
            
 
             if($dao->guardarInventario()) {
@@ -282,9 +283,7 @@ class ProductosController extends ControladorBase {
 
 
     }
-    public function agregarNuevoDetallePro(){
-        
-    }
+    
 
     public function guardarColorNew() {
 
@@ -389,36 +388,21 @@ class ProductosController extends ControladorBase {
     }
 
 
-    public function agregarColorPro(){
+    public function agregarNuevoDetallePro(){
         $dao = new DaoProductos();
 
         $dao->objeto->setIdProducto($_REQUEST["idProducto"]);
         $dao->objeto->setColor($_REQUEST["idColor"]);
-
-
-        echo $dao->agregarColorPro();
-    }
-
-
-    public function agregarMedidaPro(){
-        $dao = new DaoProductos();
-
-        $dao->objeto->setIdProducto($_REQUEST["idProducto"]);
+        $dao->objeto->setAcabado($_REQUEST["idAcabado"]);
+        $dao->objeto->setPrecio($_REQUEST["precio"]);
         $dao->objeto->setUnidadMedida($_REQUEST["idMedida"]);
 
-
-        echo $dao->agregarMedidaPro();
+        echo $dao->agregarNuevoDetallePro();
+        echo $dao->guardarInventarioPro();
     }
 
-    public function agregarAcabadoPro(){
-        $dao = new DaoProductos();
 
-        $dao->objeto->setIdProducto($_REQUEST["idProducto"]);
-        $dao->objeto->setAcabado($_REQUEST["idAcabado"]);
-
-
-        echo $dao->agregarAcabadoPro();
-    }
+    
 
 }
 

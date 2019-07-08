@@ -78,7 +78,8 @@ idColor int,
 idAcabado int,	
 cantidadExistencia double,
 precioUnitario double,
-precioDesperdicio double
+precioDesperdicio double,
+precioSugerido double
 );
 
 
@@ -459,11 +460,9 @@ begin
 end
 $$
 
-select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio from detalleOrdenP d
+select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio from detalleOrdenGR d
 			inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
 			inner join colores c on c.idColor = d.idColor
 			inner join acabados a on a.idAcabado = d.idAcabado
 			inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 			inner join medidas m on m.idMedida = pm.idMedida
-            
-            update detalleOrdenP set estado=1 where idDetalle=2

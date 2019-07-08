@@ -128,10 +128,13 @@
             <a class="ui blue button" id="btnDetalle">Detalle del producto</a>
         </div>
 
-        
+        <div class="six wide field" id="precS" style="display:none;">
+            <label><i class="dollar icon"></i>Precio sugerido unitario:</label>
+            <input type="text" id="precioS" name="precioS" >
+        </div>
 
         <div class="six wide field" id="prec" style="display:none;">
-            <label><i class="dollar icon"></i>Precio Unitario:</label>
+            <label><i class="dollar icon"></i>Precio inventario:</label>
             <input type="text" id="precioU" name="precioU" readonly>
         </div>
 
@@ -231,7 +234,7 @@
     <div class="field">
         <div class="fields">
 
-        <div class="six wide field">
+        <div class="four wide field">
             <label><i class="pencil icon"></i>Descripciones Adicionales:</label>
             <textarea rows="3" id="descripciones" name="descripciones"></textarea>
             
@@ -249,13 +252,19 @@
             </div>
 
             <div class="three wide field">
-            <label><i class="dollar icon"></i>Precio:</label>
+            <label><i class="dollar icon"></i>Precio sugerido total:</label>
             <input type="text" name="precio" id="precio">
             
             </div>
 
             <div class="three wide field">
-            <label style="color:#F3F3F1"><i class="dollar icon"></i>Precio:</label>
+            <label style=""><i class="dollar icon"></i>Precio a cobrar:</label>
+            <input type="text" name="precioS" id="precio"S>
+            
+            </div>
+
+            <div class="three wide field">
+            
             <a class=" ui right floated black labeled icon button" id="agregarOT"> <i class="plus icon"></i>Agregar OT</a>
             
             </div>
@@ -544,7 +553,7 @@ $(function() {
 			success:function(r){
                 $('#precioU').val(r);
                 $("#prec").show(1000);
-                
+                $("#precS").show(1000);
 			}
         });
         

@@ -173,11 +173,15 @@
             </div>
 
 
-            <div class="three wide field">
-            <label><i class="dollar icon"></i>Precio:</label>
-            <input type="text" name="precio" id="precio">
-            
-            </div>
+            <div class="six wide field" id="precS" style="display:none;">
+            <label><i class="dollar icon"></i>Precio sugerido:</label>
+            <input type="text" id="precioS" name="precioS" readonly>
+        </div>
+
+        <div class="six wide field" id="prec" style="display:none;">
+            <label><i class="dollar icon"></i>Precio inventario:</label>
+            <input type="text" id="precioU" name="precioU" readonly>
+        </div>
 
             <div class="three wide field">
             <label style="color:#F3F3F1"><i class="dollar icon"></i>Precio:</label>
@@ -339,6 +343,7 @@ var app = new Vue({
 			success:function(r){
                 $('#precioU').val(r);
                 $("#prec").show(1000);
+                $("#precS").show(1000);
                 
 			}
         });

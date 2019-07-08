@@ -411,6 +411,35 @@ class DaoProductos extends DaoBase {
         }
     }
 
+    public function agregarNuevoDetallePro(){
+
+        
+
+        $_query = "insert into productosDetalle values('".$this->objeto->getIdProducto()."', '".$this->objeto->getColor()."',
+        '".$this->objeto->getAcabado()."','".$this->objeto->getUnidadMedida()."')";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function guardarInventarioPro(){
+
+        $_query = "insert into inventario values('".$this->objeto->getIdProducto()."', '".$this->objeto->getColor()."',
+        '".$this->objeto->getAcabado()."',0.0,0.0,0.0,'".$this->objeto->getPrecio()."')";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
     
 
     public function guardarInventario(){
@@ -423,7 +452,7 @@ class DaoProductos extends DaoBase {
         $idExp = $fila['id'];
 
         $_query = "insert into inventario values(".$idExp.", '".$this->objeto->getColor()."',
-        '".$this->objeto->getAcabado()."',0.0,0.0,0.0)";
+        '".$this->objeto->getAcabado()."',0.0,0.0,0.0,'".$this->objeto->getPrecio()."')";
 
         $resultado = $this->con->ejecutar($_query);
 

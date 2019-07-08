@@ -120,97 +120,59 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
             <input type="hidden" id="idProductoF">
             </div>
             </div></div>
-
             <div class="field">
             <div class="fields">
+                <div class="sixteen wide field">
+                <div id="color"></div>
+                </div>
+            </div>
+            </div>
+            <div class="field">
+            <a class="ui icon black small button" id="btnNuevoColor" style="margin-left:5%;"><i class="plus icon"></i></a>
+            <div class="fields" id="nuevoDetallePro" style="display:none;">
 
-            <div class="eight wide field" id="acabadoDiv" style="display:none;">
-                <table class="ui selectable very compact celled table" style="border: 1px solid black;">
-                    <thead>
-                       <tr>
-                           <th style="background-color:black; color:white;"><label><i class="list icon"></i>Acabados</label></th>
-                           
-                        </tr>
-                        </thead>
-                        <tbody>
-                        
-                            <td id="acabados"></td>
-                        
-                    
-                        </tbody>
-                </table>
-                <a class="ui icon black small button" id="btnNuevoColor" style="margin-left:90%;"><i class="plus icon"></i></a>
-                <div id="nuevoAcabadoPro" style="margin-left:15%;display:none;">
-           <br>
-            <label style="font-size:17px; font-weight:bold;" ><i class="podcast icon"></i> Nueva acabado:</label>
+            <div class="eight wide field" >
+                
+                
+              
+            <label style="font-size:17px; font-weight:bold;" ><i class="podcast icon"></i> Nuevo acabado:</label>
             <select id="nuAcabadoPro" name="nuAcabadoPro" class="ui search dropdown"></select>
             <br><br>
-            <a class="ui green button" id="guardarColorPro" style="margin-left:65%;"><i class="save icon"></i>Guardar</a>
-            </div>
+            
+          
                 </div>
 
-                <div class="eight wide field" id="colorDiv" style="display:none;margin-left:20px;">
-                <table class="ui selectable very compact celled table" style="border: 1px solid black;">
-                    <thead>
-                       <tr>
-                           <th style="background-color:#8F8F91; color:white;"><label><i class="list icon"></i>Color</label></th>
-                           
-                        </tr>
-                        </thead>
-                        <tbody>
-                        
-                            <td id="color"></td>
-                        
-                        
-                        </tbody>
-                </table>
+                <div class="eight wide field">
                
-                <div id="nuevoColorPro" style="margin-left:18%;display:none;">
-            <br><br><br>
+            
             <label style="font-size:17px; font-weight:bold;" ><i class="pencil icon"></i> Nuevo Color:</label>
             <select id="nuColorPro" name="nuColorPro" class="ui search dropdown"></select>
             <br><br>
             
-            </div>
+
                 </div>
 <br>
                 
 <br>
 
-                <div class="eight wide field" id="medidadDiv" style="display:none;margin-right:20px;">
-                <table class="ui selectable very compact celled table" style="border: 1px solid black;">
-                    <thead>
-                       <tr>
-                           <th style="background-color:#B40431; color:white;"><label><i class="list icon"></i>Medidas</label></th>
-                           
-                        </tr>
-                        </thead>
-                        <tbody>
-                        
-                            <td id="medidas"></td>
-                        
-                        
-                        </tbody>
-                </table>
-                <br><br>
-                <div id="nuevaMedidaPro" style="margin-left:17%;display:none;">
-            <br>
+                <div class="eight wide field" >
+                
+               
             <label style="font-size:17px; font-weight:bold;" ><i class="arrows alternate icon"></i> Nueva Medida:</label>
             <select id="nuMedidaPro" name="nuMedidaPro" class="ui search dropdown"></select>
-            <br><br>
             
-            </div>
-            <br><br>
                 </div>
-
-                
-
-                
-                
+                <div class="eight wide field">
+                <label style="font-size:17px; font-weight:bold;" ><i class="dollar icon"></i>Precio Sugerido:</label>
+                <input type="text" name="precioSug" id="precioSug" placeholder="Precio Sugerido">
+                </div>   
 
                 </div>
                 
                 </div>
+                
+                <a class="ui green button" id="guardarColorPro" style="margin-left:50%;display:none"><i class="save icon"></i>Guardar</a>
+                <br><br>
                 <a class="ui right floated blue button" id="btnCloseD" style="margin:right:20px;">Cerrar</a>
                 </div>
                 
@@ -264,6 +226,7 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                                 <th style="background-color: black; color:white; text-align:center;"><i class="podcast icon"></i>Acabado</th>
                                                 <th style="background-color: black; color:white; text-align:center;"><i class="podcast icon"></i>Color</th>
                                                 <th style="background-color: black; color:white; text-align:center;"><i class="podcast icon"></i>Medida</th>
+                                                <th style="background-color: black; color:white; text-align:center;"><i class="dollar icon"></i>Precio Sugerido</th>
                                                     <th style="background-color: black; color:white;text-align:center;"><i class="trash icon"></i></th>
                                                 </thead>
                                                 <tbody>
@@ -288,6 +251,14 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
                                                 <select v-model="detalleAC.unidad" class="ui  dropdown" id="unidad" name="unidad">
                                             <option v-for="option in medidasOps" :value="option.idMedida">{{option.medida}}</option>
                                         </select>
+                                                </td> 
+
+                                                   
+
+                                                    <td>  
+                                                <input type="text" v-model="detalleAC.precioSugerido"  id="precioSugerido" 
+                                                name="precioSugerido" placeholder="Precio Sugerido">
+                                            
                                                 </td> 
 
                                                     <td>
@@ -489,6 +460,7 @@ Detalles del producto: <a id="nombreP"  style="background-color:black; color:#ED
     $("#gr").removeClass("ui gray button");
     $("#gr").addClass("ui gray basic button");
     $('#newPrecio').mask("###0.00", {reverse: true});
+    $('#precioSug').mask("###0.00", {reverse: true});
     });
     
 var detalles=(ele)=>{
@@ -530,7 +502,7 @@ var app = new Vue({
                 color: '',
                 acabado: '',
                 unidad: '',
-              
+                precioSugerido:'',
                
             }],
             detallesPrecio: [{
@@ -586,7 +558,7 @@ var app = new Vue({
                 color: '',
                 acabado: '',
                 unidad: '',
-                precioUnitario: '',
+                precioSugerido: '',
                 });
             
             },
@@ -761,6 +733,7 @@ var app = new Vue({
                                         acabado: '1',
                                         colorN : '1' ,
                                         unidad: '1',
+                                        precioSugerido: '0.00',
                                     } ]
                                         
                         }
@@ -793,20 +766,11 @@ $("#btnNuevoD").click(function(){
 });
 
 
-$("#btnNuevaMedida").click(function(){
- $("#nuevaMedidaPro").show(1000);
- $("#tablaProductos").hide(1000);
-});
 
-$("#btnNuevoAcabado").click(function(){
- $("#nuevoAcabadoPro").show(1000);
- $("#tablaProductos").hide(1000);
-});
 
 $("#btnNuevoColor").click(function(){
- $("#nuevoColorPro").show(1000);
- $("#nuevoAcabadoPro").show(1000);
- $("#nuevaMedidaPro").show(1000);
+ $("#nuevoDetallePro").show(1000);
+ $("#guardarColorPro").show(1000);
 });
 
 $("#editarNom").click(function(){
@@ -909,11 +873,10 @@ var idC = $("#idCla").val();
 var detallePro=(ele)=>{
     
     $("#nuevoDetalle").hide(1000);
-       $("#colorDiv").hide();
-       $("#acabadoDiv").hide();
-       $("#medidadDiv").hide();
+    $("#nuevoDetallePro").hide(1000);
+ $("#guardarColorPro").hide(1000);
        $("#botonNuevo").hide(1000);
-       $("#precioDiv").hide();
+    
        $("#tablaProductos").hide(1000);
     var idBtnN = $(ele).attr("id");
     var idBtn = $(ele).attr("idP");
@@ -931,51 +894,9 @@ var detallePro=(ele)=>{
 				$('#color').html(r);
 			}
         });
-
-        $.ajax({
-			type:"POST",
-			url:"?1=Funciones&2=verDetallesAcabados",
-            data:{
-                idC:idBtn
-            },
-        success:function(r){
-				$('#acabados').html(r);
-			}
-		});
-
-
-       
-
-        $.ajax({
-			type:"POST",
-			url:"?1=Funciones&2=verDetallesMedidas",
-            data:{
-                idC:idBtn
-            },
-        success:function(r){
-				$('#medidas').html(r);
-			}
-        });
-
-        $.ajax({
-			type:"POST",
-			url:"?1=Funciones&2=verPrecios",
-            data:{
-                idC:idBtn
-            },
-        success:function(r){
-				$('#precioPro').html(r);
-			}
-        });
-
-        $("#colorDiv").show(1000);
-        $("#acabadoDiv").show(1000);
-        $("#medidadDiv").show(1000);
+    
         $("#title").show(1000);
-        $("#verDe").show(1000);
-        $("#precioDiv").show(1000);
-        
-        
+        $("#verDe").show(1000); 
 
 }
 
@@ -1556,6 +1477,7 @@ var eliminarAcabado=(ele)=>{
         var nombrePro = $("#titleDe").text();
         var idAcabado = $("#nuAcabadoPro").val();
         var idMedida = $("#nuMedidaPro").val();
+        var precio = $("#precioSug").val();
 
         $.ajax({
                
@@ -1566,9 +1488,10 @@ var eliminarAcabado=(ele)=>{
                   idColor:idColor,
                   idMedida:idMedida,
                   idAcabado:idAcabado,
+                  precio:precio,
               },
                success: function(r) {
-                   if(r == 1) {
+                   if(r == 11) {
                     $("#nuevoColorPro").hide();
                        swal({
                            title: 'Detalle agregado al producto '+$("#titleDe").text(),
@@ -1583,37 +1506,17 @@ var eliminarAcabado=(ele)=>{
                                    type:"POST",
                                    url:"?1=Funciones&2=verDetallesColor",
                                    data:{
-                                       idC:nombrePro
+                                       idC:idProducto
                                    },
                                success:function(r){
                                        $('#color').html(r);
-                                       
+                                       $("#nuevoDetallePro").hide(1000);
+                                        $("#guardarColorPro").hide(1000);
+                                        $("#precioSug").val('');
                                    }
                                });
 
-                               $.ajax({
-                                   type:"POST",
-                                   url:"?1=Funciones&2=verDetallesMedidas",
-                                   data:{
-                                       idC:nombrePro
-                                   },
-                               success:function(r){
-                                       $('#medidas').html(r);
-                                       
-                                   }
-                               });
-
-                               $.ajax({
-                                   type:"POST",
-                                   url:"?1=Funciones&2=verDetallesAcabados",
-                                   data:{
-                                       idC:nombrePro
-                                   },
-                               success:function(r){
-                                       $('#acabados').html(r);
-                                       
-                                   }
-                               });
+                              
                            }
                        }); 
                        

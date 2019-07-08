@@ -128,7 +128,12 @@
         
 
         <div class="six wide field" id="prec" style="display:none;">
-            <label><i class="dollar icon"></i>Precio Unitario:</label>
+            <label><i class="dollar icon"></i>Precio sugerido:</label>
+            <input type="text" id="precioS" name="precioS" readonly>
+        </div>
+
+        <div class="six wide field" id="prec" style="display:none;">
+            <label><i class="dollar icon"></i>Precio inventario:</label>
             <input type="text" id="precioU" name="precioU" readonly>
         </div>
 

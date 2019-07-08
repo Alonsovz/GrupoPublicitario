@@ -236,22 +236,50 @@ class Funciones extends ControladorBase {
 	
 
 	if($_POST['idC']){
-		$sql="select a.idColor, a.color  from colores a
-		inner join productosDetalle pc on pc.idColor = a.idColor
-		inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
-		 where p.idProductoFinal='".$idPro."' order by idColor asc";
+		$sql="
+		select p.*, c.color,a.acabado,m.medida,format(i.precioSugerido,2) as precioSugerido  from productosDetalle p
+				inner join colores c on c.idColor = p.idColor
+				inner join acabados a on a.idAcabado = p.idAcabado
+				inner join medidas m on m.idMedida = p.idMedida
+				inner join inventario i on i.idProducto= p.idProductoFinal
+				and i.idColor=p.idColor and i.idAcabado = p.idAcabado
+				inner join productoFinal pF on pF.idProductoFinal = p.idProductoFinal
+		 where pF.idProductoFinal='".$idPro."' group by p.idProductoFinal,p.idAcabado,p.idColor";
 
 		$result=mysqli_query($conexion,$sql);
 
-		$cadena="";
-		while ($ver=mysqli_fetch_row($result)) {
-			$cadena=$cadena.'<tr><td style="border:1px solid black;width:100%;">
-			-'.utf8_encode($ver[1]).'</td>
-			<td style="border:1px solid black;width:100%;">
-			 <a id='.$ver[0].' class="ui icon red small button" onclick="eliminarColor(this)">
-			 <i class="trash icon"></i></a>
+		$cadena="
+		<table class='ui table bordered' style='width:100%;text-align:center'>
+		<tr>
+		<th style='color:white;background-color:black;' height='40px;'>Acabado</th>
+		<th style='color:white;background-color:black;' height='40px;'>Color</th>
+		<th style='color:white;background-color:black;' height='40px;'>Medida</th>
+		<th style='color:white;background-color:black;' height='40px;'>Precio Sugerido</th>
+		<th style='color:white;background-color:black;' height='40px;'><i class='cogs icon'></i></th>
+		</tr>
+		";
+		while ($ver=mysqli_fetch_assoc($result)) {
+			$cadena=$cadena.'<tr>
+			<td style="border:1px solid black;">
+			'.utf8_encode($ver["acabado"]).'
+			</td>
+			
+			<td style="border:1px solid black;">
+			'.utf8_encode($ver["color"]).'
+			</td>
+
+			<td style="border:1px solid black;">
+			'.utf8_encode($ver["medida"]).'
+			</td>
+			<td style="border:1px solid black;">
+			$'.utf8_encode($ver["precioSugerido"]).'
+			</td>
+			<td style="border:1px solid black;">
+			<a class="ui red small icon button"><i class="trash icon"></i></a>
+			</td>
 			 
-			 </td></tr>';
+			 
+			 </tr>';
 		}
 
 		echo  $cadena;
@@ -261,63 +289,7 @@ class Funciones extends ControladorBase {
 
 	
 
-	public function verDetallesAcabados(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
-		$idPro=$_POST['idC'];
 	
-
-	if($_POST['idC']){
-		$sql="select a.idAcabado, a.acabado  from acabados a
-		inner join productosDetalle pc on pc.idAcabado = a.idAcabado
-		inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
-		 where pc.idProductoFinal='".$idPro."' order by idAcabado asc";
-
-		$result=mysqli_query($conexion,$sql);
-
-		$cadena="";
-		while ($ver=mysqli_fetch_row($result)) {
-			$cadena=$cadena.'<tr><td style="border:1px solid black;width:100%;">
-			-'.utf8_encode($ver[1]).'</td>
-			<td style="border:1px solid black;width:100%;">
-			 <a id='.$ver[0].' class="ui icon red small button" onclick="eliminarAcabado(this)">
-			 <i class="trash icon"></i></a>
-			 
-			 </td></tr>';
-		}
-
-		echo  $cadena;
-	}
-
-	}
-
-	public function verDetallesMedidas(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
-		$idPro=$_POST['idC'];
-	
-
-	if($_POST['idC']){
-		$sql="select a.idMedida, a.medida  from medidas a
-		inner join productosDetalle pc on pc.idMedida = a.idMedida
-		inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
-		 where pc.idProductoFinal='".$idPro."' order by idMedida asc";
-
-		$result=mysqli_query($conexion,$sql);
-
-		$cadena="";
-		while ($ver=mysqli_fetch_row($result)) {
-			$cadena=$cadena.'<tr><td style="border:1px solid black;width:100%;">
-			-'.utf8_encode($ver[1]).'</td>
-			<td style="border:1px solid black;width:100%;">
-			 <a id='.$ver[0].' class="ui icon red small button" onclick="eliminarMedida(this)">
-			 <i class="trash icon"></i></a>
-			 
-			 </td></tr>';
-		}
-
-		echo  $cadena;
-	}
-
-	}
 
 	public function colores(){
 		$conexion= new mysqli('localhost','root','','grupoPublicitario');
@@ -486,29 +458,29 @@ class Funciones extends ControladorBase {
 				
 			</tr>
 			";
-			while ($ver=mysqli_fetch_row($result)) {
+			while ($ver=mysqli_fetch_assoc($result)) {
 				$cadena=$cadena.'<tr>
-				<td><b>Producto:</b> '.utf8_encode($ver[12]).'<br>
-					<b>Color:</b> '.utf8_encode($ver[13]).'<br>
-					<b>Acabado:</b> '.utf8_encode($ver[14]).'<br>
+				<td><b>Producto:</b> '.utf8_encode($ver["productoFinal"]).'<br>
+					<b>Color:</b> '.utf8_encode($ver["color"]).'<br>
+					<b>Acabado:</b> '.utf8_encode($ver["acabado"]).'<br>
 				</td>
 				<td>
-				'.utf8_encode($ver[5]). ' ' .utf8_encode($ver[15]).'
-				</td>
-
-				<td>
-				'.utf8_encode($ver[6]). '
+				'.utf8_encode($ver["cantidad"]). ' ' .utf8_encode($ver["medida"]).'
 				</td>
 
 				<td>
-				'.utf8_encode($ver[7]). '
+				'.utf8_encode($ver["medidas"]). '
+				</td>
+
+				<td>
+				'.utf8_encode($ver["descripcion"]). '
 				</td>
 				
 				<td>
-				$ '.utf8_encode($ver[16]). '
+				$ '.utf8_encode($ver["precio"]). '
 				</td>
 				<td>
-				$ '.utf8_encode($ver[17]). '
+				$ '.utf8_encode($ver["precioTotal"]). '
 				</td>
 				</tr>';
 			}
@@ -527,7 +499,7 @@ class Funciones extends ControladorBase {
 		$idC=$_POST['id'];
 
 		if($_POST['id']){
-			$sql="select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precioUnitario,2) as precio,
+			$sql="select d.*,p.productoFinal,c.color as colorR,a.acabado as acabadoR,m.medida,format(d.precioUnitario,2) as precio,
 			format(d.total,2) as precioTotal, format(d.precioUnitario/d.cantidad,2) as precioIn from detalleRequisicion d
 			inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
 			inner join colores c on c.idColor = d.color
@@ -552,41 +524,41 @@ class Funciones extends ControladorBase {
 				<th style='background-color:#B40431;color:white; width:5%;'><i class='cogs icon'></i></th>
 			</tr>
 			";
-			while ($ver=mysqli_fetch_row($result)) {
+			while ($ver=mysqli_fetch_assoc($result)) {
 				$cadena=$cadena.'<tr>
-				<td><b>Producto:</b> '.utf8_encode($ver[12]).'<br>
-					<b>Color:</b> '.utf8_encode($ver[13]).'<br>
-					<b>Acabado:</b> '.utf8_encode($ver[14]).'<br>
+				<td><b>Producto:</b> '.utf8_encode($ver["productoFinal"]).'<br>
+					<b>Color:</b> '.utf8_encode($ver["colorR"]).'<br>
+					<b>Acabado:</b> '.utf8_encode($ver["acabadoR"]).'<br>
 				</td>
 				<td>
-				'.utf8_encode($ver[5]). ' ' .utf8_encode($ver[15]).'
-				</td>
-
-				<td>
-				'.utf8_encode($ver[6]). '
+				'.utf8_encode($ver["cantidad"]). ' ' .utf8_encode($ver["medida"]).'
 				</td>
 
 				<td>
-				'.utf8_encode($ver[7]). '
+				'.utf8_encode($ver["medidas"]). '
+				</td>
+
+				<td>
+				'.utf8_encode($ver["descripcion"]). '
 				</td>
 				
 				<td>
-				$ '.utf8_encode($ver[16]). '
+				$ '.utf8_encode($ver["precio"]). '
 				</td>
 				<td>
-				$ '.utf8_encode($ver[17]). '
+				$ '.utf8_encode($ver["precioTotal"]). '
 				</td>
 				<td>
-				$ '.utf8_encode($ver[18]). '
+				$ '.utf8_encode($ver["precioIn"]). '
 				</td>
 				';
-				if(utf8_encode($ver[10])==1){
+				if(utf8_encode($ver["estado"])==1){
 					$cadena=$cadena.'<td>
-					<a class="ui green small icon button" idD='.utf8_encode($ver[0]). '
-					idPr='.utf8_encode($ver[2]). ' color='.utf8_encode($ver[3]). ' acabado='.utf8_encode($ver[4]). '
-					pro="'.utf8_encode($ver[12]). '" co="'.utf8_encode($ver[13]). '" ac="'.utf8_encode($ver[14]). '"
-					me="'.utf8_encode($ver[15]). '"
-					cantidad ="'.utf8_encode($ver[5]). '" precio ="'.utf8_encode($ver[18]). '" onclick="recibir(this)"
+					<a class="ui green small icon button" idD='.utf8_encode($ver["idDetalle"]). '
+					idPr='.utf8_encode($ver["idProductoFinal"]). ' color='.utf8_encode($ver["color"]). ' acabado='.utf8_encode($ver["acabado"]). '
+					pro="'.utf8_encode($ver["productoFinal"]). '" co="'.utf8_encode($ver["colorR"]). '" ac="'.utf8_encode($ver["acabadoR"]). '"
+					me="'.utf8_encode($ver["medida"]). '"
+					cantidad ="'.utf8_encode($ver["cantidad"]). '" precio ="'.utf8_encode($ver["precioIn"]). '" onclick="recibir(this)"
 					><i class="pencil icon"></i></a>
 					</td>';
 				}else{
@@ -633,33 +605,33 @@ class Funciones extends ControladorBase {
 				<th style='background-color:#B40431;color:white;width:5%;'><i class='cogs icon'></i></th>
 			</tr>
 			";
-			while ($ver=mysqli_fetch_row($result)) {
+			while ($ver=mysqli_fetch_assoc($result)) {
 				$cadena=$cadena.'<tr>
-				<td><b>Producto:</b> '.utf8_encode($ver[11]).'<br>
-					<b>Color:</b> '.utf8_encode($ver[12]).'<br>
-					<b>Acabado:</b> '.utf8_encode($ver[13]).'<br>
+				<td><b>Producto:</b> '.utf8_encode($ver["productoFinal"]).'<br>
+					<b>Color:</b> '.utf8_encode($ver["color"]).'<br>
+					<b>Acabado:</b> '.utf8_encode($ver["acabado"]).'<br>
 				</td>
 				<td>
-				'.utf8_encode($ver[5]). ' ' .utf8_encode($ver[14]).'
-				</td>
-
-				<td>
-				'.utf8_encode($ver[6]). '
+				'.utf8_encode($ver["cantidad"]). ' ' .utf8_encode($ver["medida"]).'
 				</td>
 
 				<td>
-				'.utf8_encode($ver[7]). '
+				'.utf8_encode($ver["tipo"]). '
+				</td>
+
+				<td>
+				'.utf8_encode($ver["descripciones"]). '
 				</td>
 				
 				<td>
-				$ '.utf8_encode($ver[15]). '
+				$ '.utf8_encode($ver["precio"]). '
 				</td>';
 				
 				if(utf8_encode($ver[10]==1)){
-					$cadena=$cadena.'<td><a class="ui blue small icon button" idOrden ="'.utf8_encode($ver[1]).'"
-					idDetalle ="'.utf8_encode($ver[0]).'"
-					 idAcabado ="'.utf8_encode($ver[4]).'" idColor="'.utf8_encode($ver[3]).'"
-					idProducto="'.utf8_encode($ver[2]).'" cantidad="'.utf8_encode($ver[5]).'" onclick="recibirPro(this)">
+					$cadena=$cadena.'<td><a class="ui blue small icon button" idOrden ="'.utf8_encode($ver["idOrden"]).'"
+					idDetalle ="'.utf8_encode($ver["idDetalle"]).'"
+					 idAcabado ="'.utf8_encode($ver["idAcabado"]).'" idColor="'.utf8_encode($ver["idColor"]).'"
+					idProducto="'.utf8_encode($ver["idProductoFinal"]).'" cantidad="'.utf8_encode($ver["cantidad"]).'" onclick="recibirPro(this)">
 					<i class="check icon"></i></a></td>';
 				}else{
 					$cadena=$cadena.'<td></td>';
@@ -704,34 +676,34 @@ class Funciones extends ControladorBase {
 				<th style='background-color:#B40431;color:white;width:5%;'><i class='cogs icon'></i></th>
 			</tr>
 			";
-			while ($ver=mysqli_fetch_row($result)) {
+			while ($ver=mysqli_fetch_assoc($result)) {
 				$cadena=$cadena.'<tr>
-				<td><b>Producto:</b> '.utf8_encode($ver[11]).'<br>
-					<b>Color:</b> '.utf8_encode($ver[12]).'<br>
-					<b>Acabado:</b> '.utf8_encode($ver[13]).'<br>
+				<td><b>Producto:</b> '.utf8_encode($ver["productoFinal"]).'<br>
+					<b>Color:</b> '.utf8_encode($ver["color"]).'<br>
+					<b>Acabado:</b> '.utf8_encode($ver["acabado"]).'<br>
 				</td>
 				<td>
-				'.utf8_encode($ver[5]). ' ' .utf8_encode($ver[14]).'
-				</td>
-
-				<td>
-				'.utf8_encode($ver[6]). '
+				'.utf8_encode($ver["cantidad"]). ' ' .utf8_encode($ver["medida"]).'
 				</td>
 
 				<td>
-				'.utf8_encode($ver[7]). '
+				'.utf8_encode($ver["tipo"]). '
+				</td>
+
+				<td>
+				'.utf8_encode($ver["descripciones"]). '
 				</td>
 				
 				<td>
-				$ '.utf8_encode($ver[15]). '
-				 
+				$ '.utf8_encode($ver["precio"]). '
 				</td>';
 				
 				if(utf8_encode($ver[10]==1)){
-					$cadena=$cadena.'<td><a class="ui blue small icon button" idOrden ="'.utf8_encode($ver[1]).'"
-					idDetalle ="'.utf8_encode($ver[0]).'"
-					 idAcabado ="'.utf8_encode($ver[4]).'" idColor="'.utf8_encode($ver[3]).'"
-					idProducto="'.utf8_encode($ver[2]).'" cantidad="'.utf8_encode($ver[5]).'" onclick="recibirPro(this)">
+					$cadena=$cadena.'<td><a class="ui blue small icon button" idOrden ="'.utf8_encode($ver["idOrden"]).'"
+					idDetalle ="'.utf8_encode($ver["idDetalle"]).'"
+					 idAcabado ="'.utf8_encode($ver["idAcabado"]).'" idColor="'.utf8_encode($ver["idColor"]).'"
+					idProducto="'.utf8_encode($ver["idProductoFinal"]).'" cantidad="'.utf8_encode($ver["cantidad"]).'" 
+					onclick="recibirPro(this)">
 					<i class="check icon"></i></a></td>';
 				}else{
 					$cadena=$cadena.'<td></td>';
@@ -778,41 +750,41 @@ class Funciones extends ControladorBase {
 				
 			</tr>
 			";
-			while ($ver=mysqli_fetch_row($result)) {
+			while ($ver=mysqli_fetch_assoc($result)) {
 				$cadena=$cadena.'<tr>
 				<td>
-					<b>Producto:</b> '.utf8_encode($ver[18]).'<br>
-					<b>Color:</b> '.utf8_encode($ver[19]).'<br>
-					<b>Acabado:</b> '.utf8_encode($ver[20]).'<br>
+					<b>Producto:</b> '.utf8_encode($ver["productoFinal"]).'<br>
+					<b>Color:</b> '.utf8_encode($ver["color"]).'<br>
+					<b>Acabado:</b> '.utf8_encode($ver["acabado"]).'<br>
 				</td>
 				<td>
-				'.utf8_encode($ver[5]). ' ' .utf8_encode($ver[22]).'
-				</td>
-
-				<td>
-				    <b>Altura:</b> '.utf8_encode($ver[6]).'<br>
-					<b>Base:</b> '.utf8_encode($ver[7]).'<br>
-					<b>Mts 2 Imp:</b> '.utf8_encode($ver[8]).'<br>
-					<b>Ubicación:</b> '.utf8_encode($ver[9]).'<br>
+				'.utf8_encode($ver["cantidad"]). ' ' .utf8_encode($ver["medida"]).'
 				</td>
 
 				<td>
-				    <b>Ancho:</b> '.utf8_encode($ver[10]).'<br>
-					<b>Longitud:</b> '.utf8_encode($ver[11]).'<br>
-					<b>Ancho Material:</b> '.utf8_encode($ver[12]).'<br>
+				    <b>Altura:</b> '.utf8_encode($ver["altura"]).'<br>
+					<b>Base:</b> '.utf8_encode($ver["base"]).'<br>
+					<b>Mts 2 Imp:</b> '.utf8_encode($ver["cuadrosImp"]).'<br>
+					<b>Ubicación:</b> '.utf8_encode($ver["ubicacion"]).'<br>
+				</td>
+
+				<td>
+				    <b>Ancho:</b> '.utf8_encode($ver["ancho"]).'<br>
+					<b>Longitud:</b> '.utf8_encode($ver["longitud"]).'<br>
+					<b>Ancho Material:</b> '.utf8_encode($ver["anchoMat"]).'<br>
 					
 				</td>
 
 				<td>
-				<b>Copias:</b> '.utf8_encode($ver[13]).'<br>
-				<b>MTS2:</b> '.utf8_encode($ver[14]).'<br>
-				<b>Desperdicio:</b> '.utf8_encode($ver[15]).'<br>
+				<b>Copias:</b> '.utf8_encode($ver["copias"]).'<br>
+				<b>MTS2:</b> '.utf8_encode($ver["mts2"]).'<br>
+				<b>Desperdicio:</b> '.utf8_encode($ver["desperdicio"]).'<br>
 				</td>
 				<td>
-				 '.utf8_encode($ver[16]). '
+				 '.utf8_encode($ver["descripciones"]). '
 				</td>
 				<td>
-				$ '.utf8_encode($ver[23]). '
+				$ '.utf8_encode($ver["precio"]). '
 				</td>
 				
 				</tr>';
@@ -892,7 +864,8 @@ class Funciones extends ControladorBase {
 	
 
 		if($_POST['idC']){
-		$sql="select i.*,c.*,a.*,m.*, format(i.precioUnitario,2), format(i.cantidadExistencia,2),format(i.precioDesperdicio,2)
+		$sql="select i.*,c.*,a.*,m.*, format(i.precioUnitario,2) as precioU, format(i.cantidadExistencia,2) as cantidadEx,
+		format(i.precioDesperdicio,2) as precioD,format(i.precioSugerido,2) as precioSug
 		 from inventario i
 		inner join productosDetalle pc on pc.idProductoFinal = i.idProducto
 		inner join colores c on c.idColor = i.idColor
@@ -918,74 +891,74 @@ class Funciones extends ControladorBase {
 		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Existencia</th>
 		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Precio Unitario</th>
 		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Precio por desperdicio</th>
-		
+		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Precio establecido</th>
 	
 		</tr>
 		";		
-			while ($ver=mysqli_fetch_row($result)) {
+			while ($ver=mysqli_fetch_assoc($result)) {
 				$cadena.='<tr>
 				
-				<td>'.utf8_encode($ver[11]).'</td>
-				<td>'.utf8_encode($ver[7]).'</td>
-				<td>'.utf8_encode($ver[15]).'</td>';
-				if(utf8_encode($ver[3]) == "0"){
+				<td>'.utf8_encode($ver["acabado"]).'</td>
+				<td>'.utf8_encode($ver["color"]).'</td>
+				<td>'.utf8_encode($ver["medida"]).'</td>';
+				if(utf8_encode($ver["cantidadExistencia"]) == "0"){
 
 					$cadena.='<td><center>
-					<a class="ui red small icon button" id='.utf8_encode($ver[0]).' idColor= '.utf8_encode($ver[1]).'
-					idAcabado= "'.utf8_encode($ver[2]).'"  acabado= "'.utf8_encode($ver[11]).'" medida= "'.utf8_encode($ver[15]).'"
-					color= "'.utf8_encode($ver[7]).'" onclick="agregarExistencia(this)"
+					<a class="ui red small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
+					idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'" medida= "'.utf8_encode($ver["medida"]).'"
+					color= "'.utf8_encode($ver["color"]).'" onclick="agregarExistencia(this)"
 					><i class="edit icon"></i></a></center>
 					</td>';
 					
 				}else{
-					$cadena.='<td style="text-align:center;">'.utf8_encode($ver[3]).'
+					$cadena.='<td style="text-align:center;">'.utf8_encode($ver["cantidadExistencia"]).'
 					&nbsp;&nbsp;&nbsp;
-					<a class="ui red small icon button" id='.utf8_encode($ver[0]).' idColor= '.utf8_encode($ver[1]).'
-					idAcabado= "'.utf8_encode($ver[2]).'"  acabado= "'.utf8_encode($ver[11]).'" medida= "'.utf8_encode($ver[15]).'"
-					color= "'.utf8_encode($ver[7]).'" onclick="agregarExistencia(this)"
+					<a class="ui red small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
+					idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'" medida= "'.utf8_encode($ver["medida"]).'"
+					color= "'.utf8_encode($ver["color"]).'" onclick="agregarExistencia(this)"
 					><i class="edit icon"></i></a></center>
 					</td>';
 				}
 				
 
-				if(utf8_encode($ver[4]) == "0"){
+				if(utf8_encode($ver["precioU"]) == "0"){
 
 					$cadena.='<td><center>
-					<a class="ui green small icon button" id='.utf8_encode($ver[0]).' idColor= '.utf8_encode($ver[1]).'
-					idAcabado= "'.utf8_encode($ver[2]).'"  acabado= "'.utf8_encode($ver[11]).'"  medida= "'.utf8_encode($ver[15]).'"
-					color= "'.utf8_encode($ver[7]).'" onclick="agregarPrecio(this)"
+					<a class="ui green small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
+					idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida= "'.utf8_encode($ver["medida"]).'"
+					color= "'.utf8_encode($ver["color"]).'" onclick="agregarPrecio(this)"
 					><i class="edit icon"></i></a></center>
 					</td>';
 					
 				}else{
-					$cadena.='<td style="text-align:center;"> $ '.utf8_encode($ver[18]).'
+					$cadena.='<td style="text-align:center;"> $ '.utf8_encode($ver["precioU"]).'
 					&nbsp;&nbsp;&nbsp;
-					<a class="ui green small icon button" id='.utf8_encode($ver[0]).' idColor= '.utf8_encode($ver[1]).'
-					idAcabado= "'.utf8_encode($ver[2]).'"  acabado= "'.utf8_encode($ver[11]).'" medida= "'.utf8_encode($ver[15]).'" 
-					color= "'.utf8_encode($ver[7]).'" onclick="agregarPrecio(this)"
-					><i class="edit icon"></i></a>
+					<a class="ui green small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
+					idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida= "'.utf8_encode($ver["medida"]).'"
+					color= "'.utf8_encode($ver["color"]).'" onclick="agregarPrecio(this)"
+					><i class="edit icon"></i></a
 					</td>';
 				}
 
-				if(utf8_encode($ver[5]) == "0"){
+				if(utf8_encode($ver["precioD"]) == "0"){
 
 					$cadena.='<td><center>
-					<a class="ui purple small icon button" id='.utf8_encode($ver[0]).' idColor= '.utf8_encode($ver[1]).'
-					idAcabado= "'.utf8_encode($ver[2]).'"  acabado= "'.utf8_encode($ver[11]).'"  medida= "'.utf8_encode($ver[15]).'"
-					color= "'.utf8_encode($ver[7]).'" onclick="agregarPrecioDesper(this)"
+					<a class="ui purple small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
+					idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida= "'.utf8_encode($ver["medida"]).'"
+					color= "'.utf8_encode($ver["color"]).' onclick="agregarPrecioDesper(this)"
 					><i class="edit icon"></i></a></center>
 					</td>';
 					
 				}else{
-					$cadena.='<td style="text-align:center;"> $ '.utf8_encode($ver[20]).'
+					$cadena.='<td style="text-align:center;"> $ '.utf8_encode($ver["precioD"]).'
 					&nbsp;&nbsp;&nbsp;
-					<a class="ui purple small icon button" id='.utf8_encode($ver[0]).' idColor= '.utf8_encode($ver[1]).'
-					idAcabado= "'.utf8_encode($ver[2]).'"  acabado= "'.utf8_encode($ver[11]).'" medida= "'.utf8_encode($ver[15]).'" 
-					color= "'.utf8_encode($ver[7]).'" onclick="agregarPrecioDesper(this)"
+					<a class="ui purple small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
+					idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida= "'.utf8_encode($ver["medida"]).'"
+					color= "'.utf8_encode($ver["color"]).' onclick="agregarPrecioDesper(this)"
 					><i class="edit icon"></i></a>
 					</td>';
 				}
-				
+				$cadena.='<td>$ '.utf8_encode($ver["precioSug"]).'</td>';
 				$cadena.='
 				</tr>';
 			}
@@ -1005,7 +978,9 @@ class Funciones extends ControladorBase {
 	
 
 		if($_POST['idC']){
-		$sql="select i.*,c.*,a.*,m.*, format(i.precioUnitario,2), format(i.cantidadExistencia,2) from inventario i
+		$sql="select i.*,c.*,a.*,m.*, format(i.precioUnitario,2) as precioU, format(i.cantidadExistencia,2) as cantidadEx,
+		format(i.precioDesperdicio,2) as precioD,format(i.precioSugerido,2) as precioSug
+		 from inventario i
 		inner join productosDetalle pc on pc.idProductoFinal = i.idProducto
 		inner join colores c on c.idColor = i.idColor
 		inner join acabados a on a.idAcabado = i.idAcabado
@@ -1029,67 +1004,69 @@ class Funciones extends ControladorBase {
 		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Unidad de Medida</th>
 		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Existencia</th>
 		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Precio Unitario</th>
-	
+		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Precio Sugerido</th>
 		
 	
 		</tr>
 		";		
-			while ($ver=mysqli_fetch_row($result)) {
-				$cadena.='<tr>
-				
-				<td>'.utf8_encode($ver[11]).'</td>
-				<td>'.utf8_encode($ver[7]).'</td>
-				<td>'.utf8_encode($ver[15]).'</td>';
-				if(utf8_encode($ver[3]) == "0"){
+		while ($ver=mysqli_fetch_assoc($result)) {
+			$cadena.='<tr>
+			
+			<td>'.utf8_encode($ver["acabado"]).'</td>
+			<td>'.utf8_encode($ver["color"]).'</td>
+			<td>'.utf8_encode($ver["medida"]).'</td>';
+			if(utf8_encode($ver["cantidadExistencia"]) == "0"){
 
-					$cadena.='<td><center>
-					<a class="ui red small icon button" id='.utf8_encode($ver[0]).' idColor= '.utf8_encode($ver[1]).'
-					idAcabado= "'.utf8_encode($ver[2]).'"  acabado= "'.utf8_encode($ver[11]).'" medida= "'.utf8_encode($ver[15]).'"
-					color= "'.utf8_encode($ver[7]).'" onclick="agregarExistencia(this)"
-					><i class="edit icon"></i></a></center>
-					</td>';
-					
-				}else{
-					$cadena.='<td style="text-align:center;">'.utf8_encode($ver[3]).'
-					&nbsp;&nbsp;&nbsp;
-					<a class="ui red small icon button" id='.utf8_encode($ver[0]).' idColor= '.utf8_encode($ver[1]).'
-					idAcabado= "'.utf8_encode($ver[2]).'"  acabado= "'.utf8_encode($ver[11]).'" medida= "'.utf8_encode($ver[15]).'"
-					color= "'.utf8_encode($ver[7]).'" onclick="agregarExistencia(this)"
-					><i class="edit icon"></i></a>
-					</td>';
-				}
+				$cadena.='<td><center>
+				<a class="ui red small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
+				idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'" medida= "'.utf8_encode($ver["medida"]).'"
+				color= "'.utf8_encode($ver["color"]).'" onclick="agregarExistencia(this)"
+				><i class="edit icon"></i></a></center>
+				</td>';
 				
-
-				if(utf8_encode($ver[4]) == "0"){
-
-					$cadena.='<td><center>
-					<a class="ui green small icon button" id='.utf8_encode($ver[0]).' idColor= '.utf8_encode($ver[1]).'
-					idAcabado= "'.utf8_encode($ver[2]).'"  acabado= "'.utf8_encode($ver[11]).'"  medida= "'.utf8_encode($ver[15]).'"
-					color= "'.utf8_encode($ver[7]).'" onclick="agregarPrecio(this)"
-					><i class="edit icon"></i></a></center>
-					</td>';
-					
-				}else{
-					$cadena.='<td style="text-align:center;"> $ '.utf8_encode($ver[18]).'
-					&nbsp;&nbsp;&nbsp;
-					<a class="ui green small icon button" id='.utf8_encode($ver[0]).' idColor= '.utf8_encode($ver[1]).'
-					idAcabado= "'.utf8_encode($ver[2]).'"  acabado= "'.utf8_encode($ver[11]).'" medida= "'.utf8_encode($ver[15]).'" 
-					color= "'.utf8_encode($ver[7]).'" onclick="agregarPrecio(this)"
-					><i class="edit icon"></i></a>
-					</td>';
-				}
-
-				
-				
-				$cadena.='
-				</tr>';
+			}else{
+				$cadena.='<td style="text-align:center;">'.utf8_encode($ver["cantidadExistencia"]).'
+				&nbsp;&nbsp;&nbsp;
+				<a class="ui red small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
+				idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'" medida= "'.utf8_encode($ver["medida"]).'"
+				color= "'.utf8_encode($ver["color"]).'" onclick="agregarExistencia(this)"
+				><i class="edit icon"></i></a></center>
+				</td>';
 			}
-
-			$cadena.='</table>';
 			
 
-		echo  $cadena;
-	}
+			if(utf8_encode($ver["precioU"]) == "0"){
+
+				$cadena.='<td><center>
+				<a class="ui green small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
+				idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida= "'.utf8_encode($ver["medida"]).'"
+				color= "'.utf8_encode($ver["color"]).'" onclick="agregarPrecio(this)"
+				><i class="edit icon"></i></a></center>
+				</td>';
+				
+			}else{
+				$cadena.='<td style="text-align:center;"> $ '.utf8_encode($ver["precioU"]).'
+				&nbsp;&nbsp;&nbsp;
+				<a class="ui green small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
+				idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida= "'.utf8_encode($ver["medida"]).'"
+				color= "'.utf8_encode($ver["color"]).'" onclick="agregarPrecio(this)"
+				><i class="edit icon"></i></a
+				</td>';
+			}
+
+			
+			$cadena.='<td>$ '.utf8_encode($ver["precioSug"]).'</td>';
+			$cadena.='
+			</tr>';
+		}
+
+		$cadena.='</table>';
+		
+
+	echo  $cadena;
+}
+
+
 	
 
 	}
