@@ -125,7 +125,7 @@
     
 
     <div class="six wide field" id="prec" style="display:none;">
-        <label><i class="dollar icon"></i>Precio Unitario:</label>
+        <label><i class="dollar icon"></i>Precio Sugerido:</label>
         <input type="text" id="precioU" name="precioU" readonly>
     </div>
 
@@ -161,7 +161,7 @@
             
             </div>
 
-            <div class="four wide field">
+            <div class="three wide field">
             <label><i class="dollar icon"></i>Tipo de venta:</label>
             <select name="tipoVenta" id="tipoVenta" class="ui  dropdown">
             <option value="Seleccione" set selected>Seleccione una opción</option>
@@ -172,18 +172,19 @@
             
             </div>
 
-
-            <div class="six wide field" id="precS" style="display:none;">
-            <label><i class="dollar icon"></i>Precio sugerido:</label>
-            <input type="text" id="precioS" name="precioS" readonly>
-        </div>
-
-        <div class="six wide field" id="prec" style="display:none;">
-            <label><i class="dollar icon"></i>Precio inventario:</label>
-            <input type="text" id="precioU" name="precioU" readonly>
-        </div>
+            <div class="three wide field">
+            <label><i class="dollar icon"></i>Total sugerido:</label>
+            <input type="text" name="precioTo" id="precioTo">
+            
+            </div>
 
             <div class="three wide field">
+            <label style=""><i class="dollar icon"></i>Precio a cobrar:</label>
+            <input type="text" name="precioS" id="precio" >
+            
+            </div>
+
+            <div class="two wide field">
             <label style="color:#F3F3F1"><i class="dollar icon"></i>Precio:</label>
             <a class=" ui right floated black labeled icon button" id="agregarOT"> <i class="plus icon"></i>Agregar OT</a>
             
@@ -430,7 +431,7 @@ $(function() {
 
             var total = can * precio;
 
-            $("#precio").val(total.toFixed(2));
+            $("#precioTo").val(total.toFixed(2));
         });
 </script>
 <script type="text/javascript">

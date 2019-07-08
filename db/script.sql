@@ -263,6 +263,7 @@ idEliminado int
 create table gastosOficina(
 idGasto int primary key auto_increment,
 nombre varchar(100),
+idProveedor int,
 idEliminado int
 );
 
@@ -274,6 +275,8 @@ precio double,
 fecha date,
 estado int
 );
+
+
 
 create table notaCredito(
 idNota int primary key auto_increment,
@@ -404,7 +407,7 @@ insert into ordenTrabajoGR values(null,'OTGR00',curdate(),1,1,curdate(),'',9,1);
 insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,curdate(),'',9,1);
 insert into ordenTrabajoP values(null,'OTPR00',curdate(),1,1,curdate(),'',9,1);
 
-insert into gastosOficina values(null,'Internet',1);
+insert into gastosOficina values(null,'Internet',1,1);
 	
  delimiter $$
  
@@ -460,9 +463,6 @@ begin
 end
 $$
 
-select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio from detalleOrdenGR d
-			inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
-			inner join colores c on c.idColor = d.idColor
-			inner join acabados a on a.idAcabado = d.idAcabado
-			inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
-			inner join medidas m on m.idMedida = pm.idMedida
+select format(SUM(d.ventasNo),2) as ventasNoSu  from detalleNota  d
+        inner join notaCredito n on n.idNota = d.idNota
+        where n.idNota=(select max(idNota) from notaCredito)

@@ -61,7 +61,8 @@ class DaoNotaCredito extends DaoBase {
     }
 
     public function imprimirDetalleNota(){
-        $query = "select d.* from detalleNota d
+        $query = "select d.*,format(d.precioUni,2) as precioUnit,
+        format(d.ventasNo,2) as ventasNoS, format(d.ventasGra,2) as ventasGrav,format(d.ventasEx,2) as ventasExe  from detalleNota d
         inner join notaCredito n on n.idNota = d.idNota
         where n.idNota=(select max(idNota) from notaCredito)";
 
@@ -70,9 +71,30 @@ class DaoNotaCredito extends DaoBase {
         return $resultado;
     }
 
-    public function totalFactura(){
-        $query = "select format(SUM(precio),2) as precio  from detalleOrdenGR 
-        where idOrden= (select max(idOrden) from ordenTrabajoGR);";
+    public function ventasNoSujetas(){
+        $query = "select format(SUM(d.ventasNo),2) as ventasNoSu  from detalleNota  d
+        inner join notaCredito n on n.idNota = d.idNota
+        where n.idNota=(select max(idNota) from notaCredito)";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function ventasExentas(){
+        $query = "select format(SUM(d.ventasEx),2) as ventasExen  from detalleNota  d
+        inner join notaCredito n on n.idNota = d.idNota
+        where n.idNota=(select max(idNota) from notaCredito)";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function ventasGravadas(){
+        $query = "select format(SUM(d.ventasGra),2) as ventasGrava  from detalleNota  d
+        inner join notaCredito n on n.idNota = d.idNota
+        where n.idNota=(select max(idNota) from notaCredito)";
 
         $resultado = $this->con->ejecutar($query);
 

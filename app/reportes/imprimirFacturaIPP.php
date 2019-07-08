@@ -90,6 +90,7 @@ class Reporte {
                 <th style='background-color:black;color:white;'>Cantidad</th>
                 <th style='background-color:black;color:white;'>Tipo</th>
                 <th style='background-color:black;color:white;'>Descripcion</th>
+                <th style='background-color:black;color:white;'>Tipo de venta</th>
 				<th style='background-color:black;color:white;'>Precio</th>
 				
                </tr>
@@ -105,6 +106,7 @@ class Reporte {
                 <td style='border:1px solid black;text-align: center;'>".$fila['cantidad']." </td>
                 <td style='border:1px solid black;text-align: center;'>".$fila['tipo']." </td>
                <td style='border:1px solid black;'>".$fila['descripciones']." </td>
+               <td style='border:1px solid black;'>".$fila['tipoVenta']." </td>
                <td style='border:1px solid black;text-align: center;'> $ ".$fila['precio']." </td>
 
                </tr>
@@ -133,7 +135,10 @@ class Reporte {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
         <b>Total</b> = $".$resultado2;
-
+        $tabla .= "
+        <br>
+        
+        ";
         $tabla .= "<hr><br><br><br><br><table>
                     <tr>
                     <th style='border-left:0; border-bottom:0;border-top:0;'>F._______________________________<br>

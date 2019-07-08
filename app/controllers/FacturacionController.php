@@ -158,9 +158,12 @@ class FacturacionController extends ControladorBase {
     
         $resultado = $dao->imprimirEncabezadoNota();
         $resultado1 = $dao->imprimirDetalleNota();
-      //  $resultado2 = $dao->totalNota();
+        $ventasNo = $dao->ventasNoSujetas();
+        $ventasGr = $dao->ventasGravadas();
+        $ventasEx = $dao->ventasExentas();
+     
         
-        $reporte->notaCredito($resultado,$resultado1);
+        $reporte->notaCredito($resultado,$resultado1,$ventasNo,$ventasGr,$ventasEx);
     }
 
 

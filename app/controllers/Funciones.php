@@ -21,7 +21,30 @@ class Funciones extends ControladorBase {
 	}
 
 	echo  $cadena."</select>";
-    }
+	}
+
+	public function proveedorGastos(){
+        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $tipoSum=$_POST['tipoSum'];
+
+	$sql="SELECT idGasto,
+			 nombre
+		from gastosOficina 
+		where  idEliminado=1";
+
+	$result=mysqli_query($conexion,$sql);
+
+	$cadena="<label> <i class='dollar icon'></i>Gastos: </label> 
+			<select id='clasificacion' name='clasificacion' class='ui dropdown'>";
+
+	while ($ver=mysqli_fetch_row($result)) {
+		$cadena=$cadena.'<option value='.$ver[0].'>'.utf8_encode($ver[1]).'</option>';
+	}
+
+	echo  $cadena."</select>";
+	}
+	
+	
 
 
     public function proveedorEdit(){
@@ -627,7 +650,7 @@ class Funciones extends ControladorBase {
 				$ '.utf8_encode($ver["precio"]). '
 				</td>';
 				
-				if(utf8_encode($ver[10]==1)){
+				if(utf8_encode($ver["estado"]==1)){
 					$cadena=$cadena.'<td><a class="ui blue small icon button" idOrden ="'.utf8_encode($ver["idOrden"]).'"
 					idDetalle ="'.utf8_encode($ver["idDetalle"]).'"
 					 idAcabado ="'.utf8_encode($ver["idAcabado"]).'" idColor="'.utf8_encode($ver["idColor"]).'"
@@ -804,7 +827,10 @@ class Funciones extends ControladorBase {
 		$idC=$_POST['idCla'];
 
 		if($_POST['idCla']){
-			$sql="select idGasto,nombre from gastosOficina where idEliminado=1";
+			$sql="select g.idGasto,g.nombre,p.nombre as nombreP
+			from gastosOficina g
+			inner join proveedores p on p.idProveedor = g.idProveedor
+			where g.idEliminado=1";
 	
 			$result=mysqli_query($conexion,$sql);
 	
@@ -812,12 +838,14 @@ class Funciones extends ControladorBase {
 			<table class='ui selectable very compact celled table' style='width:80%;text-align:center;'>
 			<tr>
 				<th style='font-size:15px;background-color:#110991;color:white;' height='40'>Nombre de Gasto</th>
+				<th style='font-size:15px;background-color:#110991;color:white;' height='40'>Proveedor</th>
 				<th style='font-size:20px;background-color:#110991;color:white;'><i class='cogs icon'></i></th>
 			</tr>
 			";
-			while ($ver=mysqli_fetch_row($result)) {
-				$cadena=$cadena.'<tr><td>'.utf8_encode($ver[1]).'</td>
-				<td><a id='.$ver[0].' nombre="'.utf8_encode($ver[1]).'" class="ui icon red small button" onclick="eliminarGasto(this)">
+			while ($ver=mysqli_fetch_assoc($result)) {
+				$cadena=$cadena.'<tr><td>'.utf8_encode($ver["nombre"]).'</td>
+				<td>'.utf8_encode($ver["nombreP"]).'</td>
+				<td><a id='.$ver["idGasto"].' nombre="'.utf8_encode($ver["nombre"]).'" class="ui icon red small button" onclick="eliminarGasto(this)">
 				<i class="trash icon"></i></a></td></tr>';
 			}
 			$cadena=$cadena."
@@ -1077,7 +1105,7 @@ class Funciones extends ControladorBase {
 		$idColor=$_POST['idColor'];
 		$idAcabado=$_POST['idAcabado'];
 
-	$sql="SELECT format(precioUnitario,2) from inventario
+	$sql="SELECT format(precioSugerido,2) from inventario
 			where idProducto='$idPro' and idColor = '$idColor' and idAcabado = '$idAcabado'";
 
 	$result=mysqli_query($conexion,$sql);

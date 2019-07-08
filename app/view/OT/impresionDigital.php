@@ -127,13 +127,10 @@
 
         
 
-        <div class="six wide field" id="prec" style="display:none;">
-            <label><i class="dollar icon"></i>Precio sugerido:</label>
-            <input type="text" id="precioS" name="precioS" readonly>
-        </div>
+      
 
         <div class="six wide field" id="prec" style="display:none;">
-            <label><i class="dollar icon"></i>Precio inventario:</label>
+            <label><i class="dollar icon"></i>Precio sugerido:</label>
             <input type="text" id="precioU" name="precioU" readonly>
         </div>
 
@@ -170,7 +167,7 @@
             
             </div>
 
-            <div class="four wide field">
+            <div class="three wide field">
             <label><i class="dollar icon"></i>Tipo de venta:</label>
             <select name="tipoVenta" id="tipoVenta" class="ui  dropdown">
             <option value="Seleccione" set selected>Seleccione una opción</option>
@@ -183,8 +180,14 @@
 
 
             <div class="three wide field">
-            <label><i class="dollar icon"></i>Precio:</label>
-            <input type="text" name="precio" id="precio">
+            <label><i class="dollar icon"></i>Total sugerido:</label>
+            <input type="text" name="precioTo" id="precioTo">
+            
+            </div>
+
+            <div class="three wide field">
+            <label style=""><i class="dollar icon"></i>Precio a cobrar:</label>
+            <input type="text" name="precio" id="precio" >
             
             </div>
 
@@ -431,7 +434,7 @@ $(function() {
 
             var total = can * precio;
 
-            $("#precio").val(total.toFixed(2));
+            $("#precioTo").val(total.toFixed(2));
         });
 	});
 </script>

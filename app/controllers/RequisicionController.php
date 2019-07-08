@@ -13,8 +13,11 @@ class RequisicionController extends ControladorBase {
 
 
     public static function gastosOficina() {
-        $daoP = new DaoRequisicion();
-        $gastos = $daoP->mostrarGastosCMB();
+        $daoR = new DaoRequisicion();
+        $gastos = $daoR->mostrarGastosCMB();
+
+        $daoP = new DaoProveedores();
+        $proveedores = $daoP->mostrarProveedoresCmbG();
 
         self::loadMain();
         

@@ -124,6 +124,7 @@
                                 <option value="1">Gran Formato</option>
                                 <option value="2">Impresión digital</option>
                                 <option value="3">Promocionales</option>
+                                <option value="4">Gasto de Oficina</option>
                             </select> 
                            
                         </div>
@@ -801,7 +802,15 @@ $("#correoCE").css("display","none");
 		recargarLista();
 
 		$('#tipoSuministro').change(function(){
-			recargarLista();
+
+            var t = $(this).val();
+
+            if(t=="4"){
+                recargarListaGastos();
+            }else{
+                recargarLista();
+            }
+			
 		});
 	})
 </script>
@@ -810,6 +819,17 @@ $("#correoCE").css("display","none");
 		$.ajax({
 			type:"POST",
 			url:"?1=Funciones&2=proveedor",
+			data:"tipoSum=" + $('#tipoSuministro').val(),
+			success:function(r){
+				$('#clasificacion').html(r);
+			}
+		});
+	}
+
+    function recargarListaGastos(){
+		$.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=proveedorGastos",
 			data:"tipoSum=" + $('#tipoSuministro').val(),
 			success:function(r){
 				$('#clasificacion').html(r);

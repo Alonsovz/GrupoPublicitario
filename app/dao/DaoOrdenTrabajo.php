@@ -629,7 +629,8 @@ class DaoOrdenTrabajo extends DaoBase {
     }
 
     public function imprimirDetalleOTGR(){
-        $query = " select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio from detalleOrdenGR d
+        $query = " select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,
+        d.tipoVenta from detalleOrdenGR d
         inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
         inner join colores c on c.idColor = d.idColor
         inner join acabados a on a.idAcabado = d.idAcabado
@@ -666,7 +667,8 @@ class DaoOrdenTrabajo extends DaoBase {
     }
 
     public function imprimirDetalleOTIP(){
-        $query = "select d.cantidad,d.tipo,d.descripciones,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio 
+        $query = "select d.cantidad,d.tipo,d.descripciones,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,
+        d.tipoVenta
         from detalleOrdenIP d
         inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
         inner join colores c on c.idColor = d.idColor
@@ -703,7 +705,8 @@ class DaoOrdenTrabajo extends DaoBase {
     }
 
     public function imprimirDetalleOTP(){
-        $query = "select d.cantidad,d.tipo,d.descripciones,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio 
+        $query = "select d.cantidad,d.tipo,d.descripciones,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,
+        d.tipoVenta
         from detalleOrdenP d
         inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
         inner join colores c on c.idColor = d.idColor

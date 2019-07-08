@@ -163,6 +163,23 @@ class DaoProveedores extends DaoBase {
         return '['.$json.']';
     }
 
+    public function mostrarProveedoresCmbG() {
+
+        $_query = "select * from proveedores where idEliminado=1";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= json_encode($fila).',';
+        }
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return '['.$json.']';
+    }
+
     public function mostrarProveedoresCmbP() {
 
         $_query = "select * from proveedores where tipoSuministro=3 and idEliminado=1";

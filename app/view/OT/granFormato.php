@@ -128,13 +128,10 @@
             <a class="ui blue button" id="btnDetalle">Detalle del producto</a>
         </div>
 
-        <div class="six wide field" id="precS" style="display:none;">
-            <label><i class="dollar icon"></i>Precio sugerido unitario:</label>
-            <input type="text" id="precioS" name="precioS" >
-        </div>
+      
 
         <div class="six wide field" id="prec" style="display:none;">
-            <label><i class="dollar icon"></i>Precio inventario:</label>
+            <label><i class="dollar icon"></i>Precio sugerido:</label>
             <input type="text" id="precioU" name="precioU" readonly>
         </div>
 
@@ -252,14 +249,14 @@
             </div>
 
             <div class="three wide field">
-            <label><i class="dollar icon"></i>Precio sugerido total:</label>
-            <input type="text" name="precio" id="precio">
+            <label><i class="dollar icon"></i>Total sugerido:</label>
+            <input type="text" name="precioTo" id="precioTo">
             
             </div>
 
             <div class="three wide field">
             <label style=""><i class="dollar icon"></i>Precio a cobrar:</label>
-            <input type="text" name="precioS" id="precio"S>
+            <input type="text" name="precioS" id="precio" >
             
             </div>
 
