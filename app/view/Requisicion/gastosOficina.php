@@ -91,41 +91,21 @@
             <div id="detallesGastos">
             </div>
         </div>
+       
         <div class="eight wide field">
         <a class="ui blue button" id="btnNuevoG"><i class="plus icon"></i> Nuevo Gasto</a>
+        <div id="newGasto" style="display:none">
+        <br><br>
+        <label style="font-size:17px; font-weight:bold;"><i class="list icon"></i> Nombre:</label>
+            <input type="text" id="nuGasto" name="nuGasto" placeholder="Nombre del gasto">
+            <br><br>
+            <a class="ui yellow button" id="guardarGasto"><i class="save icon"></i>Guardar</a>
+            
+        </div>
         </div>
         </div>
 </div>      
 
-<div class="field">
-    <div class="fields" id="newGasto" style="display:none;"> 
-    <div class="eight wide field">
-            
-            
-            <br>
-            
-            <br><br>
-            
-
-        </div>
-        <div class="eight wide field" >
-            
-            
-            <br>
-            <label style="font-size:17px; font-weight:bold;"><i class="list icon"></i> Nombre:</label>
-            <input type="text" id="nuGasto" name="nuGasto" placeholder="Nombre del gasto">
-            <label style="font-size:17px; font-weight:bold;"><i class="user icon"></i> Proveedor:</label>
-            <select name="proveedor" id="proveedor" class="ui search dropdown"></select>
-            <br><br>
-            <a class="ui yellow button" id="guardarGasto"><i class="save icon"></i>Guardar</a>
-            
-
-        </div>
-
-        
-
-        </div>
-</div> 
 </form>
 
 </div>

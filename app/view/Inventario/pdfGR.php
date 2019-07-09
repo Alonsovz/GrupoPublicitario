@@ -28,6 +28,8 @@
 	<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Unidad de Medida</th>
 	<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Existencia</th>
 	<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Precio Unitario</th>
+	<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Precio Desperdicio</th>
+	<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Precio Sugerido</th>
 	</tr>
 	<?php
 		while ($row=mysqli_fetch_assoc($result)) {
@@ -39,7 +41,9 @@
 					<td><?php echo $row['color']; ?></td>
 					<td><?php echo $row['medida']; ?></td>
                     <td ><?php echo $row['cantidadExistencia']; ?></td>
-                    <td style="mso-number-format:'$ 0.00';"><?php echo $row['precioUnitario']; ?></td>
+                    <td style="mso-number-format:'$ 0.00';"><?php echo $row['precioUni']; ?></td>
+					<td style="mso-number-format:'$ 0.00';"><?php echo $row['precioDesperdicio']; ?></td>
+					<td style="mso-number-format:'$ 0.00';"><?php echo $row['precioSugerido']; ?></td>
 				</tr>	
 
 			<?php

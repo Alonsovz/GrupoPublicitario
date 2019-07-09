@@ -267,7 +267,7 @@ class Funciones extends ControladorBase {
 				inner join inventario i on i.idProducto= p.idProductoFinal
 				and i.idColor=p.idColor and i.idAcabado = p.idAcabado
 				inner join productoFinal pF on pF.idProductoFinal = p.idProductoFinal
-		 where pF.idProductoFinal='".$idPro."' group by p.idProductoFinal,p.idAcabado,p.idColor";
+		 where pF.idProductoFinal='".$idPro."' group by p.idProductoFinal,p.idAcabado,p.idColor order by precioSugerido asc";
 
 		$result=mysqli_query($conexion,$sql);
 
@@ -278,7 +278,6 @@ class Funciones extends ControladorBase {
 		<th style='color:white;background-color:black;' height='40px;'>Color</th>
 		<th style='color:white;background-color:black;' height='40px;'>Medida</th>
 		<th style='color:white;background-color:black;' height='40px;'>Precio Sugerido</th>
-		<th style='color:white;background-color:black;' height='40px;'><i class='cogs icon'></i></th>
 		</tr>
 		";
 		while ($ver=mysqli_fetch_assoc($result)) {
@@ -297,9 +296,7 @@ class Funciones extends ControladorBase {
 			<td style="border:1px solid black;">
 			$'.utf8_encode($ver["precioSugerido"]).'
 			</td>
-			<td style="border:1px solid black;">
-			<a class="ui red small icon button"><i class="trash icon"></i></a>
-			</td>
+			
 			 
 			 
 			 </tr>';
@@ -827,9 +824,8 @@ class Funciones extends ControladorBase {
 		$idC=$_POST['idCla'];
 
 		if($_POST['idCla']){
-			$sql="select g.idGasto,g.nombre,p.nombre as nombreP
+			$sql="select g.idGasto,g.nombre
 			from gastosOficina g
-			inner join proveedores p on p.idProveedor = g.idProveedor
 			where g.idEliminado=1";
 	
 			$result=mysqli_query($conexion,$sql);
@@ -838,13 +834,11 @@ class Funciones extends ControladorBase {
 			<table class='ui selectable very compact celled table' style='width:80%;text-align:center;'>
 			<tr>
 				<th style='font-size:15px;background-color:#110991;color:white;' height='40'>Nombre de Gasto</th>
-				<th style='font-size:15px;background-color:#110991;color:white;' height='40'>Proveedor</th>
 				<th style='font-size:20px;background-color:#110991;color:white;'><i class='cogs icon'></i></th>
 			</tr>
 			";
 			while ($ver=mysqli_fetch_assoc($result)) {
 				$cadena=$cadena.'<tr><td>'.utf8_encode($ver["nombre"]).'</td>
-				<td>'.utf8_encode($ver["nombreP"]).'</td>
 				<td><a id='.$ver["idGasto"].' nombre="'.utf8_encode($ver["nombre"]).'" class="ui icon red small button" onclick="eliminarGasto(this)">
 				<i class="trash icon"></i></a></td></tr>';
 			}
@@ -900,7 +894,7 @@ class Funciones extends ControladorBase {
 		inner join acabados a on a.idAcabado = i.idAcabado
 		inner join medidas m on m.idMedida = pc.idMedida
 		inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
-		where p.idProductoFinal =".$idPro." group by i.idProducto,i.idColor,i.idAcabado";
+		where p.idProductoFinal =".$idPro." group by i.idProducto,i.idColor,i.idAcabado order by precioSug asc";
 
 		$result=mysqli_query($conexion,$sql);
 
@@ -972,8 +966,8 @@ class Funciones extends ControladorBase {
 
 					$cadena.='<td><center>
 					<a class="ui purple small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
-					idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida= "'.utf8_encode($ver["medida"]).'"
-					color= "'.utf8_encode($ver["color"]).' onclick="agregarPrecioDesper(this)"
+					idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida="'.utf8_encode($ver["medida"]).'"
+					color="'.utf8_encode($ver["color"]).'" onclick="agregarPrecioDesper(this)"
 					><i class="edit icon"></i></a></center>
 					</td>';
 					
@@ -981,12 +975,19 @@ class Funciones extends ControladorBase {
 					$cadena.='<td style="text-align:center;"> $ '.utf8_encode($ver["precioD"]).'
 					&nbsp;&nbsp;&nbsp;
 					<a class="ui purple small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
-					idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida= "'.utf8_encode($ver["medida"]).'"
-					color= "'.utf8_encode($ver["color"]).' onclick="agregarPrecioDesper(this)"
+					idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida="'.utf8_encode($ver["medida"]).'"
+					color="'.utf8_encode($ver["color"]).'" onclick="agregarPrecioDesper(this)"
 					><i class="edit icon"></i></a>
 					</td>';
 				}
-				$cadena.='<td>$ '.utf8_encode($ver["precioSug"]).'</td>';
+				$cadena.='<td>$ '.utf8_encode($ver["precioSug"]).'
+				
+				&nbsp;&nbsp;&nbsp;
+					<a class="ui blue small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
+					idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida="'.utf8_encode($ver["medida"]).'"
+					color="'.utf8_encode($ver["color"]).'" onclick="modificarPrecioSug(this)"
+					><i class="edit icon"></i></a>
+				</td>';
 				$cadena.='
 				</tr>';
 			}
@@ -1078,12 +1079,18 @@ class Funciones extends ControladorBase {
 				<a class="ui green small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
 				idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida= "'.utf8_encode($ver["medida"]).'"
 				color= "'.utf8_encode($ver["color"]).'" onclick="agregarPrecio(this)"
-				><i class="edit icon"></i></a
+				><i class="edit icon"></i></a>
 				</td>';
 			}
 
 			
-			$cadena.='<td>$ '.utf8_encode($ver["precioSug"]).'</td>';
+			$cadena.='<td style="text-align:center;">$ '.utf8_encode($ver["precioSug"]).'
+			&nbsp;&nbsp;&nbsp;
+				<a class="ui blue small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
+				idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'"  medida= "'.utf8_encode($ver["medida"]).'"
+				color= "'.utf8_encode($ver["color"]).'" onclick="modificarPrecioSug(this)"
+				><i class="edit icon"></i></a>
+			</td>';
 			$cadena.='
 			</tr>';
 		}

@@ -740,6 +740,20 @@ class DaoProductos extends DaoBase {
         }
     }
 
+    public function definirPrecioSug() {
+        $_query = "update inventario set precioSugerido=".$this->objeto->getPrecio()." 
+        where idProducto=".$this->objeto->getIdProducto()." and idColor=".$this->objeto->getColor()."
+         and idAcabado=".$this->objeto->getAcabado()." ";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 
     public function restarProducto() {
         $_query = "update inventario set cantidadExistencia= cantidadExistencia -".$this->objeto->getExistencia()." 

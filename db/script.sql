@@ -137,6 +137,23 @@ correo varchar(50),
 idEliminado int
 );
 
+ create table proveedoresGastos(
+idProveedor int primary key auto_increment,
+nombre varchar(100),
+nit varchar(40),
+nrc varchar(40),
+direccion varchar(500),
+departamento varchar(40),
+giro varchar(500),
+categoria varchar(40),
+idGasto int,
+condicionCredito varchar(50),
+telefono varchar(30),
+celular varchar(50),
+contacto varchar(80),
+correo varchar(50),
+idEliminado int
+);
 
 create table ordenTrabajoGR(
 idOrden int primary key auto_increment,
@@ -263,9 +280,10 @@ idEliminado int
 create table gastosOficina(
 idGasto int primary key auto_increment,
 nombre varchar(100),
-idProveedor int,
 idEliminado int
 );
+
+
 
 create table gastos(
 idDetalle int primary key auto_increment,
@@ -407,7 +425,7 @@ insert into ordenTrabajoGR values(null,'OTGR00',curdate(),1,1,curdate(),'',9,1);
 insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,curdate(),'',9,1);
 insert into ordenTrabajoP values(null,'OTPR00',curdate(),1,1,curdate(),'',9,1);
 
-insert into gastosOficina values(null,'Internet',1,1);
+insert into gastosOficina values(null,'Internet',1);
 	
  delimiter $$
  
@@ -463,6 +481,13 @@ begin
 end
 $$
 
-select format(SUM(d.ventasNo),2) as ventasNoSu  from detalleNota  d
-        inner join notaCredito n on n.idNota = d.idNota
-        where n.idNota=(select max(idNota) from notaCredito)
+select i.*,c.*,a.*,m.*, format(i.precioUnitario,2) as precioUni, format(i.cantidadExistencia,2) as cantidadExis,
+    p.*,cp.nombre as nombre from inventario i
+        inner join productosDetalle pc on pc.idProductoFinal = i.idProducto
+        inner join colores c on c.idColor = i.idColor
+        inner join acabados a on a.idAcabado = i.idAcabado
+        inner join medidas m on m.idMedida = pc.idMedida
+        inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
+        inner join clasificacionProductos cp on cp.idProducto = p.idProducto
+        where cp.idClasificacion=1
+        group by i.idProducto,i.idColor,i.idAcabado

@@ -83,6 +83,17 @@ class InventarioController extends ControladorBase {
         echo $dao->definirPrecioDes();
     }
 
+    public function definirPrecioSug(){
+        $dao = new DaoProductos();
+
+        $dao->objeto->setIdProducto($_REQUEST["id"]);
+        $dao->objeto->setColor($_REQUEST["idColor"]);
+        $dao->objeto->setAcabado($_REQUEST["idAcabado"]);
+        $dao->objeto->setPrecio($_REQUEST["precio"]);
+        
+        echo $dao->definirPrecioSug();
+    }
+
     public function restarProductoIP(){
         $dao = new DaoProductos();
 

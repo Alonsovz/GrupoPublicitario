@@ -112,7 +112,7 @@
         </div>
         </div>
   
-  <div id="modalExistencia" class="ui tiny modal">
+  <div id="modalExistencia" class="ui modal">
     <div class="header" style="color:white;background-color:black;">
         Definir existencia para el producto : <a id="proE" style="color:yellow"></a><br>
         Acabado : <a id="acaE" style="color:yellow"></a><br>
@@ -141,7 +141,7 @@
 </div>
 
 
-<div id="modalPrecio" class="ui tiny modal">
+<div id="modalPrecio" class="ui  modal">
     <div class="header" style="color:white;background-color:black;">
         Definir precio para el producto : <a id="proP" style="color:yellow"></a><br>
         Acabado : <a id="acaP" style="color:yellow"></a><br>
@@ -169,7 +169,7 @@
     </div>
 </div>
 
-<div id="modalPrecioDes" class="ui tiny modal">
+<div id="modalPrecioDes" class="ui modal">
     <div class="header" style="color:white;background-color:black;">
         Definir precio de desperdicio para el producto : <a id="proPD" style="color:yellow"></a><br>
         Acabado : <a id="acaPD" style="color:yellow"></a><br>
@@ -197,6 +197,35 @@
     </div>
 </div>
 
+
+<div id="modalPrecioSug" class="ui modal">
+    <div class="header" style="color:white;background-color:black;">
+        Modificar precio sugerido del producto : <a id="proPDS" style="color:yellow"></a><br>
+        Acabado : <a id="acaPDS" style="color:yellow"></a><br>
+        Color : <a id="colPDS" style="color:yellow"></a><br>
+        Medida : <a id="medPDS" style="color:yellow"></a>
+    </div>
+    <div class="content">
+    <input type="hidden" id="colorPDS" name="colorPDS">
+    <input type="hidden" id="acabadoPDS" name="acabadoPDS">
+    <input type="hidden" id="productoPDS" name="productoPDS">
+        <form class="ui form">
+            <div class="field">
+                <div class="fields">
+                    <div class="sixteen wide field">
+                    <label><i class="dollar icon"></i> Precio a definir:</label>
+                    <input type="text" id="precioDS" name="precioDS" placeholder="Definir Precio sugerido">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <button class="ui black  button" id="btnPDS">Cancelar</button>
+        <button class="ui red button" id="guardarPDS">Guardar</button>
+    </div>
+</div>
+
 </div> 
 
 
@@ -207,6 +236,7 @@
     $("#gr").addClass("ui gray basic button");
     $('#precio').mask("###0.00", {reverse: true});
     $('#precioD').mask("###0.00", {reverse: true});
+    $('#precioDS').mask("###0.00", {reverse: true});
     $('#exis').mask("###0.00", {reverse: true});
     });
 
@@ -283,6 +313,30 @@ $("#btnE").click(function(){
 
 
 $("#btnP").click(function(){
+
+   
+var idP =  $("#idProductoF").val();;
+
+$("#titleDe").text();
+
+$.ajax({
+    type:"POST",
+    url:"?1=Funciones&2=verDetallesInventarioGR",
+    data:{
+        idC:idP
+    },
+success:function(r){
+        $('#respuesta').html(r);
+    }
+});
+
+$("#verDe").show(1000);
+$("#title").show(1000);
+$('#detallesProducto').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+});
+
+
+$("#btnPDS").click(function(){
 
    
 var idP =  $("#idProductoF").val();;
@@ -424,6 +478,25 @@ var agregarPrecioDesper=(ele)=>{
     $("#productoPD").val(id);
     $('#modalPrecioDes').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 }
+
+
+var modificarPrecioSug=(ele)=>{
+    var id = $(ele).attr("id");
+    var idColor = $(ele).attr("idColor");
+    var idAcabado = $(ele).attr("idAcabado");
+
+    $("#proPDS").text($("#titleDe").text());
+    $("#colPDS").text($(ele).attr("color"));
+    $("#acaPDS").text($(ele).attr("acabado"));
+    $("#medPDS").text($(ele).attr("medida"));
+
+
+    $("#colorPDS").val(idColor);
+    $("#acabadoPDS").val(idAcabado);
+    $("#productoPDS").val(id);
+    $('#modalPrecioSug').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+}
+    
     
 
 
@@ -472,7 +545,7 @@ $("#guardarP").click(function(){
                                               $('#respuesta').html(r);
                                           }
                                       });
-  
+                                      $("#precio").val('');
                                       $("#verDe").show(1000);
                                       $("#title").show(1000);
                                       $('#detallesProducto').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
@@ -539,7 +612,74 @@ $("#guardarP").click(function(){
                                               $('#respuesta').html(r);
                                           }
                                       });
+                                      $("#precioD").val('');
+                                      $("#verDe").show(1000);
+                                      $("#title").show(1000);
+                                      $('#detallesProducto').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                                 
+                              }
+                          }); 
+                          
+                      } 
+                  }
+          });
   
+      },
+              function(){
+                 
+                  alertify.error('Cancelado');
+                  
+              }); 
+      
+  });
+
+
+  $("#guardarPDS").click(function(){
+    
+    var idColor=  $("#colorPDS").val();
+     var idAcabado= $("#acabadoPDS").val();
+     var id= $("#productoPDS").val();
+     var precio = $("#precioDS").val();
+  
+      alertify.confirm("¿Desea guardar el precio sugerido para el producto: " +$("#proPDS").text()+ "  Acabado: " + $("#acaPDS").text() + "  Color: " + $("#colPDS").text() + "?",
+              function(){
+      $.ajax({
+              type:"POST",
+              url:"?1=InventarioController&2=definirPrecioSug",
+              data:{
+                  id:id,
+                  idColor:idColor,
+                  idAcabado:idAcabado,
+                  precio:precio,
+              },
+              success: function(r) {
+                      if(r == 1) {
+                        $('#modalPrecioSug').modal('hide');
+                          $('#respuesta').html('');
+                          swal({
+                              title: 'Precio actualizado',
+                              text: 'Guardado con éxito',
+                              type: 'success',
+                              
+                              showConfirmButton: true,
+                              }).then((result) => {
+                                  if (result.value) {
+                              
+                                      var idP =  $("#idProductoF").val();;
+                                  
+                                  $("#titleDe").text();
+                                  
+                                  $.ajax({
+                                          type:"POST",
+                                          url:"?1=Funciones&2=verDetallesInventarioGR",
+                                          data:{
+                                              idC:idP
+                                          },
+                                      success:function(r){
+                                              $('#respuesta').html(r);
+                                          }
+                                      });
+                                      $("#precioDS").val('');
                                       $("#verDe").show(1000);
                                       $("#title").show(1000);
                                       $('#detallesProducto').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');

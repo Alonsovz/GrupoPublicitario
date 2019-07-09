@@ -37,6 +37,36 @@ class DaoProveedores extends DaoBase {
         return '{"data": ['.$_json .']}';
     }
 
+
+    public function mostrarProveedoresGastos() {
+        $_query = "
+            select p.*,c.nombre as gasto from proveedoresGastos p
+            inner join  gastosOficina c on c.idGasto = p.idGasto
+           where p.idEliminado=1 group by p.idProveedor;";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+            $btnEditar = '<button id=\"'.$fila["idProveedor"].'\" nombre=\"'.$fila["nombre"].'\" gasto=\"'.$fila["gasto"].'\" idGasto=\"'.$fila["idGasto"].'\"  telefono=\"'.$fila["telefono"].'\" correo=\"'.$fila["correo"].'\" direccion=\"'.$fila["direccion"].'\" nit=\"'.$fila["nit"].'\" nrc=\"'.$fila["nrc"].'\" giro=\"'.$fila["giro"].'\" celular=\"'.$fila["celular"].'\" categoria=\"'.$fila["categoria"].'\" condicion=\"'.$fila["condicionCredito"].'\"   categoria=\"'.$fila["categoria"].'\" contacto=\"'.$fila["contacto"].'\" departamento=\"'.$fila["departamento"].'\" class=\"ui btnEditar icon black small button\" onclick=\"editarProveedor(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEliminar = '<button id=\"'.$fila["idProveedor"].'\" nombre=\"'.$fila["nombre"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
+
+            $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
     public function registrar() {
         $_query = "insert into proveedores values(null,'".$this->objeto->getNombre()."', '".$this->objeto->getNit()."',
         '".$this->objeto->getNrc()."', '".$this->objeto->getDireccion()."', '".$this->objeto->getDepartamento()."',
@@ -54,6 +84,23 @@ class DaoProveedores extends DaoBase {
         }
     }
 
+    public function registrarNP() {
+        $_query = "insert into proveedoresGastos values(null,'".$this->objeto->getNombre()."', '".$this->objeto->getNit()."',
+        '".$this->objeto->getNrc()."', '".$this->objeto->getDireccion()."', '".$this->objeto->getDepartamento()."',
+        '".$this->objeto->getGiro()."','".$this->objeto->getCategoria()."','".$this->objeto->getTipoSuministro()."',
+        '".$this->objeto->getCondicion()."','".$this->objeto->getTelefono()."','".$this->objeto->getCelular()."',
+        '".$this->objeto->getContacto()."','".$this->objeto->getEmail()."',1)";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
     public function editar() {
         $_query = "update proveedores set nombre='".$this->objeto->getNombre()."',
         nit= '".$this->objeto->getNit()."',
@@ -69,6 +116,42 @@ class DaoProveedores extends DaoBase {
         tipoSuministro='".$this->objeto->getTipoSuministro()."',
         idClasificacion='".$this->objeto->getIdClasificacion()."',
         correo='".$this->objeto->getEmail()."' where idProveedor=".$this->objeto->getIdProveedor();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function editarNP() {
+        $_query = "update proveedoresGastos set nombre='".$this->objeto->getNombre()."',
+        nit= '".$this->objeto->getNit()."',
+        nrc='".$this->objeto->getNrc()."',
+        direccion='".$this->objeto->getDireccion()."',
+        departamento='".$this->objeto->getDepartamento()."',
+        giro='".$this->objeto->getGiro()."',
+        categoria='".$this->objeto->getCategoria()."',
+        condicionCredito='".$this->objeto->getCondicion()."',
+        telefono='".$this->objeto->getTelefono()."',
+        celular='".$this->objeto->getCelular()."',
+        contacto='".$this->objeto->getContacto()."',
+        idGasto='".$this->objeto->getTipoSuministro()."',
+        correo='".$this->objeto->getEmail()."' where idProveedor=".$this->objeto->getIdProveedor();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function eliminarNP() {
+        $_query = "update proveedoresGastos set idEliminado=2 where idProveedor = ".$this->objeto->getIdProveedor();
 
         $resultado = $this->con->ejecutar($_query);
 

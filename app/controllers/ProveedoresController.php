@@ -8,10 +8,25 @@ class ProveedoresController extends ControladorBase {
         require_once './app/view/Proveedores/gestion.php';
     }
 
+    public static function gestionGastos() {
+        $daoR = new DaoRequisicion();
+        $gastos = $daoR->mostrarGastosCMB();
+
+        self::loadMain();
+        
+        require_once './app/view/Proveedores/gestionGastos.php';
+    }
+
     public function mostrarProveedores() {
         $dao = new DaoProveedores();
 
         echo $dao->mostrarProveedores();
+    }
+
+    public function mostrarProveedoresGastos() {
+        $dao = new DaoProveedores();
+
+        echo $dao->mostrarProveedoresGastos();
     }
 
     public function registrar() {
@@ -36,6 +51,28 @@ class ProveedoresController extends ControladorBase {
 
 
         echo $dao->registrar();
+
+    }
+
+    public function registrarNP() {
+       
+        $dao = new DaoProveedores();
+
+        $dao->objeto->setNombre($_REQUEST["nombre"]);
+        $dao->objeto->setNit($_REQUEST["nit"]);
+        $dao->objeto->setNrc($_REQUEST["nrc"]);
+        $dao->objeto->setDireccion($_REQUEST["direccion"]);
+        $dao->objeto->setDepartamento($_REQUEST["departamento"]);
+        $dao->objeto->setGiro($_REQUEST["giro"]);
+        $dao->objeto->setCategoria($_REQUEST["categoria"]);
+        $dao->objeto->setCondicion($_REQUEST["condicion"]);
+        $dao->objeto->setTelefono($_REQUEST["telefono"]);
+        $dao->objeto->setCelular($_REQUEST["celular"]);
+        $dao->objeto->setContacto($_REQUEST["contacto"]);
+        $dao->objeto->setEmail($_REQUEST["correo"]);
+        $dao->objeto->setTipoSuministro($_REQUEST["gastos"]);
+      
+        echo $dao->registrarNP();
 
     }
 
@@ -81,6 +118,44 @@ class ProveedoresController extends ControladorBase {
 
         echo $dao->editar();
 
+    }
+
+
+    public function editarNP() {
+       
+        $dao = new DaoProveedores();
+
+        
+
+            $dao->objeto->setNombre($_REQUEST["nombreE"]);
+        $dao->objeto->setNit($_REQUEST["nitE"]);
+        $dao->objeto->setNrc($_REQUEST["nrcE"]);
+        $dao->objeto->setDireccion($_REQUEST["direccionE"]);
+        $dao->objeto->setDepartamento($_REQUEST["departamentoE"]);
+        $dao->objeto->setGiro($_REQUEST["giroE"]);
+        $dao->objeto->setCategoria($_REQUEST["categoriaE"]);
+        $dao->objeto->setCondicion($_REQUEST["condicionE"]);
+        $dao->objeto->setTelefono($_REQUEST["telefonoE"]);
+        $dao->objeto->setCelular($_REQUEST["celularE"]);
+        $dao->objeto->setContacto($_REQUEST["contactoE"]);
+        $dao->objeto->setEmail($_REQUEST["correoE"]);
+        $dao->objeto->setTipoSuministro($_REQUEST["gastosE"]);
+        $dao->objeto->setIdProveedor($_REQUEST["idDetalle"]);
+
+        
+
+        echo $dao->editarNP();
+
+    }
+
+    public function eliminarNP() {
+        $datos = $_REQUEST["idEliminar"];
+
+        $dao = new DaoProveedores();
+
+        $dao->objeto->setIdProveedor($datos);
+
+        echo $dao->eliminarNP();
     }
 
     public function eliminar() {

@@ -2,14 +2,13 @@
         <div class="ui grid">
         <div class="row">
                 <div class="titulo">
-                
-               
-                <font color="#848484" size="6px">
+               <font color="#848484" size="6px">
                 <i class="users icon"></i> <i class="truck icon"></i>
-                    Proveedores </font><font color="black" size="20px">.</font>
-<br><br>
+                    Proveedores de Gastos de oficina </font><font color="black" size="20px">.</font>
+                    <br><br>
                     <a class="ui red button" id="proPro" href="?1=ProveedoresController&2=gestion">Proveedores de productos</a>
                 <a class="ui black button" id="proGas" href="?1=ProveedoresController&2=gestionGastos">Proveedores de Gastos</a>
+                
                 </div>
         </div>
 
@@ -123,26 +122,17 @@
                         <div class="fields">
             <div class="eight wide field">
                             
-                            <b><label><i class="book icon"></i>Tipo de suministro:</label></b>
-                            <select id="tipoSuministro" name="tipoSuministro" class="ui dropdown">
+                            <b><label><i class="book icon"></i>Gasto:</label></b>
+                            <select id="gastos" name="gastos" class="ui search dropdown">
                                 
-                                <option value="1">Gran Formato</option>
-                                <option value="2">Impresión digital</option>
-                                <option value="3">Promocionales</option>
-                                <option value="4">Gasto de Oficina</option>
+                                <option value="Seleccione" set selected>Seleccione una opción</option>
+>
                             </select> 
                            
                         </div>
 
-                        <div class="eight wide field">
-                            
-                            <div id="clasificacion"></div>
-                           
-                        </div>
-                    
-
-                            
-                        </div>
+                        
+                </div>
                 </div>
                 <br><hr><br>
                 <div class="field">
@@ -308,33 +298,19 @@
             <br><hr><br>
            
              
-                 <a class="ui blue button" id="editarSum">Editar suministros del proveedor</a><br>
                  
-                 <div class="field" id="editarPro">
-                 <br><b>Establezca la nueva clasificación y nuevo suministro del proveedor...</b><br><br>
+                 
+                 <div class="field">
+                
                     <div class="fields">
                     <div class="eight wide field">
                             
-                            <b><label><i class="book icon"></i>Tipo de suministro:</label></b>
-                            <select id="tipoSuministroE" name="tipoSuministroE" class="ui search dropdown">
+                            <b><label><i class="book icon"></i>Gasto:</label></b>
+                            <select id="gastosE" name="gastosE" class="ui search dropdown">
                                 
-                                <option value="1">Gran Formato</option>
-                                <option value="2">Impresión digital</option>
-                                <option value="3">Promocionales</option>
+                                <option value="Seleccione" set selected>Seleccione una opción</option>
+>
                             </select> 
-                           
-                        </div>
-                        <input type="hidden" id="validar" name="validar">
-                        <input type="hidden" id="sumi" name="sumi">
-                        <input type="hidden" id="clasi" name="clasi">
-                        <div class="eight wide field">
-                            
-                      
-                        <label><i class="pencil icon"></i>Clasificación: (Productos Disponibles)</label>
-                        <select name="clasificacionE"  id="clasificacionE" class="ui search dropdown">
-                            
-                        
-                            </select>
                            
                         </div>
                     
@@ -459,13 +435,41 @@
 
 
 
-<script src="./res/tablas/tablaProveedores.js"></script>
+<script src="./res/tablas/tablaProveedoresGastos.js"></script>
 
 <script>
 $(document).ready(function(){
-$("#proPro").removeClass("ui red button");
-$("#proPro").addClass("ui red basic button");
-});
+$("#proGas").removeClass("ui black button");
+$("#proGas").addClass("ui black basic button");
+
+
+$(function() {
+        
+
+        var option = '';
+        var gasto = '<?php echo $gastos?>';
+
+        $.each(JSON.parse(gasto), function() {
+            option = `<option value="${this.idGasto}">${this.nombre}</option>`;
+
+            $('#gastos').append(option);
+        });
+
+
+        var option1 = '';
+        var gastosE = '<?php echo $gastos?>';
+
+        $.each(JSON.parse(gastosE), function() {
+            option1 = `<option value="${this.idGasto}">${this.nombre}</option>`;
+
+            $('#gastosE').append(option1);
+        });
+    });
+
+    });
+
+
+
 $('#nit').mask("9999-999999-999-9");
 $('#telefono').mask("9999-9999");
 $('#celular').mask("9999-9999");
@@ -528,13 +532,12 @@ $('#nrcE').val($(ele).attr("nrc"));
 $('#giroE').val($(ele).attr("giro"));
 $('#nombreE').val($(ele).attr("nombre"));
 $('#celularE').val($(ele).attr("celular"));
-$('#tipoSuministroE').val($(ele).attr("tipoSuministro"));
-$('#clasificacionE').dropdown('set selected', $(ele).attr("idClasificacion"));
+$('#gastosE').dropdown('set selected', $(ele).attr("idGasto"));
 $('#condicionE').dropdown('set selected', $(ele).attr("condicion"));;
 $('#categoriaE').dropdown('set selected', $(ele).attr("categoria"));
 $('#contactoE').val($(ele).attr("contacto"));
 $('#departamentoE').dropdown('set selected', $(ele).attr("departamento"));
-$('#nameE').text($(ele).attr("nombre")+"--Clasificación:"+$(ele).attr("clasificacion")+"--Producto: "+$(ele).attr("producto"));
+$('#nameE').text($(ele).attr("nombre")+"--Gasto:"+$(ele).attr("gasto"));
     }
 
 
@@ -558,7 +561,7 @@ $("#nit").keyup(function(){
                 if(r==1)
                 {
                     
-                    $("#btnGuardarProveedor").attr("disabled", true);
+                  //  $("#btnGuardarProveedor").attr("disabled", true);
                     $("#labelNitEx").css("display","block");
                 }    
                 else{
@@ -590,7 +593,7 @@ var nit=$("#nitE").val();
          if(r==1)
          {
              
-             $("#btnEditarProveedor").attr("disabled", true);
+           //  $("#btnEditarProveedor").attr("disabled", true);
              $("#labelNitExE").css("display","block");
          }    
          else{
@@ -624,7 +627,7 @@ var email=$("#correo").val();
          if(r==1)
          {
              
-             $("#btnGuardarProveedor").attr("disabled", true);
+          //   $("#btnGuardarProveedor").attr("disabled", true);
              $("#correoC").css("display","block");
          }    
          
@@ -653,7 +656,7 @@ var email=$("#correoE").val();
          if(r==1)
          {
              
-             $("#btnEditarProveedor").attr("disabled", true);
+          //   $("#btnEditarProveedor").attr("disabled", true);
              $("#correoCE").css("display","block");
          }    
          
@@ -688,7 +691,7 @@ $("#correoCE").css("display","none");
             processData: false,
             cache: false,
             type: 'POST',
-            url: '?1=ProveedoresController&2=registrar',
+            url: '?1=ProveedoresController&2=registrarNP',
             data: datosFormulario,
             success: function(r) {
                 if(r == 1) {
@@ -727,7 +730,7 @@ $("#correoCE").css("display","none");
         $.ajax({
            
             type: 'POST',
-            url: '?1=ProveedoresController&2=eliminar',
+            url: '?1=ProveedoresController&2=eliminarNP',
             data: {idEliminar},
             success: function(r) {
                 if(r == 1) {
@@ -770,7 +773,7 @@ $("#correoCE").css("display","none");
             processData: false,
             cache: false,
             type: 'POST',
-            url: '?1=ProveedoresController&2=editar',
+            url: '?1=ProveedoresController&2=editarNP',
             data: datosFormulario,
             success: function(r) {
                 if(r == 1) {
@@ -804,75 +807,4 @@ $("#correoCE").css("display","none");
         });
   
 
-</script>
- <script type="text/javascript">
-	$(document).ready(function(){
-		$('#tipoSuministro').val(1);
-		recargarLista();
-
-		$('#tipoSuministro').change(function(){
-
-            var t = $(this).val();
-
-            if(t=="4"){
-                recargarListaGastos();
-            }else{
-                recargarLista();
-            }
-			
-		});
-	})
-</script>
-<script type="text/javascript">
-	function recargarLista(){
-		$.ajax({
-			type:"POST",
-			url:"?1=Funciones&2=proveedor",
-			data:"tipoSum=" + $('#tipoSuministro').val(),
-			success:function(r){
-				$('#clasificacion').html(r);
-			}
-		});
-	}
-
-    function recargarListaGastos(){
-		$.ajax({
-			type:"POST",
-			url:"?1=Funciones&2=proveedorGastos",
-			data:"tipoSum=" + $('#tipoSuministro').val(),
-			success:function(r){
-				$('#clasificacion').html(r);
-			}
-		});
-	}
-</script>
-
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#tipoSuministroE').val(1);
-		recargarListaE();
-
-		$('#tipoSuministroE').change(function(){
-            recargarListaE();
-            $('#validar').val(2);
-		});
-
-        $('#clasificacionE').change(function(){
-            
-            $('#validar').val(2);
-		});
-	})
-</script>
-<script type="text/javascript">
-	function recargarListaE(){
-		$.ajax({
-			type:"POST",
-			url:"?1=Funciones&2=proveedorEdit",
-			data:"tipoSumE=" + $('#tipoSuministroE').val(),
-			success:function(r){
-				$('#clasificacionE').html(r);
-			}
-		});
-	}
 </script>
