@@ -37,6 +37,11 @@
     <form class="ui form" style="font-size:16px;margin-left:20px;margin-right:20px;" id="frmGasto" method="POST" enctype="multipart/form-data">
         <div class="field">
             <div class="fields">
+            <div class="four wide field">
+                        <label><i class="user icon"></i>Responsable:</label>
+                        <input type="text" name="responsable" id="responsable" value=<?php echo '"'.$_SESSION['nombre'].' '."".' ' .$_SESSION['apellido'].'"'; ?> readonly>
+                        <input type="hidden" id="idUser" name="idUser" value=<?php echo '"'.$_SESSION['codigoUsuario'].'"'; ?>>
+                    </div>
                 <div class="six wide field">
                 
                 <label><i class="pencil icon"></i> Gasto: </label>
@@ -44,6 +49,48 @@
                 <option value="seleccione" set selected>Seleccione una opción</option>
                 </select>
                 </div>
+
+                <div class="four wide field">
+                        <label><i class="user icon"></i><i class="truck icon"></i>Proveedor:</label>
+                        <input type="text" name="proveedor" id="proveedor" readonly>
+                        
+                    </div>
+
+
+                <div class="four wide field">
+                        <label><i class="dollar icon"></i>Condición de crédito:</label>
+                        <input type="text" name="condicionCredito" id="condicionCredito" readonly>
+                  
+                    </div>
+
+                    <div class="four wide field">
+                        <label><i class="list icon"></i>Tipo de compra:</label>
+                        <select name="tipoCompra" id="tipoCompra" class="ui dropdown">
+                        <option value="Seleccione" set selected>Seleccione una opción</option>
+                        <option value="Gravada">Gravada</option>
+                        <option value="Exenta">Exenta</option>
+                        <option value="No Gravada">No Gravada</option>
+                        </select>
+                        
+                    </div>
+
+            </div>
+            </div><br>
+            <div class="ui divider"></div>
+            <br>
+            <div class="field">
+                <div class="fields">
+                <div class="four wide field">
+                            <label><i class="cart arrow down  icon"></i>Tipo de documento:</label>
+                            <select name="tipoDocumento" id="tipoDocumento" class="ui search dropdown">
+                        <option value="Seleccione" set selected>Seleccione una opción</option>
+                        <option value="CCF">CCF</option>
+                        <option value="Factura">Factura</option>
+                        <option value="Honorarios">Honorarios</option>
+                        <option value="Recibo">Recibo</option>
+                        </select>
+                  
+                            </div>
 
                 <div class="six wide field">
                         <label><i class="pencil icon"></i>Descripción: </label>
@@ -60,6 +107,13 @@
                         <input type="text" name="precio" id="precio" placeholder="Precio">
                 </div>
 
+               
+
+                    
+
+                   
+
+                            
                 
             </div>
             
@@ -130,6 +184,36 @@ $(document).ready(function(){
 $("#btnListoC").click(function(){
    location.reload();
 });
+
+$('#gastosCmb').change(function(){
+    condicion();
+    nombre();
+});
+
+function condicion(){
+		$.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=proveedorCondicionGasto",
+			data:"idPro=" + $('#gastosCmb option:selected').val(),
+			success:function(r){
+				$('#condicionCredito').val(r);
+                //$('#datosProveedor').show(1000);
+			}
+		});
+    }
+
+    function nombre(){
+		$.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=proveedorNombreGasto",
+			data:"idPro=" + $('#gastosCmb option:selected').val(),
+			success:function(r){
+				$('#proveedor').val(r);
+                //$('#datosProveedor').show(1000);
+			}
+		});
+    }
+    
 
 $("#guardarGasto").click(function(){
     var gasto= $("#nuGasto").val();

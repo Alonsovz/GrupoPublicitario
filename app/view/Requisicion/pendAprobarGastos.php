@@ -55,6 +55,12 @@
                     </div>
 
                     <div class="eight wide field">
+                        <label><i class="truck icon"></i>Proveedor:</label>
+                        <input type="text" name="proveedor" id="proveedor"  readonly>
+                        
+                    </div>
+
+                    <div class="eight wide field">
                         <label><i class="user icon"></i>Descripción:</label>
                         <textarea rows="3" name="descripcion" id="descripcion"  readonly></textarea>
                     </div>
@@ -70,8 +76,14 @@
                     </div>
 
                     <div class="eight wide field">
-                        <label><i class="user icon"></i><i class="dollar icon"></i>Precio:</label>
+                        <label><i class="money bill alternate icon"></i><i class="dollar icon"></i>Precio:</label>
                         <input type="text" name="precio" id="precio"  readonly>
+                        
+                    </div>
+
+                    <div class="eight wide field">
+                        <label><i class="user icon"></i><i class="lock icon"></i>Responsable:</label>
+                        <input type="text" name="responsable" id="responsable"  readonly>
                         
                     </div>
 
@@ -114,6 +126,8 @@
        $("#gasto").val($(ele).attr("gasto"));
        $("#precio").val($(ele).attr("precio"));
        $("#descripcion").val($(ele).attr("descripcion"));
+       $("#responsable").val($(ele).attr("responsable"));
+       $("#proveedor").val($(ele).attr("proveedor"));
        $("#idRequisicion").val($(ele).attr("id"));
 
        

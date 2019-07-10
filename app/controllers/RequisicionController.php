@@ -333,6 +333,9 @@ class RequisicionController extends ControladorBase {
         $dao->objeto->setDescripciones($_REQUEST["descripcion"]);
         $dao->objeto->setPrecio($_REQUEST["precio"]);
         $dao->objeto->setFechaReq($_REQUEST["fecha"]);
+        $dao->objeto->setIdResponsable($_REQUEST["idUser"]);
+        $dao->objeto->setTipoCompra($_REQUEST["tipoCompra"]);
+        $dao->objeto->setTipoDocumento($_REQUEST["tipoDocumento"]);
        
         
         echo $dao->gastos();

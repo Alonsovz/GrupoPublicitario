@@ -332,7 +332,15 @@
     <div class="item">
     <a href="?1=FacturacionController&2=baseCompras" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
     <i class="book icon"></i> <i class="file alternate icon"></i>
-      Compras-Gastos
+      Gastos (Productos)
+    </a>
+
+    </div>
+
+    <div class="item">
+    <a href="?1=FacturacionController&2=baseComprasAd" class="item menu-it" style="color:black;font-size:13px;font-weight:bold;">
+    <i class="book icon"></i> <i class="file alternate icon"></i>
+      Gastos (Oficina)
     </a>
 
     </div>

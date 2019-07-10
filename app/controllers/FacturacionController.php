@@ -19,6 +19,15 @@ class FacturacionController extends ControladorBase {
         require_once './app/view/Facturacion/baseCompras.php';
     }
 
+    public static function baseComprasAd() {
+      
+        
+        self::loadMain();
+        
+        require_once './app/view/Facturacion/baseComprasAd.php';
+    }
+
+
     public static function libroConsumidor() {
       
         

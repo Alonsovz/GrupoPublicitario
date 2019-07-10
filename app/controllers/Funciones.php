@@ -1168,5 +1168,49 @@ class Funciones extends ControladorBase {
 	}
 
 
+
+	public function proveedorCondicionGasto(){
+		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$idC=$_POST['idPro'];
+
+		if($_POST['idPro']){
+			$sql="select condicionCredito from proveedoresGastos where idGasto='".$idC."' and idEliminado=1";
+	
+			$result=mysqli_query($conexion,$sql);
+	
+			$cadena="";
+			while ($ver=mysqli_fetch_row($result)) {
+				$cadena=$cadena.utf8_encode($ver[0]);
+			}
+			
+
+			echo  $cadena;
+		}
+
+	}
+
+
+	public function proveedorNombreGasto(){
+		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$idC=$_POST['idPro'];
+
+		if($_POST['idPro']){
+			$sql="select nombre from proveedoresGastos where idGasto='".$idC."' and idEliminado=1";
+	
+			$result=mysqli_query($conexion,$sql);
+	
+			$cadena="";
+			while ($ver=mysqli_fetch_row($result)) {
+				$cadena=$cadena.utf8_encode($ver[0]);
+			}
+			
+
+			echo  $cadena;
+		}
+
+	}
+
+
+
 	
 }

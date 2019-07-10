@@ -137,9 +137,10 @@ class DaoRequisicion extends DaoBase {
 
     public function mostrarPenAprobarGastos() {
         $_query = "select g.*,DATE_FORMAT(g.fecha, '%d/%m/%Y') as fecha, CONCAT('$',format(g.precio,2)) as precio,
-        go.nombre as gasto
-               from gastos g
+        go.nombre as gasto,p.nombre as proveedor,p.condicionCredito,concat(u.nombre,' ', u.apellido) as nombre from gastos g
                inner join gastosOficina go on go.idGasto = g.idGasto
+               inner join proveedoresGastos p on p.idGasto = g.idGasto
+               inner join usuario u on u.codigoUsuario = g.reponsable
                 where g.estado=1";
 
         $resultado = $this->con->ejecutar($_query);
@@ -150,7 +151,7 @@ class DaoRequisicion extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnEditar = '<button id=\"'.$fila["idDetalle"].'\" fecha=\"'.$fila["fecha"].'\" precio=\"'.$fila["precio"].'\" gasto=\"'.$fila["gasto"].'\" descripcion=\"'.$fila["descripcion"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEditar = '<button id=\"'.$fila["idDetalle"].'\" fecha=\"'.$fila["fecha"].'\" proveedor=\"'.$fila["proveedor"].'\" responsable=\"'.$fila["nombre"].'\" precio=\"'.$fila["precio"].'\" gasto=\"'.$fila["gasto"].'\" descripcion=\"'.$fila["descripcion"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
             $btnEliminar = '<button id=\"'.$fila["idDetalle"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.'"';
@@ -167,9 +168,10 @@ class DaoRequisicion extends DaoBase {
 
     public function mostrarGastosAprobados() {
         $_query = "select g.*,DATE_FORMAT(g.fecha, '%d/%m/%Y') as fecha, CONCAT('$',format(g.precio,2)) as precio,
-        go.nombre as gasto
-               from gastos g
+        go.nombre as gasto,p.nombre as proveedor,p.condicionCredito,concat(u.nombre,' ', u.apellido) as nombre from gastos g
                inner join gastosOficina go on go.idGasto = g.idGasto
+               inner join proveedoresGastos p on p.idGasto = g.idGasto
+               inner join usuario u on u.codigoUsuario = g.reponsable
                 where g.estado=2";
 
         $resultado = $this->con->ejecutar($_query);
@@ -180,7 +182,7 @@ class DaoRequisicion extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnEditar = '<button id=\"'.$fila["idDetalle"].'\" fecha=\"'.$fila["fecha"].'\" precio=\"'.$fila["precio"].'\" gasto=\"'.$fila["gasto"].'\" descripcion=\"'.$fila["descripcion"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEditar = '<button id=\"'.$fila["idDetalle"].'\" fecha=\"'.$fila["fecha"].'\" proveedor=\"'.$fila["proveedor"].'\" responsable=\"'.$fila["nombre"].'\" precio=\"'.$fila["precio"].'\" gasto=\"'.$fila["gasto"].'\" descripcion=\"'.$fila["descripcion"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
             $btnEliminar = '<button id=\"'.$fila["idDetalle"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.'"';
@@ -197,9 +199,10 @@ class DaoRequisicion extends DaoBase {
 
     public function mostrarGastosRechazados() {
         $_query = "select g.*,DATE_FORMAT(g.fecha, '%d/%m/%Y') as fecha, CONCAT('$',format(g.precio,2)) as precio,
-        go.nombre as gasto
-               from gastos g
+        go.nombre as gasto,p.nombre as proveedor,p.condicionCredito,concat(u.nombre,' ', u.apellido) as nombre from gastos g
                inner join gastosOficina go on go.idGasto = g.idGasto
+               inner join proveedoresGastos p on p.idGasto = g.idGasto
+               inner join usuario u on u.codigoUsuario = g.reponsable
                 where g.estado=3";
 
         $resultado = $this->con->ejecutar($_query);
@@ -210,7 +213,7 @@ class DaoRequisicion extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnEditar = '<button id=\"'.$fila["idDetalle"].'\" fecha=\"'.$fila["fecha"].'\" precio=\"'.$fila["precio"].'\" gasto=\"'.$fila["gasto"].'\" descripcion=\"'.$fila["descripcion"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEditar = '<button id=\"'.$fila["idDetalle"].'\" fecha=\"'.$fila["fecha"].'\" proveedor=\"'.$fila["proveedor"].'\" responsable=\"'.$fila["nombre"].'\" precio=\"'.$fila["precio"].'\" gasto=\"'.$fila["gasto"].'\" descripcion=\"'.$fila["descripcion"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
             $btnEliminar = '<button id=\"'.$fila["idDetalle"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.'"';
@@ -609,8 +612,10 @@ class DaoRequisicion extends DaoBase {
     }
 
     public function gastos() {
-        $_query = "insert into gastos values(null,'".$this->objeto->getIdOrden()."',
-        '".$this->objeto->getDescripciones()."','".$this->objeto->getPrecio()."','".$this->objeto->getFechaReq()."',1)";
+        $_query = "insert into gastos values(null,'".$this->objeto->getIdResponsable()."',
+        '".$this->objeto->getTipoCompra()."','".$this->objeto->getTipoDocumento()."',
+        '".$this->objeto->getIdOrden()."','".$this->objeto->getDescripciones()."',
+        '".$this->objeto->getPrecio()."','".$this->objeto->getFechaReq()."',1)";
 
         $resultado = $this->con->ejecutar($_query);
 

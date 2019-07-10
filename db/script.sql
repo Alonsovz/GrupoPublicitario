@@ -287,13 +287,15 @@ idEliminado int
 
 create table gastos(
 idDetalle int primary key auto_increment,
+reponsable int,
+tipoCompra varchar(50),
+tipoDoc varchar(50),
 idGasto int,
 descripcion varchar(500),
 precio double,
 fecha date,
 estado int
 );
-
 
 
 create table notaCredito(
@@ -481,13 +483,14 @@ begin
 end
 $$
 
-select i.*,c.*,a.*,m.*, format(i.precioUnitario,2) as precioUni, format(i.cantidadExistencia,2) as cantidadExis,
-    p.*,cp.nombre as nombre from inventario i
-        inner join productosDetalle pc on pc.idProductoFinal = i.idProducto
-        inner join colores c on c.idColor = i.idColor
-        inner join acabados a on a.idAcabado = i.idAcabado
-        inner join medidas m on m.idMedida = pc.idMedida
-        inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
-        inner join clasificacionProductos cp on cp.idProducto = p.idProducto
-        where cp.idClasificacion=1
-        group by i.idProducto,i.idColor,i.idAcabado
+select g.*,DATE_FORMAT(g.fecha, '%d/%m/%Y') as fecha, CONCAT('$',format(g.precio,2)) as precio,
+        go.nombre as gasto,p.nombre,p.condicionCredito,concat(u.nombre,' ', u.apellido) as nombre from gastos g
+               inner join gastosOficina go on go.idGasto = g.idGasto
+               inner join proveedoresGastos p on p.idGasto = g.idGasto
+               inner join usuario u on u.codigoUsuario = g.reponsable
+                where g.estado=1
+                
+                select * from gastos
+                
+                
+                update gastos set estado=2 where idDetalle=4
