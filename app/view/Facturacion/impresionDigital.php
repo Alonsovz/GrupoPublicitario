@@ -99,6 +99,7 @@ Detalles de la OT : <a id="corr" style="background-color:black; color:red;"></a>
     <div class="content">
     <center>
     <input type="hidden" id="idOT">
+    <div class="row tiles" id="contenedor-tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
     <button class="ui red button" id="facturaConsumidor">
     Factura consumidor Final
     </button>
@@ -106,6 +107,11 @@ Detalles de la OT : <a id="corr" style="background-color:black; color:red;"></a>
     <button class="ui black button" id="creditoFiscal">
     Crédito Fiscal
     </button>
+
+    <button class="ui gray button" id="notaCredito">
+    Nota de crédito
+    </button>
+    </div>
     </center>
     </div>
     <div class="actions">
@@ -184,4 +190,88 @@ var factura=(ele)=>{
    $('#ordenCorr').text($(ele).attr("correlativo"));
    $('#modalTipoFactura').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 }
+
+
+$("#facturaConsumidor").click(function(){
+    var idOT=$('#idOT').val();
+
+    $.ajax({
+        
+        type: 'POST',
+        url: '?1=FacturacionController&2=facturaConsumidorImp',
+        data: {idOT:idOT},
+        success: function(r) {
+            if(r == 11) {
+               
+                swal({
+                    title: 'Se imprimirá la factura consumidor final',
+                    type: 'warning',
+                    showConfirmButton: true,
+
+                }).then((result) => {
+                    if (result.value) {
+                        location.reload();
+                    }
+                }); 
+                
+            } 
+        }
+    });
+});
+
+
+$("#creditoFiscal").click(function(){
+    var idOT=$('#idOT').val();
+
+    $.ajax({
+        
+        type: 'POST',
+        url: '?1=FacturacionController&2=CFFImp',
+        data: {idOT:idOT},
+        success: function(r) {
+            if(r == 11) {
+               
+                swal({
+                    title: 'Se imprimirá el CFF',
+                    type: 'warning',
+                    showConfirmButton: true,
+
+                }).then((result) => {
+                    if (result.value) {
+                        location.reload();
+                    }
+                }); 
+                
+            } 
+        }
+    });
+});
+
+$("#notaCredito").click(function(){
+    var idOT=$('#idOT').val();
+
+
+    $.ajax({
+        
+        type: 'POST',
+        url: '?1=FacturacionController&2=notaCreImp',
+        data: {idOT:idOT},
+        success: function(r) {
+            if(r == 11) {
+               
+                swal({
+                    title: 'Se imprimirá la nota de crédito',
+                    type: 'warning',
+                    showConfirmButton: true,
+
+                }).then((result) => {
+                    if (result.value) {
+                        location.reload();
+                    }
+                }); 
+                
+            } 
+        }
+    });
+});
 </script>

@@ -175,6 +175,96 @@ class FacturacionController extends ControladorBase {
         $reporte->notaCredito($resultado,$resultado1,$ventasNo,$ventasGr,$ventasEx);
     }
 
+    public function facturaConsumidorImp(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdOrden($_REQUEST["idOT"]);
+       
+        
+        echo $dao->facturaConsumidorImp();
+        echo $dao->fechaCobroIP();
+    }
+
+    public function CFFImp(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdOrden($_REQUEST["idOT"]);
+       
+        
+        echo $dao->CFFImp();
+        echo $dao->fechaCobroIP();
+    }
+
+    public function notaCreImp(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdOrden($_REQUEST["idOT"]);
+       
+        
+        echo $dao->notaCreImp();
+        echo $dao->fechaCobroIP();
+    }
+
+    public function facturaConsumidorP(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdOrden($_REQUEST["idOT"]);
+       
+        
+        echo $dao->facturaConsumidorP();
+        echo $dao->fechaCobroP();
+    }
+
+    public function CFFP(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdOrden($_REQUEST["idOT"]);
+       
+        
+        echo $dao->CFFP();
+        echo $dao->fechaCobroP();
+    }
+
+    public function notaCreP(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdOrden($_REQUEST["idOT"]);
+       
+        
+        echo $dao->notaCreP();
+        echo $dao->fechaCobroP();
+    }
+
+    public function facturaConsumidorGR(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdOrden($_REQUEST["idOT"]);
+       
+        
+        echo $dao->facturaConsumidorGR();
+        echo $dao->fechaCobroGR();
+    }
+
+    public function CFFGR(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdOrden($_REQUEST["idOT"]);
+       
+        
+        echo $dao->CFFGR();
+        echo $dao->fechaCobroGR();
+    }
+
+    public function notaCreGR(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdOrden($_REQUEST["idOT"]);
+       
+        
+        echo $dao->notaCreGR();
+        echo $dao->fechaCobroGR();
+    }
+
 
 }
 ?>

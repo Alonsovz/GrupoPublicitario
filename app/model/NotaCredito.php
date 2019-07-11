@@ -17,9 +17,22 @@ class NotaCredito extends ModeloBase{
     private $ventasNo;
     private $ventasEx;
     private $ventasGra;
-
+    private $idOrden;
+    
     public function __construct() {
 
+    }
+    public function getIdOrden()
+    {
+        return $this->idOrden;
+    }
+
+    
+    public function setIdOrden($idOrden)
+    {
+        $this->idOrden = $idOrden;
+
+        return $this;
     }
 
     public function getIdCliente()

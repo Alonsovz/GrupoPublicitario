@@ -189,7 +189,10 @@ desperdicio varchar(50),
 descripciones varchar(500),
 tipoVenta varchar(40),
 precio double,
-estado int
+estado int,
+estadoCobro int,
+fechaFactura date,
+totalCobro double
 );
 
 
@@ -216,7 +219,10 @@ tipo varchar(50),
 descripciones varchar(500),
 tipoVenta varchar(40),
 precio double,
-estado int
+estado int,
+estadoCobro int,
+fechaFactura date,
+totalCobro double
 );
 
 
@@ -243,8 +249,14 @@ tipo varchar(50),
 descripciones varchar(500),
 tipoVenta varchar(40),
 precio double,
-estado int
+estado int,
+estadoCobro int,
+fechaFactura date,
+totalCobro double
 );
+
+
+
 
 create table requisiciones(
 idRequisicion int primary key auto_increment,
@@ -423,7 +435,7 @@ insert into productoFinal values(null,'Seleccione una opcion',0);
 
 
 
-insert into ordenTrabajoGR values(null,'OTGR00',curdate(),1,1,curdate(),'',9,1);
+insert into ordenTrabajoGR values(null,'OTGF00',curdate(),1,1,curdate(),'',9,1);
 insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,curdate(),'',9,1);
 insert into ordenTrabajoP values(null,'OTPR00',curdate(),1,1,curdate(),'',9,1);
 
@@ -483,14 +495,19 @@ begin
 end
 $$
 
-select g.*,DATE_FORMAT(g.fecha, '%d/%m/%Y') as fecha, CONCAT('$',format(g.precio,2)) as precio,
-        go.nombre as gasto,p.nombre,p.condicionCredito,concat(u.nombre,' ', u.apellido) as nombre from gastos g
-               inner join gastosOficina go on go.idGasto = g.idGasto
-               inner join proveedoresGastos p on p.idGasto = g.idGasto
-               inner join usuario u on u.codigoUsuario = g.reponsable
-                where g.estado=1
-                
-                select * from gastos
-                
-                
-                update gastos set estado=2 where idDetalle=4
+
+select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,o.*,
+DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
+o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro   from detalleOrdenIP d
+inner join ordenTrabajoIP o on o.idOrden = d.idOrden
+inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+inner join colores c on c.idColor = d.idColor
+inner join acabados a on a.idAcabado = d.idAcabado
+inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
+inner join clientes cl on cl.idCliente = o.cliente
+inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle
+
+update detalleOrden set estado=3  where idOrden=2
+
+
+update ordenTrabajoIP set fechaEntrega = curdate() where idOrden=2

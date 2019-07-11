@@ -102,6 +102,162 @@ class DaoNotaCredito extends DaoBase {
     }
 
 
+    public function facturaConsumidorImp() {
+        $_query = "update ordenTrabajoIP set estado=6 where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function CFFImp() {
+        $_query = "update ordenTrabajoIP set estado=7 where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function notaCreImp() {
+        $_query = "update ordenTrabajoIP set estado=8 where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function facturaConsumidorP() {
+        $_query = "update ordenTrabajoP set estado=6 where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function CFFP() {
+        $_query = "update ordenTrabajoP set estado=7 where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function notaCreP() {
+        $_query = "update ordenTrabajoP set estado=8 where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function facturaConsumidorGR() {
+        $_query = "update ordenTrabajoGR set estado=6 where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function CFFGR() {
+        $_query = "update ordenTrabajoGR set estado=7 where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function notaCreGR() {
+        $_query = "update ordenTrabajoGR set estado=8 where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    
+    public function fechaCobroGR() {
+        $_query = "update detalleOrdenGR set fechaFactura=curdate(), estado=2 where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function fechaCobroIP() {
+        $_query = "update detalleOrdenIP set fechaFactura=curdate(), estado=2 where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function fechaCobroP() {
+        $_query = "update detalleOrdenP set fechaFactura=curdate(), estado=2 where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    
+
+
+
+
 }
 
 

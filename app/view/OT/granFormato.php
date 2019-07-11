@@ -43,7 +43,7 @@
 
             <div class="three wide field">
             <label><i class="list icon"></i>Correlativo:</label>
-            <input type="text" name="correlativo" id="correlativo" value="<?php echo "OTGR00".$id; ?>" readonly>
+            <input type="text" name="correlativo" id="correlativo" value="<?php echo "OTGF00".$id; ?>" readonly>
 
              <input type="hidden" id="idUser" name="idUser" value=<?php echo '"'.$_SESSION['codigoUsuario'].'"'; ?>>
             </div>

@@ -156,7 +156,7 @@
     </div>
 
 </div>
-<script src="./res/tablas/tablaFinalizadasP.js"></script>
+<script src="./res/tablas/tablaPenRecibirP.js"></script>
 <script>
     $(document).ready(function(){
     $("#pro").removeClass("ui red button");

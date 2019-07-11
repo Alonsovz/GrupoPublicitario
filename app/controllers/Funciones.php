@@ -520,7 +520,7 @@ class Funciones extends ControladorBase {
 
 		if($_POST['id']){
 			$sql="select d.*,p.productoFinal,c.color as colorR,a.acabado as acabadoR,m.medida,format(d.precioUnitario,2) as precio,
-			format(d.total,2) as precioTotal, format(d.precioUnitario/d.cantidad,2) as precioIn from detalleRequisicion d
+			format(d.total,2) as precioTotal,  (d.precioUnitario/i.cantidadExistencia + d.cantidad) as precioIn from detalleRequisicion d
 			inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
 			inner join colores c on c.idColor = d.color
 			inner join acabados a on a.idAcabado = d.acabado
@@ -540,7 +540,7 @@ class Funciones extends ControladorBase {
 				<th style='background-color:#B40431;color:white;'>Descripcion</th>
 				<th style='background-color:#B40431;color:white;'>Precio Unitario</th>
 				<th style='background-color:#B40431;color:white;'>Precio Total</th>
-				<th style='background-color:#B40431;color:white;'>Nuevo Precio</th>
+				
 				<th style='background-color:#B40431;color:white; width:5%;'><i class='cogs icon'></i></th>
 			</tr>
 			";
@@ -568,9 +568,7 @@ class Funciones extends ControladorBase {
 				<td>
 				$ '.utf8_encode($ver["precioTotal"]). '
 				</td>
-				<td>
-				$ '.utf8_encode($ver["precioIn"]). '
-				</td>
+				
 				';
 				if(utf8_encode($ver["estado"])==1){
 					$cadena=$cadena.'<td>
@@ -718,7 +716,7 @@ class Funciones extends ControladorBase {
 				$ '.utf8_encode($ver["precio"]). '
 				</td>';
 				
-				if(utf8_encode($ver[10]==1)){
+				if(utf8_encode($ver["estado"]==1)){
 					$cadena=$cadena.'<td><a class="ui blue small icon button" idOrden ="'.utf8_encode($ver["idOrden"]).'"
 					idDetalle ="'.utf8_encode($ver["idDetalle"]).'"
 					 idAcabado ="'.utf8_encode($ver["idAcabado"]).'" idColor="'.utf8_encode($ver["idColor"]).'"
