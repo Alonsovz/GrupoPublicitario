@@ -179,11 +179,9 @@ cantidad varchar(20),
 altura varchar(20),
 base varchar(20),
 cuadrosImp varchar(100),
-ubicacion varchar(100),
 ancho varchar(40),
 longitud varchar(49),
 anchoMat varchar(59),
-copias varchar(50),
 mts2 varchar(50),
 desperdicio varchar(50),
 descripciones varchar(500),
@@ -194,6 +192,7 @@ estadoCobro int,
 fechaFactura date,
 totalCobro double
 );
+
 
 
 create table ordenTrabajoIP(
@@ -495,19 +494,12 @@ begin
 end
 $$
 
-
-select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,o.*,
-DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
-o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro   from detalleOrdenIP d
-inner join ordenTrabajoIP o on o.idOrden = d.idOrden
-inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
-inner join colores c on c.idColor = d.idColor
-inner join acabados a on a.idAcabado = d.idAcabado
-inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
-inner join clientes cl on cl.idCliente = o.cliente
-inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle
-
-update detalleOrden set estado=3  where idOrden=2
+select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
+        concat(u.nombre,' ', u.apellido) as nombre,
+       c.nombre as nombreC from ordenTrabajoGR o
+       inner join usuario u on u.codigoUsuario = o.responsable
+       inner join clientes c on c.idCliente = o.cliente
+      where o.idEliminado=1 and o.estado=1 and o.correlativo>'OTGF00' order by fechaEntrega asc
 
 
-update ordenTrabajoIP set fechaEntrega = curdate() where idOrden=2
+select * from ordenTrabajoGR
