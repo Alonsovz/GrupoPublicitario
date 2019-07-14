@@ -34,6 +34,9 @@
 }else if($_SESSION["descRol"] == 'Propietario') {
     require_once 'dashboardProp.php';
 }
+else{
+    require_once 'dashboardAsis.php';
+}
 
 ?>
 

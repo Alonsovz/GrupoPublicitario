@@ -38,7 +38,7 @@ inner join acabados a on a.idAcabado = d.idAcabado
 inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 inner join clientes cl on cl.idCliente = o.cliente
 inner join medidas m on m.idMedida = pm.idMedida
-where d.estadoCobro=7 or d.estadoCobro=8  group by d.idDetalle order by d.idDetalle desc
+where d.estadoCobro=7 or d.estadoCobro=8  group by d.idDetalle
 ");
 
 
@@ -58,7 +58,7 @@ inner join acabados a on a.idAcabado = d.idAcabado
 inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 inner join clientes cl on cl.idCliente = o.cliente
 inner join medidas m on m.idMedida = pm.idMedida
-where d.estadoCobro=7 or d.estadoCobro=8  group by d.idDetalle order by d.idDetalle desc");
+where d.estadoCobro=7 or d.estadoCobro=8  group by d.idDetalle");
 
 
 $listadoGF = $mysqli -> query ("
@@ -77,7 +77,7 @@ inner join acabados a on a.idAcabado = d.idAcabado
 inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 inner join clientes cl on cl.idCliente = o.cliente
 inner join medidas m on m.idMedida = pm.idMedida
-where d.estadoCobro=7 or d.estadoCobro=8 group by d.idDetalle order by d.idDetalle desc
+where d.estadoCobro=7 or d.estadoCobro=8 group by d.idDetalle
 ");
 ?>
 
@@ -87,7 +87,7 @@ where d.estadoCobro=7 or d.estadoCobro=8 group by d.idDetalle order by d.idDetal
     <th rowspan="3" style="border:1px solid white;">N Correlativo</th>
     <th rowspan="3" style="border:1px solid white;">Fecha</th>  
     <th rowspan="3" style="border:1px solid white;">Cliente</th>
-    <th colspan="5" style="text-align:center;border:1px solid white;text-align:center;">Operación de ventas propias</th>
+    <th colspan="8" style="text-align:center;border:1px solid white;text-align:center;">Operación de ventas propias y a cuenta por tercero</th>
     <th rowspan="3" style="border:1px solid white;">IVA Retenido</th>
     <th rowspan="3" style="border:1px solid white;">Venta Total</th>
     <th rowspan="3" style="border:1px solid white;">Pago a Cuenta IVA 2%</th>
@@ -95,6 +95,7 @@ where d.estadoCobro=7 or d.estadoCobro=8 group by d.idDetalle order by d.idDetal
    
     <tr style="color:white; background-color:black;border:1px solid white;text-align:center;" height="40">
     <th colspan="5" style="text-align:center;border:1px solid white;">Ventas propias</th>
+    <th colspan="3" style="text-align:center;border:1px solid white;">Ventas a cuenta de tercero</th>
 
     </tr>
     <tr style="color:white; background-color:black;border:1px solid white;text-align:center;" height="40">
@@ -102,6 +103,9 @@ where d.estadoCobro=7 or d.estadoCobro=8 group by d.idDetalle order by d.idDetal
       <th style="border:1px solid white;">Ventas Exentas</th>
       <th style="border:1px solid white;">Ventas No Sujetas</th>
       <th style="border:1px solid white;">Exportaciones</th>
+      <th style="border:1px solid white;">Ventas Gravadas</th> 
+      <th style="border:1px solid white;">Débito Fiscal</th>
+      <th style="border:1px solid white;">Ventas Exentas</th>
       <th style="border:1px solid white;">Ventas Gravadas</th> 
       <th style="border:1px solid white;">Débito Fiscal</th>
     </tr>
@@ -113,58 +117,12 @@ where d.estadoCobro=7 or d.estadoCobro=8 group by d.idDetalle order by d.idDetal
 <?php
 while ($row=mysqli_fetch_assoc($listadoIP)) {
     ?>
-       <tr style="text-align:center;border:1px solid black;">
-        <td style="text-align:center;border:1px solid black;"><?php echo $row['correlativo']; ?></td>
+        <tr style="text-align:center;border:1px solid black;">
+        <td style="text-align:center;border:1px solid black;"><?php echo $row['idDetalle']; ?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['cliente']; ?></td>
-            <?php
-                if($row["tipoVenta"]=="Venta Exenta"){
-                ?>
-            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
-                <?php
-                }else{
-     
-            ?>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <?php
-            }
-            ?>
 
             
-
-            <?php
-                if($row["tipoVenta"]=="Venta No Sujeta"){
-            ?>
-            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
-            <?php
-                }else{
-
-                
-            ?>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <?php
-                }
-            ?>
-
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <?php
-                if($row["tipoVenta"]=="Venta Gravada"){
-            ?>
-            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
-            <?php
-                }else{
-
-                
-            ?>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <?php
-                }
-            ?>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-        </tr>		
+        </tr>	
 
     <?php
 }
@@ -174,23 +132,23 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
 while ($row=mysqli_fetch_assoc($listadoP)) {
     ?>
         <tr style="text-align:center;border:1px solid black;">
-        <td style="text-align:center;border:1px solid black;"><?php echo $row['correlativo']; ?></td>
+        <td style="text-align:center;border:1px solid black;"><?php echo $row['idDetalle']; ?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['cliente']; ?></td>
+
             <?php
-                if($row["tipoVenta"]=="Venta Exenta"){
-                ?>
+                if($row["tipoVenta"]=="Venta Gravada"){
+            ?>
             <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
-                <?php
+            <?php
                 }else{
-     
+
+                
             ?>
             <td style="text-align:center;border:1px solid black;">$0.00</td>
             <?php
-            }
+                }
             ?>
-
-            
 
             <?php
                 if($row["tipoVenta"]=="Venta No Sujeta"){
@@ -206,24 +164,19 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
                 }
             ?>
 
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <?php
-                if($row["tipoVenta"]=="Venta Gravada"){
-            ?>
-            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
-            <?php
-                }else{
 
-                
+            <?php
+                if($row["tipoVenta"]=="Venta Exenta"){
+                ?>
+            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
+                <?php
+                }else{
+     
             ?>
             <td style="text-align:center;border:1px solid black;">$0.00</td>
             <?php
-                }
+            }
             ?>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
         </tr>	
 
     <?php
@@ -234,57 +187,11 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
 while ($row=mysqli_fetch_assoc($listadoGF)) {
     ?>
         <tr style="text-align:center;border:1px solid black;">
-        <td style="text-align:center;border:1px solid black;"><?php echo $row['correlativo']; ?></td>
+        <td style="text-align:center;border:1px solid black;"><?php echo $row['idDetalle']; ?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['cliente']; ?></td>
-            <?php
-                if($row["tipoVenta"]=="Venta Exenta"){
-                ?>
-            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
-                <?php
-                }else{
-     
-            ?>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <?php
-            }
-            ?>
 
             
-
-            <?php
-                if($row["tipoVenta"]=="Venta No Sujeta"){
-            ?>
-            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
-            <?php
-                }else{
-
-                
-            ?>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <?php
-                }
-            ?>
-
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <?php
-                if($row["tipoVenta"]=="Venta Gravada"){
-            ?>
-            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
-            <?php
-                }else{
-
-                
-            ?>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <?php
-                }
-            ?>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-            <td style="text-align:center;border:1px solid black;">$0.00</td>
-        </tr>		
+        </tr>	
 
     <?php
 }

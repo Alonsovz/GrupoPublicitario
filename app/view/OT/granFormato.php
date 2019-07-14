@@ -73,7 +73,7 @@
         </div>
     </div>
 
-<div class="ui divider"></div><br>
+<div class="ui divider"></div>
 
     <div class="field">
         <div class="fields">
@@ -100,6 +100,13 @@
             
             </div>
 
+            <div class="four wide field" id="aca" style="display:none;">
+            <label><i class="podcast icon"></i>Acabado Final:</label>
+            <select name="acabadoCmb" id="acabadoCmb" class="ui search dropdown">
+            
+            </select>
+            </div>
+
             <div class="three wide field" id="col" style="display:none;">
             <label><i class="chart pie icon"></i>Color:</label>
             <select name="colorCmb" id="colorCmb" class="ui search dropdown">
@@ -107,12 +114,7 @@
             </select>
             </div>
 
-            <div class="four wide field" id="aca" style="display:none;">
-            <label><i class="podcast icon"></i>Acabado Final:</label>
-            <select name="acabadoCmb" id="acabadoCmb" class="ui search dropdown">
             
-            </select>
-            </div>
               
 
         </div>
@@ -142,7 +144,7 @@
 
         <div class="six wide field" id="precioDesDiv" style="display:none;">
             <label><i class="dollar icon"></i>Precio por desperdicio</label>
-            <input type="text" id="precioDesp" name="precioDesp" readonly>
+            <input type="text" id="precioDesp" name="precioDesp">
         </div>
 
         </div>
@@ -153,83 +155,100 @@
     <div class="field">
         <div class="fields">
 
-        <div class="two wide field">
+        <div class="two wide field" style="background-color:#C3F99E">
             <label><i class="user icon"></i>Cantidad:</label>
             <input type="text" name="cantidad" id="cantidad">
             
             </div>
 
             
-            <div class="two wide field">
+            <div class="two wide field" style="background-color:#C3F99E">
             <label><i class="arrows alternate horizontal icon"></i>Base:</label>
             <input type="text" name="base" id="base">
             </div>
 
-            <div class="two wide field">
+            <div class="two wide field" style="background-color:#C3F99E">
             <label><i class="arrows alternate vertical icon"></i>Altura:</label>
             <input type="text" name="altura" id="altura">
             </div>
 
-          
+        
+       
 
-            <div class="three wide field">
-            <label><i class="arrows alternate icon"></i>MTS 2 Imp:</label>
-            <input type="text" name="cuadrosImp" id="cuadrosImp" readonly>
-            </div>
-
-            
-
-            <div class="seven wide field">
-            <label><i class="arrows alternate icon"></i>Ubicación:</label>
-            <input type="checkbox" name="ubicacion" value="Arriba"> Arriba &nbsp;&nbsp;&nbsp;
-            <input type="checkbox" name="ubicacion" value="Abajo"> Abajo &nbsp;&nbsp;&nbsp;
-            <input type="checkbox" name="ubicacion" value="Izquierda"> Izquierda &nbsp;&nbsp;&nbsp;
-            <input type="checkbox" name="ubicacion" value="Centro"> Centro &nbsp;&nbsp;&nbsp;
-            <input type="checkbox" name="ubicacion" value="Derecha"> Derecha &nbsp;&nbsp;&nbsp;
-            <input type="checkbox" name="ubicacion" value="Alrrededor"> Alrrededor &nbsp;&nbsp;&nbsp;
-            </div>
-
-
-        </div>
-    </div>
-
-    <div class="field">
-        <div class="fields">
-            <div class="three wide field">
+            <div class="three wide field" style="background-color:#B2BAF5">
             <label><i class="arrows alternate horizontal icon"></i>Ancho:</label>
             <input type="text" name="ancho" id="ancho">
             </div>
 
-            <div class="three wide field">
+            <div class="three wide field" style="background-color:#B2BAF5">
             <label><i class="arrows alternate icon"></i>Longitud:</label>
             <input type="text" name="longitud" id="longitud">
             </div>
 
-            <div class="three wide field">
+            <div class="three wide field" style="background-color:#B2BAF5">
             <label><i class="arrows alternate horizontal icon"></i>Ancho de material:</label>
             <input type="text" name="anchoMaterial" id="anchoMaterial">
             </div>
 
-            <div class="three wide field">
-            <label><i class="folder icon"></i>Copias:</label>
-            <input type="text" name="copias" id="copias">
+            <div class="three wide field" style="background-color:#F5D5B2">
+            <label><i class="arrows alternate icon"></i>MTS 2 Imp:</label>
+            <input type="text" name="cuadrosImp" id="cuadrosImp" readonly>
             </div>
+        
+            
 
-            <div class="three wide field">
-            <label><i class="list icon"></i>MTS2:</label>
-            <input type="text" name="mts2" id="mts2">
-            </div>
+            
 
-            <div class="three wide field">
+            <div class="three wide field" style="background-color:#F99F9E">
             <label><i class="trash icon"></i>Desperdicio:</label>
-            <input type="text" name="desperdicio" id="desperdicio">
+            <input type="text" name="desperdicio" id="desperdicio" readonly>
             </div>
+
+        </div>
+    </div>
+    <div class="ui divider"></div><br>
+    <div class="field">
+        <div class="fields">
+        
+
+        <div class="three wide field" style="background-color:#E29EF9">
+            <label><i class="arrows alternate icon"></i>Ojetes:</label>
+            <input type="number" id="ojeteAr" name="ojeteAr" placeholder="Arriba">
+        </div>
+        <div class="three wide field" style="background-color:#E29EF9">
+            <label><i class="arrows alternate icon"></i><br></label>
+            <input type="number" id="ojeteAb" name="ojeteAb" placeholder="Abajo">
+        </div>
+        <div class="three wide field" style="background-color:#E29EF9">
+            <label><i class="arrows alternate icon"></i><br></label>
+            <input type="number" id="ojeteIz" name="ojeteIz" placeholder="Izquierda">
+        </div>
+        <div class="three wide field" style="background-color:#E29EF9">
+            <label><i class="arrows alternate icon"></i><br></label>
+            <input type="number" id="ojeteDe" name="ojeteDe" placeholder="Derecha">
+        </div>
+
+        <div class="three wide field">
+            <label><i class="arrows alternate icon"></i>Troquel:</label>
+            <input type="checkbox" name="troquel" value="Si" id="troquel"> Si
+            
+        </div>
+
+        <div class="three wide field">
+            <label><i class="arrows alternate icon"></i>Hacer Arte:</label>
+            <input type="text" id="arte" name="arte" placeholder="Monto $$">
+            
+        </div>
+
+
         </div>
         </div>
 
     <div class="ui divider"></div><br>
     <div class="field">
         <div class="fields">
+
+        
 
         <div class="four wide field">
             <label><i class="pencil icon"></i>Descripciones Adicionales:</label>
@@ -241,7 +260,7 @@
             <label><i class="dollar icon"></i>Tipo de venta:</label>
             <select name="tipoVenta" id="tipoVenta" class="ui  dropdown">
             <option value="Seleccione" set selected>Seleccione una opción</option>
-            <option value="Venta Gravada">Ventas Gravada</option>
+            <option value="Venta Exenta">Venta Exenta</option>
             <option value="Venta No Sujeta">Venta No Sujeta</option>
             <option value="Venta Gravada">Venta Gravada</option>
             </select>
@@ -281,10 +300,10 @@
                                     <tr>
                                         <th style="background-color: black; color:white;width:15%;"><i class="list icon"></i>Producto</th>
                                         <th style="background-color: black; color:white;width:7%;"><i class="podcast icon"></i>Cantidad</th>
-                                        <th style="background-color: black; color:white;width:20%;"><i class="arrows alternate icon"></i>Detalles Generales</th>
+                                        <th style="background-color: black; color:white;width:10%;"><i class="arrows alternate icon"></i>Detalles Generales</th>
                                         <th style="background-color: black; color:white;"><i class="arrows alternate icon"></i>Def. Medida</th>
                                         <th style="background-color: black; color:white;"><i class="arrows alternate icon"></i>Imp + Desperdicio</th>
-                                        <th style="background-color: black; color:white;"><i class="pencil icon"></i>Descipciones</th>
+                                        <th style="background-color: black; color:white;width:20%;"><i class="pencil icon"></i>Descipciones</th>
                                         <th style="background-color: black; color:white;width:10%;"><i class="dollar icon"></i>Tipo Venta</th>
                                         <th style="background-color: black; color:white;width:7%;"><i class="dollar icon"></i>Precio</th>
                                         <th style="background-color: black; color:white;"><i class="trash icon"></i></th>
@@ -309,7 +328,6 @@
                                     <input v-model="lista.alturaRe" name="alturaRe" id="alturaRe" type="hidden" readonly>
                                     <input v-model="lista.baseRe" name="baseRe" id="baseRe" type="hidden" readonly>
                                     <input v-model="lista.cuadrosImpr" name="cuadrosImpr" id="cuadrosImpr" type="hidden" readonly>
-                                    <input v-model="lista.ubicRe" name="ubicRe" id="ubicRe" type="hidden" readonly>
                                     </td>
                                     <td>  
                                     <textarea rows="3" v-model="lista.defMedidas" name="defMedidas" id="defMedidas" readonly></textarea>
@@ -320,14 +338,13 @@
                                     <td>  
                                     <textarea rows="3" v-model="lista.impDesper" name="impDesper" id="impDesper" readonly></textarea>
 
-                                    <input v-model="lista.copiasRe" name="copiasRe" id="copiasRe" type="hidden" readonly>
                                     <input v-model="lista.mtsDes" name="mtsDes" id="mtsDes" type="hidden" readonly>
                                     <input v-model="lista.despRe" name="despRe" id="despRe" type="hidden" readonly>
                                     </td>
                                    
 
                                     <td>  
-                                    <textarea rows="3"  v-model="lista.descriRe" name="descriRe" id="descriRe" readonly></textarea>
+                                    <textarea rows="5"  v-model="lista.descriRe" name="descriRe" id="descriRe" readonly></textarea>
                                     </td>
                                     <td>  
                                     <textarea rows="3" class="requerido" v-model="lista.tipoVentaRe" name="tipoVentaRe" id="tipoVentaRe"
@@ -380,10 +397,8 @@ var app = new Vue({
                 anchoMatRe:'',
                 anchoRe:'',
                 longitudRe:'',
-                copiasRe:'',
                 mtsDes:'',
                 despRe:'',
-                ubicRe:'',
                 tipoVentaRe:'',
             }],
         },
@@ -426,12 +441,17 @@ var app = new Vue({
     app.eliminarDetalle(0);
     $('#base').mask("###0.00", {reverse: true});
     $('#altura').mask("###0.00", {reverse: true});
+    $('#anchoMaterial').mask("###0.00", {reverse: true});
+    $('#longitud').mask("###0.00", {reverse: true});
+    $('#ancho').mask("###0.00", {reverse: true});
+    $('#arte').mask("###0.00", {reverse: true});
+    $('#precio').mask("###0.00", {reverse: true});
     });
 
-    $("#base").keyup(function(){
+    $("#ancho").keyup(function(){
         var ancho = $(this).val();
 
-        $("#ancho").val(ancho);
+        $("#longitud").val($("#base").val());
     });
 
     $("#altura").keyup(function(){
@@ -440,9 +460,58 @@ var app = new Vue({
         $("#longitud").val(altura);
     });
 
-    $("#copias").click(function(){
-        var ancho = $("#ancho").val();
+    $("#desperdicio").click(function(){
+        
         var ancho1 = $("#anchoMaterial").val();
+
+        var precioDes = $("#precioDesp").val();
+        var cantidad = $("#cantidad").val();
+        var mts2 = $("#cuadrosImp").val();
+
+        var desperdicio = ancho1-mts2;
+
+        var totalDinero = desperdicio * precioDes;
+
+
+        $("#desperdicio").val(totalDinero.toFixed(2));
+
+        
+    });
+
+    
+
+    $("#precioTo").click(function(){
+        var precioPorMetro = $("#precioU").val();
+        var cantidad = $("#cantidad").val();
+        var precioDes = $("#desperdicio").val();
+        var ojeteAr = $("#ojeteAr").val();
+        var ojeteAb = $("#ojeteAb").val();
+        var ojeteIz = $("#ojeteIz").val();
+        var ojeteDe = $("#ojeteDe").val();
+
+        if($("#arte").val() == ""){
+            var arte = 0.00;
+        }else{
+            var arte = $("#arte").val();
+        }
+       
+
+        var totalOjetes= parseFloat(ojeteAr) + parseFloat(ojeteAb) + parseFloat(ojeteIz) + parseFloat(ojeteDe);
+
+        var cobroOjetes = totalOjetes * 0.25;
+
+        var totalDinero = parseFloat(precioPorMetro) + parseFloat(precioDes);
+        var totalCobro = totalDinero * cantidad;
+
+            if( $('#troquel').prop('checked') ) {
+                var cobrar = parseFloat(totalCobro) + parseFloat(cobroOjetes) + 0.04 + parseFloat(arte);
+            }else{
+                var cobrar = parseFloat(totalCobro) + parseFloat(cobroOjetes) + parseFloat(arte);
+            }
+
+       
+
+        $("#precioTo").val(cobrar.toFixed(2));
     });
 </script>
 
@@ -708,25 +777,67 @@ $(function() {
         $("#list").show(1000);
             var producto ="Clasificación: "+ $("#proFinalCmb option:selected").text() + "\nColor: "+ $("#colorCmb option:selected").text()+ "\nAcabado: " + $("#acabadoCmb option:selected").text();
             var cantidad = $("#cantidad").val();
-            var desc = $("#descripciones").val();
+
+            if( $('#troquel').prop('checked') ) {
+                var troquel = "Si";
+            }else{
+                var troquel = "No";
+            }
+
+            if( $('#arte').val()== "" ) {
+                var arte = "No";
+            }else{
+                var arte = "Si";
+            }
+
+            if($('#ojeteAr').val()== ""){
+                var ojeteAr = "";
+            }else{
+                var ojeteAr = "Ojetes Ar: "+ $("#ojeteAr").val();
+            }
+
+            if($('#ojeteAb').val()== ""){
+                var ojeteAb = "";
+            }else{
+                var ojeteAb = ", Ab: "+ $("#ojeteAb").val();
+            }
+
+            if($('#ojeteIz').val()== ""){
+                var ojeteIz = "";
+            }else{
+                var ojeteIz = ", Izq: "+ $("#ojeteIz").val();
+            }
+
+            if($('#ojeteD').val()== ""){
+                var ojeteD = "";
+            }else{
+                var ojeteD = ", Der: "+ $("#ojeteDe").val();
+            }
+
+            
+
+            var desc = $("#descripciones").val() + "\nTroquel: "+ troquel+ ", Hacer Arte: "+ arte + ",\n"+ ojeteAr +" "+ ojeteAb +" "+ ojeteIz +" "+ ojeteD ;
             var precio = $("#precio").val();
             var color= $("#colorCmb option:selected").val();
             var idPro =$("#proFinalCmb option:selected").val();
             var acabado = $("#acabadoCmb option:selected").val();
-            var detallesPro1 = "Altura: "+ $("#altura").val() + "\nBase: "+ $("#base").val()+ "\nMT2 impresión: " + $("#cuadrosImp").val()+ "\nUbicación: " + $("input:checkbox[name=ubicacion]:checked").val();
+            var detallesPro1 = "Altura: "+ $("#altura").val() + "\nBase: "+ $("#base").val()+ "\nMT2 impresión: " + $("#cuadrosImp").val();
             var defMed = "Ancho: "+ $("#ancho").val() + "\nLongitud: "+ $("#longitud").val()+ "\nAncho Material: " + $("#anchoMaterial").val();
-            var impD = "Copias: "+ $("#copias").val() + "\nMTS2: "+ $("#mts2").val()+ "\nDesperdicio: " + $("#desperdicio").val();
             var altu = $("#altura").val();
             var bas = $("#base").val();
             var cuadrosIm = $("#cuadrosImp").val();
             var anch = $("#ancho").val();
             var long = $("#longitud").val();
             var anchoM = $("#anchoMaterial").val();
-            var cop = $("#copias").val();
-            var mt = $("#mts2").val();
             var des = $("#desperdicio").val();
-            var ubic =$("input:checkbox[name=ubicacion]:checked").val();
             var tipoV=$("#tipoVenta option:selected").val();
+
+            var mtsDesp = parseFloat(anchoM) - parseFloat(cuadrosIm);
+            var impD = "Desperdicio: $" + $("#desperdicio").val()+"\nMts2 de despercio: "+ mtsDesp;
+           
+            
+
+           
 
         app.listado.push({
             productoRe: producto,
@@ -745,10 +856,8 @@ $(function() {
             anchoRe: anch,
             longitudRe:long,
             anchoMatRe:anchoM,
-            copiasRe:cop,
-             mtsDes:mt,
             despRe:des,
-            ubicRe:ubic,
+            mtsDes:mtsDesp,
             tipoVentaRe:tipoV,
         }),
 

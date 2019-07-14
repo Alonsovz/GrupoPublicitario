@@ -33,8 +33,8 @@ class DaoOrdenTrabajo extends DaoBase {
         $_query = "insert into detalleOrdenGR values(null,'.$idReq.'
         ,'".$this->objeto->getIdProductoFinal()."','".$this->objeto->getColor()."','".$this->objeto->getAcabado()."'
         ,'".$this->objeto->getCantidad()."','".$this->objeto->getAltura()."','".$this->objeto->getBase()."'
-        ,'".$this->objeto->getCuadrosImp()."','".$this->objeto->getUbicacion()."','".$this->objeto->getAncho()."'
-        ,'".$this->objeto->getLongitud()."','".$this->objeto->getAnchoMat()."','".$this->objeto->getCopias()."'
+        ,'".$this->objeto->getCuadrosImp()."','".$this->objeto->getAncho()."'
+        ,'".$this->objeto->getLongitud()."','".$this->objeto->getAnchoMat()."'
         ,'".$this->objeto->getMts2()."','".$this->objeto->getDesperdicio()."','".$this->objeto->getDescripciones()."'
         ,'".$this->objeto->getVentaCuenta()."','".$this->objeto->getPrecio()."',1,1,'',0.00)";
 
@@ -130,7 +130,7 @@ class DaoOrdenTrabajo extends DaoBase {
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
         
-      where o.idEliminado=1 and o.estado=2 and o.correlativo>'OTGR00' order by fechaEntrega asc";
+      where o.idEliminado=1 and o.estado=2 and o.correlativo>'OTGF00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -287,7 +287,7 @@ class DaoOrdenTrabajo extends DaoBase {
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
       
-      where o.idEliminado=1 and o.estado=3 and o.correlativo>'OTGR00' order by fechaEntrega asc";
+      where o.idEliminado=1 and o.estado=3 and o.correlativo>'OTGF00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -297,8 +297,8 @@ class DaoOrdenTrabajo extends DaoBase {
 
             $object = json_encode($fila);
             $btnEditar = '<button id=\"'.$fila["idOrden"].'\" correlativo=\"'.$fila["correlativo"].'\" class=\"ui icon black small button\"   onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
-          $btnFinalizar = '<button id=\"'.$fila["idOrden"].'\" correlativo=\"'.$fila["correlativo"].'\"  class=\"ui  icon green small button\" onclick=\"factura(this)\"><i class=\"print icon\"></i> Facturar</button>';
-
+            $btnFinalizar = '<button id=\"'.$fila["idOrden"].'\" correlativo=\"'.$fila["correlativo"].'\"  class=\"ui  icon green small button\" onclick=\"factura(this)\"><i class=\"print icon\"></i> Facturar</button>';
+  
             $acciones = ', "Acciones": "'.$btnEditar.''.$btnFinalizar.'"';
 
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
@@ -518,7 +518,7 @@ class DaoOrdenTrabajo extends DaoBase {
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
       
-      where o.idEliminado=2 and o.correlativo>'OTGR00' order by fechaEntrega asc";
+      where o.idEliminado=2 and o.correlativo>'OTGF00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -737,7 +737,7 @@ class DaoOrdenTrabajo extends DaoBase {
        c.nombre as nombreC from ordenTrabajoGR o
        inner join usuario u on u.codigoUsuario = o.responsable
        inner join clientes c on c.idCliente = o.cliente
-      where o.idEliminado=1 and o.estado=1 and o.correlativo>'OTGR00' order by fechaEntrega asc";
+      where o.idEliminado=1 and o.estado=1 and o.correlativo>'OTGF00' order by fechaEntrega asc";
 
         $resultado = $this->con->ejecutar($_query);
 

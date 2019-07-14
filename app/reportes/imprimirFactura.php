@@ -107,8 +107,7 @@ class Reporte {
                <td style='border:1px solid black;'>
                 Altura: ".$fila['altura']." <br>
                 Base: ".$fila['base']." <br>
-                MTS 2 Imp: ".$fila['cuadrosImp']."<br>
-                Ubicación: ".$fila['ubicacion']." 
+                MTS 2 Imp: ".$fila['cuadrosImp']."
                </td>
              
                <td style='border:1px solid black;'>".$fila['descripciones']." </td>

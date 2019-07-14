@@ -783,7 +783,7 @@ class Funciones extends ControladorBase {
 				    <b>Altura:</b> '.utf8_encode($ver["altura"]).'<br>
 					<b>Base:</b> '.utf8_encode($ver["base"]).'<br>
 					<b>Mts 2 Imp:</b> '.utf8_encode($ver["cuadrosImp"]).'<br>
-					<b>Ubicación:</b> '.utf8_encode($ver["ubicacion"]).'<br>
+					
 				</td>
 
 				<td>
@@ -794,9 +794,8 @@ class Funciones extends ControladorBase {
 				</td>
 
 				<td>
-				<b>Copias:</b> '.utf8_encode($ver["copias"]).'<br>
 				<b>MTS2:</b> '.utf8_encode($ver["mts2"]).'<br>
-				<b>Desperdicio:</b> '.utf8_encode($ver["desperdicio"]).'<br>
+				<b>Desperdicio:</b>$ '.utf8_encode($ver["desperdicio"]).'<br>
 				</td>
 				<td>
 				 '.utf8_encode($ver["descripciones"]). '

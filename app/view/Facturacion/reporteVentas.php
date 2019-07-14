@@ -2,21 +2,6 @@
 <div class="ui grid">
         <div class="row">
             <div class="titulo">
-            <button id="GFbtn" class="ui  blue labeled icon button">
-                    <i class="list icon"></i>
-                   Gran Formato
-                </button>
-
-                <button id="impbtn" class="ui orange labeled icon button">
-                    <i class="list icon"></i>
-                   Impresión digital
-                </button>
-
-                <button id="Pbtn" class="ui  red labeled icon button">
-                    <i class="list icon"></i>
-                   Promocionales
-                </button>
-            <br><br>
             <font color="black" size="5px">
             <i class="list icon"></i> <i class="dollar icon"></i>
             Reporte de Ventas</font><font color="black" size="20px">.</font>
@@ -25,7 +10,7 @@
 
         <div class="row title-bar">
             <div class="sixteen wide column">
-                <a href="" class="ui right floated green labeled icon button">
+                <a href="./app/view/Facturacion/reporteVentasExcel.php" class="ui right floated green labeled icon button">
                     <i class="download icon"></i>
                     Descargar Excel
                 </a>
@@ -42,15 +27,18 @@ $listadoIP = $mysqli -> query ("
 select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,o.*,
 DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
 o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
-TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro
+TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
+format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC
 from detalleOrdenIP d
 inner join ordenTrabajoIP o on o.idOrden = d.idOrden
 inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+inner join clasificacionProductos cp on cp.idProducto = p.idProducto
+inner join tipoProductos t on t.idClasificacion = cp.idClasificacion
 inner join colores c on c.idColor = d.idColor
 inner join acabados a on a.idAcabado = d.idAcabado
 inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 inner join clientes cl on cl.idCliente = o.cliente
-inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle
+inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle order by d.idDetalle desc
 ");
 
 
@@ -58,54 +46,60 @@ $listadoP = $mysqli -> query ("
 select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,o.*,
 DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
 o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
-TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro
- from detalleOrdenP d
+TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
+format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC
+from detalleOrdenP d
 inner join ordenTrabajoP o on o.idOrden = d.idOrden
 inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+inner join clasificacionProductos cp on cp.idProducto = p.idProducto
+inner join tipoProductos t on t.idClasificacion = cp.idClasificacion
 inner join colores c on c.idColor = d.idColor
 inner join acabados a on a.idAcabado = d.idAcabado
 inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 inner join clientes cl on cl.idCliente = o.cliente
-inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle");
+inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle order by d.idDetalle desc");
 
 
 $listadoGF = $mysqli -> query ("
 select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,o.*,
 DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
 o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
-TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro ,format(d.totalCobro,2) as totalCobro
-  from detalleOrdenGR d
+TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
+format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC
+from detalleOrdenGR d
 inner join ordenTrabajoGR o on o.idOrden = d.idOrden
 inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+inner join clasificacionProductos cp on cp.idProducto = p.idProducto
+inner join tipoProductos t on t.idClasificacion = cp.idClasificacion
 inner join colores c on c.idColor = d.idColor
 inner join acabados a on a.idAcabado = d.idAcabado
 inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 inner join clientes cl on cl.idCliente = o.cliente
-inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle
+inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle order by d.idDetalle desc
 ");
 ?>
 
 <br>
-<div class="content" id="imp" style="display:none;">
-<h1>Reporte de ventas de Productos Impresión digital</h1>
+<div class="content" id="imp">
+<br>
 <table class="ui table bordered" style="width:100%;">
 
-    <tr style="border:1px solid black;text-align:center;background-color:black;color:white;" height="40">
-    <th  style="border:1px solid black;">Fecha</th>
-    <th  style="border:1px solid black;">Tipo DOC</th>
-    <th  style="border:1px solid black;">Clasificación</th>
-    <th  style="text-align:center;border:1px solid black;">Nombre de Cliente</th>
-    <th  style="text-align:center;border:1px solid black;">Detalle</th>
-    <th  style="text-align:center;border:1px solid black;">N° NRC</th>
-    <th  style="text-align:center;border:1px solid black;">N° NIT</th>
-    <th  style="text-align:center;border:1px solid black;">Cantidad</th>
+    <tr style="border:1px solid white;text-align:center;background-color:black;color:white;" height="40">
+    <th  style="border:1px solid white;width:5%;">Fecha</th>
+    <th  style="border:1px solid white;width:6%;">Tipo DOC</th>
+    <th  style="border:1px solid white;width:10%;">Tipo PRO</th>
+    <th  style="border:1px solid white;">Clasificación</th>
+    <th  style="text-align:center;border:1px solid white;width:10%;">Nombre de Cliente</th>
+    <th  style="text-align:center;border:1px solid white;width:10%;">Detalle</th>
+    <th  style="text-align:center;border:1px solid white;width:10%;">N° NRC</th>
 
-    <th  style="text-align:center;border:1px solid black;">Precio</th>
-    <th  style="text-align:center;border:1px solid black;">Estatus</th>
-    <th  style="text-align:center;border:1px solid black;">Dias de morosidad</th>
-    <th  style="text-align:center;border:1px solid black;">Total Cobrado</th>
-    <th  style="text-align:center;border:1px solid black;">Fecha de Cobro</th>
-    <th  style="text-align:center;border:1px solid black;"><i class="book icon"></i></th>
+
+    <th  style="text-align:center;border:1px solid white;width:8%;">Precio</th>
+    <th  style="text-align:center;border:1px solid white;">Estatus</th>
+    <th  style="text-align:center;border:1px solid white;">Dias de morosidad</th>
+    <th  style="text-align:center;border:1px solid white;width:8%;">Total Cobrado</th>
+    <th  style="text-align:center;border:1px solid white;">Fecha de Cobro</th>
+    <th  style="text-align:center;border:1px solid white;width:9%;"><i class="book icon"></i></th>
 
     
 </tr>
@@ -118,49 +112,119 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
             <?php   
                 if($row["doc"]=="6"){
             ?>
-                <td style="text-align:center;border:1px solid black;background-color:#BFF2C8;">Factura C</td>
+                <td style="text-align:center;border:1px solid black;background-color:#8890F3;">Fac C</td>
             <?php
                 }
                 if($row["doc"]=="7"){
             ?>
-            <td style="text-align:center;border:1px solid black;background-color:#F49F78;">CCF</td>
+            <td style="text-align:center;border:1px solid black;background-color:#CB7CFE;">CCF</td>
             <?php
                 }
                 if($row["doc"]=="8"){
             ?>
-            <td style="text-align:center;border:1px solid black;background-color:#94B5F9;">Nota C</td>
+            <td style="text-align:center;border:1px solid black;background-color:#9CF4F7;">Nota C</td>
             <?php
                 }
             ?>
+            <td style="text-align:center;border:1px solid black; background-color:#0B0678;color:white"><?php echo $row['clasificacion'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['descripciones'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nrc']);?></td>
             
-            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nit']);?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cantidad']);?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['precio'];?></td>
+
+            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
 
             <?php
-            if($row["estadoCobro"]=="1"){
+            if($row["deuda"]>0){
 
             
             ?>
-            <td style="text-align:center;border:1px solid black;">Pendiente</td>
+            <td style="text-align:center;border:1px solid black; background-color:#F8B97A">Pendiente</td>
             <?php
             }else{
 
             ?>
-            <td style="text-align:center;border:1px solid black;">Cobrado</td>
+            <td style="text-align:center;border:1px solid black; background-color:#7AF882">Cobrado</td>
             <?php
             }
             ?>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['diasMoro'];?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['totalCobro'];?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro'];?></td>
-            <td style="text-align:center;border:1px solid black;"><button class="ui purple small icon button"><i class="send icon"></i></button></td>
-        </tr>	
 
+            <?php
+            if($row["deuda"]>0){
+
+            
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['diasMoro'];?></td>
+            <?php
+            }else{
+
+            ?>
+            <td style="text-align:center;border:1px solid black;">0</td>
+            <?php
+            }
+            ?>
+            
+            <td style="text-align:center;border:1px solid black;">$ <?php echo $row['totalCobro'];?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro'];?></td>
+            <?php
+            if($row["deuda"]>0){
+
+            
+            ?>
+            <td style="text-align:center;border:1px solid black;"><button class="ui green small icon button"
+            deuda="<?php echo $row["deuda"];?>"
+            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>"
+             onclick="cobrar(this)"><i class="dollar icon"></i></button>
+
+
+             <?php
+            if($row["estadoCobro"]<5){
+             ?>
+
+             <button class="ui blue small icon button"
+            deuda="<?php echo $row["deuda"];?>"
+            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>" factura="<?php echo $row["doc"]; ?>"
+             onclick="enviarLibro(this)"><i class="send icon"></i></button>
+
+            <?php
+            }else{
+            ?>
+            
+            <?php
+            }
+            ?>
+             </td>
+            <?php
+            }else{
+
+            ?>
+            <td style="text-align:center;border:1px solid black;">
+             
+            <?php
+            if($row["estadoCobro"]<5){
+             ?>
+
+             <button class="ui blue small icon button"
+            deuda="<?php echo $row["deuda"];?>"
+            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>" factura="<?php echo $row["doc"]; ?>"
+             onclick="enviarLibro(this)"><i class="send icon"></i></button>
+
+            <?php
+            }else{
+            ?>
+            
+            <?php
+            }
+            ?>
+             </td>
+            <?php
+            }
+            ?>
+        </tr>
     <?php
 }
 
@@ -168,33 +232,7 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
 
 
 ?>
-</table>
-</div>
 
-
-<div class="content" id="GF" style="">
-<h1>Reporte de ventas de Productos de Gran Formato</h1>
-<table class="ui table bordered" style="width:100%;">
-
-    <tr style="border:1px solid black;text-align:center;background-color:#053392;color:white;" height="40">
-    <th  style="border:1px solid black;">Fecha</th>
-    <th  style="border:1px solid black;">Tipo DOC</th>
-    <th  style="border:1px solid black;">Clasificación</th>
-    <th  style="text-align:center;border:1px solid black;">Nombre de Cliente</th>
-    <th  style="text-align:center;border:1px solid black;">Detalle</th>
-    <th  style="text-align:center;border:1px solid black;">N° NRC</th>
-    <th  style="text-align:center;border:1px solid black;">N° NIT</th>
-    <th  style="text-align:center;border:1px solid black;">Cantidad</th>
-
-    <th  style="text-align:center;border:1px solid black;">Precio</th>
-    <th  style="text-align:center;border:1px solid black;">Estatus</th>
-    <th  style="text-align:center;border:1px solid black;">Dias de morosidad</th>
-    <th  style="text-align:center;border:1px solid black;">Total Cobrado</th>
-    <th  style="text-align:center;border:1px solid black;">Fecha de Cobro</th>
-    <th  style="text-align:center;border:1px solid black;"><i class="book icon"></i></th>
-
-    
-</tr>
 <?php
 while ($row=mysqli_fetch_assoc($listadoGF)) {
     ?>
@@ -204,47 +242,117 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
             <?php   
                 if($row["doc"]=="6"){
             ?>
-                <td style="text-align:center;border:1px solid black;background-color:#BFF2C8;">Factura C</td>
+                <td style="text-align:center;border:1px solid black;background-color:#8890F3;">Fac C</td>
             <?php
                 }
                 if($row["doc"]=="7"){
             ?>
-            <td style="text-align:center;border:1px solid black;background-color:#F49F78;">CCF</td>
+            <td style="text-align:center;border:1px solid black;background-color:#CB7CFE;">CCF</td>
             <?php
                 }
                 if($row["doc"]=="8"){
             ?>
-            <td style="text-align:center;border:1px solid black;background-color:#94B5F9;">Nota C</td>
+            <td style="text-align:center;border:1px solid black;background-color:#9CF4F7;">Nota C</td>
             <?php
                 }
             ?>
+            <td style="text-align:center;border:1px solid black;background-color:#03440E;color:white"><?php echo $row['clasificacion'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['descripciones'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nrc']);?></td>
             
-            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nit']);?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cantidad']);?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['precio'];?></td>
+  
+            <td style="text-align:center;border:1px solid black;">$ <?php echo $row['precio'];?></td>
 
             <?php
-            if($row["estadoCobro"]=="1"){
+            if($row["deuda"]>0){
 
             
             ?>
-            <td style="text-align:center;border:1px solid black;">Pendiente</td>
+            <td style="text-align:center;border:1px solid black; background-color:#F8B97A">Pendiente</td>
             <?php
             }else{
 
             ?>
-            <td style="text-align:center;border:1px solid black;">Cobrado</td>
+            <td style="text-align:center;border:1px solid black; background-color:#7AF882">Cobrado</td>
             <?php
             }
             ?>
+           <?php
+            if($row["deuda"]>0){
+
+            
+            ?>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['diasMoro'];?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['totalCobro'];?></td>
+            <?php
+            }else{
+
+            ?>
+            <td style="text-align:center;border:1px solid black;">0</td>
+            <?php
+            }
+            ?>
+            
+            <td style="text-align:center;border:1px solid black;">$ <?php echo $row['totalCobro'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro'];?></td>
-            <td style="text-align:center;border:1px solid black;"><button class="ui purple small icon button"><i class="send icon"></i></button></td>
+            <?php
+            if($row["deuda"]>0){
+
+            
+            ?>
+            <td style="text-align:center;border:1px solid black;"><button class="ui green small icon button"
+            deuda="<?php echo $row["deuda"];?>"
+            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>"
+             onclick="cobrar(this)"><i class="dollar icon"></i></button>
+
+
+             <?php
+            if($row["estadoCobro"]<5){
+             ?>
+
+             <button class="ui blue small icon button"
+            deuda="<?php echo $row["deuda"];?>"
+            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>" factura="<?php echo $row["doc"]; ?>"
+             onclick="enviarLibro(this)"><i class="send icon"></i></button>
+
+            <?php
+            }else{
+            ?>
+            
+            <?php
+            }
+            ?>
+             </td>
+            <?php
+            }else{
+
+            ?>
+            <td style="text-align:center;border:1px solid black;">
+             
+            <?php
+            if($row["estadoCobro"]<5){
+             ?>
+
+             <button class="ui blue small icon button"
+            deuda="<?php echo $row["deuda"];?>"
+            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>" factura="<?php echo $row["doc"]; ?>"
+             onclick="enviarLibro(this)"><i class="send icon"></i></button>
+
+            <?php
+            }else{
+            ?>
+            
+            <?php
+            }
+            ?>
+             </td>
+            <?php
+            }
+            ?>
         </tr>	
 
     <?php
@@ -254,31 +362,7 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
 
 
 ?>
-</table>
-</div>
 
-<div class="content" id="pro" style="display:none;">
-<h1>Reporte de ventas de Productos Promocionales</h1>
-<table class="ui table bordered" style="width:100%;">
-    <tr style="border:1px solid black;text-align:center;background-color:#C40340;color:white;" height="40">
-    <th  style="border:1px solid black;">Fecha</th>
-    <th  style="border:1px solid black;">Tipo DOC</th>
-    <th  style="border:1px solid black;">Clasificación</th>
-    <th  style="text-align:center;border:1px solid black;">Nombre de Cliente</th>
-    <th  style="text-align:center;border:1px solid black;">Detalle</th>
-    <th  style="text-align:center;border:1px solid black;">N° NRC</th>
-    <th  style="text-align:center;border:1px solid black;">N° NIT</th>
-    <th  style="text-align:center;border:1px solid black;">Cantidad</th>
-
-    <th  style="text-align:center;border:1px solid black;">Precio</th>
-    <th  style="text-align:center;border:1px solid black;">Estatus</th>
-    <th  style="text-align:center;border:1px solid black;">Dias de morosidad</th>
-    <th  style="text-align:center;border:1px solid black;">Total Cobrado</th>
-    <th  style="text-align:center;border:1px solid black;">Fecha de Cobro</th>
-    <th  style="text-align:center;border:1px solid black;"><i class="book icon"></i></th>
-
-    
-</tr>
 <?php
 while ($row=mysqli_fetch_assoc($listadoP)) {
     ?>
@@ -288,47 +372,118 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
             <?php   
                 if($row["doc"]=="6"){
             ?>
-                <td style="text-align:center;border:1px solid black;background-color:#BFF2C8;">Factura C</td>
+                <td style="text-align:center;border:1px solid black;background-color:#8890F3;">Fac C</td>
             <?php
                 }
                 if($row["doc"]=="7"){
             ?>
-            <td style="text-align:center;border:1px solid black;background-color:#F49F78;">CCF</td>
+            <td style="text-align:center;border:1px solid black;background-color:#CB7CFE;">CCF</td>
             <?php
                 }
                 if($row["doc"]=="8"){
             ?>
-            <td style="text-align:center;border:1px solid black;background-color:#94B5F9;">Nota C</td>
+            <td style="text-align:center;border:1px solid black;background-color:#9CF4F7;">Nota C</td>
             <?php
                 }
             ?>
+            <td style="text-align:center;border:1px solid black;background-color:#5C1106;color:white"><?php echo $row['clasificacion'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['descripciones'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nrc']);?></td>
-            
-            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nit']);?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cantidad']);?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['precio'];?></td>
+     
+            <td style="text-align:center;border:1px solid black;">$ <?php echo $row['precio'];?></td>
 
             <?php
-            if($row["estadoCobro"]=="1"){
+            if($row["deuda"]>0){
 
             
             ?>
-            <td style="text-align:center;border:1px solid black;">Pendiente</td>
+            <td style="text-align:center;border:1px solid black; background-color:#F8B97A">Pendiente</td>
             <?php
             }else{
 
             ?>
-            <td style="text-align:center;border:1px solid black;">Cobrado</td>
+            <td style="text-align:center;border:1px solid black; background-color:#7AF882">Cobrado</td>
             <?php
             }
             ?>
+            <?php
+            if($row["deuda"]>0){
+
+            
+            ?>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['diasMoro'];?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['totalCobro'];?></td>
+            <?php
+            }else{
+
+            ?>
+            <td style="text-align:center;border:1px solid black;">0</td>
+            <?php
+            }
+            ?>
+            
+            <td style="text-align:center;border:1px solid black;">$ <?php echo $row['totalCobro'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro'];?></td>
-            <td style="text-align:center;border:1px solid black;"><button class="ui purple small icon button"><i class="send icon"></i></button></td>
+            <?php
+            if($row["deuda"]>0){
+
+            
+            ?>
+            <td style="text-align:center;border:1px solid black;"><button class="ui green small icon button"
+            deuda="<?php echo $row["deuda"];?>"
+            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>"
+             onclick="cobrar(this)"><i class="dollar icon"></i></button>
+
+
+             <?php
+            if($row["estadoCobro"]<5){
+             ?>
+
+             <button class="ui blue small icon button"
+            deuda="<?php echo $row["deuda"];?>"
+            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>" factura="<?php echo $row["doc"]; ?>"
+             onclick="enviarLibro(this)"><i class="send icon"></i></button>
+
+            <?php
+            }else{
+            ?>
+            
+            <?php
+            }
+            ?>
+             </td>
+            <?php
+            }else{
+
+            ?>
+            <td style="text-align:center;border:1px solid black;">
+             
+            <?php
+            if($row["estadoCobro"]<5){
+             ?>
+
+             <button class="ui blue small icon button"
+            deuda="<?php echo $row["deuda"];?>"
+            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>" factura="<?php echo $row["doc"]; ?>"
+             onclick="enviarLibro(this)"><i class="send icon"></i></button>
+
+            <?php
+            }else{
+            ?>
+            
+            <?php
+            }
+            ?>
+             </td>
+            <?php
+            }
+            ?>
+
+            
         </tr>	
 
     <?php
@@ -341,8 +496,53 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
 </table>
 </div>
 
+<div class="ui tiny modal" id="modalCobrar">
+<div class="header" style="color:white;background-color:black">
+Cobrar Venta.<br>
+Producto :<a id="pro" style="color:yellow"></a><br>
+Deuda : $ <a id="deu" style="color:yellow"></a><br>
+Fecha de emisión de factura <a id="fechaFa" style="color:yellow"></a>
+</div>
+<div class="content">
+<form class="ui form">
+<input type="hidden" id="idCla" name="idCla">
+<input type="hidden" id="idDetalle" name="idDetalle">
+<label><i class="dollar icon"></i>Monto a cobrar</label>
+<input type="text" id="monto" name="monto" placeholder="Monto a cobrar">
+</form>
+</div>
+<div class="actions">
+<button class="ui red deny button">Cancelar</button>
+<button class="ui black button" id="btnCobrar">Cobrar</button>
+</div>
+</div>
+
+
+<div class="ui tiny modal" id="modalEnviar">
+<div class="header" style="color:white;background-color:black">
+<a id="tipoLibro" style="color:red;background-color:black"></a>
+<br>
+Producto :<a id="prod" style="color:yellow"></a><br>
+Deuda : $ <a id="deud" style="color:yellow"></a><br>
+Fecha de emisión de factura <a id="fechaFac" style="color:yellow"></a>
+</div>
+<div class="content">
+<form class="ui form">
+<input type="hidden" id="idClas" name="idClas">
+<input type="hidden" id="idDetalles" name="idDetalles">
+<input type="hidden" id="tipoD" name="tipoD">
+</form>
+</div>
+<div class="actions">
+<button class="ui red deny button">Cancelar</button>
+<button class="ui black button" id="btnEnviar">Enviar</button>
+</div>
+</div>
 </div>
 <script>
+$(document).ready(function(){
+    $('#monto').mask("###0.00", {reverse: true});
+});
 $("#GFbtn").click(function(){
     $("#GF").show(100);
     $("#imp").hide(100);
@@ -360,4 +560,191 @@ $("#Pbtn").click(function(){
     $("#imp").hide(100);
     $("#pro").show(100);
 });
+
+
+var cobrar=(ele)=>{
+    $("#fechaFa").text($(ele).attr("fechaFa"));
+    $("#pro").text($(ele).attr("pro"));
+    $("#deu").text($(ele).attr("deuda"));
+    $("#idCla").val($(ele).attr("idC"));
+    $("#idDetalle").val($(ele).attr("id"));
+    $("#modalCobrar").modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+}
+
+
+var enviarLibro=(ele)=>{
+    $("#fechaFac").text($(ele).attr("fechaFa"));
+    $("#prod").text($(ele).attr("pro"));
+    $("#deud").text($(ele).attr("deuda"));
+    $("#idClas").val($(ele).attr("idC"));
+    $("#idDetalles").val($(ele).attr("id"));
+
+    var tipoFa=$(ele).attr("factura");
+
+    $("#tipoD").val(tipoFa);
+
+
+    if(tipoFa=="6"){
+        $("#tipoLibro").text("Enviar a libro de Consumidor Final");
+    }
+    else if(tipoFa=="7"){
+        $("#tipoLibro").text("Enviar a libro de Contribuyentes");
+        
+    }
+    else if(tipoFa=="8"){
+        $("#tipoLibro").text("Enviar a libro de Contribuyentes");
+    }
+
+    $("#modalEnviar").modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+}
+
+
+$("#btnCobrar").click(function(){
+    
+    var idClasificacion = $("#idCla").val();
+    
+
+    if(idClasificacion==1){
+
+        
+        var idDetalle = $("#idDetalle").val();
+        var monto = $("#monto").val();
+        $.ajax({
+            
+                type: 'POST',
+                url: '?1=RequisicionController&2=cobrarGF',
+                data: {
+                    idDetalle:idDetalle,
+                    monto:monto,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        $("#modalCobrar").modal('hide');
+                        swal({
+                            title: 'Cobro guardado',
+                            text: 'Guardado con éxito',
+                            type: 'success',
+                            
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                if(result.value){
+                                    location.reload();
+                                }
+                            });
+                        
+                    } 
+                }
+            
+        });
+    }
+    if(idClasificacion==2){
+        var idDetalle = $("#idDetalle").val();
+        var monto = $("#monto").val();
+        $.ajax({
+                
+                type: 'POST',
+                url: '?1=RequisicionController&2=cobrarIP',
+                data: {
+                    idDetalle:idDetalle,
+                    monto:monto,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        $("#modalCobrar").modal('hide');
+                        swal({
+                            title: 'Cobro guardado',
+                            text: 'Guardado con éxito',
+                            type: 'success',
+                            
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                if(result.value){
+                                    location.reload();
+                                }
+                            });
+                        
+                    } 
+                }
+            
+        });
+    }
+
+    if(idClasificacion==3){
+        var idDetalle = $("#idDetalle").val();
+        var monto = $("#monto").val();
+        $.ajax({
+                
+                type: 'POST',
+                url: '?1=RequisicionController&2=cobrarP',
+                data: {
+                    idDetalle:idDetalle,
+                    monto:monto,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        $("#modalCobrar").modal('hide');
+                        swal({
+                            title: 'Cobro guardado',
+                            text: 'Guardado con éxito',
+                            type: 'success',
+                            
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                if(result.value){
+                                    location.reload();
+                                }
+                            });
+                        
+                    } 
+                }
+            
+        });
+    }
+    
+
+});
+
+
+
+$("#btnEnviar").click(function(){
+    
+    var idClasificacion = $("#idClas").val();
+    var idDetalle = $("#idDetalles").val();
+    var tipoDoc = $("#tipoD").val();
+
+    
+        
+        $.ajax({
+                
+                type: 'POST',
+                url: '?1=RequisicionController&2=enviarLibro',
+                data: {
+                    idDetalle:idDetalle,
+                    idClasificacion:idClasificacion,
+                    tipoDoc:tipoDoc,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        $("#modalEnviar").modal('hide');
+                        swal({
+                            title: 'Enviado a '+$("#tipoLibro").text(),
+                            text: 'Guardado con éxito',
+                            type: 'success',
+                            
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                if(result.value){
+                                    location.reload();
+                                }
+                            });
+                        
+                    } 
+                }
+            
+        });
+    
+    
+
+});
+
 </script>

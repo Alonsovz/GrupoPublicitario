@@ -365,6 +365,59 @@ class RequisicionController extends ControladorBase {
         
         echo $dao->finalizarRe();
     }
+
+    public function cobrarIP(){
+        $dao = new DaoRequisicion();
+
+        $dao->objeto->setIdOrden($_REQUEST["idDetalle"]);
+        $dao->objeto->setPrecio($_REQUEST["monto"]);
+        
+        echo $dao->cobrarIP();
+    }
+
+    public function cobrarP(){
+        $dao = new DaoRequisicion();
+
+        $dao->objeto->setIdOrden($_REQUEST["idDetalle"]);
+        $dao->objeto->setPrecio($_REQUEST["monto"]);
+        
+        echo $dao->cobrarP();
+    }
+
+    public function cobrarGF(){
+        $dao = new DaoRequisicion();
+
+        $dao->objeto->setIdOrden($_REQUEST["idDetalle"]);
+        $dao->objeto->setPrecio($_REQUEST["monto"]);
+        
+        echo $dao->cobrarGF();
+    }
+
+
+    public function enviarLibro(){
+        $dao = new DaoRequisicion();
+
+        if($_REQUEST["idClasificacion"]=="1"){
+            $dao->objeto->setIdOrden($_REQUEST["idDetalle"]);
+            $dao->objeto->setLibro($_REQUEST["tipoDoc"]);
+            
+            echo $dao->enviarLibroGF();
+        }
+        if($_REQUEST["idClasificacion"]=="2"){
+            $dao->objeto->setIdOrden($_REQUEST["idDetalle"]);
+            $dao->objeto->setLibro($_REQUEST["tipoDoc"]);
+            
+            echo $dao->enviarLibroIP();
+        }
+
+        if($_REQUEST["idClasificacion"]=="3"){
+            $dao->objeto->setIdOrden($_REQUEST["idDetalle"]);
+            $dao->objeto->setLibro($_REQUEST["tipoDoc"]);
+            
+            echo $dao->enviarLibroP();
+        }
+        
+    }
     
 
 }

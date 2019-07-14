@@ -17,9 +17,23 @@ class Requisicion extends ModeloBase{
     private $precioTotal;
     private $fechaEn;
     private $idClasificacion;
+    private $libro;
 
     public function __construct() {
 
+    }
+
+    public function getLibro()
+    {
+        return $this->libro;
+    }
+
+    
+    public function setLibro($libro)
+    {
+        $this->libro = $libro;
+
+        return $this;
     }
 
     public function getIdOrden()

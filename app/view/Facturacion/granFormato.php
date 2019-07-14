@@ -202,7 +202,7 @@ $("#facturaConsumidor").click(function(){
     $.ajax({
         
         type: 'POST',
-        url: '?1=FacturacionController&2=facturaConsumidorGF',
+        url: '?1=FacturacionController&2=facturaConsumidorGR',
         data: {idOT:idOT},
         success: function(r) {
             if(r == 11) {
@@ -230,7 +230,7 @@ $("#creditoFiscal").click(function(){
     $.ajax({
         
         type: 'POST',
-        url: '?1=FacturacionController&2=CFFGF,
+        url: '?1=FacturacionController&2=CFFGR',
         data: {idOT:idOT},
         success: function(r) {
             if(r == 11) {
@@ -258,7 +258,7 @@ $("#notaCredito").click(function(){
     $.ajax({
         
         type: 'POST',
-        url: '?1=FacturacionController&2=notaCreGF',
+        url: '?1=FacturacionController&2=notaCreGR',
         data: {idOT:idOT},
         success: function(r) {
             if(r == 11) {

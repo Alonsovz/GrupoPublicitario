@@ -165,7 +165,7 @@
             <label><i class="dollar icon"></i>Tipo de venta:</label>
             <select name="tipoVenta" id="tipoVenta" class="ui  dropdown">
             <option value="Seleccione" set selected>Seleccione una opción</option>
-            <option value="Venta Gravada">Ventas Gravada</option>
+            <option value="Venta Exenta">Venta Exenta</option>
             <option value="Venta No Sujeta">Venta No Sujeta</option>
             <option value="Venta Gravada">Venta Gravada</option>
             </select>

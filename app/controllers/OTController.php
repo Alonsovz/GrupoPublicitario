@@ -104,11 +104,9 @@ class OTController extends ControladorBase {
             $dao->objeto->setAltura($detalle->alturaRe);
             $dao->objeto->setBase($detalle->baseRe);
             $dao->objeto->setCuadrosImp($detalle->cuadrosImpr);
-            $dao->objeto->setUbicacion($detalle->ubicRe);
             $dao->objeto->setAncho($detalle->anchoRe);
             $dao->objeto->setLongitud($detalle->longitudRe);
-            $dao->objeto->setAnchoMat($detalle->anchoMatRe);
-            $dao->objeto->setCopias($detalle->copiasRe);
+            $dao->objeto->setAnchoMat($detalle->anchoMatRe);        
             $dao->objeto->setMts2($detalle->mtsDes);
             $dao->objeto->setDesperdicio($detalle->despRe);
             $dao->objeto->setDescripciones($detalle->descriRe);

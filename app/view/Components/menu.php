@@ -15,7 +15,7 @@
         else if($_SESSION["descRol"] == 'Produccion') {
             require_once 'menuProduccion.php';
         }else{
-            require_once 'menuSecretarios.php';
+            require_once 'menuAsis.php';
         }
 
     ?>

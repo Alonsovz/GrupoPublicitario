@@ -657,6 +657,82 @@ class DaoRequisicion extends DaoBase {
         return '['.$json.']';
     }
 
+    public function cobrarIP() {
+        $_query = "update detalleOrdenIP set totalCobro=totalCobro + ".$this->objeto->getPrecio()." where idDetalle=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function cobrarP() {
+        $_query = "update detalleOrdenP set totalCobro=totalCobro + ".$this->objeto->getPrecio()." where idDetalle=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function cobrarGF() {
+        $_query = "update detalleOrdenGR set totalCobro=totalCobro + ".$this->objeto->getPrecio()." where idDetalle=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+
+    public function enviarLibroIP() {
+        $_query = "update detalleOrdenIP set estadoCobro= ".$this->objeto->getLibro()." where idDetalle=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function enviarLibroP() {
+        $_query = "update detalleOrdenP set estadoCobro= ".$this->objeto->getLibro()." where idDetalle=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function enviarLibroGF() {
+        $_query = "update detalleOrdenGR set estadoCobro= ".$this->objeto->getLibro()." where idDetalle=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+
 }
 
 ?>
