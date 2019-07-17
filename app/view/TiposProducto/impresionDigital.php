@@ -758,6 +758,63 @@ $("#btnNuevoColor").click(function(){
  $("#guardarColorPro").show(1000);
 });
 
+var borrarProducto=(ele)=>{
+    var idProducto = $(ele).attr("idProducto");
+        var idAcabado = $(ele).attr("idAcabado");
+        var idColor=$(ele).attr("idColor");
+
+    alertify.confirm("¿Desea eliminar el detalle del producto "+$("#titleDe").text()+" ?",
+            function(){
+
+                $.ajax({
+                    type: 'POST',
+                    data: {
+    
+                        idProducto : idProducto,
+                        idColor:idColor,
+                        idAcabado:idAcabado,
+                    },
+                    url: '?1=ProductosController&2=eliminarProducto',
+                    success: function (r) {
+                       
+                        if (r == 11) {
+                            swal({
+                             title: 'Eliminado',
+                            text: 'Guardada con éxito',
+                            type: 'success',
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                if (result.value) {
+                                   
+                                    $('#color').html('');
+                                    $.ajax({
+                                        type:"POST",
+                                        url:"?1=Funciones&2=verDetallesColor",
+                                        data:{
+                                            idC:idProducto
+                                        },
+                                    success:function(r){
+                                            $('#color').html(r);
+                                        }
+                                    });
+                                
+                                    $("#title").show(1000);
+                                    $("#verDe").show(1000);
+                                }
+                            });           
+                        }
+                        
+                    }
+                });
+            },
+            function(){
+               
+                alertify.error('Cancelado');
+                
+            }); 
+
+}
+
 var detallePro=(ele)=>{
     
     $("#nuevoDetalle").hide(1000);

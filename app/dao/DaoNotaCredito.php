@@ -101,6 +101,36 @@ class DaoNotaCredito extends DaoBase {
         return $resultado;
     }
 
+    public function ventasGravadasGR(){
+        $query = "select format(SUM((d.ventasGra) * 0.01) + SUM(d.ventasGra),2) as ventasGravaGR  from detalleNota  d
+        inner join notaCredito n on n.idNota = d.idNota
+        where n.idNota=(select max(idNota) from notaCredito)";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function descGR(){
+        $query = "select format(SUM((d.ventasGra) * 0.01),2) as descGR  from detalleNota  d
+        inner join notaCredito n on n.idNota = d.idNota
+        where n.idNota=(select max(idNota) from notaCredito)";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function tipoCliente(){
+        $query = "select c.categoria as tipoCliente from notaCredito n
+        inner join clientes c on c.idCliente = n.idCliente
+        where n.idNota=(select max(idNota) from notaCredito)";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
 
     public function facturaConsumidorImp() {
         $_query = "update ordenTrabajoIP set estado=6 where idOrden=".$this->objeto->getIdOrden();

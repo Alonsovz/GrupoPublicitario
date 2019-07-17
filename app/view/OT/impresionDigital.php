@@ -329,6 +329,7 @@ var app = new Vue({
 $(document).ready(function(){
     $("#imp").removeClass("ui black button");
     $("#imp").addClass("ui black basic button");
+    $('#precio').mask("###0.00", {reverse: true});
     app.eliminarDetalle(0);
     });
 

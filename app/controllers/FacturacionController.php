@@ -169,10 +169,13 @@ class FacturacionController extends ControladorBase {
         $resultado1 = $dao->imprimirDetalleNota();
         $ventasNo = $dao->ventasNoSujetas();
         $ventasGr = $dao->ventasGravadas();
+        $ventasGrGR = $dao->ventasGravadasGR();
         $ventasEx = $dao->ventasExentas();
+        $tipoCliente = $dao->tipoCliente();
+        $descGR = $dao->descGR();
      
         
-        $reporte->notaCredito($resultado,$resultado1,$ventasNo,$ventasGr,$ventasEx);
+        $reporte->notaCredito($resultado,$resultado1,$ventasNo,$ventasGr,$ventasGrGR,$ventasEx,$tipoCliente,$descGR);
     }
 
     public function facturaConsumidorImp(){

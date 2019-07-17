@@ -9,7 +9,7 @@ class Reporte {
         require_once './vendor/autoload.php';
     }
 
-    public function notaCredito($resultado,$resultado1,$ventasNo,$ventasGr,$ventasEx) {
+    public function notaCredito($resultado,$resultado1,$ventasNo,$ventasGr,$ventasGrGR,$ventasEx,$tipoCliente,$descGR) {
         
         $ventasNo = $ventasNo->fetch_assoc();
         $ventasNoS = $ventasNo['ventasNoSu'];
@@ -19,6 +19,15 @@ class Reporte {
 
         $ventasGr = $ventasGr->fetch_assoc();
         $ventasGra = $ventasGr['ventasGrava'];
+
+        $ventasGrGR = $ventasGrGR->fetch_assoc();
+        $ventasGraGR = $ventasGrGR['ventasGravaGR'];
+
+        $tipoCliente = $tipoCliente->fetch_assoc();
+        $tipoCl = $tipoCliente['tipoCliente'];
+
+        $descGR = $descGR->fetch_assoc();
+        $descGRA = $descGR['descGR'];
 
         $tabla = '';
 
@@ -202,11 +211,11 @@ class Reporte {
         
         $".$ventasExe;
         $tabla.= "
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         $".$ventasGra;
         $tabla.= "
         <br>";
-        $iva = $ventasGra *0.13;
+        $iva = number_format($ventasGra *0.13,2);
 
         $tabla.= "
         
@@ -221,7 +230,7 @@ class Reporte {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        $".round($iva,2);
+        $".$iva;
 
         $totalConIva = $ventasGra+$iva;
         $tabla.= "
@@ -252,7 +261,19 @@ class Reporte {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        $0.00";
+        ";
+        $totalV=0;
+        if($tipoCl == "Gran Contribuyente" && $ventasGra >= "100.00"){
+        
+        $totalV   = number_format($descGRA,2);
+
+         $tabla.= "$". $descGRA;
+
+        }else{
+            $totalV = 0.00;
+
+            $tabla.= "$".number_format($totalV,2);
+        }
 
 
         $tabla.= "
@@ -285,7 +306,7 @@ class Reporte {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         $".$ventasExe;
 
-        $total = $totalConIva + $ventasExe + $ventasNoS;
+        $total = number_format( $ventasExe + $ventasNoS + $totalV + $totalConIva,2);
 
         $tabla.= "
         <br>
@@ -300,7 +321,7 @@ class Reporte {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        $".round($total,2);
+        $".$total;
 
        
        

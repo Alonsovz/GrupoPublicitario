@@ -79,9 +79,9 @@ idAcabado int,
 cantidadExistencia double,
 precioUnitario double,
 precioDesperdicio double,
-precioSugerido double
+precioSugerido double,
+idEliminado int
 );
-
 
 create table productoFinal(
 idProductoFinal int primary key  auto_increment,
@@ -93,7 +93,8 @@ create table productosDetalle(
 idProductoFinal int,
 idColor int,
 idAcabado int,
-idMedida int
+idMedida int,
+idEliminado int
 );
 
 
@@ -343,6 +344,7 @@ alter table usuario add constraint fk_usuario_rol foreign key (codigoRol) refere
 insert into rol values(2,'Produccion');
 insert into rol values(3,'Asistente');
  insert into rol values(4,'Propietario');
+ insert into rol values(5,'Administrador Sustituto');
  
 
 
@@ -494,12 +496,12 @@ begin
 end
 $$
 
-select o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
-        concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC from ordenTrabajoGR o
-       inner join usuario u on u.codigoUsuario = o.responsable
-       inner join clientes c on c.idCliente = o.cliente
-      where o.idEliminado=1 and o.estado=1 and o.correlativo>'OTGF00' order by fechaEntrega asc
 
 
-select * from ordenTrabajoGR
+
+
+
+
+
+
+

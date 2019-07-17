@@ -400,7 +400,7 @@ class DaoProductos extends DaoBase {
         $idExp = $fila['id'];
 
         $_query = "insert into productosDetalle values(".$idExp.", '".$this->objeto->getColor()."',
-        '".$this->objeto->getAcabado()."','".$this->objeto->getUnidadMedida()."')";
+        '".$this->objeto->getAcabado()."','".$this->objeto->getUnidadMedida()."',1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -416,7 +416,7 @@ class DaoProductos extends DaoBase {
         
 
         $_query = "insert into productosDetalle values('".$this->objeto->getIdProducto()."', '".$this->objeto->getColor()."',
-        '".$this->objeto->getAcabado()."','".$this->objeto->getUnidadMedida()."')";
+        '".$this->objeto->getAcabado()."','".$this->objeto->getUnidadMedida()."',1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -430,7 +430,7 @@ class DaoProductos extends DaoBase {
     public function guardarInventarioPro(){
 
         $_query = "insert into inventario values('".$this->objeto->getIdProducto()."', '".$this->objeto->getColor()."',
-        '".$this->objeto->getAcabado()."',0.0,0.0,0.0,'".$this->objeto->getPrecio()."')";
+        '".$this->objeto->getAcabado()."',0.0,0.0,0.0,'".$this->objeto->getPrecio()."',1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -452,7 +452,7 @@ class DaoProductos extends DaoBase {
         $idExp = $fila['id'];
 
         $_query = "insert into inventario values(".$idExp.", '".$this->objeto->getColor()."',
-        '".$this->objeto->getAcabado()."',0.0,0.0,0.0,'".$this->objeto->getPrecio()."')";
+        '".$this->objeto->getAcabado()."',0.0,0.0,0.0,'".$this->objeto->getPrecio()."',1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -794,6 +794,38 @@ class DaoProductos extends DaoBase {
             return 0;
         }
     }
+
+    public function eliminarProducto() {
+
+        $_query = "update productosDetalle set idEliminado=2 where idAcabado=".$this->objeto->getAcabado()."
+        and idColor=".$this->objeto->getColor()." and idProductoFinal=".$this->objeto->getIdProducto();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+        
+    }
+
+    public function eliminarProductoInventario() {
+
+        $_query = "update inventario set idEliminado=2 where idAcabado=".$this->objeto->getAcabado()."
+        and idColor=".$this->objeto->getColor()." and idProducto=".$this->objeto->getIdProducto();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+        
+    }
+
+
 
 
 

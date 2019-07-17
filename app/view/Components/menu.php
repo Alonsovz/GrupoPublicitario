@@ -14,7 +14,11 @@
         }
         else if($_SESSION["descRol"] == 'Produccion') {
             require_once 'menuProduccion.php';
-        }else{
+        }
+        else if($_SESSION["descRol"] == 'Administrador Sustituto') {
+            require_once 'menuAdminSus.php';
+        }
+        else{
             require_once 'menuAsis.php';
         }
 

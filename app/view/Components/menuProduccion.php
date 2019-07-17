@@ -4,7 +4,7 @@
     <i class="dropdown icon"></i>
         <div class="default text" style="color:black; background-color:#BDBDBD;">
                 <i class="calendar check outline icon"></i>
-                <b>Tipo de productos</b>       
+                <b>Gestión de productos</b>       
         </div>
 
         <div class="menu">

@@ -159,7 +159,7 @@
     </div>
 
 </div>
-<script src="./res/tablas/tablaFinalizadasP.js"></script>
+<script src="./res/tablas/tablaFinalizadasGF.js"></script>
     <script>
     $(document).ready(function(){
     $("#gr").removeClass("ui gray button");

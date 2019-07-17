@@ -28,7 +28,7 @@ select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as prec
 DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
 o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
 TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
-format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC
+format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC,cl.categoria as tipoCliente
 from detalleOrdenIP d
 inner join ordenTrabajoIP o on o.idOrden = d.idOrden
 inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
@@ -38,8 +38,8 @@ inner join colores c on c.idColor = d.idColor
 inner join acabados a on a.idAcabado = d.idAcabado
 inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 inner join clientes cl on cl.idCliente = o.cliente
-inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle order by d.idDetalle desc
-");
+inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
+ YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc");
 
 
 $listadoP = $mysqli -> query ("
@@ -47,7 +47,7 @@ select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as prec
 DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
 o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
 TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
-format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC
+format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC,cl.categoria as tipoCliente
 from detalleOrdenP d
 inner join ordenTrabajoP o on o.idOrden = d.idOrden
 inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
@@ -57,7 +57,8 @@ inner join colores c on c.idColor = d.idColor
 inner join acabados a on a.idAcabado = d.idAcabado
 inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 inner join clientes cl on cl.idCliente = o.cliente
-inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle order by d.idDetalle desc");
+inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
+ YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc");
 
 
 $listadoGF = $mysqli -> query ("
@@ -65,7 +66,7 @@ select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as prec
 DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
 o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
 TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
-format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC
+format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC,cl.categoria as tipoCliente
 from detalleOrdenGR d
 inner join ordenTrabajoGR o on o.idOrden = d.idOrden
 inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
@@ -75,7 +76,8 @@ inner join colores c on c.idColor = d.idColor
 inner join acabados a on a.idAcabado = d.idAcabado
 inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 inner join clientes cl on cl.idCliente = o.cliente
-inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle order by d.idDetalle desc
+inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
+ YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc
 ");
 ?>
 
@@ -94,7 +96,7 @@ inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle order by d
     <th  style="text-align:center;border:1px solid white;width:10%;">N° NRC</th>
 
 
-    <th  style="text-align:center;border:1px solid white;width:8%;">Precio</th>
+    <th  style="text-align:center;border:1px solid white;width:8%;">Total a cobrar</th>
     <th  style="text-align:center;border:1px solid white;">Estatus</th>
     <th  style="text-align:center;border:1px solid white;">Dias de morosidad</th>
     <th  style="text-align:center;border:1px solid white;width:8%;">Total Cobrado</th>
@@ -105,6 +107,32 @@ inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle order by d
 </tr>
 <?php
 while ($row=mysqli_fetch_assoc($listadoIP)) {
+    $idOrden = $row["idOrden"];
+
+    $totalVentaGra = $mysqli -> query ("select format((sum(dp.precio) * 0.13) + sum(dp.precio),2) as ventasGR from detalleOrdenIP dp
+           inner join ordenTrabajoIP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalGR = $totalVentaGra->fetch_assoc();
+
+            $totalGR = $totalGR['ventasGR'];
+
+
+            $totalVentaEx = $mysqli -> query ("select format(sum(dp.precio),2) as ventasEx from detalleOrdenIP dp
+           inner join ordenTrabajoIP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Exenta' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalEx = $totalVentaEx->fetch_assoc();
+            $totalEx = $totalEx['ventasEx'];
+
+            $totalVentaNoS= $mysqli -> query ("select format(sum(dp.precio),2) as ventasNoS from detalleOrdenIP dp
+           inner join ordenTrabajoIP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta No Sujeta' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalNoS = $totalVentaNoS->fetch_assoc();
+            $totalNoS = $totalNoS['ventasNoS'];
+
+
     ?>
         <tr style="text-align:center;border:1px solid black;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
@@ -127,16 +155,37 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
                 }
             ?>
             <td style="text-align:center;border:1px solid black; background-color:#0B0678;color:white"><?php echo $row['clasificacion'];?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['descripciones'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nrc']);?></td>
             
 
-            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
+            <?php
+                if($totalGR>="100.00" and $row["tipoCliente"]=="Gran Contribuyente"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"> $ <?php
+                $debitoFiscal = $totalGR * 0.01;
+
+                $total = ($totalGR + $totalEx + $totalNoS)-$debitoFiscal;
+
+                echo number_format($total,2);
+            ?></td>
+            <?php
+                }else{
+
+                
+            ?>
+            <td style="text-align:center;border:1px solid black;">$ <?php 
+           $total = $totalGR + $totalEx + $totalNoS;
+
+            echo number_format($total,2);?></td>
+            <?php
+                }
+            ?>
 
             <?php
-            if($row["deuda"]>0){
+            if($total - $row['totalCobro'] >0){
 
             
             ?>
@@ -151,7 +200,7 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
             ?>
 
             <?php
-            if($row["deuda"]>0){
+            if($total - $row['totalCobro'] >0){
 
             
             ?>
@@ -168,13 +217,13 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
             <td style="text-align:center;border:1px solid black;">$ <?php echo $row['totalCobro'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro'];?></td>
             <?php
-            if($row["deuda"]>0){
+            if($total - $row['totalCobro'] >0){
 
             
             ?>
             <td style="text-align:center;border:1px solid black;"><button class="ui green small icon button"
-            deuda="<?php echo $row["deuda"];?>"
-            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+            deuda="<?php echo number_format($total - $row['totalCobro'],2);?>"
+            pro="<?php echo utf8_encode($row['productoFinal']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
              id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>"
              onclick="cobrar(this)"><i class="dollar icon"></i></button>
 
@@ -184,8 +233,8 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
              ?>
 
              <button class="ui blue small icon button"
-            deuda="<?php echo $row["deuda"];?>"
-            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             deuda="<?php echo number_format($total - $row['totalCobro'],2);?>"
+            pro="<?php echo utf8_encode($row['productoFinal']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
              id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>" factura="<?php echo $row["doc"]; ?>"
              onclick="enviarLibro(this)"><i class="send icon"></i></button>
 
@@ -208,8 +257,8 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
              ?>
 
              <button class="ui blue small icon button"
-            deuda="<?php echo $row["deuda"];?>"
-            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             deuda="<?php echo number_format($total - $row['totalCobro'],2);?>"
+            pro="<?php echo utf8_encode($row['productoFinal']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
              id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>" factura="<?php echo $row["doc"]; ?>"
              onclick="enviarLibro(this)"><i class="send icon"></i></button>
 
@@ -235,6 +284,31 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
 
 <?php
 while ($row=mysqli_fetch_assoc($listadoGF)) {
+
+    $idOrden = $row["idOrden"];
+
+    $totalVentaGra = $mysqli -> query ("select format((sum(dp.precio) * 0.13) + sum(dp.precio),2) as ventasGR from detalleOrdenGR dp
+           inner join ordenTrabajoGR op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalGR = $totalVentaGra->fetch_assoc();
+
+            $totalGR = $totalGR['ventasGR'];
+
+
+            $totalVentaEx = $mysqli -> query ("select format(sum(dp.precio),2) as ventasEx from detalleOrdenGR dp
+           inner join ordenTrabajoGR op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Exenta' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalEx = $totalVentaEx->fetch_assoc();
+            $totalEx = $totalEx['ventasEx'];
+
+            $totalVentaNoS= $mysqli -> query ("select format(sum(dp.precio),2) as ventasNoS from detalleOrdenGR dp
+           inner join ordenTrabajoGR op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta No Sujeta' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalNoS = $totalVentaNoS->fetch_assoc();
+            $totalNoS = $totalNoS['ventasNoS'];
     ?>
         <tr style="text-align:center;border:1px solid black;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
@@ -257,16 +331,37 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
                 }
             ?>
             <td style="text-align:center;border:1px solid black;background-color:#03440E;color:white"><?php echo $row['clasificacion'];?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['descripciones'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nrc']);?></td>
             
   
-            <td style="text-align:center;border:1px solid black;">$ <?php echo $row['precio'];?></td>
+            <?php
+                if($totalGR>="100.00" and $row["tipoCliente"]=="Gran Contribuyente"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"> $ <?php
+                $debitoFiscal = $totalGR * 0.01;
+
+                $total = ($totalGR + $totalEx + $totalNoS)-$debitoFiscal;
+
+                echo number_format($total,2);
+            ?></td>
+            <?php
+                }else{
+
+                
+            ?>
+            <td style="text-align:center;border:1px solid black;">$ <?php 
+           $total = $totalGR + $totalEx + $totalNoS;
+
+            echo number_format($total,2);?></td>
+            <?php
+                }
+            ?>
 
             <?php
-            if($row["deuda"]>0){
+            if($total - $row['totalCobro'] >0){
 
             
             ?>
@@ -280,7 +375,7 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
             }
             ?>
            <?php
-            if($row["deuda"]>0){
+            if($total - $row['totalCobro'] >0){
 
             
             ?>
@@ -297,13 +392,13 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
             <td style="text-align:center;border:1px solid black;">$ <?php echo $row['totalCobro'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro'];?></td>
             <?php
-            if($row["deuda"]>0){
+            if($total - $row['totalCobro'] >0){
 
             
             ?>
             <td style="text-align:center;border:1px solid black;"><button class="ui green small icon button"
-            deuda="<?php echo $row["deuda"];?>"
-            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+            deuda="<?php echo number_format($total - $row['totalCobro'],2);?>"
+            pro="<?php echo utf8_encode($row['productoFinal']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
              id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>"
              onclick="cobrar(this)"><i class="dollar icon"></i></button>
 
@@ -313,8 +408,8 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
              ?>
 
              <button class="ui blue small icon button"
-            deuda="<?php echo $row["deuda"];?>"
-            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             deuda="<?php echo number_format($total - $row['totalCobro'],2);?>"
+            pro="<?php echo utf8_encode($row['productoFinal']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
              id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>" factura="<?php echo $row["doc"]; ?>"
              onclick="enviarLibro(this)"><i class="send icon"></i></button>
 
@@ -337,8 +432,8 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
              ?>
 
              <button class="ui blue small icon button"
-            deuda="<?php echo $row["deuda"];?>"
-            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             deuda="<?php echo number_format($total - $row['totalCobro'],2);?>"
+            pro="<?php echo utf8_encode($row['productoFinal']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
              id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>" factura="<?php echo $row["doc"]; ?>"
              onclick="enviarLibro(this)"><i class="send icon"></i></button>
 
@@ -365,6 +460,31 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
 
 <?php
 while ($row=mysqli_fetch_assoc($listadoP)) {
+
+    $idOrden = $row["idOrden"];
+
+    $totalVentaGra = $mysqli -> query ("select format((sum(dp.precio) * 0.13) + sum(dp.precio),2) as ventasGR from detalleOrdenP dp
+           inner join ordenTrabajoP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalGR = $totalVentaGra->fetch_assoc();
+
+            $totalGR = $totalGR['ventasGR'];
+
+
+            $totalVentaEx = $mysqli -> query ("select format(sum(dp.precio),2) as ventasEx from detalleOrdenP dp
+           inner join ordenTrabajoP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Exenta' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalEx = $totalVentaEx->fetch_assoc();
+            $totalEx = $totalEx['ventasEx'];
+
+            $totalVentaNoS= $mysqli -> query ("select format(sum(dp.precio),2) as ventasNoS from detalleOrdenP dp
+           inner join ordenTrabajoP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta No Sujeta' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalNoS = $totalVentaNoS->fetch_assoc();
+            $totalNoS = $totalNoS['ventasNoS'];
     ?>
         <tr style="text-align:center;border:1px solid black;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
@@ -387,15 +507,36 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
                 }
             ?>
             <td style="text-align:center;border:1px solid black;background-color:#5C1106;color:white"><?php echo $row['clasificacion'];?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['descripciones'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nrc']);?></td>
-     
-            <td style="text-align:center;border:1px solid black;">$ <?php echo $row['precio'];?></td>
+            <?php
+                if($totalGR>="100.00" and $row["tipoCliente"]=="Gran Contribuyente"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"> $ <?php
+                $debitoFiscal = $totalGR * 0.01;
+
+                $total = ($totalGR + $totalEx + $totalNoS)-$debitoFiscal;
+
+                echo number_format($total,2);
+            ?></td>
+            <?php
+                }else{
+
+                
+            ?>
+            <td style="text-align:center;border:1px solid black;">$ <?php 
+           $total = $totalGR + $totalEx + $totalNoS;
+
+            echo number_format($total,2);?></td>
+            <?php
+                }
+            ?>
 
             <?php
-            if($row["deuda"]>0){
+
+            if($total - $row['totalCobro'] >0){
 
             
             ?>
@@ -409,7 +550,7 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
             }
             ?>
             <?php
-            if($row["deuda"]>0){
+            if($total - $row['totalCobro'] >0){
 
             
             ?>
@@ -426,13 +567,13 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
             <td style="text-align:center;border:1px solid black;">$ <?php echo $row['totalCobro'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro'];?></td>
             <?php
-            if($row["deuda"]>0){
+            if($total - $row['totalCobro'] >0){
 
             
             ?>
             <td style="text-align:center;border:1px solid black;"><button class="ui green small icon button"
-            deuda="<?php echo $row["deuda"];?>"
-            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+            deuda="<?php echo number_format($total - $row['totalCobro'],2);?>"
+            pro="<?php echo utf8_encode($row['productoFinal']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
              id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>"
              onclick="cobrar(this)"><i class="dollar icon"></i></button>
 
@@ -442,8 +583,8 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
              ?>
 
              <button class="ui blue small icon button"
-            deuda="<?php echo $row["deuda"];?>"
-            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             deuda="<?php echo number_format($total - $row['totalCobro'],2);?>"
+            pro="<?php echo utf8_encode($row['productoFinal']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
              id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>" factura="<?php echo $row["doc"]; ?>"
              onclick="enviarLibro(this)"><i class="send icon"></i></button>
 
@@ -466,8 +607,8 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
              ?>
 
              <button class="ui blue small icon button"
-            deuda="<?php echo $row["deuda"];?>"
-            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+             deuda="<?php echo number_format($total - $row['totalCobro'],2);?>"
+            pro="<?php echo utf8_encode($row['productoFinal']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
              id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>" factura="<?php echo $row["doc"]; ?>"
              onclick="enviarLibro(this)"><i class="send icon"></i></button>
 

@@ -325,6 +325,7 @@ var app = new Vue({
     $(document).ready(function(){
     $("#pro").removeClass("ui red button");
     $("#pro").addClass("ui red basic button");
+    $('#precio').mask("###0.00", {reverse: true});
     app.eliminarDetalle(0);
     });
 

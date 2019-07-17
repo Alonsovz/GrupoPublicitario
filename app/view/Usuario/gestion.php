@@ -326,6 +326,7 @@
                                     <option value="1">Administrador/a</option>
                                     <option value="2">Producción</option>
                                     <option value="3">Asistente</option>
+                                    <option value="5">Administrador Sustituto</option>
                                 </select>       
                             </div>
                             

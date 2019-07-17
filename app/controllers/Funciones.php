@@ -3,7 +3,7 @@
 class Funciones extends ControladorBase {
 
     public function proveedor(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
         $tipoSum=$_POST['tipoSum'];
 
 	$sql="SELECT idProducto,
@@ -24,7 +24,7 @@ class Funciones extends ControladorBase {
 	}
 
 	public function proveedorGastos(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
         $tipoSum=$_POST['tipoSum'];
 
 	$sql="SELECT idGasto,
@@ -48,7 +48,7 @@ class Funciones extends ControladorBase {
 
 
     public function proveedorEdit(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
         $tipoSum=$_POST['tipoSumE'];
 
 	$sql="SELECT idProducto,
@@ -68,7 +68,7 @@ class Funciones extends ControladorBase {
 	}
 	
 	public function clienteDirec(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
         $idCliente=$_POST['id'];
 
 	$sql="SELECT direccion
@@ -87,7 +87,7 @@ class Funciones extends ControladorBase {
 	}
 	
 	public function clienteDepar(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
         $idCliente=$_POST['id'];
 
 	$sql="SELECT departamento
@@ -106,7 +106,7 @@ class Funciones extends ControladorBase {
 	}
 	
 	public function clienteNit(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
         $idCliente=$_POST['id'];
 
 	$sql="SELECT nit
@@ -125,7 +125,7 @@ class Funciones extends ControladorBase {
 	}
 	
 	public function clienteGiro(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
         $idCliente=$_POST['id'];
 
 	$sql="SELECT giro
@@ -145,7 +145,7 @@ class Funciones extends ControladorBase {
 
 
     public function productoFinalGr(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
         $idPro=$_POST['idPro'];
 
 	$sql="SELECT idProductoFinal,
@@ -166,13 +166,13 @@ class Funciones extends ControladorBase {
 	
 
 	public function unidadMedida(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
         $idPro=$_POST['idPro'];
 
 	$sql="SELECT m.medida from medidas m
 	inner join productosDetalle p on p.idMedida = m.idMedida
 			inner join productoFinal  f on f.idProductoFinal = p.idProductoFinal 
-			where f.idProductoFinal='$idPro' group by m.medida";
+			where f.idProductoFinal='$idPro' and p.idEliminado=1 group by m.medida";
 
 	$result=mysqli_query($conexion,$sql);
 
@@ -187,13 +187,13 @@ class Funciones extends ControladorBase {
 	
 
 	public function acabado(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
         $idPro=$_POST['idPro'];
 
 	$sql="SELECT m.idAcabado, m.acabado from acabados m
 	inner join productosDetalle p on p.idAcabado = m.idAcabado
 			inner join productoFinal  f on f.idProductoFinal = p.idProductoFinal 
-			where f.idProductoFinal='$idPro' group by acabado";
+			where f.idProductoFinal='$idPro' and p.idEliminado=1 group by acabado";
 
 	$result=mysqli_query($conexion,$sql);
 
@@ -208,13 +208,13 @@ class Funciones extends ControladorBase {
 
 
 	public function color(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
         $idPro=$_POST['idPro'];
 
 	$sql="SELECT m.idColor, m.color from colores m
 	inner join productosDetalle p on p.idColor = m.idColor
 			inner join productoFinal  f on f.idProductoFinal = p.idProductoFinal 
-			where f.idProductoFinal='$idPro' group by color";
+			where f.idProductoFinal='$idPro' and p.idEliminado=1 group by color";
 
 	$result=mysqli_query($conexion,$sql);
 
@@ -228,7 +228,7 @@ class Funciones extends ControladorBase {
 	}
 
 	public function verDetallesProFinal(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idPro=$_POST['id'];
 		
 
@@ -254,7 +254,7 @@ class Funciones extends ControladorBase {
 	
 
 	public function verDetallesColor(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idPro=$_POST['idC'];
 	
 
@@ -267,7 +267,7 @@ class Funciones extends ControladorBase {
 				inner join inventario i on i.idProducto= p.idProductoFinal
 				and i.idColor=p.idColor and i.idAcabado = p.idAcabado
 				inner join productoFinal pF on pF.idProductoFinal = p.idProductoFinal
-		 where pF.idProductoFinal='".$idPro."' group by p.idProductoFinal,p.idAcabado,p.idColor order by precioSugerido asc";
+		 where pF.idProductoFinal='".$idPro."' and p.idEliminado=1 group by p.idProductoFinal,p.idAcabado,p.idColor order by precioSugerido asc";
 
 		$result=mysqli_query($conexion,$sql);
 
@@ -278,6 +278,7 @@ class Funciones extends ControladorBase {
 		<th style='color:white;background-color:black;' height='40px;'>Color</th>
 		<th style='color:white;background-color:black;' height='40px;'>Medida</th>
 		<th style='color:white;background-color:black;' height='40px;'>Precio Sugerido</th>
+		<th style='color:white;background-color:black;' height='40px;'><i class='cogs icon'></i></th>
 		</tr>
 		";
 		while ($ver=mysqli_fetch_assoc($result)) {
@@ -296,7 +297,11 @@ class Funciones extends ControladorBase {
 			<td style="border:1px solid black;">
 			$'.utf8_encode($ver["precioSugerido"]).'
 			</td>
-			
+			<td style="border:1px solid black;">
+			<a class="ui red small icon button" idProducto='.$ver["idProductoFinal"].' idColor='.$ver["idColor"].'
+			idAcabado='.$ver["idAcabado"].' onclick="borrarProducto(this)"
+			><i class="trash icon"></i></a>
+			</td>
 			 
 			 
 			 </tr>';
@@ -312,7 +317,7 @@ class Funciones extends ControladorBase {
 	
 
 	public function colores(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['idCla'];
 
 		if($_POST['idCla']){
@@ -327,9 +332,9 @@ class Funciones extends ControladorBase {
 				<th style='font-size:20px;background-color:#FACA8C;'><i class='cogs icon'></i></th>
 			</tr>
 			";
-			while ($ver=mysqli_fetch_row($result)) {
-				$cadena=$cadena.'<tr><td>'.utf8_encode($ver[1]).'</td>
-				<td><a id='.$ver[0].' color="'.utf8_encode($ver[1]).'" class="ui icon orange small button" onclick="eliminarColorPaleta(this)">
+			while ($ver=mysqli_fetch_assoc($result)) {
+				$cadena=$cadena.'<tr><td>'.utf8_encode($ver["color"]).'</td>
+				<td><a id='.$ver["idColor"].' color="'.utf8_encode($ver["color"]).'" class="ui icon orange small button" onclick="eliminarColorPaleta(this)">
 				<i class="trash icon"></i></a></td></tr>';
 			}
 			$cadena=$cadena."
@@ -343,7 +348,7 @@ class Funciones extends ControladorBase {
 
 
 	public function acabados(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['idCla'];
 
 		if($_POST['idCla']){
@@ -358,9 +363,9 @@ class Funciones extends ControladorBase {
 				<th style='font-size:20px;background-color:#89DE5F;'><i class='cogs icon'></i></th>
 			</tr>
 			";
-			while ($ver=mysqli_fetch_row($result)) {
-				$cadena=$cadena.'<tr><td>'.utf8_encode($ver[1]).'</td>
-				<td><a id='.$ver[0].' acabado="'.utf8_encode($ver[1]).'" class="ui icon green small button" onclick="eliminarAcabadoPaleta(this)">
+			while ($ver=mysqli_fetch_assoc($result)) {
+				$cadena=$cadena.'<tr><td>'.utf8_encode($ver["acabado"]).'</td>
+				<td><a id='.$ver["idAcabado"].' acabado="'.utf8_encode($ver["acabado"]).'" class="ui icon green small button" onclick="eliminarAcabadoPaleta(this)">
 				<i class="trash icon"></i></a></td></tr>';
 			}
 			$cadena=$cadena."
@@ -374,7 +379,7 @@ class Funciones extends ControladorBase {
 
 
 	public function medidas(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['idCla'];
 
 		if($_POST['idCla']){
@@ -389,9 +394,9 @@ class Funciones extends ControladorBase {
 				<th style='font-size:20px;background-color:#D6A7F4;'><i class='cogs icon'></i></th>
 			</tr>
 			";
-			while ($ver=mysqli_fetch_row($result)) {
-				$cadena=$cadena.'<tr><td>'.utf8_encode($ver[1]).'</td>
-				<td><a id='.$ver[0].' medida="'.utf8_encode($ver[1]).'" class="ui icon purple small button" onclick="eliminarMedidaPaleta(this)">
+			while ($ver=mysqli_fetch_assoc($result)) {
+				$cadena=$cadena.'<tr><td>'.utf8_encode($ver["medida"]).'</td>
+				<td><a id='.$ver["idMedida"].' medida="'.utf8_encode($ver["medida"]).'" class="ui icon purple small button" onclick="eliminarMedidaPaleta(this)">
 				<i class="trash icon"></i></a></td></tr>';
 			}
 			$cadena=$cadena."
@@ -405,7 +410,7 @@ class Funciones extends ControladorBase {
 
 
 	public function proveedorCondicion(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['idPro'];
 
 		if($_POST['idPro']){
@@ -426,7 +431,7 @@ class Funciones extends ControladorBase {
 
 
 	public function proveedorProductos(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['idPro'];
 
 		if($_POST['idPro']){
@@ -451,7 +456,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesRequisicion(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['id'];
 
 		if($_POST['id']){
@@ -515,7 +520,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesRequisicionAp(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['id'];
 
 		if($_POST['id']){
@@ -598,7 +603,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesOTIP(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['id'];
 
 		if($_POST['id']){
@@ -630,7 +635,7 @@ class Funciones extends ControladorBase {
 					<b>Acabado:</b> '.utf8_encode($ver["acabado"]).'<br>
 				</td>
 				<td>
-				'.utf8_encode($ver["cantidad"]). ' ' .utf8_encode($ver["medida"]).'
+				'.utf8_encode($ver["cantidad"]). '
 				</td>
 
 				<td>
@@ -669,7 +674,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesOTP(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['id'];
 
 		if($_POST['id']){
@@ -701,7 +706,7 @@ class Funciones extends ControladorBase {
 					<b>Acabado:</b> '.utf8_encode($ver["acabado"]).'<br>
 				</td>
 				<td>
-				'.utf8_encode($ver["cantidad"]). ' ' .utf8_encode($ver["medida"]).'
+				'.utf8_encode($ver["cantidad"]). '
 				</td>
 
 				<td>
@@ -741,7 +746,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesOTGR(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['id'];
 
 		if($_POST['id']){
@@ -776,7 +781,7 @@ class Funciones extends ControladorBase {
 					<b>Acabado:</b> '.utf8_encode($ver["acabado"]).'<br>
 				</td>
 				<td>
-				'.utf8_encode($ver["cantidad"]). ' ' .utf8_encode($ver["medida"]).'
+				'.utf8_encode($ver["cantidad"]).'
 				</td>
 
 				<td>
@@ -817,7 +822,7 @@ class Funciones extends ControladorBase {
 
 
 	public function gastosOficina(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['idCla'];
 
 		if($_POST['idCla']){
@@ -850,7 +855,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesProFinalInventario(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idPro=$_POST['id'];
 		
 
@@ -878,7 +883,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesInventarioGR(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idPro=$_POST['idC'];
 	
 
@@ -891,7 +896,7 @@ class Funciones extends ControladorBase {
 		inner join acabados a on a.idAcabado = i.idAcabado
 		inner join medidas m on m.idMedida = pc.idMedida
 		inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
-		where p.idProductoFinal =".$idPro." group by i.idProducto,i.idColor,i.idAcabado order by precioSug asc";
+		where p.idProductoFinal =".$idPro." and i.idEliminado=1 group by i.idProducto,i.idColor,i.idAcabado order by precioSug asc";
 
 		$result=mysqli_query($conexion,$sql);
 
@@ -999,7 +1004,7 @@ class Funciones extends ControladorBase {
 	}
 
 	public function verDetallesInventario(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idPro=$_POST['idC'];
 	
 
@@ -1012,7 +1017,7 @@ class Funciones extends ControladorBase {
 		inner join acabados a on a.idAcabado = i.idAcabado
 		inner join medidas m on m.idMedida = pc.idMedida
 		inner join productoFinal p on p.idProductoFinal = pc.idProductoFinal
-		where p.idProductoFinal =".$idPro." group by i.idProducto,i.idColor,i.idAcabado";
+		where p.idProductoFinal =".$idPro." and i.idEliminado=1 group by i.idProducto,i.idColor,i.idAcabado";
 
 		$result=mysqli_query($conexion,$sql);
 
@@ -1104,13 +1109,13 @@ class Funciones extends ControladorBase {
 	}
 
 	public function precioUnitario(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idPro=$_POST['idPro'];
 		$idColor=$_POST['idColor'];
 		$idAcabado=$_POST['idAcabado'];
 
 	$sql="SELECT format(precioSugerido,2) from inventario
-			where idProducto='$idPro' and idColor = '$idColor' and idAcabado = '$idAcabado'";
+			where idProducto='$idPro' and idColor = '$idColor' and idAcabado = '$idAcabado' and idEliminado=1";
 
 	$result=mysqli_query($conexion,$sql);
 
@@ -1124,13 +1129,13 @@ class Funciones extends ControladorBase {
 	}
 
 	public function precioDes(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idPro=$_POST['idPro'];
 		$idColor=$_POST['idColor'];
 		$idAcabado=$_POST['idAcabado'];
 
 	$sql="SELECT format(precioDesperdicio,2) from inventario
-			where idProducto='$idPro' and idColor = '$idColor' and idAcabado = '$idAcabado'";
+			where idProducto='$idPro' and idColor = '$idColor' and idAcabado = '$idAcabado' and idEliminado=1";
 
 	$result=mysqli_query($conexion,$sql);
 
@@ -1145,13 +1150,13 @@ class Funciones extends ControladorBase {
 
 
 	public function existencia(){
-        $conexion= new mysqli('localhost','root','','grupoPublicitario');
+        $conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idPro=$_POST['idPro'];
 		$idColor=$_POST['idColor'];
 		$idAcabado=$_POST['idAcabado'];
 
 	$sql="SELECT cantidadExistencia from inventario
-			where idProducto='$idPro' and idColor = '$idColor' and idAcabado = '$idAcabado'";
+			where idProducto='$idPro' and idColor = '$idColor' and idAcabado = '$idAcabado' group by idProducto,idColor,idAcabado";
 
 	$result=mysqli_query($conexion,$sql);
 
@@ -1167,7 +1172,7 @@ class Funciones extends ControladorBase {
 
 
 	public function proveedorCondicionGasto(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['idPro'];
 
 		if($_POST['idPro']){
@@ -1188,7 +1193,7 @@ class Funciones extends ControladorBase {
 
 
 	public function proveedorNombreGasto(){
-		$conexion= new mysqli('localhost','root','','grupoPublicitario');
+		$conexion= new mysqli('localhost','root','','grupopublicitario');
 		$idC=$_POST['idPro'];
 
 		if($_POST['idPro']){

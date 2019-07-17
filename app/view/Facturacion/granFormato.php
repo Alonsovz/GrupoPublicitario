@@ -271,6 +271,8 @@ $("#notaCredito").click(function(){
                 }).then((result) => {
                     if (result.value) {
                         location.reload();
+                        window.open('?1=FacturacionController&2=imprimirNota','_blank');
+                                return false;
                     }
                 }); 
                 

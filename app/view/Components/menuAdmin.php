@@ -31,7 +31,7 @@
 
     <a href="?1=UsuarioController&2=gestion" class="item menu-it" style="color:black; font-size:13px;font-weight:bold;">
         <i class="users icon"></i><i class="computer icon"></i>
-        Usuarios
+        Recursos Humanos
     </a>
 
     </div>
@@ -48,7 +48,7 @@
     <i class="dropdown icon"></i>
         <div class="default text" style="color:black; background-color:#BDBDBD;">
                 <i class="calendar check outline icon"></i>
-                <b>Tipo de productos</b>       
+                <b>Gestión de productos</b>       
         </div>
 
         <div class="menu">

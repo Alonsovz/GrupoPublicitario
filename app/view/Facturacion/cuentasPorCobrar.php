@@ -25,91 +25,148 @@ require_once './vendor/autoload.php';
 $mysqli = new mysqli('localhost','root','','grupopublicitario');
 $listadoIP = $mysqli -> query ("
 select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,o.*,
-DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
-o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
-TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
-format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC
-from detalleOrdenIP d
-inner join ordenTrabajoIP o on o.idOrden = d.idOrden
-inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
-inner join clasificacionProductos cp on cp.idProducto = p.idProducto
-inner join tipoProductos t on t.idClasificacion = cp.idClasificacion
-inner join colores c on c.idColor = d.idColor
-inner join acabados a on a.idAcabado = d.idAcabado
-inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
-inner join clientes cl on cl.idCliente = o.cliente
-inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle
+    DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
+    o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
+    TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
+    format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC,cl.categoria as tipoCliente,cl.*
+    from detalleOrdenIP d
+    inner join ordenTrabajoIP o on o.idOrden = d.idOrden
+    inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+    inner join clasificacionProductos cp on cp.idProducto = p.idProducto
+    inner join tipoProductos t on t.idClasificacion = cp.idClasificacion
+    inner join colores c on c.idColor = d.idColor
+    inner join acabados a on a.idAcabado = d.idAcabado
+    inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
+    inner join clientes cl on cl.idCliente = o.cliente
+    inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
+     YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc
 ");
 
 
 $listadoP = $mysqli -> query ("
 select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,o.*,
-DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
-o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
-TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
-format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC
-from detalleOrdenP d
-inner join ordenTrabajoP o on o.idOrden = d.idOrden
-inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
-inner join clasificacionProductos cp on cp.idProducto = p.idProducto
-inner join tipoProductos t on t.idClasificacion = cp.idClasificacion
-inner join colores c on c.idColor = d.idColor
-inner join acabados a on a.idAcabado = d.idAcabado
-inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
-inner join clientes cl on cl.idCliente = o.cliente
-inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle");
+    DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
+    o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
+    TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
+    format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC,cl.categoria as tipoCliente,cl.*
+    from detalleOrdenP d
+    inner join ordenTrabajoP o on o.idOrden = d.idOrden
+    inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+    inner join clasificacionProductos cp on cp.idProducto = p.idProducto
+    inner join tipoProductos t on t.idClasificacion = cp.idClasificacion
+    inner join colores c on c.idColor = d.idColor
+    inner join acabados a on a.idAcabado = d.idAcabado
+    inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
+    inner join clientes cl on cl.idCliente = o.cliente
+    inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
+     YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc");
 
 
 $listadoGF = $mysqli -> query ("
 select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,o.*,
-DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
-o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
-TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
-format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC
-from detalleOrdenGR d
-inner join ordenTrabajoGR o on o.idOrden = d.idOrden
-inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
-inner join clasificacionProductos cp on cp.idProducto = p.idProducto
-inner join tipoProductos t on t.idClasificacion = cp.idClasificacion
-inner join colores c on c.idColor = d.idColor
-inner join acabados a on a.idAcabado = d.idAcabado
-inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
-inner join clientes cl on cl.idCliente = o.cliente
-inner join medidas m on m.idMedida = pm.idMedida group by d.idDetalle
+    DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
+    o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
+    TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
+    format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC,cl.categoria as tipoCliente,cl.*
+    from detalleOrdenGR d
+    inner join ordenTrabajoGR o on o.idOrden = d.idOrden
+    inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+    inner join clasificacionProductos cp on cp.idProducto = p.idProducto
+    inner join tipoProductos t on t.idClasificacion = cp.idClasificacion
+    inner join colores c on c.idColor = d.idColor
+    inner join acabados a on a.idAcabado = d.idAcabado
+    inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
+    inner join clientes cl on cl.idCliente = o.cliente
+    inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
+     YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc
 ");
 ?>
 
 <br>
-<div class="content" id="imp">
+<div class="content">
 <br>
 <table class="ui table bordered" style="width:100%;">
 
     <tr style="border:1px solid white;text-align:center;background-color:black;color:white;" height="40">
-    <th  style="border:1px solid white;width:5%;">Fecha</th>
-    <th  style="border:1px solid white;width:6%;">Tipo DOC</th>
-    <th  style="border:1px solid white;width:10%;">Tipo PRO</th>
-    <th  style="border:1px solid white;">Clasificación</th>
-    <th  style="text-align:center;border:1px solid white;width:10%;">Nombre de Cliente</th>
-    <th  style="text-align:center;border:1px solid white;width:10%;">Detalle</th>
+    <th rowspan="2"  style="border:1px solid white;width:5%;">Fecha</th>
+    <th rowspan="2"  style="border:1px solid white;width:6%;">Tipo DOC</th>
+    <th rowspan="2"  style="border:1px solid white;width:10%;">Tipo PRO</th>
+    <th rowspan="2"  style="border:1px solid white;">Clasificación</th>
+    <th rowspan="2"  style="text-align:center;border:1px solid white;width:10%;">Nombre Cliente</th>
+    
+    <th rowspan="2"  style="text-align:center;border:1px solid white;width:8%;">Total</th>
+    <th rowspan="2"  style="text-align:center;border:1px solid white;width:8%;">Deuda</th>
+    <th rowspan="2"  style="text-align:center;border:1px solid white;width:8%;">Cartera Corr</th>
+    <th colspan="5" style="text-align:center;border:1px solid white;">Morosidad (Días)</th>
+    <th rowspan="2" style="text-align:center;border:1px solid white;width:5%;"><i class="book icon"></i></th>
 
+    
+    
 
-    <th  style="text-align:center;border:1px solid white;width:8%;">Total</th>
-    <th  style="text-align:center;border:1px solid white;width:8%;">Cartera Corr</th>
-    <th  style="text-align:center;border:1px solid white;width:8%;">1 a 30 dias</th>
-    <th  style="text-align:center;border:1px solid white;width:8%;">31 a 60 dias</th>
-    <th  style="text-align:center;border:1px solid white;width:8%;">61 a 90 días</th>
-    <th  style="text-align:center;border:1px solid white;width:8%;">91 a 180 días</th>
-    <th  style="text-align:center;border:1px solid white;width:8%;">181 a 360 días</th>
-    <th  style="text-align:center;border:1px solid white;width:9%;"><i class="book icon"></i></th>
+    
+    <tr style="color:white; background-color:black;border:1px solid white;text-align:center;">
+    <th  style="text-align:center;border:1px solid white;width:8%;">1 a 30 </th>
+    <th  style="text-align:center;border:1px solid white;width:8%;">31 a 60 </th>
+    <th  style="text-align:center;border:1px solid white;width:8%;">61 a 90 </th>
+    <th  style="text-align:center;border:1px solid white;width:8%;">91 a 180 </th>
+    <th  style="text-align:center;border:1px solid white;width:10%;">181 a 360</th>
+    </tr>
+    
 
     
 </tr>
 <?php
 while ($row=mysqli_fetch_assoc($listadoIP)) {
-    ?>
+    $idOrden = $row["idOrden"];
 
-    <?php
-    if($row["deuda"]>0){
+         $totalVentaGra = $mysqli -> query ("select format((sum(dp.precio) * 0.13) + sum(dp.precio),2) as ventasGR from detalleOrdenIP dp
+           inner join ordenTrabajoIP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalGR = $totalVentaGra->fetch_assoc();
+
+            $totalGR = $totalGR['ventasGR'];
+
+            $totalVentaIVA = $mysqli -> query ("select format(sum(dp.precio) * 0.13 ,2) as ventasGR from detalleOrdenIP dp
+           inner join ordenTrabajoIP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalIVA = $totalVentaIVA->fetch_assoc();
+
+            $totalIVA = $totalIVA['ventasGR'];
+
+
+            $totalVentaEx = $mysqli -> query ("select format(sum(dp.precio),2) as ventasEx from detalleOrdenIP dp
+           inner join ordenTrabajoIP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Exenta' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalEx = $totalVentaEx->fetch_assoc();
+            $totalEx = $totalEx['ventasEx'];
+
+            $totalVentaNoS= $mysqli -> query ("select format(sum(dp.precio),2) as ventasNoS from detalleOrdenIP dp
+           inner join ordenTrabajoIP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta No Sujeta' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalNoS = $totalVentaNoS->fetch_assoc();
+            $totalNoS = $totalNoS['ventasNoS'];
+
+          
+                if($totalGR>="100.00" and $row["tipoCliente"]=="Gran Contribuyente"){
+            
+                $debitoFiscal = $totalGR * 0.01;
+
+                $totalC = ($totalGR + $totalEx + $totalNoS)-$debitoFiscal;
+
+                
+            
+                }else{
+           $totalC = $totalGR + $totalEx + $totalNoS;
+                }
+
+     
+            
+
+    if($totalC - $row["totalCobro"]>0){
     ?>
         <tr style="text-align:center;border:1px solid black;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
@@ -132,27 +189,99 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
                 }
             ?>
             <td style="text-align:center;border:1px solid black; background-color:#0B0678;color:white"><?php echo $row['clasificacion'];?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['descripciones'];?></td>
-           
-            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
+            
+            <td style="text-align:center;border:1px solid black;"> $ <?php echo number_format($totalC,2);?></td>
 
-            <td style="text-align:center;border:1px solid black;"></td>
+            <td style="text-align:center;border:1px solid black;">$ <?php echo number_format($totalC - $row["totalCobro"],2) ; ?></td>
 
-            <td style="text-align:center;border:1px solid black;"></td>
-            <td style="text-align:center;border:1px solid black;"></td>
-            <td style="text-align:center;border:1px solid black;"></td>
-            <td style="text-align:center;border:1px solid black;"></td>
-            <td style="text-align:center;border:1px solid black;"></td>
+            <?php
+                if($row["diasMoro"]<="30"){
+            ?>
+            <td style="text-align:center;border:1px solid black;">$ <?php
+            echo number_format($totalC,2);?></td>
+            <?php
+                }else{
+
+                
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>="1" and $row["diasMoro"]<="30"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+             echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{
+
+                
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>"30" and $row["diasMoro"]<="60"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+             echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{
+
+                
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>"61" and $row["diasMoro"]<="90"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+              echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{  
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>"91" and $row["diasMoro"]<="180"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+              echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{  
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>"180" and $row["diasMoro"]<="360"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+              echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{  
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
             
             <td style="text-align:center;border:1px solid black;">
              
-             <button class="ui blue small icon button"
-            deuda="<?php echo $row["deuda"];?>"
-            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+            <button class="ui green small icon button"
+            deuda="<?php echo number_format($totalC - $row['totalCobro'],2);?>"
+            pro="<?php echo utf8_encode($row['productoFinal']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
              id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>"
-             onclick="enviarLibro(this)"><i class="send icon"></i></button>
+             onclick="cobrar(this)"><i class="dollar icon"></i></button>
              </td>
             
             
@@ -171,9 +300,52 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
 
 <?php
 while ($row=mysqli_fetch_assoc($listadoGF)) {
-    ?>
-       <?php
-    if($row["deuda"]>0){
+    $idOrden = $row["idOrden"];
+
+    $totalVentaGra = $mysqli -> query ("select format((sum(dp.precio) * 0.13) + sum(dp.precio),2) as ventasGR from detalleOrdenGR dp
+           inner join ordenTrabajoGR op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalGR = $totalVentaGra->fetch_assoc();
+
+            $totalGR = $totalGR['ventasGR'];
+
+            $totalVentaIVA = $mysqli -> query ("select format(sum(dp.precio) * 0.13 ,2) as ventasGR from detalleOrdenGR dp
+           inner join ordenTrabajoGR op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalIVA = $totalVentaIVA->fetch_assoc();
+
+            $totalIVA = $totalIVA['ventasGR'];
+
+
+            $totalVentaEx = $mysqli -> query ("select format(sum(dp.precio),2) as ventasEx from detalleOrdenGR dp
+           inner join ordenTrabajoGR op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Exenta' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalEx = $totalVentaEx->fetch_assoc();
+            $totalEx = $totalEx['ventasEx'];
+
+            $totalVentaNoS= $mysqli -> query ("select format(sum(dp.precio),2) as ventasNoS from detalleOrdenGR dp
+           inner join ordenTrabajoGR op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta No Sujeta' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalNoS = $totalVentaNoS->fetch_assoc();
+            $totalNoS = $totalNoS['ventasNoS'];
+
+            if($totalGR>="100.00" and $row["tipoCliente"]=="Gran Contribuyente"){
+            
+                $debitoFiscal = $totalGR * 0.01;
+
+                $totalC = ($totalGR + $totalEx + $totalNoS)-$debitoFiscal;
+
+                
+            
+                }else{
+           $totalC = $totalGR + $totalEx + $totalNoS;
+                }
+
+    if($totalC - $row["totalCobro"]>0){
     ?>
         <tr style="text-align:center;border:1px solid black;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
@@ -196,27 +368,99 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
                 }
             ?>
             <td style="text-align:center;border:1px solid black; background-color:#03440E;color:white"><?php echo $row['clasificacion'];?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['descripciones'];?></td>
+            
            
-            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
+            <td style="text-align:center;border:1px solid black;"> $ <?php echo number_format($totalC,2);?></td>
+            <td style="text-align:center;border:1px solid black;">$ <?php echo number_format($totalC - $row["totalCobro"],2) ; ?></td>
+            <?php
+                if($row["diasMoro"]<="30"){
+            ?>
+            <td style="text-align:center;border:1px solid black;">$ <?php
+            echo number_format($totalC,2);?></td>
+            <?php
+                }else{
 
-            <td style="text-align:center;border:1px solid black;"></td>
+                
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
 
-            <td style="text-align:center;border:1px solid black;"></td>
-            <td style="text-align:center;border:1px solid black;"></td>
-            <td style="text-align:center;border:1px solid black;"></td>
-            <td style="text-align:center;border:1px solid black;"></td>
-            <td style="text-align:center;border:1px solid black;"></td>
+            <?php
+                if($row["diasMoro"]>="1" and $row["diasMoro"]<="30"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+              echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{
+
+                
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>"30" and $row["diasMoro"]<="60"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+             echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{
+
+                
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>"61" and $row["diasMoro"]<="90"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+              echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{  
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>"91" and $row["diasMoro"]<="180"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+              echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{  
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>"180" and $row["diasMoro"]<="360"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+              echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{  
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
             
             <td style="text-align:center;border:1px solid black;">
              
-             <button class="ui blue small icon button"
-            deuda="<?php echo $row["deuda"];?>"
-            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+            <button class="ui green small icon button"
+            deuda="<?php echo number_format($totalC - $row['totalCobro'],2);?>"
+            pro="<?php echo utf8_encode($row['productoFinal']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
              id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>"
-             onclick="enviarLibro(this)"><i class="send icon"></i></button>
+             onclick="cobrar(this)"><i class="dollar icon"></i></button>
              </td>
             
             
@@ -236,9 +480,51 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
 
 <?php
 while ($row=mysqli_fetch_assoc($listadoP)) {
-    ?>
-        <?php
-    if($row["deuda"]>0){
+    $idOrden = $row["idOrden"];
+
+    $totalVentaGra = $mysqli -> query ("select format((sum(dp.precio) * 0.13) + sum(dp.precio),2) as ventasGR from detalleOrdenP dp
+           inner join ordenTrabajoP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalGR = $totalVentaGra->fetch_assoc();
+
+            $totalGR = $totalGR['ventasGR'];
+
+            $totalVentaIVA = $mysqli -> query ("select format(sum(dp.precio) * 0.13 ,2) as ventasGR from detalleOrdenP dp
+           inner join ordenTrabajoP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalIVA = $totalVentaIVA->fetch_assoc();
+
+            $totalIVA = $totalIVA['ventasGR'];
+
+
+            $totalVentaEx = $mysqli -> query ("select format(sum(dp.precio),2) as ventasEx from detalleOrdenP dp
+           inner join ordenTrabajoP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Exenta' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalEx = $totalVentaEx->fetch_assoc();
+            $totalEx = $totalEx['ventasEx'];
+
+            $totalVentaNoS= $mysqli -> query ("select format(sum(dp.precio),2) as ventasNoS from detalleOrdenP dp
+           inner join ordenTrabajoP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta No Sujeta' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalNoS = $totalVentaNoS->fetch_assoc();
+            $totalNoS = $totalNoS['ventasNoS'];
+
+            if($totalGR>="100.00" and $row["tipoCliente"]=="Gran Contribuyente"){
+            
+                $debitoFiscal = $totalGR * 0.01;
+
+                $totalC = ($totalGR + $totalEx + $totalNoS)-$debitoFiscal;
+
+                
+            
+                }else{
+           $totalC = $totalGR + $totalEx + $totalNoS;
+                }
+    if($totalC - $row["totalCobro"]>0){
     ?>
         <tr style="text-align:center;border:1px solid black;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
@@ -261,27 +547,101 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
                 }
             ?>
             <td style="text-align:center;border:1px solid black; background-color:#5C1106;color:white"><?php echo $row['clasificacion'];?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['descripciones'];?></td>
            
-            <td style="text-align:center;border:1px solid black;"> $ <?php echo $row['precio'];?></td>
+            
+            <td style="text-align:center;border:1px solid black;"> $ <?php echo number_format($totalC,2);?></td>
+            
+        <td style="text-align:center;border:1px solid black;">$ <?php echo number_format($totalC - $row["totalCobro"],2) ; ?></td>
 
-            <td style="text-align:center;border:1px solid black;"></td>
+        <?php
+                if($row["diasMoro"]<="30"){
+            ?>
+            <td style="text-align:center;border:1px solid black;">$ <?php
+            echo number_format($totalC,2);?></td>
+            <?php
+                }else{
 
-            <td style="text-align:center;border:1px solid black;"></td>
-            <td style="text-align:center;border:1px solid black;"></td>
-            <td style="text-align:center;border:1px solid black;"></td>
-            <td style="text-align:center;border:1px solid black;"></td>
-            <td style="text-align:center;border:1px solid black;"></td>
+                
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+
+            <?php
+                if($row["diasMoro"]>="1" and $row["diasMoro"]<="30"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+             echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{
+
+                
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>"30" and $row["diasMoro"]<="60"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+              echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{
+
+                
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>"61" and $row["diasMoro"]<="90"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+             echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{  
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>"91" and $row["diasMoro"]<="180"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+              echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{  
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
+            <?php
+                if($row["diasMoro"]>"180" and $row["diasMoro"]<="360"){
+            ?>
+            <td style="text-align:center;border:1px solid black;"><?php
+             echo $row["diasMoro"] . " dias <br>$".number_format($totalC - $row["totalCobro"],2);?></td>
+            <?php
+                }else{  
+            ?>
+            <td style="text-align:center;border:1px solid black;">--</td>
+            <?php
+                }
+            ?>
             
             <td style="text-align:center;border:1px solid black;">
              
-             <button class="ui blue small icon button"
-            deuda="<?php echo $row["deuda"];?>"
-            pro="<?php echo utf8_encode($row['productoFinal']." ".$row['acabado']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
+            <button class="ui green small icon button"
+            deuda="<?php echo number_format($totalC - $row['totalCobro'],2);?>"
+            pro="<?php echo utf8_encode($row['productoFinal']);?>" fechaFa="<?php echo $row['fechaCobro'];?>"
              id="<?php echo $row["idDetalle"]; ?>" idC="<?php echo $row["idC"]; ?>"
-             onclick="enviarLibro(this)"><i class="send icon"></i></button>
+             onclick="cobrar(this)"><i class="dollar icon"></i></button>
              </td>
             
             
@@ -305,7 +665,7 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
 <div class="header" style="color:white;background-color:black">
 Cobrar Venta.<br>
 Producto :<a id="pro" style="color:yellow"></a><br>
-Deuda : <a id="deu" style="color:yellow"></a><br>
+Deuda : $ <a id="deu" style="color:yellow"></a><br>
 Fecha de emisión de factura <a id="fechaFa" style="color:yellow"></a>
 </div>
 <div class="content">
@@ -327,7 +687,7 @@ Fecha de emisión de factura <a id="fechaFa" style="color:yellow"></a>
 <div class="header" style="color:white;background-color:black">
 Enviar a libro.<br>
 Producto :<a id="prod" style="color:yellow"></a><br>
-Deuda : <a id="deud" style="color:yellow"></a><br>
+Deuda : $ <a id="deud" style="color:yellow"></a><br>
 Fecha de emisión de factura <a id="fechaFac" style="color:yellow"></a>
 </div>
 <div class="content">

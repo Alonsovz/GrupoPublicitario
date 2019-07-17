@@ -401,6 +401,17 @@ class ProductosController extends ControladorBase {
         echo $dao->guardarInventarioPro();
     }
 
+    public function eliminarProducto(){
+        $dao = new DaoProductos();
+
+        $dao->objeto->setAcabado($_REQUEST["idAcabado"]);
+        $dao->objeto->setIdProducto($_REQUEST["idProducto"]);
+        $dao->objeto->setColor($_REQUEST["idColor"]);
+
+        echo $dao->eliminarProducto();
+        echo $dao->eliminarProductoInventario();
+    }
+
 
     
 
