@@ -13,9 +13,9 @@
         <div class="ui grid">
         <div class="row">
                 <div class="titulo">
-                <a href="?1=ProductosController&2=granFormato" class="ui gray button" id="gr">Gran Formato</a>
-                    <a href="?1=ProductosController&2=impresion" class="ui black button" id="imp">Impresión Digital</a>
-                    <a href="?1=ProductosController&2=promocionales" class="ui red button" id="pro" style="font-weight:bold;">Promocionales</a>
+                <a href="?1=ProductosController&2=granFormato" class="ui gray button" id="gr" style="color:black; font-weight:bold;width:22%;">Gran Formato</a>
+                    <a href="?1=ProductosController&2=impresion" class="ui black button" id="imp" style="font-weight:bold;width:25%;">Impresión Digital</a>
+                    <a href="?1=ProductosController&2=promocionales" class="ui red button" id="pro" style="font-weight:bold;width:32%;">Promocionales</a>
                     <br><br>
                 <font color="#B40431" size="6px">
                 <i class="calendar check outline icon"></i> <i class="truck icon"></i>
@@ -25,22 +25,22 @@
 
         <div class="row title-bar">
             <div class="sixteen wide column">
-            <button class="ui left floated orange labeled icon button" id="btnColores">
-                    <i class="pencil icon"></i>
+            <button class="ui left floated orange  icon button" id="btnColores"  style="font-weight:bold;width:20%;">
+  
                     Paleta de Colores
                 </button>
 
-                <button class="ui left floated green labeled icon button" id="btnAcabados">
-                    <i class="podcast icon"></i>
+                <button class="ui left floated green  icon button" id="btnAcabados"  style="font-weight:bold;width:20%;">
+                    
                     Lista de Acabados
                 </button>
 
-                <button class="ui left floated purple labeled icon button" id="btnMedidas">
-                    <i class="arrows alternate icon"></i>
+                <button class="ui left floated purple  icon button" id="btnMedidas"  style="font-weight:bold;width:20%;">
+                    
                     Unidades de Medida
                 </button>
 
-                <button class="ui right floated red labeled icon button" @click="modalRegistrar">
+                <button class="ui right floated red  icon button" @click="modalRegistrar">
                     <i class="plus icon"></i>
                     Agregar
                 </button>

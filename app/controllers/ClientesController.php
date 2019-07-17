@@ -14,6 +14,12 @@ class ClientesController extends ControladorBase {
         echo $dao->mostrarClientes();
     }
 
+    public function mostrarClientesEstadoCuenta() {
+        $dao = new DaoClientes();
+
+        echo $dao->mostrarClientesEstadoCuenta();
+    }
+
     public function eliminar() {
         $datos = $_REQUEST["idEliminar"];
 

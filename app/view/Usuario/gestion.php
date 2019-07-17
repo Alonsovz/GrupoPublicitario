@@ -706,90 +706,11 @@ var email=$("#correo").val();
 
 
 $(function(){
-                $("#nombre").keyup(function(){
-                    $("#labelNombre").css("display","none");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                });
-                $("#apellido").keyup(function(){
-                    $("#labelApellido").css("display","none");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                });
                
-                $("#fechaNac").change(function(){
-                    $("#labelFecha").css("display","none");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                });
-                $("#fechaNac").keyup(function(){
-                    $("#labelFecha").css("display","none");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                });
-                $("#dui").keyup(function(){
-                    $("#labelDui").css("display","none");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                });
-                $("#telefono").keyup(function(){
-                    $("#labelTelefono").css("display","none");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                });
-                $("#correo").keyup(function(){
-                    $("#labelCorreo").css("display","none");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                });
-                $("#direccion").keyup(function(){
-                    $("#labelDireccion").css("display","none");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                });
-                $("#usuario").keyup(function(){
-                    $("#labelUsuario").css("display","none");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                });
-                $("#pass").keyup(function(){
-                    $("#labelContra").css("display","none");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                });
 
 
             $('#btnGuardarUsuario').click(function() {
-                if($("#nombre").val()=='')
-                {
-                    $("#labelNombre").css("display","block");
-                    $("#btnGuardarUsuario").attr("disabled", true);
-                }
-                else if($("#apellido").val()==""){
-                    $("#labelApellido").css("display","block");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                }
-               else if($("#fechaNac").val()==""){
-                    $("#labelFecha").css("display","block");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                }
-               else if($("#dui").val()==""){
-                    $("#labelDui").css("display","block");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                }
-                else if($("#telefono").val()==""){
-                    $("#labelTelefono").css("display","block");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                }
-                else if($("#correo").val()==""){
-                    $("#labelCorreo").css("display","block");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                }
-                else if($("#direccion").val()==""){
-                    $("#labelDireccion").css("display","block");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                }
-                else if($("#usuario").val()==""){
-                    $("#labelUsuario").css("display","block");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                }
-                else if($("#pass").val()==""){
-                    $("#labelContra").css("display","block");
-                    $("#btnGuardarUsuario").attr("disabled", false);
-                }
-
                 
-                else{
                 const form = $('#frmUsuario');
 
                 const datosFormulario = new FormData(form[0]);
@@ -823,7 +744,7 @@ $(function(){
                     } 
                 }
             });
-        }
+        
             });
         });
 

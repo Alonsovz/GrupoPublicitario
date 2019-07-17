@@ -19,6 +19,14 @@ class FacturacionController extends ControladorBase {
         require_once './app/view/Facturacion/baseCompras.php';
     }
 
+    public static function estadosDeCuenta() {
+      
+        
+        self::loadMain();
+        
+        require_once './app/view/Facturacion/estadoCuenta.php';
+    }
+
     public static function baseComprasAd() {
       
         

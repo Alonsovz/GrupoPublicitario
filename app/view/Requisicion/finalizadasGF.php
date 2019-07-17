@@ -2,12 +2,12 @@
     <div class="ui grid">
             <div class="row">
                     <div class="titulo">
-                    <a href="?1=RequisicionController&2=finalizadasGF" class="ui gray button" id="gr" style="color:black; font-weight:bold;">
+                    <a href="?1=RequisicionController&2=finalizadasGF" class="ui gray button" id="gr" style="color:black; font-weight:bold;width:22%;">
                     Gran Formato</a>
 
-                    <a href="?1=RequisicionController&2=finalizadasIP" class="ui black button" id="imp">Impresión Digital</a>
+                    <a href="?1=RequisicionController&2=finalizadasIP" class="ui black button" id="imp" style="font-weight:bold;width:25%;">Impresión Digital</a>
 
-                    <a href="?1=RequisicionController&2=finalizadasP" class="ui red button" id="pro">Promocionales</a>
+                    <a href="?1=RequisicionController&2=finalizadasP" class="ui red button" id="pro" style="font-weight:bold;width:32%;">Promocionales</a>
                    
                     <br><br>
 

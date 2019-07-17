@@ -120,6 +120,19 @@ class InventarioController extends ControladorBase {
         echo $dao->cambiarEstadoP();
     }
 
+    public function restarProductoGR(){
+        $dao = new DaoProductos();
+
+        $dao->objeto->setIdProducto($_REQUEST["idPr"]);
+        $dao->objeto->setColor($_REQUEST["idColor"]);
+        $dao->objeto->setAcabado($_REQUEST["idAcabado"]);
+        $dao->objeto->setExistencia($_REQUEST["cantidad"]);
+        $dao->objeto->setIdOrden($_REQUEST["idDetalle"]);
+        
+        echo $dao->restarProductoGR();
+        echo $dao->cambiarEstadoGR();
+    }
+
 }
 
 ?>

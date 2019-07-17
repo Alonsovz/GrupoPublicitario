@@ -770,7 +770,7 @@ class Funciones extends ControladorBase {
 				<th style='background-color:#B40431;color:white;'>Imp + Desperdicio</th>
 				<th style='background-color:#B40431;color:white;'>Descripcion</th>
 				<th style='background-color:#B40431;color:white;'>Precio</th>
-				
+				<th style='background-color:#B40431;color:white;width:5%;'><i class='cogs icon'></i></th>
 			</tr>
 			";
 			while ($ver=mysqli_fetch_assoc($result)) {
@@ -807,9 +807,20 @@ class Funciones extends ControladorBase {
 				</td>
 				<td>
 				$ '.utf8_encode($ver["precio"]). '
-				</td>
+				</td>';
+
+				if(utf8_encode($ver["estado"]==1)){
+					$cadena=$cadena.'<td><a class="ui blue small icon button" idOrden ="'.utf8_encode($ver["idOrden"]).'"
+					idDetalle ="'.utf8_encode($ver["idDetalle"]).'"
+					 idAcabado ="'.utf8_encode($ver["idAcabado"]).'" idColor="'.utf8_encode($ver["idColor"]).'"
+					idProducto="'.utf8_encode($ver["idProductoFinal"]).'" cantidad="'.utf8_encode($ver["anchoMat"]).'" 
+					onclick="recibirPro(this)">
+					<i class="check icon"></i></a></td>';
+				}else{
+					$cadena=$cadena.'<td></td>';
+				}
 				
-				</tr>';
+				$cadena=$cadena.'</tr>';
 			}
 			$cadena=$cadena."
 			
@@ -935,7 +946,7 @@ class Funciones extends ControladorBase {
 					</td>';
 					
 				}else{
-					$cadena.='<td style="text-align:center;">'.utf8_encode($ver["cantidadExistencia"]).'
+					$cadena.='<td style="text-align:center;">'.utf8_encode($ver["cantidadEx"]).'
 					&nbsp;&nbsp;&nbsp;
 					<a class="ui red small icon button" id='.utf8_encode($ver["idProducto"]).' idColor= '.utf8_encode($ver["idColor"]).'
 					idAcabado= "'.utf8_encode($ver["idAcabado"]).'"  acabado= "'.utf8_encode($ver["acabado"]).'" medida= "'.utf8_encode($ver["medida"]).'"

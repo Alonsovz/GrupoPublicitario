@@ -9,7 +9,8 @@ class DaoClientes extends DaoBase {
 
 
     public function mostrarClientes() {
-        $_query = "call mostrarClientes()";
+        $_query = "select *  from clientes
+        where idEliminado=1;";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -19,10 +20,37 @@ class DaoClientes extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnEditar = '<button id=\"'.$fila["idCliente"].'\" nombre=\"'.$fila["nombre"].'\"  telefono=\"'.$fila["telefono"].'\" correo=\"'.$fila["correo"].'\" direccion=\"'.$fila["direccion"].'\" nit=\"'.$fila["nit"].'\" nrc=\"'.$fila["nrc"].'\" giro=\"'.$fila["giro"].'\" celular=\"'.$fila["celular"].'\" categoria=\"'.$fila["categoria"].'\" condicion=\"'.$fila["condicionCredito"].'\" tipoDoc=\"'.$fila["tipoDoc"].'\" categoria=\"'.$fila["categoria"].'\" contacto=\"'.$fila["contacto"].'\" departamento=\"'.$fila["departamento"].'\" class=\"ui btnEditar icon black small button\" onclick=\"editarCliente(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEditar = '<button id=\"'.$fila["idCliente"].'\" nombre=\"'.$fila["nombre"].'\"   telefono=\"'.$fila["telefono"].'\" correo=\"'.$fila["correo"].'\" direccion=\"'.$fila["direccion"].'\" nit=\"'.$fila["nit"].'\" nrc=\"'.$fila["nrc"].'\" giro=\"'.$fila["giro"].'\" celular=\"'.$fila["celular"].'\" categoria=\"'.$fila["categoria"].'\" condicion=\"'.$fila["condicionCredito"].'\" tipoDoc=\"'.$fila["tipoDoc"].'\" categoria=\"'.$fila["categoria"].'\" contacto=\"'.$fila["contacto"].'\" departamento=\"'.$fila["departamento"].'\" class=\"ui btnEditar icon black small button\" onclick=\"editarCliente(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
             $btnEliminar = '<button id=\"'.$fila["idCliente"].'\" nombre=\"'.$fila["nombre"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
+
+    public function mostrarClientesEstadoCuenta() {
+        $_query = "select *, DATE_FORMAT(curdate(), '%d/%m/%Y') as fecha from clientes
+        where idEliminado=1;";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+            $btnEditar = '<button id=\"'.$fila["idCliente"].'\" fecha=\"'.$fila["fecha"].'\"  nombre=\"'.$fila["nombre"].'\"  telefono=\"'.$fila["telefono"].'\" correo=\"'.$fila["correo"].'\" direccion=\"'.$fila["direccion"].'\" nit=\"'.$fila["nit"].'\" nrc=\"'.$fila["nrc"].'\" giro=\"'.$fila["giro"].'\" celular=\"'.$fila["celular"].'\" categoria=\"'.$fila["categoria"].'\" condicion=\"'.$fila["condicionCredito"].'\" tipoDoc=\"'.$fila["tipoDoc"].'\" categoria=\"'.$fila["categoria"].'\" contacto=\"'.$fila["contacto"].'\" departamento=\"'.$fila["departamento"].'\" class=\"ui btnEditar icon green small button\" onclick=\"verEstado(this)\"><i class=\"dollar icon\"></i> Ver Estado</button>';
+          
+            $acciones = ', "Acciones": "'.$btnEditar.' "';
 
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 

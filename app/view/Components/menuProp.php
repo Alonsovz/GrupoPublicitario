@@ -336,6 +336,13 @@
 
     </div>
 
+    <div class="item">
+    <a href="?1=FacturacionController&2=estadosDeCuenta" class="item menu-it" style="background-color:#85FBE9;color:black;font-size:13px;font-weight:bold;">
+        <i class="book icon"></i><i class="pencil alternate icon"></i>
+     Estados de cuenta
+    </a>
+
+    </div>
     
 
     

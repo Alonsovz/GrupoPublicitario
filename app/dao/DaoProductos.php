@@ -782,6 +782,33 @@ class DaoProductos extends DaoBase {
         }
     }
 
+    public function restarProductoGR() {
+        $_query = "update inventario set cantidadExistencia= cantidadExistencia -".$this->objeto->getExistencia()." 
+        where idProducto=".$this->objeto->getIdProducto()." and idColor=".$this->objeto->getColor()."
+         and idAcabado=".$this->objeto->getAcabado()." ";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function cambiarEstadoGR() {
+        $_query = "update detalleOrdenGR set estado=2 
+        where idDetalle=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     public function cambiarEstadoP() {
         $_query = "update detalleOrdenP set estado=2 
         where idDetalle=".$this->objeto->getIdOrden();

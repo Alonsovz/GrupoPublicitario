@@ -153,11 +153,8 @@ class UsuarioController extends ControladorBase {
         $dao->objeto->setMAFP($_REQUEST["MAFP"]);
         $dao->objeto->setEstadoFam($_REQUEST["estadoFam"]);
 
-        if($_REQUEST["conyuge"] == ""){
             $dao->objeto->setConyuge($_REQUEST["conyuge"]);
-        }else{
-            $dao->objeto->setConyuge("No definido");
-        }
+        
        
         $dao->objeto->setHijos($_REQUEST["hijos"]);
         $dao->objeto->setNombrePadre($_REQUEST["padre"]);
