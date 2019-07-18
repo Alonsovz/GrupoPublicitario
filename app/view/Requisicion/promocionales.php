@@ -398,7 +398,7 @@ $(function() {
 		$.ajax({
 			type:"POST",
 			url:"?1=Funciones&2=proveedorProductos",
-			data:"idPro=" + $('#proveedor option:selected').val(),
+			data:"idPro="+3,
 			success:function(r){
                 $('#clasi').show(1000);
 				$('#clasificacion').html(r);

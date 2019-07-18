@@ -2,13 +2,13 @@
 <div class="ui grid">
         <div class="row">
             <div class="titulo">
-            <a href="?1=OTController&2=granFormatoEliminadas" class="ui gray button" id="gr" style="color:black; font-weight:bold;">
+            <a href="?1=OTController&2=granFormatoEliminadas" class="ui gray button" id="gr" style="color:black; font-weight:bold;width:32%;">
                     Gran Formato</a>
 
-                    <a href="?1=OTController&2=impresionEliminadas" class="ui black button" id="imp">Impresión Digital</a>
+                    <a href="?1=OTController&2=impresionEliminadas" class="ui black button" id="imp" style="font-weight:bold;width:25%;">Impresión Digital</a>
 
-                    <a href="?1=OTController&2=promocionalesEliminadas" class="ui red button" id="pro">Promocionales</a>
-            <br><br>
+                    <a href="?1=OTController&2=promocionalesEliminadas" class="ui red button" id="pro" style="font-weight:bold;width:32%;">Promocionales</a>
+                    <br><br>
             <font color="black" size="5px">
             <i class="trash icon"></i> <i class="cart arrow down icon"></i>
             Órdenes de Trabajo eliminadas de Impresión digital </font><font color="black" size="20px">.</font>

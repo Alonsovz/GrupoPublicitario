@@ -436,15 +436,14 @@ class Funciones extends ControladorBase {
 
 		if($_POST['idPro']){
 			$sql="select c.idProducto,c.nombre from clasificacionProductos c
-			inner join proveedores p on p.idClasificacion = c.idProducto
-			where p.idProveedor ='".$idC."' and p.idEliminado=1";
+			where c.idClasificacion=".$idC." order by c.idProducto asc";
 	
 			$result=mysqli_query($conexion,$sql);
 	
 			$cadena="";
 			while ($ver=mysqli_fetch_row($result)) {
 				$cadena=$cadena.'
-				<option value="Seleccione" set selected>Seleccione una opción</option>
+				
 				<option value='.$ver[0].'>'.utf8_encode($ver[1]).'</option>';
 			}
 			

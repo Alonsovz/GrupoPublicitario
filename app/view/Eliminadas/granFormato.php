@@ -2,12 +2,12 @@
     <div class="ui grid">
             <div class="row">
                     <div class="titulo">
-                    <a href="?1=OTController&2=granFormatoEliminadas" class="ui gray button" id="gr" style="color:black; font-weight:bold;">
+                    <a href="?1=OTController&2=granFormatoEliminadas" class="ui gray button" id="gr" style="color:black; font-weight:bold;width:32%;">
                     Gran Formato</a>
 
-                    <a href="?1=OTController&2=impresionEliminadas" class="ui black button" id="imp">Impresión Digital</a>
+                    <a href="?1=OTController&2=impresionEliminadas" class="ui black button" id="imp" style="font-weight:bold;width:25%;">Impresión Digital</a>
 
-                    <a href="?1=OTController&2=promocionalesEliminadas" class="ui red button" id="pro">Promocionales</a>
+                    <a href="?1=OTController&2=promocionalesEliminadas" class="ui red button" id="pro" style="font-weight:bold;width:32%;">Promocionales</a>
                     <br><br>
 
                     <font color="#848484" size="5px">
@@ -167,7 +167,7 @@ Eliminat la OT : <a id="cor" style="background-color:#BDBDBD; color:red;"></a>
                 </div>
 </div>
 </div>
-<script src="./res/tablas/tablaEliminadaGR.js"></script>
+<script src="./res/tablas/tablaEliminadaGr.js"></script>
 <script>
 
 var app = new Vue({

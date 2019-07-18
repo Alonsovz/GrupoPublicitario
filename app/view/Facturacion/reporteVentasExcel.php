@@ -153,7 +153,7 @@ while ($row=mysqli_fetch_assoc($result1)) {
             <td style="text-align:center;border:1px solid black; background-color:#0B0678;color:white"><?php echo $row['clasificacion'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['descripciones'];?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['descripciones']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nrc']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nit']);?></td>
 
@@ -324,7 +324,7 @@ while ($row=mysqli_fetch_assoc($result3)) {
             <td style="text-align:center;border:1px solid black; background-color:#03440E;color:white"><?php echo $row['clasificacion'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['descripciones'];?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['descripciones']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nrc']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nit']);?></td>
 
@@ -496,7 +496,7 @@ while ($row=mysqli_fetch_assoc($result2)) {
             <td style="text-align:center;border:1px solid black; background-color:#5C1106;color:white"><?php echo $row['clasificacion'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['descripciones'];?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['descripciones']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nrc']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nit']);?></td>
 

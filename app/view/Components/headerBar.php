@@ -5,8 +5,8 @@
     <a class="item" href="?1=UsuarioController&2=dashboard" style="color:#B40431;" id="home">
         <i class="material-icons">home</i>
     </a>
-    <a style=" display: flex; justify-content: center; align-items: center; color:#B40431;">
-        <img src="./res/img/he.png" alt="" width="50%" class="" id=""> 
+    <a style=" display: flex; justify-content: center; align-items: center; color:#B40431; ;">
+        <img src="./res/img/he.png" style="width:60%; height:60%" alt=""> 
     
     
     </a>

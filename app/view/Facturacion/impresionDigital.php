@@ -2,10 +2,13 @@
 <div class="ui grid">
         <div class="row">
             <div class="titulo">
-            <a href="?1=FacturacionController&2=granFormato" class="ui gray button" id="gr">Gran Formato</a>
-            <a href="?1=FacturacionController&2=impresion" class="ui black button" id="imp" style="font-weight:bold;">Impresión Digital</a>
-            <a href="?1=FacturacionController&2=promocionales" class="ui red button" id="pro">Promocionales</a>
-            <br><br>
+            <a href="?1=FacturacionController&2=granFormato" class="ui gray button" id="gr" style="color:black; font-weight:bold;width:32%;">
+                    Gran Formato</a>
+
+                    <a href="?1=FacturacionController&2=impresion" class="ui black button" id="imp" style="font-weight:bold;width:25%;">Impresión Digital</a>
+
+                    <a href="?1=FacturacionController&2=promocionales" class="ui red button" id="pro" style="font-weight:bold;width:32%;">Promocionales</a>
+                    <br><br>
             <font color="black" size="5px">
             <i class="calendar check outline icon"></i> <i class="dollar icon"></i>
             Órdenes de Trabajo por facturar de Impresión digital </font><font color="black" size="20px">.</font>
