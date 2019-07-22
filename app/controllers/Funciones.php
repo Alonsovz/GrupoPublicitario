@@ -155,7 +155,7 @@ class Funciones extends ControladorBase {
 
 	$result=mysqli_query($conexion,$sql);
 
-	$cadena="";
+	
 
 	while ($ver=mysqli_fetch_row($result)) {
 		$cadena=$cadena.'<option value='.$ver[0].'>'.utf8_encode($ver[1]).'</option>';
@@ -435,7 +435,7 @@ class Funciones extends ControladorBase {
 		$idC=$_POST['idPro'];
 
 		if($_POST['idPro']){
-			$sql="select c.idProducto,c.nombre from clasificacionProductos c
+			$sql="select c.idProducto,c.nombre from clasificacionProductos c	
 			where c.idClasificacion=".$idC." order by c.idProducto asc";
 	
 			$result=mysqli_query($conexion,$sql);

@@ -20,7 +20,7 @@ if($_GET["idCliente"] && $_GET ["nombre"]){
 	$conn=new Conexion();
     $link = $conn->conectarse();
     
-    $mysqli = new mysqli("shareddb-o.hosting.stackcp.net","grupoPub","12345678*","grupoPublicitario-313039a314");
+    $mysqli = new mysqli('localhost','root','','grupopublicitario');
 
     $listadoIP = $mysqli -> query ("select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,o.*,
     DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,

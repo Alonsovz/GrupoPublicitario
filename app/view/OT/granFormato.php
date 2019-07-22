@@ -17,7 +17,7 @@
     <div class="ui grid">
             <div class="row">
                     <div class="titulo">
-                    <a href="?1=OTController&2=granFormato" class="ui gray button" id="gr" style="color:black; font-weight:bold;width:32;">
+                    <a href="?1=OTController&2=granFormato" class="ui gray button" id="gr" style="color:black; font-weight:bold;width:32%;">
                     Gran Formato</a>
 
                     <a href="?1=OTController&2=impresion" class="ui black button" id="imp" style="font-weight:bold;width:25%;">Impresión Digital</a>
@@ -54,7 +54,7 @@
             </div>
 
             <div class="eight wide field">
-            <label><i class="user icon"></i>Responsable:</label>
+            <label><i class="user icon"></i>Responsable de ingresar OT:</label>
             <input type="text" name="responsable" id="responsable" value=<?php echo '"'.$_SESSION['nombre'].' '."".' ' .$_SESSION['apellido'].'"'; ?> readonly>
             </div>
 
@@ -86,22 +86,22 @@
             </div>
 
             <div class="four wide field" id="producs" style="display:none;">
-            <label> <i class="pencil icon"></i>Producto Final: (Productos Disponibles)</label>
+            <label> <i class="pencil icon"></i>Producto Final:</label>
             <select name="proFinalCmb"  id="proFinalCmb" class="ui search dropdown">
-            
+              
            
             </select>
             
             </div>
 
             <div class="two wide field" id="medi" style="display:none;">
-            <label><i class="arrows alternate icon"></i>Unidad de Medidad:</label>
+            <label><i class="arrows alternate icon"></i>Medidad:</label>
             <input type="text" name="unidadMedida" id="unidadMedida" readonly>
             
             </div>
 
             <div class="four wide field" id="aca" style="display:none;">
-            <label><i class="podcast icon"></i>Acabado Final:</label>
+            <label><i class="podcast icon"></i>Acabado:</label>
             <select name="acabadoCmb" id="acabadoCmb" class="ui search dropdown">
             
             </select>
@@ -134,7 +134,7 @@
 
         <div class="six wide field" id="prec" style="display:none;">
             <label><i class="dollar icon"></i>Precio sugerido:</label>
-            <input type="text" id="precioU" name="precioU" readonly>
+            <input type="text" id="precioU" name="precioU" >
         </div>
 
         <div class="six wide field" id="ex" style="display:none;">
@@ -190,6 +190,11 @@
             <input type="text" name="anchoMaterial" id="anchoMaterial">
             </div>
 
+            <div class="three wide field" style="background-color:#F2F768">
+            <label><i class="file icon"></i>Copias:</label>
+            <input type="text" name="copias" id="copias">
+            </div>
+
             <div class="three wide field" style="background-color:#F5D5B2">
             <label><i class="arrows alternate icon"></i>MTS 2 Imp:</label>
             <input type="text" name="cuadrosImp" id="cuadrosImp" readonly>
@@ -201,7 +206,7 @@
 
             <div class="three wide field" style="background-color:#F99F9E">
             <label><i class="trash icon"></i>Desperdicio:</label>
-            <input type="text" name="desperdicio" id="desperdicio" readonly>
+            <input type="text" name="desperdicio" id="desperdicio">
             </div>
 
         </div>
@@ -212,20 +217,20 @@
         
 
         <div class="three wide field" style="background-color:#E29EF9">
-            <label><i class="arrows alternate icon"></i>Ojetes:</label>
-            <input type="number" id="ojeteAr" name="ojeteAr" placeholder="Arriba">
+            <label><i class="arrows alternate icon"></i>Ojetes: Arriba</label>
+            <input type="number" id="ojeteAr" name="ojeteAr" placeholder="Arriba" value="0">
         </div>
         <div class="three wide field" style="background-color:#E29EF9">
-            <label><i class="arrows alternate icon"></i><br></label>
-            <input type="number" id="ojeteAb" name="ojeteAb" placeholder="Abajo">
+            <label><i class="arrows alternate icon"></i>Abajo<br></label>
+            <input type="number" id="ojeteAb" name="ojeteAb" placeholder="Abajo" value="0">
         </div>
         <div class="three wide field" style="background-color:#E29EF9">
-            <label><i class="arrows alternate icon"></i><br></label>
-            <input type="number" id="ojeteIz" name="ojeteIz" placeholder="Izquierda">
+            <label><i class="arrows alternate icon"></i>Izquierda<br></label>
+            <input type="number" id="ojeteIz" name="ojeteIz" placeholder="Izquierda" value="0">
         </div>
         <div class="three wide field" style="background-color:#E29EF9">
-            <label><i class="arrows alternate icon"></i><br></label>
-            <input type="number" id="ojeteDe" name="ojeteDe" placeholder="Derecha">
+            <label><i class="arrows alternate icon"></i>Derecha<br></label>
+            <input type="number" id="ojeteDe" name="ojeteDe" placeholder="Derecha" value="0">
         </div>
 
         <div class="three wide field">
@@ -270,12 +275,12 @@
             <div class="three wide field">
             <label><i class="dollar icon"></i>Total sugerido:</label>
             <input type="text" name="precioTo" id="precioTo">
-            
+              <a class="ui blue button" id="calcIva"><i class="plus icon"></i> IVA</a>
             </div>
 
             <div class="three wide field">
             <label style=""><i class="dollar icon"></i>Precio a cobrar:</label>
-            <input type="text" name="precioS" id="precio" >
+            <input type="text" name="precio" id="precio" >
             
             </div>
 
@@ -446,6 +451,8 @@ var app = new Vue({
     $('#ancho').mask("###0.00", {reverse: true});
     $('#arte').mask("###0.00", {reverse: true});
     $('#precio').mask("###0.00", {reverse: true});
+    $('#precioU').mask("###0.00", {reverse: true});
+    $('#precioDesp').mask("###0.00", {reverse: true});
     });
 
     $("#ancho").keyup(function(){
@@ -464,22 +471,79 @@ var app = new Vue({
         
         var ancho1 = $("#anchoMaterial").val();
 
+        var ancho = $("#ancho").val();
+        var copias = $("#copias").val();
+        var longitud = $("#longitud").val();
+
         var precioDes = $("#precioDesp").val();
         var cantidad = $("#cantidad").val();
         var mts2 = $("#cuadrosImp").val();
 
         var desperdicio = ancho1-mts2;
 
-        var totalDinero = desperdicio * precioDes;
+        var imp = ancho * copias;
 
+        var desperdicio = ancho1 - imp;
 
-        $("#desperdicio").val(totalDinero.toFixed(2));
+        var cantCopias = cantidad / copias;
 
+        var redonCantCopias = Math.floor(cantCopias);
+
+       
+
+        var totalRedonCopias = "-"+redonCantCopias;
+
+     //   var redonCantCopiasSuper = (totalRedonCopias * copias) + parseFloat(cantidad);
+
+        var totalFinalCopias = "-"+(totalRedonCopias * copias) + parseFloat(cantidad);
+        
+        var totalMenos = "-" + parseFloat(totalFinalCopias);
+
+        var totalFinal = 0;
+        
+        if(redonCantCopias == "0"){
+            var totalFinal = ( ( ( (totalFinalCopias * ancho) + parseFloat(ancho1)) * longitud)*precioDes);
+        }else{
+            var totalFinal = ( desperdicio * longitud * precioDes * redonCantCopias);
+        }
+        
+        var saldo = totalFinal / cantidad;
+        
+        
+
+        $("#desperdicio").val(saldo.toFixed(2));
+
+    });
+
+    $("#copias").click(function(){
+        var anchoMat = $("#anchoMaterial").val();
+        var ancho = $("#ancho").val();
+
+        var divi = anchoMat / ancho;
+
+        var total = 0;
+        if(ancho == "0"){
+            total = 1;
+
+        }else{
+             total = Math.floor(divi); 
+        }
+
+        $("#copias").val(total);
         
     });
 
     
-
+	$("#calcIva").click(function(){
+    	var precio = $("#precioTo").val();
+      
+      var iva = precio * 0.13;
+      
+      var total = parseFloat(precio) + parseFloat(iva);
+      
+      $("#precio").val(total.toFixed(2));
+    });
+  
     $("#precioTo").click(function(){
         var precioPorMetro = $("#precioU").val();
         var cantidad = $("#cantidad").val();
@@ -500,8 +564,10 @@ var app = new Vue({
 
         var cobroOjetes = totalOjetes * 0.25;
 
-        var totalDinero = parseFloat(precioPorMetro) + parseFloat(precioDes);
-        var totalCobro = totalDinero * cantidad;
+        
+        var totalC = parseFloat(precioPorMetro) + parseFloat(precioDes);
+
+        var totalCobro = totalC * cantidad;
 
             if( $('#troquel').prop('checked') ) {
                 var cobrar = parseFloat(totalCobro) + parseFloat(cobroOjetes) + 0.04 + parseFloat(arte);

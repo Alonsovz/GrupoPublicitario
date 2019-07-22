@@ -1,3 +1,6 @@
+
+
+
 <div id="app">
 <div class="ui grid">
         <div class="row">
@@ -84,24 +87,24 @@ inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
 <br>
 <div class="content" id="imp">
 <br>
-<table class="ui table bordered" style="width:100%;">
+<table class="ui table bordered" style="width:100%;" id="tableBodyScroll">
 
     <tr style="border:1px solid white;text-align:center;background-color:black;color:white;" height="40">
-    <th  style="border:1px solid white;width:5%;">Fecha</th>
-    <th  style="border:1px solid white;width:6%;">Tipo DOC</th>
-    <th  style="border:1px solid white;width:10%;">Tipo PRO</th>
+    <th  style="border:1px solid white;">Fecha</th>
+    <th  style="border:1px solid white;">Tipo DOC</th>
+    <th  style="border:1px solid white;">Tipo PRO</th>
     <th  style="border:1px solid white;">Clasificación</th>
-    <th  style="text-align:center;border:1px solid white;width:10%;">Nombre de Cliente</th>
-    <th  style="text-align:center;border:1px solid white;width:10%;">Detalle</th>
-    <th  style="text-align:center;border:1px solid white;width:10%;">N° NRC</th>
+    <th  style="text-align:center;border:1px solid white;">Nombre de Cliente</th>
+    <th  style="text-align:center;border:1px solid white;">Detalle</th>
+    <th  style="text-align:center;border:1px solid white;">N° NRC</th>
 
 
-    <th  style="text-align:center;border:1px solid white;width:8%;">Total a cobrar</th>
+    <th  style="text-align:center;border:1px solid white;">Total a cobrar</th>
     <th  style="text-align:center;border:1px solid white;">Estatus</th>
     <th  style="text-align:center;border:1px solid white;">Dias de morosidad</th>
-    <th  style="text-align:center;border:1px solid white;width:8%;">Total Cobrado</th>
+    <th  style="text-align:center;border:1px solid white;">Total Cobrado</th>
     <th  style="text-align:center;border:1px solid white;">Fecha de Cobro</th>
-    <th  style="text-align:center;border:1px solid white;width:9%;"><i class="book icon"></i></th>
+    <th  style="text-align:center;border:1px solid white;"><i class="book icon"></i></th>
 
     
 </tr>
@@ -134,7 +137,7 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
 
 
     ?>
-        <tr style="text-align:center;border:1px solid black;">
+        <tr style="text-align:center;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
 
             <?php   
@@ -310,7 +313,7 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
             $totalNoS = $totalVentaNoS->fetch_assoc();
             $totalNoS = $totalNoS['ventasNoS'];
     ?>
-        <tr style="text-align:center;border:1px solid black;">
+        <tr style="text-align:center;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
 
             <?php   
@@ -486,7 +489,7 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
             $totalNoS = $totalVentaNoS->fetch_assoc();
             $totalNoS = $totalNoS['ventasNoS'];
     ?>
-        <tr style="text-align:center;border:1px solid black;">
+        <tr style="text-align:center;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
 
             <?php   
