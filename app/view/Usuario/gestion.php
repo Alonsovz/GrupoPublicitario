@@ -166,8 +166,8 @@
             
                 <div class="fields">
                             <div class="five wide field">
-                                <label><i class="address card  icon"></i>M. ISSS</label>
-                                    <input type="text" id="MISSS" name="MISSS" placeholder="M . ISSS">
+                                <label><i class="address card  icon"></i>N. ISSS</label>
+                                    <input type="text" id="MISSS" name="MISSS" placeholder="N . ISSS">
                                         
                                 </div>     
                            
@@ -186,8 +186,8 @@
                             
                             <div class="six wide field">
                                 
-                                <b><label><i class="address card  icon"></i>M.AFP:</label></b>
-                                <input type="text" id="MAFP" name="MAFP" placeholder="M . AFP">
+                                <b><label><i class="address card  icon"></i>N.AFP:</label></b>
+                                <input type="text" id="MAFP" name="MAFP" placeholder="N . AFP">
                                
                             </div>
 
@@ -307,8 +307,45 @@
                                     <input type="date" id="fechaIng" name="fechaIng">
                                           
                             </div>
+
+                            <?php if($_SESSION["descRol"] != 'Propietario') { ?>
                             
-                            <div class="six wide field">
+                            <div class="six wide field" style="display:none;">
+                                
+                                <b><label><i class="dollar icon"></i>Salario:</label></b>
+                                <input type="text" id="salario" name="salario" placeholder="Salario" value="0.00">
+                                
+                            </div>
+                        
+
+                            <div class="six wide field" style="display:none;">
+                                
+                                <b><label><i class="user icon"></i>Rol: </label></b>
+                                <select id="codigoRol" name="codigoRol" class="ui dropdown">
+                                <option value="6" set selected>No definido</option>
+                                    <option value="1">Administrador/a</option>
+                                    <option value="2">Producción</option>
+                                    <option value="3">Asistente</option>
+                                    <option value="5">Administrador Sustituto</option>
+                                </select>       
+                            </div>
+                            
+                            <div class="five wide field" style="display:none;">
+                                
+                                <b><label><i class="user icon"></i>Usuario: </label></b>
+                                <input type="text" id="usuario" name="usuario" placeholder="Usuario para inicio de sesión" value="No definido">
+                                <div class="ui red pointing label"  id="labelUsuario"
+                                        style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                        Completa este campo
+                                        </div>
+
+                                        <div class="ui red pointing label"  id="labelUsuarioE"
+                                        style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                        Usuario ya existe
+                                        </div>
+                            </div>
+                            <?php }else{?>
+                                <div class="six wide field">
                                 
                                 <b><label><i class="dollar icon"></i>Salario:</label></b>
                                 <input type="text" id="salario" name="salario" placeholder="Salario">
@@ -316,16 +353,15 @@
                             </div>
                         
 
-                                
-                            
-
-                            <div class="six wide field">
+                            <div class="six wide field" >
                                 
                                 <b><label><i class="user icon"></i>Rol: </label></b>
                                 <select id="codigoRol" name="codigoRol" class="ui dropdown">
+                                <option value="6" set selected>No definido</option>
                                     <option value="1">Administrador/a</option>
                                     <option value="2">Producción</option>
                                     <option value="3">Asistente</option>
+                                    <option value="4">Propietario</option>
                                     <option value="5">Administrador Sustituto</option>
                                 </select>       
                             </div>
@@ -344,7 +380,8 @@
                                         Usuario ya existe
                                         </div>
                             </div>
-                            
+
+                            <?php   }  ?>
                             
                         
 

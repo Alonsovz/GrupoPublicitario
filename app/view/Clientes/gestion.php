@@ -138,6 +138,7 @@
                                     <option value="Factura de exportación">Factura de exportación</option>
                                     <option value="Nota de crédito">Nota de crédito</option>
                                     <option value="Nota de débito">Nota de débito</option>
+                                    <option value="Otros">Otros</option>
                                 </select> 
                                
                             </div>
@@ -310,6 +311,7 @@
                                     <option value="Factura de exportación">Factura de exportación</option>
                                     <option value="Nota de crédito">Nota de crédito</option>
                                     <option value="Nota de débito">Nota de débito</option>
+                                    <option value="Otros">Otros</option>
                                 </select> 
                                
                             </div>
@@ -501,7 +503,7 @@ var editarCliente=(ele)=>{
                     if(r==1)
                     {
                         
-                        $("#btnGuardarCliente").attr("disabled", true);
+                        
                         $("#labelNitEx").css("display","block");
                     }    
                     else{
@@ -533,7 +535,7 @@ $("#nitE").keyup(function(){
                 if(r==1)
                 {
                     
-                    $("#btnEditarCliente").attr("disabled", true);
+                   
                     $("#labelNitExE").css("display","block");
                 }    
                 else{
@@ -567,7 +569,7 @@ var email=$("#correo").val();
              if(r==1)
              {
                  
-                 $("#btnGuardarCliente").attr("disabled", true);
+                 
                  $("#correoC").css("display","block");
              }    
              
@@ -596,7 +598,7 @@ var email=$("#correoE").val();
              if(r==1)
              {
                  
-                 $("#btnEditarCliente").attr("disabled", true);
+                 
                  $("#correoCE").css("display","block");
              }    
              
