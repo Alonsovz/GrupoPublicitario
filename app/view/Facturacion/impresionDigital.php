@@ -218,12 +218,14 @@ var factura=(ele)=>{
 
 $("#facturaConsumidor").click(function(){
     var idOT=$('#idOT').val();
-
+    var nDoc = $("#nDoc").val();
     $.ajax({
         
         type: 'POST',
         url: '?1=FacturacionController&2=facturaConsumidorImp',
-        data: {idOT:idOT},
+        data: {idOT:idOT,
+                nDoc:nDoc,
+        },
         success: function(r) {
             if(r == 11) {
                
@@ -246,12 +248,14 @@ $("#facturaConsumidor").click(function(){
 
 $("#creditoFiscal").click(function(){
     var idOT=$('#idOT').val();
-
+    var nDoc = $("#nDoc").val();
     $.ajax({
         
         type: 'POST',
         url: '?1=FacturacionController&2=CFFImp',
-        data: {idOT:idOT},
+        data: {idOT:idOT,
+                nDoc:nDoc,
+        },
         success: function(r) {
             if(r == 11) {
                
@@ -273,13 +277,15 @@ $("#creditoFiscal").click(function(){
 
 $("#notaCredito").click(function(){
     var idOT=$('#idOT').val();
-
+    var nDoc = $("#nDoc").val();
 
     $.ajax({
         
         type: 'POST',
         url: '?1=FacturacionController&2=notaCreImp',
-        data: {idOT:idOT},
+        data: {idOT:idOT,
+                nDoc:nDoc,
+        },
         success: function(r) {
             if(r == 11) {
                

@@ -60,6 +60,13 @@ correo varchar(50),
 idEliminado int
 );
 
+create table vendedores(
+idVendedor int primary key  auto_increment,
+nombre varchar(50),
+idEliminado int
+);
+
+insert into vendedores values (null, 'Oficina' ,1);
 create table tipoProductos(
 idClasificacion int primary key  auto_increment,
 clasificacion varchar(40)
@@ -161,10 +168,13 @@ idOrden int primary key auto_increment,
 correlativo varchar(20),
 fechaOT date,
 responsable int,
+idResponsablePro int,
+idVendedor int,
 cliente int,
 fechaEntrega date,
 descripcionesE varchar(500),
 estado int,
+nDoc varchar(50),
 idEliminado int
 );
 
@@ -187,6 +197,7 @@ mts2 varchar(50),
 desperdicio varchar(50),
 descripciones varchar(500),
 tipoVenta varchar(40),
+precioSin double,
 precio double,
 estado int,
 estadoCobro int,
@@ -201,12 +212,16 @@ idOrden int primary key auto_increment,
 correlativo varchar(20),
 fechaOT date,
 responsable int,
+idResponsablePro int,
+idVendedor int,
 cliente int,
 fechaEntrega date,
 descripcionesE varchar(500),
 estado int,
+nDoc varchar(50),
 idEliminado int
 );
+
 
 create table detalleOrdenIP(
 idDetalle int primary key auto_increment,
@@ -218,6 +233,7 @@ cantidad varchar(20),
 tipo varchar(50),
 descripciones varchar(500),
 tipoVenta varchar(40),
+precioSin double,
 precio double,
 estado int,
 estadoCobro int,
@@ -226,15 +242,19 @@ totalCobro double
 );
 
 
+
 create table ordenTrabajoP(
 idOrden int primary key auto_increment,
 correlativo varchar(20),
 fechaOT date,
 responsable int,
+idResponsablePro int,
+idVendedor int,
 cliente int,
 fechaEntrega date,
 descripcionesE varchar(500),
 estado int,
+nDoc varchar(50),
 idEliminado int
 );
 
@@ -248,11 +268,21 @@ cantidad varchar(20),
 tipo varchar(50),
 descripciones varchar(500),
 tipoVenta varchar(40),
+precioSin double,
 precio double,
 estado int,
 estadoCobro int,
 fechaFactura date,
 totalCobro double
+);
+
+create table pagos(
+idPago int primary key auto_increment,
+idClasificacion int,
+idDetalle int,
+monto double,
+tipoPago varchar(50),
+fechaPago date
 );
 
 
@@ -345,7 +375,7 @@ insert into rol values(2,'Produccion');
 insert into rol values(3,'Asistente');
  insert into rol values(4,'Propietario');
  insert into rol values(5,'Administrador Sustituto');
- 
+  insert into rol values(6,'No definido');
 
 
 insert into usuario values(null,'Fabio','Mejia','8187-239817-239-8','01234567-8',
@@ -436,9 +466,9 @@ insert into productoFinal values(null,'Seleccione una opcion',0);
 
 
 
-insert into ordenTrabajoGR values(null,'OTGF00',curdate(),1,1,curdate(),'',9,1);
-insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,curdate(),'',9,1);
-insert into ordenTrabajoP values(null,'OTPR00',curdate(),1,1,curdate(),'',9,1);
+insert into ordenTrabajoGR values(null,'OTGF00',curdate(),1,1,1,1,curdate(),'',9,'',1);
+insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,1,1,curdate(),'',9,'',1);
+insert into ordenTrabajoP values(null,'OTPR00',curdate(),1,1,1,1,curdate(),'',9,'',1);
 
 insert into gastosOficina values(null,'Internet',1);
 	
@@ -497,11 +527,4 @@ end
 $$
 
 
-
-
-
-
-
-
-
-
+select * from ordenTrabajoP

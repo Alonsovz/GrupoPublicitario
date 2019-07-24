@@ -1224,5 +1224,49 @@ class Funciones extends ControladorBase {
 
 
 
+	public function historialPagos(){
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
+		$idC=$_POST['idC'];
+		$idD=$_POST['idDetalle'];
+
+		if($_POST['idC']){
+		$sql="select *, format(monto,2) as monto,DATE_FORMAT(fechaPago, '%d/%m/%Y') as fechaPago from pagos where idClasificacion=".$idC." and idDetalle= ".$idD." ";
+
+		$result=mysqli_query($conexion,$sql);
+
+		
+
+		
+
+		$cadena="
+
+		<table style='width:100%;' class='ui celled table'>
+		<tr>
+		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Monto</th>
+		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Tipo Pago</th>
+		
+		<th style='background-color:#110991;font-weight:bold; color:white; text-align:center;' height='40'>Fecha</th>
+		<t
+		
+	
+		</tr>
+		";		
+		while ($ver=mysqli_fetch_assoc($result)) {
+			$cadena.='<tr>
+			
+			<td> $'.utf8_encode($ver["monto"]).'</td>
+			<td>'.utf8_encode($ver["tipoPago"]).'</td>
+			<td>'.utf8_encode($ver["fechaPago"]).'</td>';
+			
+			$cadena.='
+			</tr>';
+		}
+	}
+
+		$cadena.='</table>';
+		
+
+	echo  $cadena;
+}
 	
 }

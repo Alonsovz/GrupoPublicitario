@@ -115,7 +115,12 @@ Detalles de la OT : <a id="corr" style="background-color:#BDBDBD; color:red;"></
     Tipo de Factura a imprimir para la orden: <a id="ordenCorr" style="background-color:#BDBDBD; color:red;"></a>
     </div>
     <div class="content">
+    <form class="ui form">
+            <label>N° de DOC:</label>
+            <input type="text" name="nDoc" id="nDoc" placeholder="N° de DOC">
+        </form>
     <center>
+    <br><br>
     <input type="hidden" id="idOT">
     <div class="row tiles" id="contenedor-tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
     <button class="ui red button" id="facturaConsumidor">
@@ -214,12 +219,14 @@ var factura=(ele)=>{
 
 $("#facturaConsumidor").click(function(){
     var idOT=$('#idOT').val();
-
+    var nDoc = $("#nDoc").val();
     $.ajax({
         
         type: 'POST',
         url: '?1=FacturacionController&2=facturaConsumidorGR',
-        data: {idOT:idOT},
+        data: {idOT:idOT,
+                nDoc:nDoc,
+        },
         success: function(r) {
             if(r == 11) {
                
@@ -242,12 +249,14 @@ $("#facturaConsumidor").click(function(){
 
 $("#creditoFiscal").click(function(){
     var idOT=$('#idOT').val();
-
+    var nDoc = $("#nDoc").val();
     $.ajax({
         
         type: 'POST',
         url: '?1=FacturacionController&2=CFFGR',
-        data: {idOT:idOT},
+        data: {idOT:idOT,
+                nDoc:nDoc,
+        },
         success: function(r) {
             if(r == 11) {
                
@@ -269,13 +278,15 @@ $("#creditoFiscal").click(function(){
 
 $("#notaCredito").click(function(){
     var idOT=$('#idOT').val();
-
+    var nDoc = $("#nDoc").val();
 
     $.ajax({
         
         type: 'POST',
         url: '?1=FacturacionController&2=notaCreGR',
-        data: {idOT:idOT},
+        data: {idOT:idOT,
+                nDoc:nDoc,
+        },
         success: function(r) {
             if(r == 11) {
                

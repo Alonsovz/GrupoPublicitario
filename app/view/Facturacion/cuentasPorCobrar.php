@@ -119,7 +119,7 @@ select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as prec
 while ($row=mysqli_fetch_assoc($listadoIP)) {
     $idOrden = $row["idOrden"];
 
-         $totalVentaGra = $mysqli -> query ("select format((sum(dp.precio) * 0.13) + sum(dp.precio),2) as ventasGR from detalleOrdenIP dp
+         $totalVentaGra = $mysqli -> query ("select format(sum(dp.precio),2) as ventasGR from detalleOrdenIP dp
            inner join ordenTrabajoIP op on op.idOrden = dp.idOrden
             where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
 
@@ -169,7 +169,7 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
     if($totalC - $row["totalCobro"]>0){
     ?>
         <tr style="text-align:center;border:1px solid black;">
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro']; ?></td>
 
             <?php   
                 if($row["doc"]=="6"){
@@ -302,7 +302,7 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
 while ($row=mysqli_fetch_assoc($listadoGF)) {
     $idOrden = $row["idOrden"];
 
-    $totalVentaGra = $mysqli -> query ("select format((sum(dp.precio) * 0.13) + sum(dp.precio),2) as ventasGR from detalleOrdenGR dp
+    $totalVentaGra = $mysqli -> query ("select  format(sum(dp.precio),2) as ventasGR from detalleOrdenGR dp
            inner join ordenTrabajoGR op on op.idOrden = dp.idOrden
             where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
 
@@ -348,7 +348,7 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
     if($totalC - $row["totalCobro"]>0){
     ?>
         <tr style="text-align:center;border:1px solid black;">
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro']; ?></td>
 
             <?php   
                 if($row["doc"]=="6"){
@@ -482,7 +482,7 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
 while ($row=mysqli_fetch_assoc($listadoP)) {
     $idOrden = $row["idOrden"];
 
-    $totalVentaGra = $mysqli -> query ("select format((sum(dp.precio) * 0.13) + sum(dp.precio),2) as ventasGR from detalleOrdenP dp
+    $totalVentaGra = $mysqli -> query ("select format(sum(dp.precio),2) as ventasGR from detalleOrdenP dp
            inner join ordenTrabajoP op on op.idOrden = dp.idOrden
             where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
 
@@ -527,7 +527,7 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
     if($totalC - $row["totalCobro"]>0){
     ?>
         <tr style="text-align:center;border:1px solid black;">
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro']; ?></td>
 
             <?php   
                 if($row["doc"]=="6"){
@@ -661,20 +661,42 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
 </table>
 </div>
 
-<div class="ui tiny modal" id="modalCobrar">
+<div class="ui  modal" id="modalCobrar">
 <div class="header" style="color:white;background-color:black">
 Cobrar Venta.<br>
 Producto :<a id="pro" style="color:yellow"></a><br>
 Deuda : $ <a id="deu" style="color:yellow"></a><br>
 Fecha de emisión de factura <a id="fechaFa" style="color:yellow"></a>
 </div>
-<div class="content">
+<div class="content" style="background-color:#BDBCBD">
 <form class="ui form">
-<input type="hidden" id="idCla" name="idCla">
-<input type="hidden" id="idDetalle" name="idDetalle">
-<label><i class="dollar icon"></i>Monto a cobrar</label>
-<input type="text" id="monto" name="monto" placeholder="Monto a cobrar">
+<div class="field">
+    <div class="fields">
+        <div class="eight wide field">
+            <input type="hidden" id="idCla" name="idCla">
+            <input type="hidden" id="idDetalle" name="idDetalle">
+            <label><i class="dollar icon"></i>Monto a cobrar</label>
+            <input type="text" id="monto" name="monto" placeholder="Monto a cobrar">
+        </div>
+        <div class="eight wide field">
+            <label><i class="dollar icon"></i>Tipo de pago</label>
+            <select class="ui dropdown" id="tipoPago" name="tipoPago">
+            <option value="seleccione" set selected>Seleccione una forma de pago</option>
+            <option value="Efectivo">Efectivo</option>
+            <option value="Cheque">Cheque</option>
+            <option value="Tarjeta de credito">Tarjeta de credito</option>
+            <option value="Patrocinio">Patrocinio</option>
+            <option value="Comision">Comisión</option>
+            <option value="Otros">Otros</option>
+            </select>
+        </div>
+    </div>
+</div>
 </form>
+<div class="ui divider"></div>
+<a style="color:black; background-color:white;font-size:22px;font-weight:bold;">Historial de pagos</a>
+<a id="pagos"></a>
+
 </div>
 <div class="actions">
 <button class="ui red deny button">Cancelar</button>
@@ -704,6 +726,9 @@ Fecha de emisión de factura <a id="fechaFac" style="color:yellow"></a>
 </div>
 </div>
 <script>
+$(document).ready(function(){
+    $('#monto').mask("###0.00", {reverse: true});
+});
 $("#GFbtn").click(function(){
     $("#GF").show(100);
     $("#imp").hide(100);
@@ -729,8 +754,25 @@ var cobrar=(ele)=>{
     $("#deu").text($(ele).attr("deuda"));
     $("#idCla").val($(ele).attr("idC"));
     $("#idDetalle").val($(ele).attr("id"));
+
+    var idC = $(ele).attr("idC");
+    var idDetalle = $(ele).attr("id");
+
+    $.ajax({
+			type:"POST",
+			url:"?1=Funciones&2=historialPagos",
+            data:{
+                idC:idC,
+                idDetalle : idDetalle,
+            },
+        success:function(r){
+				$('#pagos').html(r);
+			}
+        });
+
     $("#modalCobrar").modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 }
+
 
 
 var enviarLibro=(ele)=>{
@@ -746,21 +788,26 @@ var enviarLibro=(ele)=>{
 $("#btnCobrar").click(function(){
     
     var idClasificacion = $("#idCla").val();
-    
+    var tipoPago = $("#tipoPago").val();
 
     if(idClasificacion==1){
+
+        
         var idDetalle = $("#idDetalle").val();
         var monto = $("#monto").val();
+        
         $.ajax({
-                
+            
                 type: 'POST',
                 url: '?1=RequisicionController&2=cobrarGF',
                 data: {
                     idDetalle:idDetalle,
                     monto:monto,
+                    tipoPago:tipoPago,
                 },
                 success: function(r) {
-                    if(r == 1) {
+                    if(r == 11) {
+                        $("#modalCobrar").modal('hide');
                         swal({
                             title: 'Cobro guardado',
                             text: 'Guardado con éxito',
@@ -788,9 +835,11 @@ $("#btnCobrar").click(function(){
                 data: {
                     idDetalle:idDetalle,
                     monto:monto,
+                    tipoPago:tipoPago,
                 },
                 success: function(r) {
-                    if(r == 1) {
+                    if(r == 11) {
+                        $("#modalCobrar").modal('hide');
                         swal({
                             title: 'Cobro guardado',
                             text: 'Guardado con éxito',
@@ -819,9 +868,11 @@ $("#btnCobrar").click(function(){
                 data: {
                     idDetalle:idDetalle,
                     monto:monto,
+                    tipoPago:tipoPago,
                 },
                 success: function(r) {
-                    if(r == 1) {
+                    if(r == 11) {
+                        $("#modalCobrar").modal('hide');
                         swal({
                             title: 'Cobro guardado',
                             text: 'Guardado con éxito',
@@ -839,6 +890,49 @@ $("#btnCobrar").click(function(){
             
         });
     }
+    
+
+});
+
+
+
+$("#btnEnviar").click(function(){
+    
+    var idClasificacion = $("#idClas").val();
+    var idDetalle = $("#idDetalles").val();
+    var tipoDoc = $("#tipoD").val();
+
+    
+        
+        $.ajax({
+                
+                type: 'POST',
+                url: '?1=RequisicionController&2=enviarLibro',
+                data: {
+                    idDetalle:idDetalle,
+                    idClasificacion:idClasificacion,
+                    tipoDoc:tipoDoc,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        $("#modalEnviar").modal('hide');
+                        swal({
+                            title: 'Enviado a '+$("#tipoLibro").text(),
+                            text: 'Guardado con éxito',
+                            type: 'success',
+                            
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                if(result.value){
+                                    location.reload();
+                                }
+                            });
+                        
+                    } 
+                }
+            
+        });
+    
     
 
 });

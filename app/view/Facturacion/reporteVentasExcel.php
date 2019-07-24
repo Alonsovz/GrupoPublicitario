@@ -11,7 +11,7 @@ header("Content-Type: text/html;charset=utf-8");
     DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
     o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
     TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
-    format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC,cl.categoria as tipoCliente,cl.*
+    format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC,cl.categoria as tipoCliente,v.nombre as vendedor,cl.*
     from detalleOrdenIP d
     inner join ordenTrabajoIP o on o.idOrden = d.idOrden
     inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
@@ -21,6 +21,7 @@ header("Content-Type: text/html;charset=utf-8");
     inner join acabados a on a.idAcabado = d.idAcabado
     inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
     inner join clientes cl on cl.idCliente = o.cliente
+    inner join vendedores v on v.idVendedor = o.idVendedor
     inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
      YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc";
     $result1=mysqli_query($link, $query1);
@@ -29,7 +30,8 @@ header("Content-Type: text/html;charset=utf-8");
     DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
     o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
     TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
-    format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC,cl.categoria as tipoCliente,cl.*
+    format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC,cl.categoria as tipoCliente,v.nombre as vendedor,cl.*
+    
     from detalleOrdenP d
     inner join ordenTrabajoP o on o.idOrden = d.idOrden
     inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
@@ -39,6 +41,7 @@ header("Content-Type: text/html;charset=utf-8");
     inner join acabados a on a.idAcabado = d.idAcabado
     inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
     inner join clientes cl on cl.idCliente = o.cliente
+    inner join vendedores v on v.idVendedor = o.idVendedor
     inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
      YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc";
     $result2=mysqli_query($link, $query2);
@@ -48,7 +51,8 @@ header("Content-Type: text/html;charset=utf-8");
     DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
     o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
     TIMESTAMPDIFF(DAY, d.fechaFactura, curdate()) AS diasMoro,format(d.totalCobro,2) as totalCobro,
-    format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC,cl.categoria as tipoCliente,cl.*
+    format(d.precio - d.totalCobro,2) as deuda,t.*,cp.idClasificacion as idC,cl.categoria as tipoCliente,
+    v.nombre as vendedor, cl.*
     from detalleOrdenGR d
     inner join ordenTrabajoGR o on o.idOrden = d.idOrden
     inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
@@ -58,6 +62,7 @@ header("Content-Type: text/html;charset=utf-8");
     inner join acabados a on a.idAcabado = d.idAcabado
     inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
     inner join clientes cl on cl.idCliente = o.cliente
+    inner join vendedores v on v.idVendedor = o.idVendedor
     inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
      YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc";
 	$result3=mysqli_query($link, $query3);
@@ -67,8 +72,10 @@ header("Content-Type: text/html;charset=utf-8");
 
     <tr style="border:1px solid white;text-align:center;background-color:black;color:white;" height="40">
     <th  style="border:1px solid white;width:5%;">Fecha</th>
+    <th  style="border:1px solid white;width:6%;">Correlativo</th>
     <th  style="border:1px solid white;width:6%;">Tipo DOC</th>
     <th  style="border:1px solid white;width:6%;">No DOC</th>
+    <th  style="border:1px solid white;width:6%;">Vendedor</th>
     <th  style="border:1px solid white;width:10%;">Tipo Venta</th>
     <th  style="border:1px solid white;width:10%;">Tipo PRO</th>
     <th  style="border:1px solid white;">Clasificaci&oacute;n</th>
@@ -83,6 +90,7 @@ header("Content-Type: text/html;charset=utf-8");
     <th  style="text-align:center;border:1px solid white;width:8%;">1%</th>
     <th  style="text-align:center;border:1px solid white;width:8%;">Total</th>
     <th  style="text-align:center;border:1px solid white;">Estatus</th>
+    <th  style="text-align:center;border:1px solid white;">Abonos realizados</th>
     <th  style="text-align:center;border:1px solid white;">Dias de morosidad</th>
     <th  style="text-align:center;border:1px solid white;width:8%;">Total Cobrado</th>
     <th  style="text-align:center;border:1px solid white;">Fecha de Cobro</th>
@@ -93,8 +101,9 @@ header("Content-Type: text/html;charset=utf-8");
 <?php
 while ($row=mysqli_fetch_assoc($result1)) {
     $idOrden = $row["idOrden"];
+    $idDetalle = $row["idDetalle"];
 
-    $totalVentaGra = $mysqli -> query ("select format((sum(dp.precio) * 0.13) + sum(dp.precio),2) as ventasGR from detalleOrdenIP dp
+    $totalVentaGra = $mysqli -> query ("select format(sum(dp.precio),2) as ventasGR from detalleOrdenIP dp
            inner join ordenTrabajoIP op on op.idOrden = dp.idOrden
             where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
 
@@ -125,11 +134,13 @@ while ($row=mysqli_fetch_assoc($result1)) {
             $totalNoS = $totalVentaNoS->fetch_assoc();
             $totalNoS = $totalNoS['ventasNoS'];
 
+            $pagosIP= $mysqli -> query ("select *, format(monto,2) as monto,DATE_FORMAT(fechaPago, '%d/%m/%Y') as fechaPago from pagos
+            where idClasificacion= 2 and idDetalle =".$idDetalle."");
 
     ?>
         <tr style="text-align:center;border:1px solid black;">
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
-
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro']; ?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['correlativo']; ?></td>
             <?php   
                 if($row["doc"]=="6"){
             ?>
@@ -147,7 +158,8 @@ while ($row=mysqli_fetch_assoc($result1)) {
             <?php
                 }
             ?>
-            <td style="text-align:center;border:1px solid black;"></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nDoc']);?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_decode($row['vendedor']);?></td>
             <td style="text-align:center;border:1px solid black;"></td>
             
             <td style="text-align:center;border:1px solid black; background-color:#0B0678;color:white"><?php echo $row['clasificacion'];?></td>
@@ -233,6 +245,31 @@ while ($row=mysqli_fetch_assoc($result1)) {
             }
             ?>
 
+            <td  style="text-align:center;border:1px solid black">
+            
+                <table class="ui table">
+                <tr style="border:1px solid white;text-align:center;background-color:#19C72E;color:white;">
+                            <th>Monto</th>
+                            <th>Tipo de pago</th>
+                            <th>Fecha de pago</th>
+                        
+                        </tr>
+
+            <?php
+                while ($row1=mysqli_fetch_assoc($pagosIP)) {
+                    ?>
+                    <tr>
+                            <td style="text-align:center;border:1px solid black;"> $<?php echo utf8_encode($row1["monto"]);?></td>
+                            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row1["tipoPago"]);?></td>
+                            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row1["fechaPago"]);?></td>
+                    </tr>
+                    <?php
+                }
+            ?>
+                </table>
+               <br>
+            </td>
+
             <?php
             if($total - $row['totalCobro'] >0){
 
@@ -266,8 +303,9 @@ while ($row=mysqli_fetch_assoc($result1)) {
 <?php
 while ($row=mysqli_fetch_assoc($result3)) {
     $idOrden = $row["idOrden"];
+    $idDetalle = $row["idDetalle"];
 
-    $totalVentaGra = $mysqli -> query ("select format((sum(dp.precio) * 0.13) + sum(dp.precio),2) as ventasGR from detalleOrdenGR dp
+    $totalVentaGra = $mysqli -> query ("select format(sum(dp.precio),2) as ventasGR from detalleOrdenGR dp
            inner join ordenTrabajoGR op on op.idOrden = dp.idOrden
             where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
 
@@ -297,10 +335,13 @@ while ($row=mysqli_fetch_assoc($result3)) {
 
             $totalNoS = $totalVentaNoS->fetch_assoc();
             $totalNoS = $totalNoS['ventasNoS'];
+
+            $pagosGR= $mysqli -> query ("select *, format(monto,2) as monto,DATE_FORMAT(fechaPago, '%d/%m/%Y') as fechaPago from pagos
+            where idClasificacion= 1 and idDetalle =".$idDetalle."");
     ?>
         <tr style="text-align:center;border:1px solid black;">
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
-
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro']; ?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['correlativo']; ?></td>
             <?php   
                 if($row["doc"]=="6"){
             ?>
@@ -318,7 +359,8 @@ while ($row=mysqli_fetch_assoc($result3)) {
             <?php
                 }
             ?>
-            <td style="text-align:center;border:1px solid black;"></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nDoc']);?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_decode($row['vendedor']);?></td>
             <td style="text-align:center;border:1px solid black;"></td>
             
             <td style="text-align:center;border:1px solid black; background-color:#03440E;color:white"><?php echo $row['clasificacion'];?></td>
@@ -404,6 +446,32 @@ while ($row=mysqli_fetch_assoc($result3)) {
             }
             ?>
 
+            <td  style="text-align:center;border:1px solid black">
+                        <table>
+                        
+                        
+                        <tr style="border:1px solid white;text-align:center;background-color:#2C22A4;color:white;">
+                            <th>Monto</th>
+                            <th>Tipo de pago</th>
+                            <th>Fecha de pago</th>
+                        
+                        </tr>
+
+                    <?php
+                        while ($row1=mysqli_fetch_assoc($pagosGR)) {
+                            ?>
+                            <tr>
+                            <td style="text-align:center;border:1px solid black;"> $<?php echo utf8_encode($row1["monto"]);?></td>
+                            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row1["tipoPago"]);?></td>
+                            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row1["fechaPago"]);?></td>
+                            </tr>
+                            <?php
+                        }
+                    ?>
+                        </table>
+                        <br>
+                    </td>
+
             <?php
             if($total - $row['totalCobro'] >0){
 
@@ -438,8 +506,9 @@ while ($row=mysqli_fetch_assoc($result3)) {
 <?php
 while ($row=mysqli_fetch_assoc($result2)) {
     $idOrden = $row["idOrden"];
+    $idDetalle = $row["idDetalle"];
 
-    $totalVentaGra = $mysqli -> query ("select format((sum(dp.precio) * 0.13) + sum(dp.precio),2) as ventasGR from detalleOrdenP dp
+    $totalVentaGra = $mysqli -> query ("select format(sum(dp.precio),2) as ventasGR from detalleOrdenP dp
            inner join ordenTrabajoP op on op.idOrden = dp.idOrden
             where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
 
@@ -469,10 +538,13 @@ while ($row=mysqli_fetch_assoc($result2)) {
 
             $totalNoS = $totalVentaNoS->fetch_assoc();
             $totalNoS = $totalNoS['ventasNoS'];
+
+            $pagosP= $mysqli -> query ("select *, format(monto,2) as monto,DATE_FORMAT(fechaPago, '%d/%m/%Y') as fechaPago from pagos
+            where idClasificacion= 3 and idDetalle =".$idDetalle."");
     ?>
         <tr style="text-align:center;border:1px solid black;">
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
-
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro']; ?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['correlativo']; ?></td>
             <?php   
                 if($row["doc"]=="6"){
             ?>
@@ -490,7 +562,8 @@ while ($row=mysqli_fetch_assoc($result2)) {
             <?php
                 }
             ?>
-            <td style="text-align:center;border:1px solid black;"></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nDoc']);?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['vendedor']);?></td>
             <td style="text-align:center;border:1px solid black;"></td>
             
             <td style="text-align:center;border:1px solid black; background-color:#5C1106;color:white"><?php echo $row['clasificacion'];?></td>
@@ -575,6 +648,32 @@ while ($row=mysqli_fetch_assoc($result2)) {
             <?php
             }
             ?>
+
+            <td  style="text-align:center;border:1px solid black">
+                    <table>
+                    <tr style="border:1px solid white;text-align:center;background-color:#D33647;color:white;">
+                            <th>Monto</th>
+                            <th>Tipo de pago</th>
+                            <th>Fecha de pago</th>
+                        
+                    </tr>
+
+                <?php
+                    while ($row1=mysqli_fetch_assoc($pagosP)) {
+                        ?>
+                        <tr>
+                        <td style="text-align:center;border:1px solid black;"> $<?php echo utf8_encode($row1["monto"]);?></td>
+                        <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row1["tipoPago"]);?></td>
+                        <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row1["fechaPago"]);?></td>
+                        </tr>
+                        <?php
+                    }
+                ?>
+                    </table>
+                    <br>
+                </td>
+
+               
 
             <?php
             if($total - $row['totalCobro'] >0){

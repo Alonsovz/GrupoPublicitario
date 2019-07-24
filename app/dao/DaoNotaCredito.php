@@ -133,7 +133,7 @@ class DaoNotaCredito extends DaoBase {
 
 
     public function facturaConsumidorImp() {
-        $_query = "update ordenTrabajoIP set estado=6 where idOrden=".$this->objeto->getIdOrden();
+        $_query = "update ordenTrabajoIP set estado=6, nDoc =".$this->objeto->getNRE()." where idOrden=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -145,7 +145,7 @@ class DaoNotaCredito extends DaoBase {
     }
 
     public function CFFImp() {
-        $_query = "update ordenTrabajoIP set estado=7 where idOrden=".$this->objeto->getIdOrden();
+        $_query = "update ordenTrabajoIP set estado=7, nDoc =".$this->objeto->getNRE()." where idOrden=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -158,7 +158,7 @@ class DaoNotaCredito extends DaoBase {
 
 
     public function notaCreImp() {
-        $_query = "update ordenTrabajoIP set estado=8 where idOrden=".$this->objeto->getIdOrden();
+        $_query = "update ordenTrabajoIP set estado=8, nDoc =".$this->objeto->getNRE()." where idOrden=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -171,7 +171,7 @@ class DaoNotaCredito extends DaoBase {
 
 
     public function facturaConsumidorP() {
-        $_query = "update ordenTrabajoP set estado=6 where idOrden=".$this->objeto->getIdOrden();
+        $_query = "update ordenTrabajoP set estado=6, nDoc =".$this->objeto->getNRE()." where idOrden=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -183,7 +183,7 @@ class DaoNotaCredito extends DaoBase {
     }
 
     public function CFFP() {
-        $_query = "update ordenTrabajoP set estado=7 where idOrden=".$this->objeto->getIdOrden();
+        $_query = "update ordenTrabajoP set estado=7, nDoc =".$this->objeto->getNRE()." where idOrden=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -196,7 +196,7 @@ class DaoNotaCredito extends DaoBase {
 
 
     public function notaCreP() {
-        $_query = "update ordenTrabajoP set estado=8 where idOrden=".$this->objeto->getIdOrden();
+        $_query = "update ordenTrabajoP set estado=8, nDoc =".$this->objeto->getNRE()." where idOrden=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -209,7 +209,7 @@ class DaoNotaCredito extends DaoBase {
 
 
     public function facturaConsumidorGR() {
-        $_query = "update ordenTrabajoGR set estado=6 where idOrden=".$this->objeto->getIdOrden();
+        $_query = "update ordenTrabajoGR set estado=6, nDoc =".$this->objeto->getNRE()." where idOrden=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -221,7 +221,7 @@ class DaoNotaCredito extends DaoBase {
     }
 
     public function CFFGR() {
-        $_query = "update ordenTrabajoGR set estado=7 where idOrden=".$this->objeto->getIdOrden();
+        $_query = "update ordenTrabajoGR set estado=7, nDoc =".$this->objeto->getNRE()." where idOrden=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -234,7 +234,7 @@ class DaoNotaCredito extends DaoBase {
 
 
     public function notaCreGR() {
-        $_query = "update ordenTrabajoGR set estado=8 where idOrden=".$this->objeto->getIdOrden();
+        $_query = "update ordenTrabajoGR set estado=8, nDoc =".$this->objeto->getNRE()." where idOrden=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 

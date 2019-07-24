@@ -190,7 +190,7 @@ class FacturacionController extends ControladorBase {
         $dao = new DaoNotaCredito();
 
         $dao->objeto->setIdOrden($_REQUEST["idOT"]);
-       
+        $dao->objeto->setNRE($_REQUEST["nDoc"]);
         
         echo $dao->facturaConsumidorImp();
         echo $dao->fechaCobroIP();
@@ -200,7 +200,7 @@ class FacturacionController extends ControladorBase {
         $dao = new DaoNotaCredito();
 
         $dao->objeto->setIdOrden($_REQUEST["idOT"]);
-       
+        $dao->objeto->setNRE($_REQUEST["nDoc"]);
         
         echo $dao->CFFImp();
         echo $dao->fechaCobroIP();
@@ -210,7 +210,7 @@ class FacturacionController extends ControladorBase {
         $dao = new DaoNotaCredito();
 
         $dao->objeto->setIdOrden($_REQUEST["idOT"]);
-       
+        $dao->objeto->setNRE($_REQUEST["nDoc"]);
         
         echo $dao->notaCreImp();
         echo $dao->fechaCobroIP();
@@ -220,7 +220,7 @@ class FacturacionController extends ControladorBase {
         $dao = new DaoNotaCredito();
 
         $dao->objeto->setIdOrden($_REQUEST["idOT"]);
-       
+        $dao->objeto->setNRE($_REQUEST["nDoc"]);
         
         echo $dao->facturaConsumidorP();
         echo $dao->fechaCobroP();
@@ -230,7 +230,7 @@ class FacturacionController extends ControladorBase {
         $dao = new DaoNotaCredito();
 
         $dao->objeto->setIdOrden($_REQUEST["idOT"]);
-       
+        $dao->objeto->setNRE($_REQUEST["nDoc"]);
         
         echo $dao->CFFP();
         echo $dao->fechaCobroP();
@@ -240,7 +240,7 @@ class FacturacionController extends ControladorBase {
         $dao = new DaoNotaCredito();
 
         $dao->objeto->setIdOrden($_REQUEST["idOT"]);
-       
+        $dao->objeto->setNRE($_REQUEST["nDoc"]);
         
         echo $dao->notaCreP();
         echo $dao->fechaCobroP();
@@ -250,7 +250,7 @@ class FacturacionController extends ControladorBase {
         $dao = new DaoNotaCredito();
 
         $dao->objeto->setIdOrden($_REQUEST["idOT"]);
-       
+        $dao->objeto->setNRE($_REQUEST["nDoc"]);
         
         echo $dao->facturaConsumidorGR();
         echo $dao->fechaCobroGR();
@@ -260,7 +260,7 @@ class FacturacionController extends ControladorBase {
         $dao = new DaoNotaCredito();
 
         $dao->objeto->setIdOrden($_REQUEST["idOT"]);
-       
+        $dao->objeto->setNRE($_REQUEST["nDoc"]);
         
         echo $dao->CFFGR();
         echo $dao->fechaCobroGR();
@@ -270,7 +270,7 @@ class FacturacionController extends ControladorBase {
         $dao = new DaoNotaCredito();
 
         $dao->objeto->setIdOrden($_REQUEST["idOT"]);
-       
+        $dao->objeto->setNRE($_REQUEST["nDoc"]);
         
         echo $dao->notaCreGR();
         echo $dao->fechaCobroGR();

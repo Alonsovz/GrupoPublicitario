@@ -371,8 +371,10 @@ class RequisicionController extends ControladorBase {
 
         $dao->objeto->setIdOrden($_REQUEST["idDetalle"]);
         $dao->objeto->setPrecio($_REQUEST["monto"]);
-        
+        $dao->objeto->setTipoDocumento($_REQUEST["tipoPago"]);
+
         echo $dao->cobrarIP();
+        echo $dao->registrarPagoIP();
     }
 
     public function cobrarP(){
@@ -380,8 +382,10 @@ class RequisicionController extends ControladorBase {
 
         $dao->objeto->setIdOrden($_REQUEST["idDetalle"]);
         $dao->objeto->setPrecio($_REQUEST["monto"]);
-        
+        $dao->objeto->setTipoDocumento($_REQUEST["tipoPago"]);
+
         echo $dao->cobrarP();
+        echo $dao->registrarPagoP();
     }
 
     public function cobrarGF(){
@@ -389,7 +393,9 @@ class RequisicionController extends ControladorBase {
 
         $dao->objeto->setIdOrden($_REQUEST["idDetalle"]);
         $dao->objeto->setPrecio($_REQUEST["monto"]);
-        
+        $dao->objeto->setTipoDocumento($_REQUEST["tipoPago"]);
+
+        echo $dao->registrarPagoGF();
         echo $dao->cobrarGF();
     }
 
