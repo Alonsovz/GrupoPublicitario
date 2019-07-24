@@ -25,6 +25,15 @@
     </a>
 
     </div>
+
+    <div class="item">
+
+    <a href="?1=VendedoresController&2=gestion" class="item menu-it" style="color:black; font-size:13px;font-weight:bold;">
+        <i class="users icon"></i><i class="dollar icon"></i>
+        Vendedores
+    </a>
+
+    </div>
     
 
     

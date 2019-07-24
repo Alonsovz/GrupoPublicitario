@@ -16,9 +16,11 @@ class OrdenTrabajo extends ModeloBase{
     private $ubicacion;
     private $descripciones;
     private $precio;
+    private $precioSin;
     private $tipo;
     private $idOrden;
-
+    private $idResponsablePro;
+    private $idVendedor;
     private $altura;
     private $base;
     private $longitud;
@@ -83,6 +85,32 @@ class OrdenTrabajo extends ModeloBase{
     public function setIdResponsable($idResponsable)
     {
         $this->idResponsable = $idResponsable;
+
+        return $this;
+    }
+
+    public function getIdResponsablePro()
+    {
+        return $this->idResponsablePro;
+    }
+
+    
+    public function setIdResponsablePro($idResponsablePro)
+    {
+        $this->idResponsablePro = $idResponsablePro;
+
+        return $this;
+    }
+
+    public function getIdVendedor()
+    {
+        return $this->idVendedor;
+    }
+
+    
+    public function setIdVendedor($idVendedor)
+    {
+        $this->idVendedor = $idVendedor;
 
         return $this;
     }
@@ -231,6 +259,19 @@ class OrdenTrabajo extends ModeloBase{
     public function setPrecio($precio)
     {
         $this->precio = $precio;
+
+        return $this;
+    }
+
+    public function getPrecioSin()
+    {
+        return $this->precioSin;
+    }
+
+    
+    public function setPrecioSin($precioSin)
+    {
+        $this->precioSin = $precioSin;
 
         return $this;
     }

@@ -92,7 +92,9 @@ class Reporte {
 				<th style='background-color:black;color:white;'>Detalles Generales</th>
 
 				<th style='background-color:black;color:white;'>Descripcion</th>
-				<th style='background-color:black;color:white;'>Precio</th>
+                <th style='background-color:black;color:white;'>Precio sin IVA</th>
+                <th style='background-color:black;color:white;'>Precio final</th>
+				
                </tr>
                ";
         while($fila = $resultado1->fetch_assoc()) {      
@@ -111,6 +113,7 @@ class Reporte {
                </td>
              
                <td style='border:1px solid black;'>".$fila['descripciones']." </td>
+               <td style='border:1px solid black;text-align: center;'> $ ".$fila['precioSin']." </td>
                <td style='border:1px solid black;text-align: center;'> $ ".$fila['precio']." </td>
 
                </tr> ";

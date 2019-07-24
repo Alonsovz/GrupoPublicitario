@@ -59,10 +59,7 @@ Detalles de la OT : <a id="corr" style="background-color:white; color:black;"></
             <input type="text" name="fechaOT" id="fechaOT" readonly>
             </div>
 
-            <div class="eight wide field">
-            <label><i class="user icon"></i>Responsable:</label>
-            <input type="text" name="responsable" id="responsable"  readonly>
-            </div>
+           
 
 
             <div class="eight wide field">
@@ -76,7 +73,24 @@ Detalles de la OT : <a id="corr" style="background-color:white; color:black;"></
             </div>
 </div>
 </div>
+<div class="field">
+    <div class="fields">
+    <div class="eight wide field">
+            <label><i class="user icon"></i>Ingresó la orden:</label>
+            <input type="text" name="responsable" id="responsable"  readonly>
+            </div>
 
+            <div class="eight wide field">
+            <label><i class="user icon"></i>Vendió la orden:</label>
+            <input type="text" name="vendedor" id="vendedor"  readonly>
+            </div>
+
+            <div class="eight wide field">
+            <label><i class="user icon"></i>Encargado en produccción:</label>
+            <input type="text" name="respProduccion" id="respProduccion"  readonly>
+            </div>
+    </div>
+</div>
 <div class="field">
                 <div class="fields">
                 
@@ -190,9 +204,11 @@ var app = new Vue({
                         $('#frmVerDetalles input[name="correlativo"]').val(dat.correlativo);
                         $('#frmVerDetalles input[name="fechaOT"]').val(dat.fechaOT);
                         $('#frmVerDetalles input[name="fechaEOT"]').val(dat.fechaEntrega);
-                        $('#frmVerDetalles input[name="responsable"]').val(dat.nombre);
                         $('#frmVerDetalles input[name="cliente"]').val(dat.nombreC);
                         $('#frmVerDetalles textarea[name="descripcionesEl"]').val(dat.descripcionesE);
+                        $('#frmVerDetalles input[name="responsable"]').val(dat.nombre);
+                        $('#frmVerDetalles input[name="respProduccion"]').val(dat.respProduccion);
+                        $('#frmVerDetalles input[name="vendedor"]').val(dat.vendedor);
                     })
                     .catch(err => {
                         console.log(err);

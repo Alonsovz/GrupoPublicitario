@@ -91,7 +91,8 @@ class Reporte {
                 <th style='background-color:black;color:white;'>Tipo</th>
                 <th style='background-color:black;color:white;'>Descripcion</th>
                 <th style='background-color:black;color:white;'>Tipo de venta</th>
-				<th style='background-color:black;color:white;'>Precio</th>
+                <th style='background-color:black;color:white;'>Precio sin IVA</th>
+                <th style='background-color:black;color:white;'>Precio final</th>
 				
                </tr>
                ";
@@ -107,6 +108,7 @@ class Reporte {
                 <td style='border:1px solid black;text-align: center;'>".$fila['tipo']." </td>
                <td style='border:1px solid black;'>".$fila['descripciones']." </td>
                <td style='border:1px solid black;'>".$fila['tipoVenta']." </td>
+               <td style='border:1px solid black;text-align: center;'> $ ".$fila['precioSin']." </td>
                <td style='border:1px solid black;text-align: center;'> $ ".$fila['precio']." </td>
 
                </tr>

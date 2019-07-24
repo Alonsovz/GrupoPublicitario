@@ -1,6 +1,6 @@
 <?php
   require_once './vendor/autoload.php';
-  $mysqli = new mysqli('localhost','root','','grupopublicitario');
+  $mysqli = new mysqli("localhost","root","","grupoPublicitario");
   $listado = $mysqli -> query ("select max(idOrden) as id from ordenTrabajoGR");
 
   $id="";
@@ -35,13 +35,13 @@
     </div>
     
 <br>
-<div class="content" style="text-align:center; border: 1px solid black; background-color: #F3F3F1;">
+<div class="content" style="text-align:center; border: 1px solid black; background-color: #DADAD4;">
 <br>
-<form class="ui form" style="font-size:16px;margin-left:20px;margin-right:20px; " id="frmOrden"  method="POST" enctype="multipart/form-data">
+<form class="ui form" style="font-size:15px;margin-left:20px;margin-right:20px; " id="frmOrden"  method="POST" enctype="multipart/form-data">
     <div class="field">
         <div class="fields">
 
-            <div class="three wide field">
+            <div class="two wide field">
             <label><i class="list icon"></i>Correlativo:</label>
             <input type="text" name="correlativo" id="correlativo" value="<?php echo "OTGF00".$id; ?>" readonly>
 
@@ -53,20 +53,22 @@
             <input type="date" name="fechaOT" id="fechaOT">
             </div>
 
-            <div class="eight wide field">
+            <div class="four wide field">
             <label><i class="user icon"></i>Responsable de ingresar OT:</label>
             <input type="text" name="responsable" id="responsable" value=<?php echo '"'.$_SESSION['nombre'].' '."".' ' .$_SESSION['apellido'].'"'; ?> readonly>
             </div>
 
+            
 
-            <div class="eight wide field">
+
+            <div class="four wide field">
             <label><i class="user icon"></i><i class="cart arrow down icon"></i>Cliente:</label>
             <select name="cliente" id="cliente" class="ui search dropdown">
             </select>
             </div>
 
             <div class="three wide field">
-            <label><i class="calendar icon"></i>Fecha Entrega de la OT:</label>
+            <label><i class="calendar icon"></i>Fecha Entrega:</label>
             <input type="date" name="fechaEOT" id="fechaEOT">
             </div>
 
@@ -78,7 +80,7 @@
     <div class="field">
         <div class="fields">
 
-            <div class="three wide field">
+            <div class="four wide field">
             <label><i class="chart bar icon"></i>Clasificación:</label>
             <select name="clasificacionCmb"  id="clasificacionCmb" class="ui search dropdown">
            
@@ -95,12 +97,12 @@
             </div>
 
             <div class="two wide field" id="medi" style="display:none;">
-            <label><i class="arrows alternate icon"></i>Medidad:</label>
+            <label><i class="arrows alternate icon"></i>Medida:</label>
             <input type="text" name="unidadMedida" id="unidadMedida" readonly>
             
             </div>
 
-            <div class="four wide field" id="aca" style="display:none;">
+            <div class="three wide field" id="aca" style="display:none;">
             <label><i class="podcast icon"></i>Acabado:</label>
             <select name="acabadoCmb" id="acabadoCmb" class="ui search dropdown">
             
@@ -151,62 +153,62 @@
         </div>
 
     <div class="ui divider"></div><br>
-
+    <div id="datos" style="display:none">
     <div class="field">
         <div class="fields">
 
-        <div class="two wide field" style="background-color:#C3F99E">
-            <label><i class="user icon"></i>Cantidad:</label>
-            <input type="text" name="cantidad" id="cantidad">
+        <div class="two wide field" style="background-color:#F9FCBB">
+            <label><i class="pencil icon"></i>Cantidad:</label>
+            <input type="text" name="cantidad" id="cantidad" placeholder="Cantidad">
             
             </div>
 
             
-            <div class="two wide field" style="background-color:#C3F99E">
+            <div class="two wide field" style="background-color:#F9FCBB">
             <label><i class="arrows alternate horizontal icon"></i>Base:</label>
-            <input type="text" name="base" id="base">
+            <input type="text" name="base" id="base" placeholder="Base">
             </div>
 
-            <div class="two wide field" style="background-color:#C3F99E">
+            <div class="two wide field" style="background-color:#F9FCBB">
             <label><i class="arrows alternate vertical icon"></i>Altura:</label>
-            <input type="text" name="altura" id="altura">
+            <input type="text" name="altura" id="altura" placeholder="Altura">
             </div>
 
         
        
 
-            <div class="three wide field" style="background-color:#B2BAF5">
+            <div class="three wide field" style="background-color:#84DFD4">
             <label><i class="arrows alternate horizontal icon"></i>Ancho:</label>
-            <input type="text" name="ancho" id="ancho">
+            <input type="text" name="ancho" id="ancho" placeholder="Ancho">
             </div>
 
-            <div class="three wide field" style="background-color:#B2BAF5">
+            <div class="three wide field" style="background-color:#84DFD4">
             <label><i class="arrows alternate icon"></i>Longitud:</label>
-            <input type="text" name="longitud" id="longitud">
+            <input type="text" name="longitud" id="longitud" placeholder="Longitud">
             </div>
 
-            <div class="three wide field" style="background-color:#B2BAF5">
+            <div class="three wide field" style="background-color:#84DFD4">
             <label><i class="arrows alternate horizontal icon"></i>Ancho de material:</label>
-            <input type="text" name="anchoMaterial" id="anchoMaterial">
+            <input type="text" name="anchoMaterial" id="anchoMaterial" placeholder="Ancho Material">
             </div>
 
             <div class="three wide field" style="background-color:#F2F768">
             <label><i class="file icon"></i>Copias:</label>
-            <input type="text" name="copias" id="copias">
+            <input type="text" name="copias" id="copias" placeholder="Copias">
             </div>
 
-            <div class="three wide field" style="background-color:#F5D5B2">
+            <div class="three wide field" style="background-color:#C3F9B8">
             <label><i class="arrows alternate icon"></i>MTS 2 Imp:</label>
-            <input type="text" name="cuadrosImp" id="cuadrosImp" readonly>
+            <input type="text" name="cuadrosImp" id="cuadrosImp" readonly placeholder="Mt2 Impresión">
             </div>
         
             
 
             
 
-            <div class="three wide field" style="background-color:#F99F9E">
+            <div class="three wide field" style="background-color:#D7EAFC">
             <label><i class="trash icon"></i>Desperdicio:</label>
-            <input type="text" name="desperdicio" id="desperdicio">
+            <input type="text" name="desperdicio" id="desperdicio" placeholder="Desperdicio">
             </div>
 
         </div>
@@ -215,21 +217,25 @@
     <div class="field">
         <div class="fields">
         
-
-        <div class="three wide field" style="background-color:#E29EF9">
-            <label><i class="arrows alternate icon"></i>Ojetes: Arriba</label>
+        <div class="three wide field" style="background-color:#070244;">
+        <br>
+            <label style=" color:white;"><i class="circle outline icon"></i> Ojetes</label>
+            
+        </div>
+        <div class="three wide field" style="background-color:#A09AEA">
+            <label>Arriba</label>
             <input type="number" id="ojeteAr" name="ojeteAr" placeholder="Arriba" value="0">
         </div>
-        <div class="three wide field" style="background-color:#E29EF9">
-            <label><i class="arrows alternate icon"></i>Abajo<br></label>
+        <div class="three wide field" style="background-color:#A09AEA">
+            <label>Abajo<br></label>
             <input type="number" id="ojeteAb" name="ojeteAb" placeholder="Abajo" value="0">
         </div>
-        <div class="three wide field" style="background-color:#E29EF9">
-            <label><i class="arrows alternate icon"></i>Izquierda<br></label>
+        <div class="three wide field" style="background-color:#A09AEA">
+            <label>Izquierda<br></label>
             <input type="number" id="ojeteIz" name="ojeteIz" placeholder="Izquierda" value="0">
         </div>
-        <div class="three wide field" style="background-color:#E29EF9">
-            <label><i class="arrows alternate icon"></i>Derecha<br></label>
+        <div class="three wide field" style="background-color:#A09AEA">
+            <label>Derecha<br></label>
             <input type="number" id="ojeteDe" name="ojeteDe" placeholder="Derecha" value="0">
         </div>
 
@@ -248,6 +254,175 @@
 
         </div>
         </div>
+        <div class="ui divider"></div><br>
+        <div class="field">
+        <div class="fields">
+        <div class="three wide field" style="background-color:#7514A0;">
+        
+            <label style=" color:white;"><i class="arrows alternate icon"></i>Varillas, tubos y fundas</label>
+            <select name="tipoTubo" id="tipoTubo" class="ui dropdown">
+                <option value="7" set selected>Seleccione una opción</option>
+                <option value="1">Varilla</option>
+                <option value="2">Tubo metálico</option>
+                <option value="3">Tubo PVC</option>
+                <option value="4">Funda para varilla</option>
+                <option value="5">Funda para tubo</option>
+            </select>
+            <br><br>
+        </div>
+        <div class="three wide field" style="background-color:#E29EF9">
+            <label>Arriba</label>
+            <input type="checkbox" id="varillaAr" name="varillaAr" value="arriba">
+        </div>
+        <div class="three wide field" style="background-color:#E29EF9">
+            <label>Abajo<br></label>
+            <input type="checkbox" id="varillaAb" name="varillaAb"  value="abajo">
+        </div>
+        <div class="four wide field" style="background-color:#E29EF9">
+            <label>Izquierda y derecha<br></label>
+            <input type="checkbox" id="varillaIzD" name="varillaIzD"  value="izquierda">
+        </div>
+        <div class="three wide field" style="background-color:#E29EF9">
+            <label>Alrrededor<br></label>
+            <input type="checkbox" id="varillaAlrre" name="varillaAlrre"  value="alrrededor">
+            
+        </div>
+        
+
+        <div class="one wide field" style="background-color:#DADAD4;">
+        
+        <label style=" color:#DADAD4;"><i class="cut icon"></i>Corte</label>
+        
+        </div>
+
+        <div class="three wide field" style="background-color:#A92C8B;">
+        <br>
+            <label style=" color:white;"><i class="paste icon"></i>Pegado</label>
+        </div>
+        
+        <div class="three wide field" style="background-color:#FA9CE3">
+            <label>Base<br></label>
+            <input type="radio" name="pegadoBase" id="pegadoBase"  value="base">
+        </div>
+        <div class="three wide field" style="background-color:#FA9CE3">
+            <label>Altura<br></label>
+            <input type="radio"  name="pegadoAltura" id="pegadoAltura"  value="altura">
+        </div>
+        
+        
+
+        </div>
+</div>
+
+<div class="ui divider"></div><br>
+    <div class="field">
+        <div class="fields">
+        <div class="five wide field" style="background-color:#F48238;">
+       
+            <label style=" color:white;"><i class="paste icon"></i>Trasl. Pegado o cebolla</label>
+        </div>
+
+        <div class="three wide field" style="background-color:#FCC8A6;">
+        <label ><i class="paste icon"></i>Medida</label>
+        <input type="text" id="medidaTrasl" placeholder="Medida">
+
+        </div>
+        <div class="five wide field" style="background-color:#FCC8A6;">
+        <label ><i class="paste icon"></i>Tipo</label>
+        <select name="traslPegado" id="traslPegado" class="ui dropdown">
+                <option value="7" set selected>Seleccione una opción</option>
+                <option value="1">TRASL Pega Vertical</option>
+                <option value="2">TRASL Pega Horizontal</option>
+                <option value="3">TRASL Cebolla Horizontal</option>
+                <option value="4">TRASL Cebolla Vertical</option>
+
+            </select>
+        </div>
+
+
+        <div class="one wide field" style="background-color:#DADAD4;">
+        
+        <label style=" color:#DADAD4;"><i class="cut icon"></i>Corte</label>
+        
+    </div>
+
+        <div class="two wide field" style="background-color:#68422B;">
+        
+            <label style=" color:white;"><i class="circle icon"></i> Ruedo</label>
+            
+        </div>
+        <div class="three wide field" style="background-color:#BAA497">
+            <label>Arriba</label>
+            <input type="checkbox" id="ruedoAr" name="ruedoAr" value="arriba">
+        </div>
+        <div class="three wide field" style="background-color:#BAA497">
+            <label>Abajo<br></label>
+            <input type="checkbox" id="ruedoAb" name="ruedoAb"  value="abajo">
+        </div>
+        <div class="three wide field" style="background-color:#BAA497">
+            <label>Izquierda y derecha<br></label>
+            <input type="checkbox" id="ruedoIzD" name="ruedoIzD"  value="izquierda">
+        </div>
+        
+        <div class="three wide field" style="background-color:#BAA497">
+            <label>Alrrededor<br></label>
+            <input type="checkbox" id="ruedoAlrre" name="ruedoAlrre"  value="alrrededor">
+        </div>
+        </div>
+    </div>
+
+<div class="ui divider"></div><br>
+    <div class="field">
+        <div class="fields">
+
+        
+        
+        
+
+        <div class="three wide field" style="background-color:#AC2546;">
+        
+            <label style=" color:white;"><i class="circle icon"></i>Laminación</label>
+            
+        </div>
+
+        <div class="three wide field" style="background-color:#FE96AF">
+            <label>Brillo Vinylica</label>
+            <input type="radio"   name="laminacion" value="Brillo Vinylica">
+        </div>
+        <div class="three wide field" style="background-color:#FE96AF">
+            <label>Mate Vinylica<br></label>
+            <input type="radio"  name="laminacion"  value="Mate Vinylica">
+        </div>
+        <div class="three wide field" style="background-color:#FE96AF">
+            <label>UV Liquida<br></label>
+            <input type="radio"  name="laminacion"  value="UV Liquida">
+        </div>
+
+        <div class="one wide field" style="background-color:#DADAD4;">
+        
+            <label style=" color:#DADAD4;"><i class="cut icon"></i>Corte</label>
+            
+        </div>
+
+        <div class="three wide field" style="background-color:#1B5C15;">
+            <label style=" color:white;"><i class="cut icon"></i>Corte</label>
+        </div>
+        
+        <div class="three wide field" style="background-color:#92F389">
+            <label>Base<br></label>
+            <input type="radio"  name="corte"  value="base">
+        </div>
+        <div class="three wide field" style="background-color:#92F389">
+            <label>Altura<br></label>
+            <input type="radio"  name="corte"  value="altura">
+        </div>
+        
+
+
+        
+        </div>
+</div>
+
 
     <div class="ui divider"></div><br>
     <div class="field">
@@ -255,9 +430,9 @@
 
         
 
-        <div class="four wide field">
+        <div class="five wide field">
             <label><i class="pencil icon"></i>Descripciones Adicionales:</label>
-            <textarea rows="3" id="descripciones" name="descripciones"></textarea>
+            <textarea rows="3" id="descripciones" name="descripciones" placeholder="Descripciones"></textarea>
             
             </div>
 
@@ -272,111 +447,159 @@
             
             </div>
 
-            <div class="three wide field">
+            <div class="four wide field">
             <label><i class="dollar icon"></i>Total sugerido:</label>
-            <input type="text" name="precioTo" id="precioTo">
-              <a class="ui blue button" id="calcIva"><i class="plus icon"></i> IVA</a>
+            <input type="text" name="precioTo" id="precioTo" placeholder="Total Sugerido">
+            <br><br>
+              <a class="ui green button" id="calcIva"><i class="plus icon"></i> IVA</a>
             </div>
 
-            <div class="three wide field">
+            <div class="four wide field">
             <label style=""><i class="dollar icon"></i>Precio a cobrar:</label>
-            <input type="text" name="precio" id="precio" >
+            <input type="text" name="precio" id="precio" placeholder="Precio Final">
             
             </div>
 
-            <div class="three wide field">
             
+        </div>
+    </div>
+
+    <div class="ui divider"></div><br>
+    <div class="field">
+        <div class="fields">
+        <div class="four wide field">
+            <label><i class="user icon"></i>Vendida por:</label>
+            <select name="vendedor" id="vendedor" class="ui search dropdown">
+            </select>
+            </div>
+
+            <div class="four wide field">
+            <label><i class="user icon"></i>Responsable en  producción OT:</label>
+            <select name="respProduccion" id="respProduccion" class="ui search dropdown">
+            </select>
+            </div>
+
+            <div class="two wide field">
+            <label style="color:#DADAD4"><i class="dollar icon"></i>Precio:</label>
             <a class=" ui right floated black labeled icon button" id="agregarOT"> <i class="plus icon"></i>Agregar OT</a>
+            
+            </div>
+
+            <div class="six wide field">
+            <label style="color:#DADAD4"><i class="dollar icon"></i>Precio:</label>
+            <a class=" ui right floated red labeled icon button" id="verCompras"> <i class="cart arrow down icon"></i>Ver Compras</a>
             
             </div>
         </div>
     </div>
+    </div>
 </form>
 
-<div class="field" id="list" style="display:none;margin-left:10px;margin-right:10px;" >
-                        <div class="fields">
+<div class="ui fullscreen modal" id="modalCarrito">
+<div class="header" style="color: white; background-color:#B60F1C;">
+Listado de pedidos de la orden <?php echo "OTGF00".$id; ?>
+</div>
 
-                        <div class="sixteen wide field" style="font-size:16px;">
-                        <br>
-                        
-                <form action="" class="ui form" id="frmLista" >
-                        <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
-                                <thead>
-                                    <tr>
-                                        <th style="background-color: black; color:white;width:15%;"><i class="list icon"></i>Producto</th>
-                                        <th style="background-color: black; color:white;width:7%;"><i class="podcast icon"></i>Cantidad</th>
-                                        <th style="background-color: black; color:white;width:10%;"><i class="arrows alternate icon"></i>Detalles Generales</th>
-                                        <th style="background-color: black; color:white;"><i class="arrows alternate icon"></i>Def. Medida</th>
-                                        <th style="background-color: black; color:white;"><i class="arrows alternate icon"></i>Imp + Desperdicio</th>
-                                        <th style="background-color: black; color:white;width:20%;"><i class="pencil icon"></i>Descipciones</th>
-                                        <th style="background-color: black; color:white;width:10%;"><i class="dollar icon"></i>Tipo Venta</th>
-                                        <th style="background-color: black; color:white;width:7%;"><i class="dollar icon"></i>Precio</th>
+<div class="content">
+    <div class="field" id="list" style="" >
+                            <div class="fields">
+
+                            <div class="sixteen wide field" style="font-size:13px;">
+                            <br>
+                            
+                    <form action="" class="ui form" id="frmLista" >
+                            <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                                    <thead>
+                                        <tr>
+                                        <th style="background-color: black; color:white;width:5%;">Cant</th>
+                                            <th style="background-color: black; color:white;width:18%;"><i class="list icon"></i>Producto</th>
+                                            
+                                            <th style="background-color: black; color:white;width:10%;"><i class="arrows alternate icon"></i>Detalles Generales</th>
+                                            <th style="background-color: black; color:white;"><i class="arrows alternate icon"></i>Def. Medida</th>
+                                            <th style="background-color: black; color:white;"><i class="arrows alternate icon"></i>Imp + Desperdicio</th>
+                                            <th style="background-color: black; color:white;width:20%;"><i class="pencil icon"></i>Descipciones</th>
+                                            <th style="background-color: black; color:white;width:10%;"><i class="dollar icon"></i>Tipo Venta</th>
+                                            <th style="background-color: black; color:white;"><i class="dollar icon"></i>Precio sin IVA</th>
+                                        <th style="background-color: black; color:white;"><i class="dollar icon"></i>Precio Final</th>
                                         <th style="background-color: black; color:white;"><i class="trash icon"></i></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(lista, index) in listado">
-                                    <td>  
-                                    <textarea rows="3" v-model="lista.productoRe" name="nombreHer" id="nombreHer" readonly></textarea>
-                                    <input v-model="lista.idProducto" name="idProducto" id="idProducto" type="hidden" readonly>
-                                    <input v-model="lista.idColor" name="idColor" id="idColor" type="hidden" readonly>
-                                    <input v-model="lista.idAcabado" name="idAcabado" id="idAcabado" type="hidden" readonly>
-                                    </td>
-                                   
-                                    <td>  
-                                    <input v-model="lista.cantidadRe" name="cantidadRe" id="cantidadRe" type="text" readonly>
-                                    </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(lista, index) in listado">
+                                        <td>
+                                        <input v-model="lista.cantidadRe" name="cantidadRe" id="cantidadRe" type="text" readonly>
+                                        </td>
+                                        <td>  
+                                        
+                                        <textarea rows="4" v-model="lista.productoRe" name="nombreHer" id="nombreHer" readonly></textarea>
+                                        <input v-model="lista.idProducto" name="idProducto" id="idProducto" type="hidden" readonly>
+                                        <input v-model="lista.idColor" name="idColor" id="idColor" type="hidden" readonly>
+                                        <input v-model="lista.idAcabado" name="idAcabado" id="idAcabado" type="hidden" readonly>
+                                        </td>
 
-                                    <td>  
-                                    <textarea rows="4" v-model="lista.detallesPro" name="detallesPro" id="detallesPro" readonly></textarea>
+                                        <td>  
+                                        <textarea rows="4" v-model="lista.detallesPro" name="detallesPro" id="detallesPro" readonly></textarea>
 
-                                    <input v-model="lista.alturaRe" name="alturaRe" id="alturaRe" type="hidden" readonly>
-                                    <input v-model="lista.baseRe" name="baseRe" id="baseRe" type="hidden" readonly>
-                                    <input v-model="lista.cuadrosImpr" name="cuadrosImpr" id="cuadrosImpr" type="hidden" readonly>
-                                    </td>
-                                    <td>  
-                                    <textarea rows="3" v-model="lista.defMedidas" name="defMedidas" id="defMedidas" readonly></textarea>
-                                    <input v-model="lista.anchoRe" name="anchoRe" id="anchoRe" type="hidden" readonly>
-                                    <input v-model="lista.longitudRe" name="longitudRe" id="longitudRe" type="hidden" readonly>
-                                    <input v-model="lista.anchoMatRe" name="anchoMatRe" id="anchoMatRe" type="hidden" readonly>
-                                    </td>
-                                    <td>  
-                                    <textarea rows="3" v-model="lista.impDesper" name="impDesper" id="impDesper" readonly></textarea>
+                                        <input v-model="lista.alturaRe" name="alturaRe" id="alturaRe" type="hidden" readonly>
+                                        <input v-model="lista.baseRe" name="baseRe" id="baseRe" type="hidden" readonly>
+                                        <input v-model="lista.cuadrosImpr" name="cuadrosImpr" id="cuadrosImpr" type="hidden" readonly>
+                                        </td>
+                                        <td>  
+                                        <textarea rows="3" v-model="lista.defMedidas" name="defMedidas" id="defMedidas" readonly></textarea>
+                                        <input v-model="lista.anchoRe" name="anchoRe" id="anchoRe" type="hidden" readonly>
+                                        <input v-model="lista.longitudRe" name="longitudRe" id="longitudRe" type="hidden" readonly>
+                                        <input v-model="lista.anchoMatRe" name="anchoMatRe" id="anchoMatRe" type="hidden" readonly>
+                                        </td>
+                                        <td>  
+                                        <textarea rows="3" v-model="lista.impDesper" name="impDesper" id="impDesper" readonly></textarea>
 
-                                    <input v-model="lista.mtsDes" name="mtsDes" id="mtsDes" type="hidden" readonly>
-                                    <input v-model="lista.despRe" name="despRe" id="despRe" type="hidden" readonly>
-                                    </td>
-                                   
-
-                                    <td>  
-                                    <textarea rows="5"  v-model="lista.descriRe" name="descriRe" id="descriRe" readonly></textarea>
-                                    </td>
-                                    <td>  
-                                    <textarea rows="3" class="requerido" v-model="lista.tipoVentaRe" name="tipoVentaRe" id="tipoVentaRe"
-                                     readonly></textarea>
-                                    </td>
-                                    <td>  
-                                    <input class="requerido" v-model="lista.precioRe" name="precioRe" id="precioRe" type="text"
-                                     readonly>
-                                    </td>
+                                        <input v-model="lista.mtsDes" name="mtsDes" id="mtsDes" type="hidden" readonly>
+                                        <input v-model="lista.despRe" name="despRe" id="despRe" type="hidden" readonly>
+                                        </td>
                                     
-                                    <td>
-                                    <center>
-                    </form>
-                              <a  @click="eliminarDetalle(index)" class="ui negative mini circular icon button"><i
-                                  class="times icon"></i></a>
-                                  </center>
-                            </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    
-                        </div>
-                        <br>
-                        <a class="ui green right floated button" id="guardarOT">Guardar OT</a>
-                        <br>
-                         </div>
+
+                                        <td>  
+                                        <textarea rows="6"  v-model="lista.descriRe" name="descriRe" id="descriRe" readonly></textarea>
+                                        </td>
+                                        <td>  
+                                        <textarea rows="3" class="requerido" v-model="lista.tipoVentaRe" name="tipoVentaRe" id="tipoVentaRe"
+                                        readonly></textarea>
+                                        </td>
+                                        <td>  
+                                    <input class="requerido" v-model="lista.precioReSin" name="precioReSin" id="precioReSin" type="text" readonly>
+                                    </td>
+                                    <td>  
+                                    <input class="requerido" v-model="lista.precioRe" name="precioRe" id="precioRe" type="text" readonly>
+                                    </td>
+                                        
+                                        <td>
+                                        <center>
+                        </form>
+                                <a  @click="eliminarDetalle(index)" class="ui negative mini circular icon button"><i
+                                    class="times icon"></i></a>
+                                    </center>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        
+                            </div>
+                            
+                            
+                            
+                            </div>
+    </div>
+
+    </div>
+
+    <div class="actions">
+    <button class="ui black deny button">Cancelar</button>
+    <a class="ui green  button" id="guardarOT">Guardar OT</a>
+    </div>
+
+    </div>
+
 </div>
 
 </div>
@@ -391,6 +614,7 @@ var app = new Vue({
                 detallesPro:'',
                 descriRe:'',
                 precioRe:'',
+                precioReSin:'',
                 idProducto:'',
                 idColor:'',
                 idAcabado:'',
@@ -453,6 +677,7 @@ var app = new Vue({
     $('#precio').mask("###0.00", {reverse: true});
     $('#precioU').mask("###0.00", {reverse: true});
     $('#precioDesp').mask("###0.00", {reverse: true});
+    $('#medidaTrasl').mask("###0.00", {reverse: true});
     });
 
     $("#ancho").keyup(function(){
@@ -465,6 +690,10 @@ var app = new Vue({
         var altura = $(this).val();
 
         $("#longitud").val(altura);
+    });
+
+    $("#verCompras").click(function(){
+        $('#modalCarrito').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
     });
 
     $("#desperdicio").click(function(){
@@ -543,6 +772,11 @@ var app = new Vue({
       
       $("#precio").val(total.toFixed(2));
     });
+
+ 
+    $("#tipoTubo").change(function(){
+        
+    });
   
     $("#precioTo").click(function(){
         var precioPorMetro = $("#precioU").val();
@@ -552,6 +786,13 @@ var app = new Vue({
         var ojeteAb = $("#ojeteAb").val();
         var ojeteIz = $("#ojeteIz").val();
         var ojeteDe = $("#ojeteDe").val();
+        var material = $("#tipoTubo").val();
+        var totalTubo = "";
+        var totalPegado="";
+        var traslPegado = $("#traslPegado").val();
+        var totalTraslPegado = "";
+        var totalLaminacion="";
+        var totalCorte="";
 
         if($("#arte").val() == ""){
             var arte = 0.00;
@@ -562,7 +803,7 @@ var app = new Vue({
 
         var totalOjetes= parseFloat(ojeteAr) + parseFloat(ojeteAb) + parseFloat(ojeteIz) + parseFloat(ojeteDe);
 
-        var cobroOjetes = totalOjetes * 0.25;
+        var cobroOjetes = (totalOjetes * 0.25) * cantidad;
 
         
         var totalC = parseFloat(precioPorMetro) + parseFloat(precioDes);
@@ -576,8 +817,385 @@ var app = new Vue({
             }
 
        
+            
 
-        $("#precioTo").val(cobrar.toFixed(2));
+        if(material == 1){
+            //varilla
+          if($("#varillaAr").prop('checked')){
+              var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 1) * 2.5;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAb").prop('checked')){
+              var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 1) * 2.5;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAb").prop('checked') && $("#varillaAr").prop('checked')){
+            var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 2) * 2.5;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaIzD").prop('checked')){
+            var altura = $("#altura").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (altura * 2) * 2.5;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAlrre").prop('checked')){
+            var altura = $("#altura").val();
+            var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (altura * 2) * 2.5;
+              var mult1 =  (base * 2) * 2.5;
+
+
+              var totalTubo = (parseFloat(mult)  + parseFloat(mult1) ) * cantidad;
+
+              
+          }
+
+
+
+        }
+        if(material == 2){
+            //tuboMetal
+
+            if($("#varillaAr").prop('checked')){
+              var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 1) * 4;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAb").prop('checked')){
+              var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 1) * 4;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAb").prop('checked') && $("#varillaAr").prop('checked')){
+            var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 2) * 4;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaIzD").prop('checked')){
+            var altura = $("#altura").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (altura * 2) * 4;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAlrre").prop('checked')){
+            var altura = $("#altura").val();
+            var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (altura * 2) * 4;
+              var mult1 =  (base * 2) * 4;
+
+
+              var totalTubo = (parseFloat(mult)  + parseFloat(mult1) ) * cantidad;
+
+              
+          }
+        }
+        if(material == 3){
+            //TuboPVC
+
+            if($("#varillaAr").prop('checked')){
+              var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 1) * 3;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAb").prop('checked')){
+              var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 1) * 3;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAb").prop('checked') && $("#varillaAr").prop('checked')){
+            var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 2) * 3;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaIzD").prop('checked')){
+            var altura = $("#altura").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (altura * 2) * 3;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAlrre").prop('checked')){
+            var altura = $("#altura").val();
+            var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (altura * 2) * 3;
+              var mult1 =  (base * 2) * 3;
+
+
+              var totalTubo = (parseFloat(mult)  + parseFloat(mult1) ) * cantidad;
+
+              
+          }
+        }
+        if(material == 4){
+            //fundaPV
+
+            if($("#varillaAr").prop('checked')){
+              var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 1) * 1.25;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAb").prop('checked')){
+              var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 1) * 1.25;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAb").prop('checked') && $("#varillaAr").prop('checked')){
+            var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 2) * 1.25;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaIzD").prop('checked')){
+            var altura = $("#altura").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (altura * 2) * 1.25;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAlrre").prop('checked')){
+            var altura = $("#altura").val();
+            var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (altura * 2) * 1.25;
+              var mult1 =  (base * 2) * 1.25;
+
+
+              var totalTubo = (parseFloat(mult)  + parseFloat(mult1) ) * cantidad;
+
+              
+          }
+        }
+        if(material == 5){
+            //fundaPT
+            if($("#varillaAr").prop('checked')){
+              var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 1) * 1.25;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAb").prop('checked')){
+              var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 1) * 1.25;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAb").prop('checked') && $("#varillaAr").prop('checked')){
+            var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (base * 2) * 1.25;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaIzD").prop('checked')){
+            var altura = $("#altura").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (altura * 2) * 1.25;
+              var totalTubo = mult * cantidad;
+
+              
+          }
+
+          if($("#varillaAlrre").prop('checked')){
+            var altura = $("#altura").val();
+            var base = $("#base").val();
+              var cantidad = $("#cantidad").val();
+
+              var mult =  (altura * 2) * 1.25;
+              var mult1 =  (base * 2) * 1.25;
+
+
+              var totalTubo = (parseFloat(mult)  + parseFloat(mult1) ) * cantidad;
+
+              
+          }
+            
+        }
+
+        if(material == 7){
+            var totalTubo =0;
+        }
+
+        if($("#pegadoBase").prop('checked')){
+            var base = $("#base").val();
+            var cantidad = $("#cantidad").val();
+
+            var totalPegado = (base * 1.50) * cantidad;
+
+        }
+        
+
+        else if($("#pegadoAltura").prop('checked')){
+            var altura = $("#altura").val();
+            var cantidad = $("#cantidad").val();
+
+            var totalPegado = (altura * 1.50) * cantidad;
+
+        }
+        else{
+            var totalPegado = 0;
+        }
+
+
+        if(traslPegado == 1){
+            var medida = $("#medidaTrasl").val();
+            var altura = $("#altura").val();
+            var cantidad = $("#cantidad").val();
+
+            var totalTraslPegado = altura * medida * cantidad * 1.75;
+        }
+
+        if(traslPegado == 2){
+            var medida = $("#medidaTrasl").val();
+            var base = $("#base").val();
+            var cantidad = $("#cantidad").val();
+
+            var totalTraslPegado = base * medida * cantidad * 1.75;
+        }
+
+        if(traslPegado == 3){
+            var medida = $("#medidaTrasl").val();
+            var base = $("#base").val();
+            var cantidad = $("#cantidad").val();
+
+            var totalTraslPegado = base * medida * cantidad * 2.25;
+        }
+
+        if(traslPegado == 4){
+            var medida = $("#medidaTrasl").val();
+            var altura = $("#altura").val();
+            var cantidad = $("#cantidad").val();
+
+            var totalTraslPegado = altura * medida * cantidad * 2.25;
+        }
+
+        if(traslPegado == 7){
+            var totalTraslPegado =0;
+        }
+
+
+        if($("input[name='laminacion']:checked"). val() == "UV Liquida"){
+            var precio = $("#precioU").val();
+            var cantidad = $("#cantidad").val();
+            
+            var totalLaminacion = (precio * 0.30) * cantidad;
+        }else{
+            var totalLaminacion = 0;
+        }
+
+        if($("input[name='corte']:checked"). val() == "base"){
+            var base = $("#base").val();
+            var cantidad = $("#cantidad").val();
+
+            var totalCorte = (base * 1) * cantidad;
+        }
+        else if($("input[name='corte']:checked"). val() == "altura"){
+            var altura = $("#altura").val();
+            var cantidad = $("#cantidad").val();
+
+            var totalCorte = (altura * 1) * cantidad;
+        }
+        else{
+            var totalCorte = 0;
+        }
+        
+        var totalFinal = cobrar + totalTubo + totalPegado + totalTraslPegado + totalLaminacion + totalCorte;
+        $("#precioTo").val(totalFinal.toFixed(2));
     });
 </script>
 
@@ -595,7 +1213,17 @@ $(document).ready(function(){
     $("#fechaOT").val(fecha);
 });
 
+$("#pegadoAltura").change(function(){
+    if($(this).prop("checked")){
+        $("#pegadoBase").prop("checked",false);
+    }
+});
 
+$("#pegadoBase").change(function(){
+    if($(this).prop("checked")){
+        $("#pegadoAltura").prop("checked",false);
+    }
+});
 
 $(function() {
         
@@ -615,12 +1243,38 @@ $(function() {
         
 
         var option = '';
+        var user = '<?php echo $usuarios?>';
+
+        $.each(JSON.parse(user), function() {
+            option = `<option value="${this.codigoUsuario}">${this.nombre} ${this.apellido}</option>`;
+
+            $('#respProduccion').append(option);
+        });
+    });
+
+    $(function() {
+        
+
+        var option = '';
         var produc = '<?php echo $productos?>';
 
         $.each(JSON.parse(produc), function() {
             option = `<option value="${this.idProducto}">${this.nombre}</option>`;
 
             $('#clasificacionCmb').append(option);
+        });
+    });
+
+    $(function() {
+        
+
+        var option = '';
+        var vendedor = '<?php echo $vendedores?>';
+
+        $.each(JSON.parse(vendedor), function() {
+            option = `<option value="${this.idVendedor}">${this.nombre}</option>`;
+
+            $('#vendedor').append(option);
         });
     });
 
@@ -715,7 +1369,7 @@ $(function() {
 			success:function(r){
                 $('#precioDesp').val(r);
                 $("#precioDesDiv").show(1000);
-                
+                $("#datos").show(1000);
 			}
 		});
     });
@@ -845,45 +1499,255 @@ $(function() {
             var cantidad = $("#cantidad").val();
 
             if( $('#troquel').prop('checked') ) {
-                var troquel = "Si";
+                var troquel = "Troquelado ,";
             }else{
-                var troquel = "No";
+                var troquel = "";
             }
 
-            if( $('#arte').val()== "" ) {
-                var arte = "No";
+            if( $('#arte').val()== 0 ) {
+                var arte = "";
             }else{
-                var arte = "Si";
+                var arte = "Hacer Arte ,";
             }
 
-            if($('#ojeteAr').val()== ""){
+            if($('#ojeteAr').val()== 0){
                 var ojeteAr = "";
             }else{
-                var ojeteAr = "Ojetes Ar: "+ $("#ojeteAr").val();
+                var ojeteAr = "Ojt Ar: "+ $("#ojeteAr").val();
             }
 
-            if($('#ojeteAb').val()== ""){
+            if($('#ojeteAb').val()== 0){
                 var ojeteAb = "";
             }else{
-                var ojeteAb = ", Ab: "+ $("#ojeteAb").val();
+                var ojeteAb = ",Ojt Ab: "+ $("#ojeteAb").val();
             }
 
-            if($('#ojeteIz').val()== ""){
+            if($('#ojeteIz').val()== 0){
                 var ojeteIz = "";
             }else{
-                var ojeteIz = ", Izq: "+ $("#ojeteIz").val();
+                var ojeteIz = ",Ojt Izq: "+ $("#ojeteIz").val();
             }
 
-            if($('#ojeteD').val()== ""){
+            if($('#ojeteDe').val()== 0){
                 var ojeteD = "";
             }else{
-                var ojeteD = ", Der: "+ $("#ojeteDe").val();
+                var ojeteD = ",Ojt Der: "+ $("#ojeteDe").val();
             }
+
+            var varilla = $("#tipoTubo").val();
+
+            if(varilla == 1){
+
+                if($("#varillaAr").prop("checked") && $("#varillaAb").prop("checked")){
+                    var tipoVara = "\nVarilla: Arriba y abajo ,";
+                }
+
+                else if($("#varillaAr").prop("checked")){
+                    var tipoVara = "\nVarilla: Arriba ,";
+                }
+
+                else if($("#varillaAb").prop("checked")){
+                    var tipoVara = "\nVarilla: Abajo ,";
+                }
+
+                
+
+               else  if($("#varillaIzD").prop("checked") ){
+                    var tipoVara = "\nVarilla: Izquierda y derecha ,";
+                }
+
+               else if($("#varillaAlrre").prop("checked") ){
+                    var tipoVara = "\nVarilla: Alrrededor ,";
+                }
+                
+
+               
+            }
+            if(varilla == 2){
+
+             
+
+                if($("#varillaAr").prop("checked") && $("#varillaAb").prop("checked")){
+                    var tipoVara = "\nTubo metálico: Arriba y abajo ,";
+                }
+
+                else if($("#varillaAr").prop("checked")){
+                    var tipoVara = "\nTubo metálico: Arriba ,";
+                }
+
+                else if($("#varillaAb").prop("checked")){
+                    var tipoVara = "\nTubo metálico: Abajo ,";
+                }
+
+                
+
+               else  if($("#varillaIzD").prop("checked") ){
+                    var tipoVara = "\nTubo metálico: Izquierda y derecha ,";
+                }
+
+               else if($("#varillaAlrre").prop("checked") ){
+                    var tipoVara = "\nTubo metálico: Alrrededor ,";
+                }
+            }
+            if(varilla == 3){
+
+
+                if($("#varillaAr").prop("checked") && $("#varillaAb").prop("checked")){
+                    var tipoVara = "\nTubo PVC: Arriba y abajo ,";
+                }
+
+                else if($("#varillaAr").prop("checked")){
+                    var tipoVara = "\nTubo PVC: Arriba ,";
+                }
+
+                else if($("#varillaAb").prop("checked")){
+                    var tipoVara = "\nTubo PVC: Abajo ,";
+                }
+
+                
+
+               else  if($("#varillaIzD").prop("checked") ){
+                    var tipoVara = "\nTubo PVC: Izquierda y derecha ,";
+                }
+
+               else if($("#varillaAlrre").prop("checked") ){
+                    var tipoVara = "\nTubo PVC: Alrrededor ,";
+                }
+            }
+            if(varilla == 4){
+
+                if($("#varillaAr").prop("checked") && $("#varillaAb").prop("checked")){
+                    var tipoVara = "\nFunda P/ Varilla: Arriba y abajo ,";
+                }
+
+                else if($("#varillaAr").prop("checked")){
+                    var tipoVara = "\nFunda P/ Varilla: Arriba ,";
+                }
+
+                else if($("#varillaAb").prop("checked")){
+                    var tipoVara = "\nFunda P/ Varilla: Abajo ,";
+                }
+
+                
+
+               else  if($("#varillaIzD").prop("checked") ){
+                    var tipoVara = "\nFunda P/ Varilla: Izquierda y derecha ,";
+                }
+
+               else if($("#varillaAlrre").prop("checked") ){
+                    var tipoVara = "\nFunda P/ Varilla: Alrrededor ,";
+                }
+            }
+            if(varilla == 5){
+                if($("#varillaAr").prop("checked") && $("#varillaAb").prop("checked")){
+                    var tipoVara = "\nFunda P/ Tubo: Arriba y abajo ,";
+                }
+
+                else if($("#varillaAr").prop("checked")){
+                    var tipoVara = "\nFunda P/ Tubo: Arriba ,";
+                }
+
+                else if($("#varillaAb").prop("checked")){
+                    var tipoVara = "\nFunda P/ Tubo: Abajo ,";
+                }
+
+                
+
+               else  if($("#varillaIzD").prop("checked") ){
+                    var tipoVara = "\nFunda P/ Tubo: Izquierda y derecha ,";
+                }
+
+               else if($("#varillaAlrre").prop("checked") ){
+                    var tipoVara = "\nFunda P/ Tubo: Alrrededor ,";
+                }
+            }
+            if(varilla == 7){
+                var tipoVara = "";
+            }
+
+          
+            if($("#pegadoBase").prop("checked")){
+             
+
+            var tipoPegado = "Pegado: Base ,";
+
+                }   
+                else if($("#pegadoAltura").prop("checked")){                  
+                var tipoPegado = "Pegado : Altura ,";
+                } 
+                else{
+                  var  tipoPegado = "";
+                }
+
+                var transPegado = $("#traslPegado").val();
+
+                if(transPegado == 1){
+                     
+                    var tipoTra = "\nTRASL Pega Vertical: " + $("#medidaTrasl").val()+",";
+                }
+                if(transPegado == 2){
+                    var tipoTra = "\nTRASL Pega Horizontal: " + $("#medidaTrasl").val()+",";
+                }
+                if(transPegado == 3){
+                    var tipoTra = "\nTRASL Cebolla Horizontal: " + $("#medidaTrasl").val()+",";
+                }
+                if(transPegado == 4){
+                    var tipoTra = "\nTRASL Cebolla Vertical: " + $("#medidaTrasl").val() +",";
+                }
+                if(transPegado == 7){
+                    var tipoTra = "";
+                }
+
+                if($("#ruedoAb").prop("checked") && $("#ruedoAr").prop("checked")){
+                    var ruedo = "\nRuedo : Arriba y abajo ,";
+                 }  
+                 else if($("#ruedoAr").prop("checked")){
+                    var ruedo = "\nRuedo : Arriba ,";
+                 }   
+
+                else if($("#ruedoAb").prop("checked")){
+                    var ruedo = "\nRuedo : Abajo ,";
+                 } 
+
+                 else if($("#ruedoIzD").prop("checked")){
+                    var ruedo = "\nRuedo : Izquierda y Derecha ,";
+                 }
+                 else if($("#ruedoAlrre").prop("checked")){
+                    var ruedo = "\nRuedo : Alrrededor ,";
+                 }else{
+                    var ruedo = "";
+                 }
+
+
+                 if($("input[name='laminacion']:checked"). val() == "UV Liquida"){
+                    var laminacion = "\nLaminación : UV Líquida,";
+                 }
+                 else if($("input[name='laminacion']:checked"). val() == "Brillo Vinylica"){
+                    var laminacion = "\nLaminación : Brillo Vinylica,";
+                 }
+                 else if($("input[name='laminacion']:checked"). val() == "Mate Vinylica"){
+                    var laminacion = "\nLaminación : Mate Vinylica,";
+                }
+                else{
+                    var laminacion = "";
+                }
+                 
+                if($("input[name='corte']:checked"). val() == "base"){
+                    var corte = "\nCorte : Base";
+                 }
+                 else if($("input[name='corte']:checked"). val() == "altura"){
+                    var corte = "\nCorte : Altura";
+                }
+                else{
+                    var corte = "";
+                }
+            
 
             
 
-            var desc = $("#descripciones").val() + "\nTroquel: "+ troquel+ ", Hacer Arte: "+ arte + ",\n"+ ojeteAr +" "+ ojeteAb +" "+ ojeteIz +" "+ ojeteD ;
+var desc = $("#descripciones").val() + "\n"+ troquel+ " "+ arte + "\n "+ ojeteAr +" "+ ojeteAb +" "+ ojeteIz +" "+ ojeteD + " "+ tipoVara+ " "+ tipoPegado+" "+ tipoTra+" "+ ruedo+" "+ laminacion+" "+ corte;
             var precio = $("#precio").val();
+            var precioSin = $("#precioTo").val();
             var color= $("#colorCmb option:selected").val();
             var idPro =$("#proFinalCmb option:selected").val();
             var acabado = $("#acabadoCmb option:selected").val();
@@ -906,6 +1770,7 @@ $(function() {
            
 
         app.listado.push({
+            precioReSin:precioSin,
             productoRe: producto,
             cantidadRe:cantidad,
             detallesPro : detallesPro1,
@@ -940,7 +1805,13 @@ $(function() {
         $("#copias").val('');
         $("#mts2").val('');
         $("#desperdicio").val('');
-        $("input:checkbox[name=ubicacion]").prop("checked", false);
+        $("input:radio[name=pegado]").prop("checked", false);
+        $("input:radio[name=corte]").prop("checked", false);
+
+                     swal({
+                            title: 'Agregada',
+                            type: 'success',
+                            });
     });
 
 

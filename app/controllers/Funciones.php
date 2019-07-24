@@ -3,7 +3,7 @@
 class Funciones extends ControladorBase {
 
     public function proveedor(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
         $tipoSum=$_POST['tipoSum'];
 
 	$sql="SELECT idProducto,
@@ -24,7 +24,7 @@ class Funciones extends ControladorBase {
 	}
 
 	public function proveedorGastos(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
         $tipoSum=$_POST['tipoSum'];
 
 	$sql="SELECT idGasto,
@@ -48,7 +48,7 @@ class Funciones extends ControladorBase {
 
 
     public function proveedorEdit(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
         $tipoSum=$_POST['tipoSumE'];
 
 	$sql="SELECT idProducto,
@@ -68,7 +68,7 @@ class Funciones extends ControladorBase {
 	}
 	
 	public function clienteDirec(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
         $idCliente=$_POST['id'];
 
 	$sql="SELECT direccion
@@ -87,7 +87,7 @@ class Funciones extends ControladorBase {
 	}
 	
 	public function clienteDepar(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
         $idCliente=$_POST['id'];
 
 	$sql="SELECT departamento
@@ -106,7 +106,7 @@ class Funciones extends ControladorBase {
 	}
 	
 	public function clienteNit(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
         $idCliente=$_POST['id'];
 
 	$sql="SELECT nit
@@ -125,7 +125,7 @@ class Funciones extends ControladorBase {
 	}
 	
 	public function clienteGiro(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
         $idCliente=$_POST['id'];
 
 	$sql="SELECT giro
@@ -145,7 +145,7 @@ class Funciones extends ControladorBase {
 
 
     public function productoFinalGr(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
         $idPro=$_POST['idPro'];
 
 	$sql="SELECT idProductoFinal,
@@ -166,7 +166,7 @@ class Funciones extends ControladorBase {
 	
 
 	public function unidadMedida(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
         $idPro=$_POST['idPro'];
 
 	$sql="SELECT m.medida from medidas m
@@ -187,7 +187,7 @@ class Funciones extends ControladorBase {
 	
 
 	public function acabado(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
         $idPro=$_POST['idPro'];
 
 	$sql="SELECT m.idAcabado, m.acabado from acabados m
@@ -208,7 +208,7 @@ class Funciones extends ControladorBase {
 
 
 	public function color(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
         $idPro=$_POST['idPro'];
 
 	$sql="SELECT m.idColor, m.color from colores m
@@ -228,7 +228,7 @@ class Funciones extends ControladorBase {
 	}
 
 	public function verDetallesProFinal(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idPro=$_POST['id'];
 		
 
@@ -254,7 +254,7 @@ class Funciones extends ControladorBase {
 	
 
 	public function verDetallesColor(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idPro=$_POST['idC'];
 	
 
@@ -317,7 +317,7 @@ class Funciones extends ControladorBase {
 	
 
 	public function colores(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['idCla'];
 
 		if($_POST['idCla']){
@@ -348,7 +348,7 @@ class Funciones extends ControladorBase {
 
 
 	public function acabados(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['idCla'];
 
 		if($_POST['idCla']){
@@ -379,7 +379,7 @@ class Funciones extends ControladorBase {
 
 
 	public function medidas(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['idCla'];
 
 		if($_POST['idCla']){
@@ -410,7 +410,7 @@ class Funciones extends ControladorBase {
 
 
 	public function proveedorCondicion(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['idPro'];
 
 		if($_POST['idPro']){
@@ -431,7 +431,7 @@ class Funciones extends ControladorBase {
 
 
 	public function proveedorProductos(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['idPro'];
 
 		if($_POST['idPro']){
@@ -455,7 +455,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesRequisicion(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['id'];
 
 		if($_POST['id']){
@@ -519,7 +519,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesRequisicionAp(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['id'];
 
 		if($_POST['id']){
@@ -602,7 +602,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesOTIP(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['id'];
 
 		if($_POST['id']){
@@ -673,7 +673,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesOTP(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['id'];
 
 		if($_POST['id']){
@@ -745,7 +745,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesOTGR(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['id'];
 
 		if($_POST['id']){
@@ -832,7 +832,7 @@ class Funciones extends ControladorBase {
 
 
 	public function gastosOficina(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['idCla'];
 
 		if($_POST['idCla']){
@@ -865,7 +865,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesProFinalInventario(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idPro=$_POST['id'];
 		
 
@@ -893,7 +893,7 @@ class Funciones extends ControladorBase {
 
 
 	public function verDetallesInventarioGR(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idPro=$_POST['idC'];
 	
 
@@ -1014,7 +1014,7 @@ class Funciones extends ControladorBase {
 	}
 
 	public function verDetallesInventario(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idPro=$_POST['idC'];
 	
 
@@ -1119,7 +1119,7 @@ class Funciones extends ControladorBase {
 	}
 
 	public function precioUnitario(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idPro=$_POST['idPro'];
 		$idColor=$_POST['idColor'];
 		$idAcabado=$_POST['idAcabado'];
@@ -1139,7 +1139,7 @@ class Funciones extends ControladorBase {
 	}
 
 	public function precioDes(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idPro=$_POST['idPro'];
 		$idColor=$_POST['idColor'];
 		$idAcabado=$_POST['idAcabado'];
@@ -1160,7 +1160,7 @@ class Funciones extends ControladorBase {
 
 
 	public function existencia(){
-        $conexion= new mysqli('localhost','root','','grupopublicitario');
+        $conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idPro=$_POST['idPro'];
 		$idColor=$_POST['idColor'];
 		$idAcabado=$_POST['idAcabado'];
@@ -1182,7 +1182,7 @@ class Funciones extends ControladorBase {
 
 
 	public function proveedorCondicionGasto(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['idPro'];
 
 		if($_POST['idPro']){
@@ -1203,7 +1203,7 @@ class Funciones extends ControladorBase {
 
 
 	public function proveedorNombreGasto(){
-		$conexion= new mysqli('localhost','root','','grupopublicitario');
+		$conexion= new mysqli("localhost","root","","grupoPublicitario");
 		$idC=$_POST['idPro'];
 
 		if($_POST['idPro']){

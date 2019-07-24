@@ -10,6 +10,12 @@ class OTController extends ControladorBase {
         $daoP = new DaoProductos();
         $productos = $daoP->mostrarGranFormatoCmb();
 
+        $daoU = new DaoUsuario();
+        $usuarios = $daoU->mostrarUsuariosCmb();
+
+        $daoU = new DaoUsuario();
+        $vendedores = $daoU->mostrarVendedoresCmb();
+
         self::loadMain();
         
         require_once './app/view/OT/granFormato.php';
@@ -25,6 +31,12 @@ class OTController extends ControladorBase {
         $daoP = new DaoProductos();
         $productos = $daoP->mostrarProCmb();
 
+        $daoU = new DaoUsuario();
+        $usuarios = $daoU->mostrarUsuariosCmb();
+
+        $daoU = new DaoUsuario();
+        $vendedores = $daoU->mostrarVendedoresCmb();
+
         self::loadMain();
         
         require_once './app/view/OT/promocionales.php';
@@ -39,6 +51,12 @@ class OTController extends ControladorBase {
 
         $daoP = new DaoProductos();
         $productos = $daoP->mostrarImpDCmb();
+
+        $daoU = new DaoUsuario();
+        $usuarios = $daoU->mostrarUsuariosCmb();
+
+        $daoU = new DaoUsuario();
+        $vendedores = $daoU->mostrarVendedoresCmb();
 
         self::loadMain();
         
@@ -82,7 +100,8 @@ class OTController extends ControladorBase {
         $dao->objeto->setIdResponsable($_REQUEST["idUser"]);
         $dao->objeto->setIdCliente($_REQUEST["cliente"]);
         $dao->objeto->setFechaEn($_REQUEST["fechaEOT"]);
-       
+        $dao->objeto->setIdVendedor($_REQUEST["vendedor"]);
+        $dao->objeto->setIdResponsablePro($_REQUEST["respProduccion"]);
 
 
         echo $dao->guardarOTGR();
@@ -111,6 +130,7 @@ class OTController extends ControladorBase {
             $dao->objeto->setDesperdicio($detalle->despRe);
             $dao->objeto->setDescripciones($detalle->descriRe);
             $dao->objeto->setPrecio($detalle->precioRe);
+            $dao->objeto->setPrecioSin($detalle->precioReSin);
             $dao->objeto->setVentaCuenta($detalle->tipoVentaRe);
 
             if($dao->guardarDetalleOTGR()) {
@@ -135,6 +155,8 @@ class OTController extends ControladorBase {
         $dao->objeto->setIdResponsable($_REQUEST["idUser"]);
         $dao->objeto->setIdCliente($_REQUEST["cliente"]);
         $dao->objeto->setFechaEn($_REQUEST["fechaEOT"]);
+        $dao->objeto->setIdVendedor($_REQUEST["vendedor"]);
+        $dao->objeto->setIdResponsablePro($_REQUEST["respProduccion"]);
 
 
         echo $dao->guardarOTIP();
@@ -156,6 +178,7 @@ class OTController extends ControladorBase {
             $dao->objeto->setTipo($detalle->tipoRe);
             $dao->objeto->setDescripciones($detalle->descriRe);
             $dao->objeto->setPrecio($detalle->precioRe);
+            $dao->objeto->setPrecioSin($detalle->precioReSin);
             $dao->objeto->setVentaCuenta($detalle->tipoVentaRe);
 
             if($dao->guardarDetalleOTIP()) {
@@ -180,7 +203,8 @@ class OTController extends ControladorBase {
         $dao->objeto->setIdResponsable($_REQUEST["idUser"]);
         $dao->objeto->setIdCliente($_REQUEST["cliente"]);
         $dao->objeto->setFechaEn($_REQUEST["fechaEOT"]);
-
+        $dao->objeto->setIdVendedor($_REQUEST["vendedor"]);
+        $dao->objeto->setIdResponsablePro($_REQUEST["respProduccion"]);
 
         echo $dao->guardarOTP();
     }
@@ -200,6 +224,7 @@ class OTController extends ControladorBase {
             $dao->objeto->setCantidad($detalle->cantidadRe);
             $dao->objeto->setTipo($detalle->tipoRe);
             $dao->objeto->setDescripciones($detalle->descriRe);
+            $dao->objeto->setPrecioSin($detalle->precioReSin);
             $dao->objeto->setPrecio($detalle->precioRe);
             $dao->objeto->setVentaCuenta($detalle->tipoVentaRe);
 

@@ -59,10 +59,7 @@ Detalles de la OT : <a id="corr" style="background-color:black; color:red;"></a>
             <input type="text" name="fechaOT" id="fechaOT" readonly>
             </div>
 
-            <div class="eight wide field">
-            <label><i class="user icon"></i>Responsable:</label>
-            <input type="text" name="responsable" id="responsable"  readonly>
-            </div>
+            
 
 
             <div class="eight wide field">
@@ -75,6 +72,24 @@ Detalles de la OT : <a id="corr" style="background-color:black; color:red;"></a>
             <input type="text" name="fechaEOT" id="fechaEOT" readonly>
             </div>
 </div>
+</div>
+<div class="field">
+    <div class="fields">
+    <div class="eight wide field">
+            <label><i class="user icon"></i>Ingresó la orden:</label>
+            <input type="text" name="responsable" id="responsable"  readonly>
+            </div>
+
+            <div class="eight wide field">
+            <label><i class="user icon"></i>Vendió la orden:</label>
+            <input type="text" name="vendedor" id="vendedor"  readonly>
+            </div>
+
+            <div class="eight wide field">
+            <label><i class="user icon"></i>Encargado en produccción:</label>
+            <input type="text" name="respProduccion" id="respProduccion"  readonly>
+            </div>
+    </div>
 </div>
 <div class="field">
                 <div class="fields">
@@ -100,6 +115,11 @@ Detalles de la OT : <a id="corr" style="background-color:black; color:red;"></a>
     Tipo de Factura a imprimir para la orden: <a id="ordenCorr" style="background-color:#BDBDBD; color:red;"></a>
     </div>
     <div class="content">
+        <form class="ui form">
+            <label>N° de DOC:</label>
+            <input type="text" name="nDoc" id="nDoc" placeholder="N° de DOC">
+        </form>
+        <br><br>
     <center>
     <input type="hidden" id="idOT">
     <div class="row tiles" id="contenedor-tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
@@ -150,7 +170,8 @@ var app = new Vue({
                         $('#frmVerDetalles input[name="fechaEOT"]').val(dat.fechaEntrega);
                         $('#frmVerDetalles input[name="responsable"]').val(dat.nombre);
                         $('#frmVerDetalles input[name="cliente"]').val(dat.nombreC);
-
+                        $('#frmVerDetalles input[name="respProduccion"]').val(dat.respProduccion);
+                        $('#frmVerDetalles input[name="vendedor"]').val(dat.vendedor);
                         
                     })
                     .catch(err => {

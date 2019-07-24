@@ -211,12 +211,24 @@ $(function() {
     <div class="content" id="finanzas" style="border:1px solid black; width:100%;display:none;">
     <form class="ui form">
     <h3>Datos financieros:</h3>
+    <div class="row tiles" id="contenedor-tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
+
+        <a class="ui green button" style="width:22%;height:40px;" id="5">Hoy</a>
+
+        <a class="ui purple button" style="width: 22%;height:40px;" id="6">Ventas</a>
+
+        <a class="ui olive button" style="width: 22%;height:40px;" id="7">Banco</a>
+
+        <a class="ui brown button" style="width: 22%;height:40px;" id="8">CxC</a>
+    </div>
+
+    <div id="hoy">
     <div class="ui divider"></div>
         <div class="field">
 
             <div class="fields">
                 <div class="eight wide field" style="font-weight:bold;font-size:18px;color:green">
-                    <i class="dollar icon"></i><i class="user icon"></i>Disponiblidad:
+                    <i class="dollar icon"></i><i class="user icon"></i>Disponiblidad en efectivo ayer:
                 </div>
                 <div class="eight wide field">
                     <div class="ui input" style="width:40%;">
@@ -230,7 +242,7 @@ $(function() {
 
             <div class="fields">
                     <div class="eight wide field">
-                        <i class="dollar icon"></i><i class="reply icon"></i>Ventas:
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Recuperación de ventas en efectivo:
                     </div>
 
                     <div class="eight wide field">
@@ -240,6 +252,23 @@ $(function() {
                      </div>
             </div>
         </div>
+
+        <div class="ui divider"></div>
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Retiro de banco efectivo:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                         <input type="text" value="$150.00" readonly>
+                        </div>
+                     </div>
+            </div>
+        </div>
+        
 
         <div class="ui divider"></div>
         <div class="field">
@@ -261,8 +290,40 @@ $(function() {
         <div class="field">
 
             <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Ventas:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                         <input type="text" value="$150.00" readonly>
+                        </div>
+                     </div>
+            </div>
+        </div>
+
+        <div class="ui divider"></div>
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Remesa banco efectivo:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                         <input type="text" value="$150.00" readonly>
+                        </div>
+                     </div>
+            </div>
+        </div>
+
+        <div class="ui divider"></div>
+        <div class="field">
+
+            <div class="fields">
                     <div class="eight wide field" style="font-weight:bold;font-size:18px;color:blue">
-                        <i class="dollar icon"></i><i class="arrow alternate circle down icon"></i>Total:
+                        <i class="dollar icon"></i><i class="arrow alternate circle down icon"></i>Disponibilidad efectivo hoy:
                     </div>
 
                     <div class="eight wide field">
@@ -271,6 +332,251 @@ $(function() {
                         </div>
                      </div>
             </div>
+        </div>
+
+        </div>
+
+        <br><br>
+        <div id="ventas" style="display:none">
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Ventas con CFF:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                         <input type="text" value="$150.00" readonly>
+                        </div>
+                     </div>
+            </div>
+        </div>
+
+        <div class="ui divider"></div>
+
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Ventas con Factura:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                         <input type="text" value="$150.00" readonly>
+                        </div>
+                     </div>
+            </div>
+        </div>
+
+        <div class="ui divider"></div>
+
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Otros:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                         <input type="text" value="$150.00" readonly>
+                        </div>
+                     </div>
+            </div>
+        </div>
+
+        <div class="ui divider"></div>
+
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Patrocinio:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                         <input type="text" value="$150.00" readonly>
+                        </div>
+                     </div>
+            </div>
+        </div>
+
+        <div class="ui divider"></div>
+        </div>
+
+        <div id="banco" style="display:none">
+        <div class="field">
+
+            <div class="fields">
+                <div class="eight wide field" style="font-weight:bold;font-size:18px;color:green">
+                    <i class="dollar icon"></i><i class="user icon"></i>Disponiblidad en banco ayer:
+                </div>
+                <div class="eight wide field">
+                    <div class="ui input" style="width:40%;">
+                        <input type="text" value="$ 200.00" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+
+            <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Recuperación de cuentas con cheque:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                        <input type="text" value="$150.00" readonly>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+            <div class="ui divider"></div>
+
+            <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Recuperación de cuentas con tarjeta de crédito:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                        <input type="text" value="$150.00" readonly>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+        <div class="ui divider"></div>
+
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Comisión de cuentas con tarjeta de crédito:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                        <input type="text" value="$150.00" readonly>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+        <div class="ui divider"></div>
+
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Remesas:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                        <input type="text" value="$150.00" readonly>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+        <div class="ui divider"></div>
+
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Retiros:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                        <input type="text" value="$150.00" readonly>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+        <div class="ui divider"></div>
+
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field" style="font-weight:bold;font-size:18px;color:blue">
+                        <i class="dollar icon"></i><i class="arrow alternate circle down icon"></i>Disponibilidad banco hoy:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                         <input type="text" value="$300.00" readonly>
+                        </div>
+                     </div>
+            </div>
+        </div>
+
+
+        </div>
+
+        <div id="cxc" style="display:none">
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Recuperación de cuentas por (hoy):
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                        <input type="text" value="$150.00" readonly>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+        <div class="ui divider"></div>
+
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Recuperación de cuentas por (mes):
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                        <input type="text" value="$150.00" readonly>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+        <div class="ui divider"></div>
+
+        <div class="field">
+
+            <div class="fields">
+                    <div class="eight wide field">
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Patrocinio:
+                    </div>
+
+                    <div class="eight wide field">
+                        <div class="ui input" style="width:40%;">
+                        <input type="text" value="$150.00" readonly>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+        <div class="ui divider"></div>
         </div>
         <br>
 
@@ -282,7 +588,84 @@ $(function() {
     $(document).ready(function(){
     $("#1").removeClass("ui black button");
     $("#1").addClass("ui black basic button");
- 
+    $("#5").removeClass("ui green button");
+        $("#5").addClass("ui green basic button");
+    });
+
+    $("#5").click(function(){
+        $("#hoy").show(1000);
+        $("#ventas").hide(1000);
+        $("#banco").hide(1000);
+        $("#cxc").hide(1000);
+       
+        $("#5").removeClass("ui green  button");
+        $("#5").addClass("ui green basic button");
+
+        $("#6").removeClass("ui purple basic button");
+        $("#6").addClass("ui purple  button");
+
+        $("#7").removeClass("ui olive basic button");
+        $("#7").addClass("ui olive  button");
+
+        $("#8").removeClass("ui brown basic button");
+        $("#8").addClass("ui brown  button");
+    });
+
+    $("#6").click(function(){
+        $("#hoy").hide(1000);
+        $("#ventas").show(1000);
+        $("#banco").hide(1000);
+        $("#cxc").hide(1000);
+       
+        $("#5").removeClass("ui green basic button");
+        $("#5").addClass("ui green button");
+
+        $("#6").removeClass("ui purple button");
+        $("#6").addClass("ui purple basic button");
+
+        $("#7").removeClass("ui olive basic button");
+        $("#7").addClass("ui olive  button");
+
+        $("#8").removeClass("ui brown basic button");
+        $("#8").addClass("ui brown  button");
+    });
+
+    $("#7").click(function(){
+        $("#hoy").hide(1000);
+        $("#ventas").hide(1000);
+        $("#banco").show(1000);
+        $("#cxc").hide(1000);
+       
+        $("#5").removeClass("ui green basic button");
+        $("#5").addClass("ui green button");
+
+        $("#6").removeClass("ui purple basic button");
+        $("#6").addClass("ui purple  button");
+
+        $("#7").removeClass("ui olive button");
+        $("#7").addClass("ui olive basic button");
+
+        $("#8").removeClass("ui brown basic button");
+        $("#8").addClass("ui brown  button");
+    });
+
+    $("#8").click(function(){
+        $("#hoy").hide(1000);
+        $("#ventas").hide(1000);
+        $("#banco").hide(1000);
+        $("#cxc").show(1000);
+       
+        $("#5").removeClass("ui green basic button");
+        $("#5").addClass("ui green button");
+
+        $("#6").removeClass("ui purple basic button");
+        $("#6").addClass("ui purple  button");
+
+        $("#7").removeClass("ui olive basic button");
+        $("#7").addClass("ui olive  button");
+
+        $("#8").removeClass("ui brown button");
+        $("#8").addClass("ui brown basic button");
     });
 
     $("#OT").click(function(){
@@ -295,6 +678,8 @@ $(function() {
         $("#Pro").removeClass("ui purple basic button");
         $("#Pro").addClass("ui purple  button");
     });
+
+    
 
     $("#Pro").click(function(){
         $("#ProContent").show(1000);

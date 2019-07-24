@@ -358,11 +358,9 @@ class DaoUsuario extends DaoBase {
 
     }
 
-    public function mostrarMaestrosCmb(){
-        $_query = "select u.*, r.descRol
-        from usuario u
-        inner join rol r on r.codigoRol = u.codigoRol
-        where u.idEliminado=1 and u.codigoRol=2;";
+    public function mostrarUsuariosCmb() {
+
+        $_query = "select * from usuario where idEliminado=1 and codigoRol!=4;";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -375,6 +373,86 @@ class DaoUsuario extends DaoBase {
         $json = substr($json,0, strlen($json) - 1);
 
         return '['.$json.']';
+    }
+
+
+    public function mostrarVendedores() {
+        $_query = "select * from vendedores where idEliminado=1;";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+            $btnEditar = '<button id=\"'.$fila["idVendedor"].'\" nombre=\"'.$fila["nombre"].'\"   class=\"ui btnEditar icon black small button\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEliminar = '<button id=\"'.$fila["idVendedor"].'\" nombre=\"'.$fila["nombre"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
+
+            $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
+    public function mostrarVendedoresCmb() {
+        $_query = "select * from vendedores where idEliminado=1;";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= json_encode($fila).',';
+        }
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return '['.$json.']';
+    }
+
+
+    public function registrarVendedor() {
+        $_query = "insert into vendedores values(null,'".$this->objeto->getNombre()."',1)";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function editarVendedor() {
+        $_query = "update  vendedores set nombre = '".$this->objeto->getNombre()."' where idVendedor=".$this->objeto->getCodigoUsuario();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function eliminarVendedor() {
+        $_query = "update  vendedores set idEliminado = 2 where idVendedor=".$this->objeto->getCodigoUsuario();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
 }

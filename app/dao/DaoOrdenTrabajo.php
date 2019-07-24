@@ -9,7 +9,10 @@ class DaoOrdenTrabajo extends DaoBase {
 
     public function guardarOTGR() {
         $_query = "insert into ordenTrabajoGR values(null,'".$this->objeto->getCorrelativo()."','".$this->objeto->getFechaOT()."'
-        ,'".$this->objeto->getIdResponsable()."','".$this->objeto->getIdCliente()."','".$this->objeto->getFechaEn()."','',1,1)";
+        ,'".$this->objeto->getIdResponsable()."',
+        '".$this->objeto->getIdResponsablePro()."',
+        '".$this->objeto->getIdVendedor()."',
+        '".$this->objeto->getIdCliente()."','".$this->objeto->getFechaEn()."','',1,'',1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -36,7 +39,7 @@ class DaoOrdenTrabajo extends DaoBase {
         ,'".$this->objeto->getCuadrosImp()."','".$this->objeto->getAncho()."'
         ,'".$this->objeto->getLongitud()."','".$this->objeto->getAnchoMat()."'
         ,'".$this->objeto->getMts2()."','".$this->objeto->getDesperdicio()."','".$this->objeto->getDescripciones()."'
-        ,'".$this->objeto->getVentaCuenta()."','".$this->objeto->getPrecio()."',1,1,'',0.00)";
+        ,'".$this->objeto->getVentaCuenta()."','".$this->objeto->getPrecioSin()."','".$this->objeto->getPrecio()."',1,1,'',0.00)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -50,7 +53,8 @@ class DaoOrdenTrabajo extends DaoBase {
 
     public function guardarOTIP() {
         $_query = "insert into ordenTrabajoIP values(null,'".$this->objeto->getCorrelativo()."','".$this->objeto->getFechaOT()."'
-        ,'".$this->objeto->getIdResponsable()."','".$this->objeto->getIdCliente()."','".$this->objeto->getFechaEn()."','',1,1)";
+        ,'".$this->objeto->getIdResponsable()."','".$this->objeto->getIdResponsablePro()."',
+        '".$this->objeto->getIdVendedor()."','".$this->objeto->getIdCliente()."','".$this->objeto->getFechaEn()."','',1,'',1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -74,7 +78,7 @@ class DaoOrdenTrabajo extends DaoBase {
         $_query = "insert into detalleOrdenIP values(null,'.$idReq.'
         ,'".$this->objeto->getIdProductoFinal()."','".$this->objeto->getColor()."','".$this->objeto->getAcabado()."'
         ,'".$this->objeto->getCantidad()."','".$this->objeto->getTipo()."','".$this->objeto->getDescripciones()."'
-        ,'".$this->objeto->getVentaCuenta()."','".$this->objeto->getPrecio()."',1,1,'',0.00)";
+        ,'".$this->objeto->getVentaCuenta()."','".$this->objeto->getPrecioSin()."','".$this->objeto->getPrecio()."',1,1,'',0.00)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -87,7 +91,8 @@ class DaoOrdenTrabajo extends DaoBase {
 
     public function guardarOTP() {
         $_query = "insert into ordenTrabajoP values(null,'".$this->objeto->getCorrelativo()."','".$this->objeto->getFechaOT()."'
-        ,'".$this->objeto->getIdResponsable()."','".$this->objeto->getIdCliente()."','".$this->objeto->getFechaEn()."','',1,1)";
+        ,'".$this->objeto->getIdResponsable()."','".$this->objeto->getIdResponsablePro()."',
+        '".$this->objeto->getIdVendedor()."','".$this->objeto->getIdCliente()."','".$this->objeto->getFechaEn()."','',1,'',1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -111,7 +116,7 @@ class DaoOrdenTrabajo extends DaoBase {
         $_query = "insert into detalleOrdenP values(null,'.$idReq.'
         ,'".$this->objeto->getIdProductoFinal()."','".$this->objeto->getColor()."','".$this->objeto->getAcabado()."'
         ,'".$this->objeto->getCantidad()."','".$this->objeto->getTipo()."','".$this->objeto->getDescripciones()."'
-        ,'".$this->objeto->getVentaCuenta()."','".$this->objeto->getPrecio()."',1,1,'',0.00)";
+        ,'".$this->objeto->getVentaCuenta()."','".$this->objeto->getPrecioSin()."','".$this->objeto->getPrecio()."',1,1,'',0.00)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -229,11 +234,12 @@ class DaoOrdenTrabajo extends DaoBase {
 
         $_query = "select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC
+       c.nombre as nombreC, concat(us.nombre,' ', us.apellido) as respProduccion, v.nombre as vendedor
        from ordenTrabajoGR o
        inner join usuario u on u.codigoUsuario = o.responsable
+       inner join usuario us on us.codigoUsuario = o.idResponsablePro
+       inner join vendedores v on v.idVendedor = o.idVendedor
        inner join clientes c on c.idCliente = o.cliente
-
        where o.idOrden=".$this->objeto->getIdOrden()." group by idOrden ";
 
         $resultado = $this->con->ejecutar($_query);
@@ -247,9 +253,11 @@ class DaoOrdenTrabajo extends DaoBase {
 
         $_query = "select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC
+       c.nombre as nombreC, concat(us.nombre,' ', us.apellido) as respProduccion, v.nombre as vendedor
        from ordenTrabajoIP o
        inner join usuario u on u.codigoUsuario = o.responsable
+       inner join usuario us on us.codigoUsuario = o.idResponsablePro
+       inner join vendedores v on v.idVendedor = o.idVendedor
        inner join clientes c on c.idCliente = o.cliente
        where o.idOrden=".$this->objeto->getIdOrden()." group by idOrden ";
 
@@ -264,11 +272,12 @@ class DaoOrdenTrabajo extends DaoBase {
 
         $_query = "select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
         concat(u.nombre,' ', u.apellido) as nombre,
-       c.nombre as nombreC
+       c.nombre as nombreC, concat(us.nombre,' ', us.apellido) as respProduccion, v.nombre as vendedor
        from ordenTrabajoP o
        inner join usuario u on u.codigoUsuario = o.responsable
+       inner join usuario us on us.codigoUsuario = o.idResponsablePro
+       inner join vendedores v on v.idVendedor = o.idVendedor
        inner join clientes c on c.idCliente = o.cliente
-     
        where o.idOrden=".$this->objeto->getIdOrden()." group by idOrden ";
 
         $resultado = $this->con->ejecutar($_query);
@@ -668,6 +677,7 @@ class DaoOrdenTrabajo extends DaoBase {
 
     public function imprimirDetalleOTIP(){
         $query = "select d.cantidad,d.tipo,d.descripciones,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,
+        format(d.precioSin,2) as precioSin,
         d.tipoVenta
         from detalleOrdenIP d
         inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
@@ -706,6 +716,7 @@ class DaoOrdenTrabajo extends DaoBase {
 
     public function imprimirDetalleOTP(){
         $query = "select d.cantidad,d.tipo,d.descripciones,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,
+        format(d.precioSin,2) as precioSin,
         d.tipoVenta
         from detalleOrdenP d
         inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
