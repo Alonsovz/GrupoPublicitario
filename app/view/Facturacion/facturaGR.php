@@ -4,7 +4,7 @@ if($_GET["idOrden"]){
 
     $idOrden = $_GET["idOrden"];
 
-    $mysqli = new mysqli("shareddb-o.hosting.stackcp.net","grupoPub","12345678*","grupoPublicitario-313039a314");
+    $mysqli = new mysqli('localhost','root','','grupopublicitario');
 
     $encabezadoOrden = $mysqli -> query ("
     select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
