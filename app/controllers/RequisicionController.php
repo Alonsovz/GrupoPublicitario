@@ -446,6 +446,17 @@ class RequisicionController extends ControladorBase {
         echo $dao->banco();
 
     }
+
+    public function cerrarDia(){
+        $dao = new DaoRequisicion();
+
+        $dao->objeto->setPrecio($_REQUEST["banco"]);
+        $dao->objeto->setPrecioTotal($_REQUEST["efectivo"]);
+
+        echo $dao->bancoEfectivo();
+        echo $dao->efectivo();
+
+    }
     
 
 }

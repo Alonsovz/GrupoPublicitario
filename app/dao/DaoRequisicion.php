@@ -783,6 +783,30 @@ class DaoRequisicion extends DaoBase {
         }
     }
 
+    public function efectivo(){
+        $_query = "insert into remanente values(null, ".$this->objeto->getPrecioTotal().", 1 )";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function bancoEfectivo(){
+        $_query = "insert into remanente values(null, ".$this->objeto->getPrecio().", 2 )";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 
     public function mostrarBanco() {
         $_query = "select *, CONCAT('$', format(monto,2) ) as montoF,  DATE_FORMAT(fecha, '%d/%m/%Y') as fechaF from banco";

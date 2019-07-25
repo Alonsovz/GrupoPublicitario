@@ -194,6 +194,28 @@ class FacturacionController extends ControladorBase {
         $reporte->notaCredito($resultado,$resultado1,$ventasNo,$ventasGr,$ventasGrGR,$ventasEx,$tipoCliente,$descGR);
     }
 
+    public function imprimirNotaFac()
+    {
+        $dao = new DaoNotaCredito();
+        
+        
+        require_once './app/reportes/notaCreditoFac.php';
+
+        $reporte = new Reporte();
+    
+        $resultado = $dao->imprimirEncabezadoNota();
+        $resultado1 = $dao->imprimirDetalleNota();
+        $ventasNo = $dao->ventasNoSujetas();
+        $ventasGr = $dao->ventasGravadas();
+        $ventasGrGR = $dao->ventasGravadasGR();
+        $ventasEx = $dao->ventasExentas();
+        $tipoCliente = $dao->tipoCliente();
+        $descGR = $dao->descGR();
+     
+        
+        $reporte->notaCreditoFac($resultado,$resultado1,$ventasNo,$ventasGr,$ventasGrGR,$ventasEx,$tipoCliente,$descGR);
+    }
+
     public function facturaConsumidorImp(){
         $dao = new DaoNotaCredito();
 

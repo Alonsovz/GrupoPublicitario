@@ -194,12 +194,25 @@ $(function() {
       $fila29 = $otroP->fetch_assoc();
       $otroPT = $fila29['ventaOtro'];
 
+      $dispAyEf = $mysqli -> query ("select *, format(monto,2) as remanente  from remanente where tipo = 1
+      and id= (select max(id) from remanente where tipo=1)");
+      $fila30 = $dispAyEf->fetch_assoc();
+      $dispAyEfec = $fila30['remanente'];
+
+      $dispAyBa = $mysqli -> query ("select *, format(monto,2) as remanente  from remanente where tipo = 2 
+      and id= (select max(id) from remanente where tipo=2)");
+      $fila30 = $dispAyBa->fetch_assoc();
+      $dispAyBan = $fila30['remanente'];
+
       $otroTotal = $otroPT + $otroIPT + $otroGRT;
 
       $totalVentas = $totalVentasCFF + $totalVentasFac + $otroTotal;
 
-      $disponibilidadEfectivo = ($pagosEfectivo  + $remesa) -$retiro - $gastos - $compras;
+      $disponibilidadEfectivo = ($pagosEfectivo  + $remesa + $dispAyEfec) -$retiro - $gastos - $compras;
+
+      $disponibilidadBanco = ($cobroChequeT  + $cobroTarjetaT + $dispAyBan + $remesa) -$comision - $retiro;
    ?>
+
 
     <div class="row tiles" id="contenedor-tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
 
@@ -212,9 +225,19 @@ $(function() {
         <button class="ui grey button" style="width: 22%;height:50px;" id="3"><i class="dollar icon"></i><i class="money bill icon"></i></button>
     </div>
 
+    <div class="row title-bar">
+            <div class="sixteen wide column">
+                <button class="ui right floated orange labeled icon button" id="finalizar" style="display:none">
+                    <i class="save icon"></i>
+                    Finalizar día
+                </button>
+                
+            </div>
+        </div>
+        <br><br><br>
     <div class="content" id="generales" style="border:1px solid black; width:100%;">
     <br>
-    
+    <br>
     <form class="ui form">
     <h3>Datos generales del día (OT):</h3>
     <div class="ui divider"></div>
@@ -367,7 +390,7 @@ $(function() {
                 </div>
                 <div class="eight wide field">
                     <div class="ui input" style="width:40%;">
-                        <input type="text" value="$ 200.00" readonly>
+                        <input type="text"   value="<?php echo "$". $dispAyEfec; ?>" readonly>
                     </div>
                 </div>
             </div>
@@ -463,7 +486,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                         <input type="text" value="<?php echo "$". $disponibilidadEfectivo ?>" readonly>
+                         <input type="text" id="disponibleEfectivo" value="<?php echo  number_format( $disponibilidadEfectivo,2) ?>" readonly>
                         </div>
                      </div>
             </div>
@@ -551,7 +574,7 @@ $(function() {
                 </div>
                 <div class="eight wide field">
                     <div class="ui input" style="width:40%;">
-                        <input type="text" value="$ 200.00" readonly>
+                        <input type="text"  value="<?php echo "$". $dispAyBan; ?>" readonly>
                     </div>
                 </div>
             </div>
@@ -652,7 +675,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                         <input type="text" value="$300.00" readonly>
+                         <input type="text" id="disponibleBanco" value="<?php echo  number_format($disponibilidadBanco,2) ?>" readonly>
                         </div>
                      </div>
             </div>
@@ -716,7 +739,11 @@ $(function() {
         <br>
 
     </form>
+    
     </div>
+    
+    
+    
 
 
     <script>
@@ -727,10 +754,60 @@ $(function() {
         $("#5").addClass("ui green basic button");
 
         
-        
+        var tiempo = new Date();
+        var hora = tiempo.getHours();
+var minuto = tiempo.getMinutes();
+
+        var horaReal = hora +":"+ minuto;
+
+       // alert(horaReal);
+
+        if(horaReal >= "19:00"){
+            $("#finalizar").css("display","block")
+        }
     });
 
-   
+   $("#finalizar").click(function(){
+    alertify.confirm("¿Desea guardar los datos?",
+        function(){
+
+    var diponBanco = $("#disponibleBanco").val();
+    var disponEfectivo = $("#disponibleEfectivo").val();
+
+    $.ajax({
+               
+                type: 'POST',
+                url: '?1=RequisicionController&2=cerrarDia',
+                data: {
+                    banco : diponBanco ,
+                    efectivo : disponEfectivo,
+                },
+                success: function(r) {
+                    if(r == 11) {
+                    
+                        swal({
+                            title: 'Listo',
+                            text: 'Datos guardados',
+                            type: 'success',
+                            showConfirmButton: true,
+                            }).then((result) => {
+                                if (result.value) {
+                            
+                               location.reload();
+                               
+                            }
+                        }); 
+                        
+                    } 
+                }
+        });
+    },
+        function(){
+            //$("#modalCalendar").modal('toggle');
+            alertify.error('Cancelado');
+            
+        }); 
+   });
 
     $("#5").click(function(){
         $("#hoy").show(1000);

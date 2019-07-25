@@ -59,9 +59,11 @@ class Reporte {
                         }
                         
                         @page { sheet-size: A4-L; }
-
-@page bigger { sheet-size: 420mm 370mm; }
-
+                        
+                        
+                        
+                       
+                        
 
 
 
@@ -330,7 +332,7 @@ class Reporte {
         
 
 
-        $pdf = new \Mpdf\Mpdf(['orientation' => 'L']);
+        $pdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
         $pdf->WriteHTML($html);
         $pdf->Output();
 
