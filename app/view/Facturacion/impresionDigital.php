@@ -225,6 +225,7 @@ var factura=(ele)=>{
 $("#facturaConsumidor").click(function(){
     var idOT=$('#idOT').val();
     var nDoc = $("#nDoc").val();
+    
     $.ajax({
         
         type: 'POST',
@@ -234,7 +235,8 @@ $("#facturaConsumidor").click(function(){
         },
         success: function(r) {
             if(r == 11) {
-               
+                $('#modalTipoFactura').modal('hide');
+                $('#dtProduccionIP').DataTable().ajax.reload();
                 swal({
                     title: 'Se imprimirá la factura consumidor final',
                     type: 'warning',
@@ -242,13 +244,24 @@ $("#facturaConsumidor").click(function(){
 
                 }).then((result) => {
                     if (result.value) {
-                        location.reload();
+                        $.ajax({
+                            type: 'POST',
+                            url: './app/view/Facturacion/facturaIP.php',
+                            data: {
+                                idOrden : idOT,
+                            },
+                            success: function(r) {
+                        window.location.href="./app/view/Facturacion/facturaIP.php?idOrden="+idOT;
+                            } 
+                            
+                        });
                     }
                 }); 
                 
             } 
         }
     });
+
 });
 
 
@@ -264,7 +277,8 @@ $("#creditoFiscal").click(function(){
         },
         success: function(r) {
             if(r == 11) {
-               
+                $('#modalTipoFactura').modal('hide');
+                $('#dtProduccionIP').DataTable().ajax.reload();
                 swal({
                     title: 'Se imprimirá el CFF',
                     type: 'warning',
@@ -272,13 +286,25 @@ $("#creditoFiscal").click(function(){
 
                 }).then((result) => {
                     if (result.value) {
-                        location.reload();
+                        $.ajax({
+                            type: 'POST',
+                            url: './app/view/Facturacion/facturaIP.php',
+                            data: {
+                                idOrden : idOT,
+                            },
+                            success: function(r) {
+                        window.location.href="./app/view/Facturacion/facturaIP.php?idOrden="+idOT;
+                            } 
+                            
+                        });
                     }
                 }); 
                 
             } 
         }
     });
+
+    
 });
 
 $("#notaCredito").click(function(){
@@ -294,7 +320,8 @@ $("#notaCredito").click(function(){
         },
         success: function(r) {
             if(r == 11) {
-               
+                $('#modalTipoFactura').modal('hide');
+                $('#dtProduccionIP').DataTable().ajax.reload();
                 swal({
                     title: 'Se imprimirá la nota de crédito',
                     type: 'warning',
@@ -302,7 +329,19 @@ $("#notaCredito").click(function(){
 
                 }).then((result) => {
                     if (result.value) {
+                        $.ajax({
+                            type: 'POST',
+                            url: './app/view/Facturacion/facturaIP.php',
+                            data: {
+                                idOrden : idOT,
+                            },
+                            success: function(r) {
+                        window.location.href="./app/view/Facturacion/facturaIP.php?idOrden="+idOT;
                         location.reload();
+                            } 
+                            
+                        });
+                        
                     }
                 }); 
                 
@@ -324,7 +363,8 @@ $("#otro").click(function(){
         },
         success: function(r) {
             if(r == 11) {
-               
+                $('#modalTipoFactura').modal('hide');
+                $('#dtProduccionIP').DataTable().ajax.reload();
                 swal({
                     title: 'Se imprimirá el documento',
                     type: 'warning',
@@ -332,9 +372,20 @@ $("#otro").click(function(){
 
                 }).then((result) => {
                     if (result.value) {
-                        location.reload();
-                        //window.open('?1=FacturacionController&2=imprimirNota','_blank');
-                         //       return false;
+                        
+                        $.ajax({
+                            type: 'POST',
+                            url: './app/view/Facturacion/facturaIP.php',
+                            data: {
+                                idOrden : idOT,
+                            },
+                            success: function(r) {
+                        window.location.href="./app/view/Facturacion/facturaIP.php?idOrden="+idOT;
+                        
+                            } 
+                            
+                        });
+                        
                     }
                 }); 
                 
