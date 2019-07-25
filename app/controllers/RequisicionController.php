@@ -129,6 +129,17 @@ class RequisicionController extends ControladorBase {
         require_once './app/view/Requisicion/rechazadasIP.php';
     }
 
+    public static function banco() {
+        self::loadMain();
+        require_once './app/view/Banco/gestion.php';
+    }
+
+    public function mostrarBanco() {
+        $dao = new DaoRequisicion();
+
+        echo $dao->mostrarBanco();
+    }
+
     public function mostrarPenAprobarGF() {
         $dao = new DaoRequisicion();
 
@@ -423,6 +434,17 @@ class RequisicionController extends ControladorBase {
             echo $dao->enviarLibroP();
         }
         
+    }
+
+
+    public function bancoR(){
+        $dao = new DaoRequisicion();
+
+        $dao->objeto->setPrecio($_REQUEST["monto"]);
+        $dao->objeto->setTipoDocumento($_REQUEST["tipoDoc"]);
+
+        echo $dao->banco();
+
     }
     
 

@@ -757,6 +757,19 @@ class DaoRequisicion extends DaoBase {
         }
     }
 
+    public function banco(){
+        $_query = "insert into banco values(null,".$this->objeto->getPrecio().",
+        '".$this->objeto->getTipoDocumento()."',curdate() )";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     public function registrarPagoP(){
         $_query = "insert into pagos values(null, 3, ".$this->objeto->getIdOrden().",".$this->objeto->getPrecio().",
         '".$this->objeto->getTipoDocumento()."',curdate() )";
@@ -768,6 +781,31 @@ class DaoRequisicion extends DaoBase {
         } else {
             return 0;
         }
+    }
+
+
+    public function mostrarBanco() {
+        $_query = "select *, CONCAT('$', format(monto,2) ) as montoF,  DATE_FORMAT(fecha, '%d/%m/%Y') as fechaF from banco";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+           
+            $acciones = ', "Acciones": ""';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
     }
 
 

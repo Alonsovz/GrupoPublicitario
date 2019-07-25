@@ -1,4 +1,12 @@
-<br>
+
+<div class="item">
+<hr><br>
+        <a href="?1=RequisicionController&2=banco"  style="color:white; ">
+        <i class="building icon"></i><i class="dollar icon"></i> Banco 
+        </a>
+
+</div>
+
 <div class="ui fluid selection dropdown" style="color:white; background-color:#B40431;font-weight:bold;">
 <i class="dropdown icon"></i>
     <div class="default text" style="color:white; background-color:#B40431;">
@@ -107,7 +115,7 @@
 </div>
 
 
-<br>
+
 
 <div class="ui fluid selection dropdown" style="color:black; background-color:white;">
     <i class="dropdown icon"></i>
@@ -350,6 +358,14 @@
     </a>
 
     </div>
+    <div class="item" style="">
+    <a href="?1=FacturacionController&2=baseComprasTodas" class="item menu-it" style="background-color:#F4B847;color:black;font-size:13px;font-weight:bold;">
+    <i class="book icon"></i> <i class="file alternate icon"></i>
+      Base de compras 
+    </a>
+
+    </div>
+    
     
     <div class="item" style="">
     <a href="?1=FacturacionController&2=baseCompras" class="item menu-it" style="background-color:#F4B847;color:black;font-size:13px;font-weight:bold;">

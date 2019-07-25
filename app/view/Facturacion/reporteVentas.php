@@ -42,7 +42,7 @@ inner join acabados a on a.idAcabado = d.idAcabado
 inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 inner join clientes cl on cl.idCliente = o.cliente
 inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
- YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc");
+ YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<10 group by d.idOrden order by d.idOrden desc");
 
 
 $listadoP = $mysqli -> query ("
@@ -61,7 +61,7 @@ inner join acabados a on a.idAcabado = d.idAcabado
 inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 inner join clientes cl on cl.idCliente = o.cliente
 inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
- YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc");
+ YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<10 group by d.idOrden order by d.idOrden desc");
 
 
 $listadoGF = $mysqli -> query ("
@@ -80,7 +80,7 @@ inner join acabados a on a.idAcabado = d.idAcabado
 inner join productosDetalle pm on pm.idProductoFinal = d.idProductoFinal
 inner join clientes cl on cl.idCliente = o.cliente
 inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
- YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc
+ YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<10 group by d.idOrden order by d.idOrden desc
 ");
 ?>
 
@@ -156,7 +156,15 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
             <td style="text-align:center;border:1px solid black;background-color:#9CF4F7;">Nota C</td>
             <?php
                 }
-            ?>
+                if($row["doc"]=="9"){
+                    ?>
+                    <td style="text-align:center;border:1px solid black;background-color:#FAF75D;">Otro</td>
+                    <?php
+                        }
+                ?>
+
+            
+            
             <td style="text-align:center;border:1px solid black; background-color:#0B0678;color:white"><?php echo $row['clasificacion'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
@@ -332,7 +340,12 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
             <td style="text-align:center;border:1px solid black;background-color:#9CF4F7;">Nota C</td>
             <?php
                 }
-            ?>
+                if($row["doc"]=="9"){
+                    ?>
+                    <td style="text-align:center;border:1px solid black;background-color:#FAF75D;">Otro</td>
+                    <?php
+                        }
+                ?>
             <td style="text-align:center;border:1px solid black;background-color:#03440E;color:white"><?php echo $row['clasificacion'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>
@@ -508,7 +521,12 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
             <td style="text-align:center;border:1px solid black;background-color:#9CF4F7;">Nota C</td>
             <?php
                 }
-            ?>
+                if($row["doc"]=="9"){
+                    ?>
+                    <td style="text-align:center;border:1px solid black;background-color:#FAF75D;">Otro</td>
+                    <?php
+                        }
+                ?>
             <td style="text-align:center;border:1px solid black;background-color:#5C1106;color:white"><?php echo $row['clasificacion'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['productoFinal']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['cliente']);?></td>

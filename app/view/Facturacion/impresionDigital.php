@@ -134,6 +134,12 @@ Detalles de la OT : <a id="corr" style="background-color:black; color:red;"></a>
     <button class="ui gray button" id="notaCredito">
     Nota de crédito
     </button>
+
+    <button class="ui green button" id="otro">
+    <br>
+    Otro
+    <br>
+    </button>
     </div>
     </center>
     </div>
@@ -297,6 +303,38 @@ $("#notaCredito").click(function(){
                 }).then((result) => {
                     if (result.value) {
                         location.reload();
+                    }
+                }); 
+                
+            } 
+        }
+    });
+});
+
+$("#otro").click(function(){
+    var idOT=$('#idOT').val();
+    var nDoc = $("#nDoc").val();
+
+    $.ajax({
+        
+        type: 'POST',
+        url: '?1=FacturacionController&2=otroIP',
+        data: {idOT:idOT,
+                nDoc:nDoc,
+        },
+        success: function(r) {
+            if(r == 11) {
+               
+                swal({
+                    title: 'Se imprimirá el documento',
+                    type: 'warning',
+                    showConfirmButton: true,
+
+                }).then((result) => {
+                    if (result.value) {
+                        location.reload();
+                        //window.open('?1=FacturacionController&2=imprimirNota','_blank');
+                         //       return false;
                     }
                 }); 
                 

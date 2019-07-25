@@ -6,12 +6,12 @@
             
             <font color="black" size="5px">
             <i class="list icon"></i> <i class="dollar icon"></i>
-            Libro de compras</font><font color="black" size="20px">.</font>
+            Base de compras</font><font color="black" size="20px">.</font>
             </div>
         </div>
         <div class="row title-bar">
             <div class="sixteen wide column">
-                <a href="./app/view/Facturacion/baseComprasExcel.php" class="ui right floated green labeled icon button">
+                <a href="./app/view/Facturacion/baseComprasTodasExcel.php" class="ui right floated green labeled icon button">
                     <i class="download icon"></i>
                     Descargar Excel
                 </a>
@@ -29,7 +29,7 @@ format(d.total * 0.13,2) as iva, format((d.total * 0.13)+d.total,2) as totalComp
  from detalleRequisicion d
 inner join requisiciones r on r.idRequisicion = d.idRequisicion
 inner join proveedores p on p.idProveedor = r.idProveedor
-where r.estado=5 and r.tipoDoc = 'CCF' order by d.idDetalle desc;");
+where r.estado=5  order by d.idDetalle desc;");
 
 $totalVentEx=0;
 $totalVentGR=0;

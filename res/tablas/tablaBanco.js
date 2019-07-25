@@ -1,28 +1,24 @@
-var tablaClientes;
+var tablaBanco;
 
 $(function() {
-    if($('#dtClientes').length) {
-        tablaClientes = $('#dtClientes').DataTable({
+    if($('#dtBanco').length) {
+        tablaBanco = $('#dtBanco').DataTable({
             "ajax": {
-                "url": "?1=ClientesController&2=mostrarClientes",
+                "url": "?1=RequisicionController&2=mostrarBanco",
                 "type": "POST"
             },
             "columns": [{
-                    "data": "idCliente"
+                    "data": "id"
                 },
                 {
-                    "data": "nombre"
+                    "data": "montoF"
                 },
                 {
-                    "data": "nrc"
+                    "data": "tipoTramite"
                 },
                 {
-                    "data": "departamento"             
+                    "data": "fechaF"             
                 },
-                {
-                    "data": "giro"             
-                },
-                
                 {
                     "data": "Acciones"             
                 }
@@ -57,7 +53,7 @@ $(function() {
         });
 
          // Ocultar columna de id de Usuario
-         tablaClientes.column(0).visible(false);
-         
+         tablaBanco.column(0).visible(false);
+         tablaBanco.column(4).visible(false);
     }
 });

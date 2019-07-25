@@ -23,7 +23,7 @@ header("Content-Type: text/html;charset=utf-8");
     inner join clientes cl on cl.idCliente = o.cliente
     inner join vendedores v on v.idVendedor = o.idVendedor
     inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
-     YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc";
+     YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<10 group by d.idOrden order by d.idOrden desc";
     $result1=mysqli_query($link, $query1);
     
     $query2="select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,o.*,
@@ -43,7 +43,7 @@ header("Content-Type: text/html;charset=utf-8");
     inner join clientes cl on cl.idCliente = o.cliente
     inner join vendedores v on v.idVendedor = o.idVendedor
     inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
-     YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc";
+     YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<10 group by d.idOrden order by d.idOrden desc";
     $result2=mysqli_query($link, $query2);
     
 
@@ -64,7 +64,7 @@ header("Content-Type: text/html;charset=utf-8");
     inner join clientes cl on cl.idCliente = o.cliente
     inner join vendedores v on v.idVendedor = o.idVendedor
     inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
-     YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<9 group by d.idOrden order by d.idOrden desc";
+     YEAR(NOW()) AND MONTH(curdate())=MONTH(NOW()) and o.estado>5 and o.estado<10 group by d.idOrden order by d.idOrden desc";
 	$result3=mysqli_query($link, $query3);
 ?>
 <center><h1 style="margin:auto;">Reporte de ventas</h1>
@@ -157,7 +157,12 @@ while ($row=mysqli_fetch_assoc($result1)) {
             <td style="text-align:center;border:1px solid black;background-color:#9CF4F7;">Nota C</td>
             <?php
                 }
-            ?>
+                if($row["doc"]=="9"){
+                    ?>
+                    <td style="text-align:center;border:1px solid black;background-color:#FAF75D;">Otro</td>
+                    <?php
+                        }
+                ?>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nDoc']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_decode($row['vendedor']);?></td>
             <td style="text-align:center;border:1px solid black;"></td>
@@ -358,7 +363,12 @@ while ($row=mysqli_fetch_assoc($result3)) {
             <td style="text-align:center;border:1px solid black;background-color:#9CF4F7;">Nota C</td>
             <?php
                 }
-            ?>
+                if($row["doc"]=="9"){
+                    ?>
+                    <td style="text-align:center;border:1px solid black;background-color:#FAF75D;">Otro</td>
+                    <?php
+                        }
+                ?>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nDoc']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_decode($row['vendedor']);?></td>
             <td style="text-align:center;border:1px solid black;"></td>
@@ -561,7 +571,12 @@ while ($row=mysqli_fetch_assoc($result2)) {
             <td style="text-align:center;border:1px solid black;background-color:#9CF4F7;">Nota C</td>
             <?php
                 }
-            ?>
+                if($row["doc"]=="9"){
+                    ?>
+                    <td style="text-align:center;border:1px solid black;background-color:#FAF75D;">Otro</td>
+                    <?php
+                        }
+                ?>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['nDoc']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['vendedor']);?></td>
             <td style="text-align:center;border:1px solid black;"></td>

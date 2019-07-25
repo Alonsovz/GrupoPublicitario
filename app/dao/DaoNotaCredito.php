@@ -245,6 +245,41 @@ class DaoNotaCredito extends DaoBase {
         }
     }
 
+    public function otroGR() {
+        $_query = "update ordenTrabajoGR set estado=9, nDoc =".$this->objeto->getNRE()." where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function otroIP() {
+        $_query = "update ordenTrabajoIP set estado=9, nDoc =".$this->objeto->getNRE()." where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+    public function otroP() {
+        $_query = "update ordenTrabajoP set estado=9, nDoc =".$this->objeto->getNRE()." where idOrden=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 
     
     public function fechaCobroGR() {

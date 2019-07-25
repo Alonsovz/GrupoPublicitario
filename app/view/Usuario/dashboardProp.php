@@ -77,8 +77,128 @@ $(function() {
       $fila13 = $regas->fetch_assoc();
       $gastore = $fila13['total'];
 
-      $totalReqRe = $require + $gastore;
+      $totalReqRe = $require;
 
+
+      $pagosEf = $mysqli -> query ("select format(sum(monto),2) as pago from pagos where tipoPago='Efectivo' and fechaPago=curdate()");
+      $fila14 = $pagosEf->fetch_assoc();
+      $pagosEfectivo = $fila14['pago'];
+
+      $gastosEf = $mysqli -> query ("select format(sum(precio),2) as gasto from gastos where estado=2 and fecha=curdate()");
+      $fila15 = $gastosEf->fetch_assoc();
+      $gastos = $fila15['gasto'];
+
+
+      $com = $mysqli -> query ("select format(sum(total),2) as compras from detalleRequisicion d
+      inner join requisiciones r on r.idRequisicion = d.idRequisicion
+      where r.fechaEntrega=curdate() and d.estado=2");
+      $fila16 = $com->fetch_assoc();
+      $compras = $fila16['compras'];
+
+      $totalDia =  $pagosEfectivo - ($gastos + $compras) ;
+
+      $cobro = $mysqli -> query ("select format(sum(monto),2) as pago from pagos where fechaPago=curdate()");
+      $fila17 = $cobro->fetch_assoc();
+      $cobrado = $fila17['pago'];
+
+      $cobroMes = $mysqli -> query ("select format(sum(monto),2) as cobros  from pagos where YEAR(curdate()) = YEAR(NOW())
+      AND MONTH(curdate()) = MONTH(NOW())");
+      $fila18 = $cobroMes->fetch_assoc();
+      $cobradoMes = $fila18['cobros'];
+
+      $patroMes = $mysqli -> query ("select format(sum(monto),2) as cobros  from pagos where YEAR(curdate()) = YEAR(NOW())
+      AND MONTH(curdate()) = MONTH(NOW()) and tipoPago = 'Patrocinio'");
+      $fila19 = $patroMes->fetch_assoc();
+      $patrocinioMes = $fila19['cobros'];
+
+      $cffGr = $mysqli -> query ("select format(sum(precio),2) as ventaCFF from detalleOrdenGR d
+      inner join ordenTrabajoGR o on o.idOrden = d.idOrden 
+      where o.estado = 7  and d.fechaFactura = curdate()");
+      $fila20 = $cffGr->fetch_assoc();
+      $cffGrT = $fila20['ventaCFF'];
+
+      $cffIP = $mysqli -> query ("select format(sum(precio),2) as ventaCFF from detalleOrdenIP d
+      inner join ordenTrabajoIP o on o.idOrden = d.idOrden 
+      where o.estado = 7  and d.fechaFactura = curdate()");
+      $fila21 = $cffIP->fetch_assoc();
+      $cffIPT = $fila21['ventaCFF'];
+
+      $cffP = $mysqli -> query ("select format(sum(precio),2) as ventaCFF from detalleOrdenP d
+      inner join ordenTrabajoP o on o.idOrden = d.idOrden 
+      where o.estado = 7  and d.fechaFactura = curdate()");
+      $fila21 = $cffP->fetch_assoc();
+      $cffPT = $fila21['ventaCFF'];
+
+      $totalVentasCFF = $cffGrT + $cffIPT + $cffPT;
+
+      $facGr = $mysqli -> query ("select format(sum(precio),2) as ventaCFF from detalleOrdenGR d
+      inner join ordenTrabajoGR o on o.idOrden = d.idOrden 
+      where o.estado = 6  and d.fechaFactura = curdate()");
+      $fila20 = $facGr->fetch_assoc();
+      $facGrT = $fila20['ventaCFF'];
+
+      $facIP = $mysqli -> query ("select format(sum(precio),2) as ventaCFF from detalleOrdenIP d
+      inner join ordenTrabajoIP o on o.idOrden = d.idOrden 
+      where o.estado = 6  and d.fechaFactura = curdate()");
+      $fila21 = $facIP->fetch_assoc();
+      $facIPT = $fila21['ventaCFF'];
+
+      $facP = $mysqli -> query ("select format(sum(precio),2) as ventaCFF from detalleOrdenP d
+      inner join ordenTrabajoP o on o.idOrden = d.idOrden 
+      where o.estado = 6  and d.fechaFactura = curdate()");
+      $fila21 = $facP->fetch_assoc();
+      $facPT = $fila21['ventaCFF'];
+
+      $totalVentasFac = $facGrT + $facIPT + $facPT;
+
+
+      $ret = $mysqli -> query ("select format(sum(monto),2) as retiro from banco where fecha = curdate() and tipoTramite='Retiro'");
+      $fila22 = $ret->fetch_assoc();
+      $retiro = $fila22['retiro'];
+
+      $rem = $mysqli -> query ("select format(sum(monto),2) as remesa from banco where fecha = curdate() and tipoTramite='Remesa'");
+      $fila23 = $rem->fetch_assoc();
+      $remesa = $fila23['remesa'];
+
+      $com = $mysqli -> query ("select format(sum(monto),2) as comision from banco where fecha = curdate()
+       and tipoTramite='Comision de cuenta por tarjeta de credito'");
+      $fila24 = $com->fetch_assoc();
+      $comision = $fila24['comision'];
+
+
+      $cobroTarjeta = $mysqli -> query ("select format(sum(monto),2) as cobros  from pagos where fechaPago= curdate()
+       and tipoPago = 'Tarjeta de credito'");
+      $fila25 = $cobroTarjeta->fetch_assoc();
+      $cobroTarjetaT = $fila25['cobros'];
+
+      $cobroCheque= $mysqli -> query ("select format(sum(monto),2) as cobros  from pagos where fechaPago= curdate()
+       and tipoPago = 'Cheque'");
+      $fila26 = $cobroCheque->fetch_assoc();
+      $cobroChequeT = $fila26['cobros'];
+
+      $otroGR = $mysqli -> query ("select format(sum(precio),2) as ventaOtro from detalleOrdenGR d
+      inner join ordenTrabajoGR o on o.idOrden = d.idOrden 
+      where o.estado = 9  and d.fechaFactura = curdate()");
+      $fila27 = $otroGR->fetch_assoc();
+      $otroGRT = $fila27['ventaOtro'];
+
+      $otroIP = $mysqli -> query ("select format(sum(precio),2) as ventaOtro from detalleOrdenIP d
+      inner join ordenTrabajoIP o on o.idOrden = d.idOrden 
+      where o.estado = 9  and d.fechaFactura = curdate()");
+      $fila28 = $otroIP->fetch_assoc();
+      $otroIPT = $fila28['ventaOtro'];
+
+      $otroP = $mysqli -> query ("select format(sum(precio),2) as ventaOtro from detalleOrdenP d
+      inner join ordenTrabajoP o on o.idOrden = d.idOrden 
+      where o.estado = 9  and d.fechaFactura = curdate()");
+      $fila29 = $otroP->fetch_assoc();
+      $otroPT = $fila29['ventaOtro'];
+
+      $otroTotal = $otroPT + $otroIPT + $otroGRT;
+
+      $totalVentas = $totalVentasCFF + $totalVentasFac + $otroTotal;
+
+      $disponibilidadEfectivo = ($pagosEfectivo  + $remesa) -$retiro - $gastos - $compras;
    ?>
 
     <div class="row tiles" id="contenedor-tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
@@ -189,17 +309,32 @@ $(function() {
     <div class="content" id="graficas" style="border:1px solid black; width:100%;display:none;">
     <h2>Datos gráficamente:</h2>
     
-    <button class="ui green button" id="OT">OT</button>
-    <button class="ui purple button" id="Pro">Productos</button>
+    <h3>Productos</h3>
 
-    <div id="OTContent" style="display:none;width:100%;">
+    <div class="row tiles" id="contenedor-tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
+
+<button class="ui purple button" style="width:32%;height:40px;" id="gr">GF</button>
+
+<button class="ui green button" style="width: 32%;height:40px;" id="ip">IP</button>
+
+<button class="ui brown button" style="width: 32%;height:40px;" id="p">P</button>
+
+</div>
+    
+
+    <div id="gfContent" style="display:none;width:100%;">
     <br>
-    <div id="donutchart" style="width:10%;"></div>
+    <div id="donutchartGF" style="width:10%;"></div>
     </div>
 
-    <div id="ProContent" style="display:none;width:90%;">
+    <div id="ipContent" style="display:none;width:90%;">
     <br>
-    <div id="piechart_3d" style="width:10%;"></div>
+    <div id="piechart_3dIP" style="width:10%;"></div>
+    </div>
+
+    <div id="pContent" style="display:none;width:90%;">
+    <br>
+    <div id="piechart_3dP" style="width:10%;"></div>
     </div>
 
 
@@ -247,7 +382,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                         <input type="text" value="$150.00" readonly>
+                         <input type="text" value="<?php echo "$". $pagosEfectivo; ?>" readonly>
                         </div>
                      </div>
             </div>
@@ -263,7 +398,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                         <input type="text" value="$150.00" readonly>
+                         <input type="text" id="retiroBanco"  value="<?php echo "$". $retiro ?>" readonly>
                         </div>
                      </div>
             </div>
@@ -280,7 +415,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                         <input type="text" value="$50.00" readonly>
+                         <input type="text" value="<?php echo "$". $gastos; ?>" readonly >
                         </div>
                      </div>
             </div>
@@ -291,12 +426,12 @@ $(function() {
 
             <div class="fields">
                     <div class="eight wide field">
-                        <i class="dollar icon"></i><i class="dollar icon"></i>Ventas:
+                        <i class="dollar icon"></i><i class="dollar icon"></i>Compras:
                     </div>
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                         <input type="text" value="$150.00" readonly>
+                         <input type="text" value="<?php echo "$". $compras; ?>" readonly>
                         </div>
                      </div>
             </div>
@@ -312,7 +447,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                         <input type="text" value="$150.00" readonly>
+                         <input type="text" id="remesaBanco" value="<?php echo "$". $remesa ?>" readonly>
                         </div>
                      </div>
             </div>
@@ -328,7 +463,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                         <input type="text" value="$300.00" readonly>
+                         <input type="text" value="<?php echo "$". $disponibilidadEfectivo ?>" readonly>
                         </div>
                      </div>
             </div>
@@ -347,7 +482,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                         <input type="text" value="$150.00" readonly>
+                         <input type="text" value="<?php echo "$" . $totalVentasCFF ?>" readonly>
                         </div>
                      </div>
             </div>
@@ -364,7 +499,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                         <input type="text" value="$150.00" readonly>
+                         <input type="text" value="<?php echo "$" . $totalVentasFac ?>" readonly>
                         </div>
                      </div>
             </div>
@@ -381,7 +516,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                         <input type="text" value="$150.00" readonly>
+                         <input type="text" value="<?php echo "$" . $otroTotal ?>" readonly>
                         </div>
                      </div>
             </div>
@@ -391,20 +526,20 @@ $(function() {
 
         <div class="field">
 
-            <div class="fields">
-                    <div class="eight wide field">
-                        <i class="dollar icon"></i><i class="dollar icon"></i>Patrocinio:
-                    </div>
+        <div class="fields">
+        <div class="eight wide field" style="font-weight:bold;font-size:18px;color:blue">
+                    <i class="dollar icon"></i><i class="dollar icon"></i>Total de ventas:
+                </div>
 
-                    <div class="eight wide field">
-                        <div class="ui input" style="width:40%;">
-                         <input type="text" value="$150.00" readonly>
-                        </div>
-                     </div>
-            </div>
+                <div class="eight wide field">
+                    <div class="ui input" style="width:40%;">
+                    <input type="text" value="<?php echo "$" . $totalVentas ?>" readonly>
+                    </div>
+                </div>
+        </div>
         </div>
 
-        <div class="ui divider"></div>
+        
         </div>
 
         <div id="banco" style="display:none">
@@ -432,7 +567,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                        <input type="text" value="$150.00" readonly>
+                        <input type="text" value="<?php echo "$". $cobroChequeT ?>" readonly>
                         </div>
                     </div>
             </div>
@@ -449,7 +584,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                        <input type="text" value="$150.00" readonly>
+                        <input type="text" value="<?php echo "$". $cobroTarjetaT ?>" readonly>
                         </div>
                     </div>
             </div>
@@ -466,7 +601,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                        <input type="text" value="$150.00" readonly>
+                        <input type="text"  value="<?php echo "$". $comision ?>" readonly>
                         </div>
                     </div>
             </div>
@@ -483,7 +618,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                        <input type="text" value="$150.00" readonly>
+                        <input type="text" value="<?php echo "$". $remesa ?>" readonly>
                         </div>
                     </div>
             </div>
@@ -500,7 +635,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                        <input type="text" value="$150.00" readonly>
+                        <input type="text" value="<?php echo "$". $retiro ?>" readonly>
                         </div>
                     </div>
             </div>
@@ -536,7 +671,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                        <input type="text" value="$150.00" readonly>
+                        <input type="text" value="<?php echo "$". $cobrado; ?>" readonly>
                         </div>
                     </div>
             </div>
@@ -553,7 +688,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                        <input type="text" value="$150.00" readonly>
+                        <input type="text" value="<?php echo "$". $cobradoMes; ?>" readonly>
                         </div>
                     </div>
             </div>
@@ -570,7 +705,7 @@ $(function() {
 
                     <div class="eight wide field">
                         <div class="ui input" style="width:40%;">
-                        <input type="text" value="$150.00" readonly>
+                        <input type="text" value="<?php echo "$". $patrocinioMes; ?>" readonly>
                         </div>
                     </div>
             </div>
@@ -590,7 +725,12 @@ $(function() {
     $("#1").addClass("ui black basic button");
     $("#5").removeClass("ui green button");
         $("#5").addClass("ui green basic button");
+
+        
+        
     });
+
+   
 
     $("#5").click(function(){
         $("#hoy").show(1000);
@@ -681,15 +821,52 @@ $(function() {
 
     
 
-    $("#Pro").click(function(){
-        $("#ProContent").show(1000);
-        $("#OTContent").hide();
+    $("#gr").click(function(){
+        $("#gfContent").show(1000);
+        $("#ipContent").hide();
+        $("#pContent").hide();
+        
+        $("#p").removeClass("ui brown basic button");
+        $("#p").addClass("ui brown  button");
 
-        $("#OT").removeClass("ui green basic button");
-        $("#OT").addClass("ui green  button");
+        $("#ip").removeClass("ui green basic button");
+        $("#ip").addClass("ui green  button");
 
-        $("#Pro").removeClass("ui purple  button");
-        $("#Pro").addClass("ui purple basic  button");
+        $("#gr").removeClass("ui purple  button");
+        $("#gr").addClass("ui purple basic button");
+
+        });
+
+        $("#ip").click(function(){
+            $("#ipContent").show(1000);
+            $("#gfContent").hide();
+            $("#pContent").hide();
+            
+            $("#p").removeClass("ui brown basic button");
+            $("#p").addClass("ui brown  button");
+
+            $("#ip").removeClass("ui green  button");
+            $("#ip").addClass("ui green basic button");
+
+            $("#gr").removeClass("ui purple basic button");
+            $("#gr").addClass("ui purple  button");
+
+        });
+
+        $("#p").click(function(){
+        $("#pContent").show(1000);
+        $("#ipContent").hide();
+        $("gfContent").hide();
+        
+        $("#p").removeClass("ui brown  button");
+        $("#p").addClass("ui brown basic button");
+
+        $("#ip").removeClass("ui green basic button");
+        $("#ip").addClass("ui green  button");
+
+        $("#gr").removeClass("ui purple basic button");
+        $("#gr").addClass("ui purple button");
+
         });
 
 
@@ -774,32 +951,80 @@ $(function() {
     });
 
     </script>
+<?php
+ require_once './vendor/autoload.php';
+ $con = new mysqli("localhost","root","","grupoPublicitario");
+$sql="select p.productoFinal as producto,count(d.idProductoFinal) as cantidad from detalleOrdenGR d
+inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+ group by d.idProductoFinal ORDER BY cantidad DESC LIMIT 10";
+$res=$con->query($sql);
 
+$Cantidad=mysqli_num_rows($res);
+
+$ingresos=null;
+$i=1;
+
+if ($Cantidad==1) {
+  while ($fila=$res->fetch_assoc()) {
+   $ingresos[$i]=$fila['cantidad'];
+   $i++;
+  }
+}
+
+
+?>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Estado', 'Cantidad'],
-          ['Pen. aprobación Clien',     6],
-          ['En Producción',      2],
-          ['Por Facturar',  1],
-          ['Por Cobrar', 1],
+          ['Producto', 'Cantidad'],
+          <?php
+          while ($fila=$res->fetch_assoc()) {
+          echo "['".$fila["producto"]."',".$fila["cantidad"]."],";
+         // ['Work',     11],
+
+          }
+          ?>
         ]);
 
         var options = {
-            title: 'Estados de OT',
+            title: '10 Productos mas vendidos de Gran Formato',
           
          chartArea:
          {left:0,top:20,width:'100%',height:'100%'}
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        var chart = new google.visualization.PieChart(document.getElementById('donutchartGF'));
         chart.draw(data, options);
       }
     </script>
 
+
+
+<?php
+ require_once './vendor/autoload.php';
+ $con = new mysqli("localhost","root","","grupoPublicitario");
+$sql="select p.productoFinal as producto,count(d.idProductoFinal) as cantidad from detalleOrdenIP d
+inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+ group by d.idProductoFinal ORDER BY cantidad DESC LIMIT 10";
+$res=$con->query($sql);
+
+$Cantidad=mysqli_num_rows($res);
+
+$ingresos=null;
+$i=1;
+
+if ($Cantidad==1) {
+  while ($fila=$res->fetch_assoc()) {
+   $ingresos[$i]=$fila['cantidad'];
+   $i++;
+  }
+}
+
+
+?>
 
 <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -808,23 +1033,79 @@ $(function() {
       function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-          ['Producto', 'Cantidad'],
-          ['Lb13oz',     11],
-          ['FilmBacklite',      2],
-          ['Laminador Film',  2],
-          ['Vinil Banner', 2],
-          ['Coroplas 4MM',    7]
+            ['Producto', 'Cantidad'],
+          <?php
+          while ($fila=$res->fetch_assoc()) {
+          echo "['".$fila["producto"]."',".$fila["cantidad"]."],";
+         // ['Work',     11],
+
+          }
+          ?>
         ]);
 
         var options = {
-         title: 'Productos mas vendidos',
+         title: '10 Productos mas vendidos de Impresión digital',
          is3D: true,
          chartArea:
          {left:20,top:20,width:'100%',height:'100%'}
         };
         
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3dIP'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
+<?php
+ require_once './vendor/autoload.php';
+ $con = new mysqli("localhost","root","","grupoPublicitario");
+$sql="select p.productoFinal as producto,count(d.idProductoFinal) as cantidad from detalleOrdenP d
+inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
+ group by d.idProductoFinal ORDER BY cantidad DESC LIMIT 10";
+$res=$con->query($sql);
+
+$Cantidad=mysqli_num_rows($res);
+
+$ingresos=null;
+$i=1;
+
+if ($Cantidad==1) {
+  while ($fila=$res->fetch_assoc()) {
+   $ingresos[$i]=$fila['cantidad'];
+   $i++;
+  }
+}
+
+
+?>
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Producto', 'Cantidad'],
+          <?php
+          while ($fila=$res->fetch_assoc()) {
+          echo "['".$fila["producto"]."',".$fila["cantidad"]."],";
+         // ['Work',     11],
+
+          }
+          ?>
+        ]);
+
+        var options = {
+         title: '10 Productos mas vendidos promocionales',
+         is3D: true,
+         chartArea:
+         {left:20,top:20,width:'100%',height:'100%'}
+        };
+        
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3dP'));
 
         chart.draw(data, options);
       }

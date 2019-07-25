@@ -355,6 +355,14 @@
     </a>
 
     </div>
+
+    <div class="item" style="">
+    <a href="?1=FacturacionController&2=baseComprasTodas" class="item menu-it" style="background-color:#F4B847;color:black;font-size:13px;font-weight:bold;">
+    <i class="book icon"></i> <i class="file alternate icon"></i>
+      Base de compras 
+    </a>
+
+    </div>
     
     <div class="item" style="">
     <a href="?1=FacturacionController&2=baseCompras" class="item menu-it" style="background-color:#F4B847;color:black;font-size:13px;font-weight:bold;">

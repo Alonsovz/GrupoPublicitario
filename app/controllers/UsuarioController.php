@@ -15,6 +15,8 @@ class UsuarioController extends ControladorBase {
         require_once './app/view/Usuario/registro.php';
     }
 
+    
+
     public static function dashboard() {
         self::loadMain();
       

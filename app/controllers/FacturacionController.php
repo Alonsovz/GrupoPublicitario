@@ -35,6 +35,14 @@ class FacturacionController extends ControladorBase {
         require_once './app/view/Facturacion/baseComprasAd.php';
     }
 
+    public static function baseComprasTodas() {
+      
+        
+        self::loadMain();
+        
+        require_once './app/view/Facturacion/baseComprasTodas.php';
+    }
+
 
     public static function libroConsumidor() {
       
@@ -274,6 +282,36 @@ class FacturacionController extends ControladorBase {
         
         echo $dao->notaCreGR();
         echo $dao->fechaCobroGR();
+    }
+
+    public function otroGR(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdOrden($_REQUEST["idOT"]);
+        $dao->objeto->setNRE($_REQUEST["nDoc"]);
+        
+        echo $dao->otroGR();
+        echo $dao->fechaCobroGR();
+    }
+
+    public function otroIP(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdOrden($_REQUEST["idOT"]);
+        $dao->objeto->setNRE($_REQUEST["nDoc"]);
+        
+        echo $dao->otroIP();
+        echo $dao->fechaCobroIP();
+    }
+
+    public function otroP(){
+        $dao = new DaoNotaCredito();
+
+        $dao->objeto->setIdOrden($_REQUEST["idOT"]);
+        $dao->objeto->setNRE($_REQUEST["nDoc"]);
+        
+        echo $dao->otroP();
+        echo $dao->fechaCobroP();
     }
 
 
