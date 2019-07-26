@@ -142,6 +142,18 @@ class DaoUsuario extends DaoBase {
         }
     }
 
+
+    public function modificarPres() {
+        $_query = "update presupuesto set monto= ".$this->objeto->getSueldo()." where id=1";
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     public function restablecerContraConfig()
     {
         $_query = "update usuario set pass = '".sha1($this->objeto->getPass())."' where codigoUsuario = ".$this->objeto->getCodigoUsuario();

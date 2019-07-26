@@ -19,6 +19,7 @@ header("Content-Type: text/html;charset=utf-8");
 <table class="ui table bordered">
     <tr style="color:white; background-color:black;border:1px solid white;text-align:center;" height="40">
     <th style="border:1px solid white;">Fecha</th>
+    <th style="border:1px solid white;">N Cheque</th>
     <th style="border:1px solid white;">Responsable</th>
     <th style="border:1px solid white;">Gasto</th>
     <th style="border:1px solid white;">Proveedor</th>
@@ -35,6 +36,7 @@ while ($row=mysqli_fetch_assoc($result)) {
     ?>
         <tr style="text-align:center;border:1px solid black;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha']; ?></td>
+            <td style="text-align:center;border:1px solid black;"></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['nombre'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php  echo $row['gasto'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['proveedor'];?></td>

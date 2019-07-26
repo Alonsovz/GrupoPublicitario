@@ -9,7 +9,8 @@ header("Content-Type: text/html;charset=utf-8");
 
 	$query="
     select concat(u.nombre, u.apellido) as responsabl ,r.*, d.* ,p.*,DATE_FORMAT(r.fecha, '%d/%m/%Y') as fecha,format(d.total,2) as total,
-format(d.total * 0.13,2) as iva, format((d.total * 0.13)+d.total,2) as totalCompra,pf.productoFinal,c.color,a.acabado,m.medida, cp.nombre as clasificacion
+format(d.total * 0.13,2) as iva, format((d.total * 0.13)+d.total,2) as totalCompra,pf.productoFinal,c.color,a.acabado,m.medida, 
+cp.nombre as clasificacion, cp.idClasificacion as idCla
  from detalleRequisicion d
 inner join requisiciones r on r.idRequisicion = d.idRequisicion
 inner join proveedores p on p.idProveedor = r.idProveedor
@@ -67,19 +68,19 @@ while ($row=mysqli_fetch_assoc($result)) {
             <td style="text-align:center;border:1px solid black;"><?php echo $row['responsabl'];?></td>
 
             <?php
-                if($row["idClasificacion"]==1){
+                if($row["idCla"]=="1"){
             ?>
             <td style="text-align:center;border:1px solid black;">Gran Formato</td>
             
 
             <?php
                 }
-               else if($row["idClasificacion"]==3){
+               else if($row["idCla"]=="3"){
                     ?>
                     <td style="text-align:center;border:1px solid black;">Promocionales</td>
                     <?php
                 }
-               else if($row["idClasificacion"]==2){
+               else if($row["idCla"]=="2"){
                     ?>
                     <td style="text-align:center;border:1px solid black;">Impresion digital</td>
                 <?php

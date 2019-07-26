@@ -91,6 +91,12 @@ class UsuarioController extends ControladorBase {
         echo $dao->resetPassword($datos->code);
     }
 
+    public function modificarPres(){
+        $dao = new DaoUsuario();
+        $dao->objeto->setSueldo($_REQUEST["monto"]);
+
+        echo $dao->modificarPres();
+    }
     public function registrar() {
        
         $dao = new DaoUsuario();

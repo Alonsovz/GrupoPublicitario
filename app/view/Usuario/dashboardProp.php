@@ -12,7 +12,7 @@ $(function() {
 
 <?php
   require_once './vendor/autoload.php';
-  $mysqli = new mysqli("localhost","root","","grupoPublicitario");
+  $mysqli = new mysqli('localhost','root','','grupopublicitario');
   $ordenGRC = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoGR where estado=1 and idOrden!=1 ");
   $ordenIPC = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoIP where estado=1 and idOrden!=1 ");
   $ordenPC = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoP where estado=1 and idOrden!=1 ");
@@ -204,6 +204,29 @@ $(function() {
       $fila30 = $dispAyBa->fetch_assoc();
       $dispAyBan = $fila30['remanente'];
 
+      $pres = $mysqli -> query ("select monto as presupuesto from presupuesto");
+      $fila31 = $pres->fetch_assoc();
+      $presupuesto = $fila31['presupuesto'];
+
+
+      $ventasGF = $mysqli -> query ("select format(sum(precio),2) as ventaGR from detalleOrdenGR 
+      where YEAR(curdate()) = YEAR(NOW())
+      AND MONTH(curdate()) = MONTH(NOW())");
+      $fila32 = $ventasGF->fetch_assoc();
+      $ventasGFTotal = $fila32['ventaGR'];
+
+      $ventasP = $mysqli -> query ("select format(sum(precio),2) as ventaP from detalleOrdenP
+      where YEAR(curdate()) = YEAR(NOW())
+      AND MONTH(curdate()) = MONTH(NOW())");
+      $fila33 = $ventasP->fetch_assoc();
+      $ventasPTotal = $fila33['ventaP'];
+
+      $ventasIP = $mysqli -> query ("select format(sum(precio),2) as ventaIP from detalleOrdenIP
+      where YEAR(curdate()) = YEAR(NOW())
+      AND MONTH(curdate()) = MONTH(NOW())");
+      $fila34 = $ventasIP->fetch_assoc();
+      $ventasIPTotal = $fila34['ventaIP'];
+
       $otroTotal = $otroPT + $otroIPT + $otroGRT;
 
       $totalVentas = $totalVentasCFF + $totalVentasFac + $otroTotal;
@@ -211,6 +234,10 @@ $(function() {
       $disponibilidadEfectivo = ($pagosEfectivo  + $remesa + $dispAyEfec) -$retiro - $gastos - $compras;
 
       $disponibilidadBanco = ($cobroChequeT  + $cobroTarjetaT + $dispAyBan + $remesa) -$comision - $retiro;
+
+      $totalVentasFinal = $ventasGFTotal + $ventasIPTotal + $ventasPTotal;
+
+      $diferencia = $presupuesto - $totalVentasFinal;
    ?>
 
 
@@ -234,10 +261,41 @@ $(function() {
                 
             </div>
         </div>
-        <br><br><br>
+        <br><br>
+        
+        <div class="content" style=" width:100%;color:white; background-color:black; ">
+        <form class="ui form" style="">
+        <div class="field">
+        <div class="fields">
+        <div class="five wide field" >
+        <label style="color:white;">Presupuesto del mes:</label>
+        <input type="text" id="presupuesto" value="<?php  echo "$". number_format($presupuesto,2); ?>" readonly>
+       
+        </div>
+        <div class="two wide field">
+        <br>
+        <a class="ui yellow button" id="cambiarPres">Cambiar</a>
+        </div>
+        <div class="five wide field">
+        <label style="color:white;">Vendido durante el mes</label>
+        <input type="text" id="vendido" value="<?php  echo "$". $totalVentasFinal; ?>" readonly>
+        </div>
+        <div class="five wide field">
+        <label style="color:white;">Faltante para alcanzar el presupuesto</label>
+        <input type="text" id="diferencia" value="<?php  echo "$". $diferencia; ?>" readonly>
+        
+        </div>
+        
+        </div>
+        </div>
+        </form>
+        </div>
+
     <div class="content" id="generales" style="border:1px solid black; width:100%;">
     <br>
     <br>
+    
+        
     <form class="ui form">
     <h3>Datos generales del día (OT):</h3>
     <div class="ui divider"></div>
@@ -742,7 +800,27 @@ $(function() {
     
     </div>
     
-    
+  <div class="ui tiny modal" id="modalPresupuesto" >
+  <div class="header" style="color:white; background-color:black;">
+  Modificar presupuesto del mes
+  </div>
+  <div class="content">
+<form class="ui form">
+<div class="field">
+<div class="fields">
+<div class="sixteen wide field">
+<label>Presupuesto del mes</label>
+<input type="text" id="montoPres" name="montoPres">
+</div>
+</div>
+</div>
+</form>
+</div>
+<div class="actions">
+<button class="ui red deny button">Cancelar</button>
+<button class="ui black button" id="guardarPres">Guardar</button>
+</div>
+  </div>
     
 
 
@@ -752,7 +830,7 @@ $(function() {
     $("#1").addClass("ui black basic button");
     $("#5").removeClass("ui green button");
         $("#5").addClass("ui green basic button");
-
+        $('#montoPres').mask("###0.00", {reverse: true});
         
         var tiempo = new Date();
         var hora = tiempo.getHours();
@@ -762,9 +840,15 @@ var minuto = tiempo.getMinutes();
 
        // alert(horaReal);
 
-        if(horaReal >= "19:00"){
+        if(horaReal >= "18:00"){
             $("#finalizar").css("display","block")
         }
+    });
+
+    $('#cambiarPres').click(function() {
+        $('#modalPresupuesto').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+
+       $("#montoPres").val($("#presupuesto").val());
     });
 
    $("#finalizar").click(function(){
@@ -1027,10 +1111,51 @@ var minuto = tiempo.getMinutes();
         $("#requisiciones").show(1000);
     });
 
+
+    $('#guardarPres').click(function() {
+
+alertify.confirm("¿Desea modificar el presupuesto?",
+    function(){
+        
+     var monto = $("#montoPres").val();
+ 
+    $.ajax({
+    
+        type: 'POST',
+        url: '?1=UsuarioController&2=modificarPres',
+        data: {monto:monto,
+        },
+        success: function(r) {
+            if(r == 1) {
+                $('#modalPresupuesto').modal('hide');
+                swal({
+                    title: 'Modificado',
+                    text: 'Presupuesto guardado con éxito',
+                    type: 'success',
+                    showConfirmButton: true,
+
+                }).then((result) => {
+                    if (result.value) {
+                        location.reload();
+                    }
+                }); 
+                
+            } 
+        }
+    });
+},
+    function(){
+        //$("#modalCalendar").modal('toggle');
+        alertify.error('Cancelado');
+        
+    }); 
+
+    });
+
     </script>
 <?php
  require_once './vendor/autoload.php';
- $con = new mysqli("localhost","root","","grupoPublicitario");
+ $con = new mysqli('localhost','root','','grupopublicitario');
 $sql="select p.productoFinal as producto,count(d.idProductoFinal) as cantidad from detalleOrdenGR d
 inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
  group by d.idProductoFinal ORDER BY cantidad DESC LIMIT 10";
@@ -1082,7 +1207,7 @@ if ($Cantidad==1) {
 
 <?php
  require_once './vendor/autoload.php';
- $con = new mysqli("localhost","root","","grupoPublicitario");
+ $con = new mysqli('localhost','root','','grupopublicitario');
 $sql="select p.productoFinal as producto,count(d.idProductoFinal) as cantidad from detalleOrdenIP d
 inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
  group by d.idProductoFinal ORDER BY cantidad DESC LIMIT 10";
@@ -1137,7 +1262,7 @@ if ($Cantidad==1) {
 
 <?php
  require_once './vendor/autoload.php';
- $con = new mysqli("localhost","root","","grupoPublicitario");
+ $con = new mysqli('localhost','root','','grupopublicitario');
 $sql="select p.productoFinal as producto,count(d.idProductoFinal) as cantidad from detalleOrdenP d
 inner join productoFinal p on p.idProductoFinal = d.idProductoFinal
  group by d.idProductoFinal ORDER BY cantidad DESC LIMIT 10";

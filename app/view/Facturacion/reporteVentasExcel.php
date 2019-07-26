@@ -6,7 +6,7 @@ header("Content-Type: text/html;charset=utf-8");
 	require_once('conexion.php');
 	$conn=new Conexion();
 	$link = $conn->conectarse();
-    $mysqli = new mysqli('localhost','root','','grupopublicitario');
+    $mysqli = new mysqli("shareddb-o.hosting.stackcp.net","grupoPub","12345678*","grupoPublicitario-313039a314");
 	$query1="select d.*,p.productoFinal,c.color,a.acabado,m.medida,format(d.precio,2) as precio,o.*,
     DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fecha,cl.nombre as cliente,cl.nrc as nrc,cl.nit as nit,
     o.estado as doc, DATE_FORMAT(d.fechaFactura, '%d/%m/%Y') as fechaCobro,
