@@ -293,7 +293,7 @@ $("#creditoFiscal").click(function(){
                                 idOrden : idOT,
                             },
                             success: function(r) {
-                        window.location.href="./app/view/Facturacion/facturaIP.php?idOrden="+idOT;
+                        window.location.href="./app/view/Facturacion/cffIP.php?idOrden="+idOT;
                             } 
                             
                         });
@@ -336,8 +336,8 @@ $("#notaCredito").click(function(){
                                 idOrden : idOT,
                             },
                             success: function(r) {
-                        window.location.href="./app/view/Facturacion/facturaIP.php?idOrden="+idOT;
-                        location.reload();
+                        window.location.href="./app/view/Facturacion/notaCreIP.php?idOrden="+idOT;
+                       
                             } 
                             
                         });
@@ -380,7 +380,7 @@ $("#otro").click(function(){
                                 idOrden : idOT,
                             },
                             success: function(r) {
-                        window.location.href="./app/view/Facturacion/facturaIP.php?idOrden="+idOT;
+                        window.location.href="./app/view/Facturacion/cffIP.php?idOrden="+idOT;
                         
                             } 
                             

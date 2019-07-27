@@ -31,7 +31,7 @@ if($_GET["idOrden"]){
 
     header("Content-Type: text/html;charset=utf-8");
 	header('Content-type:application/xls');
-    header('Content-Disposition: attachment; filename=facturaConsumidor.xls');
+    header('Content-Disposition: attachment; filename=notaCredito.xls');
    
 ?>
 <h1 style="color:white">Ventas</h1>
@@ -39,21 +39,34 @@ if($_GET["idOrden"]){
 <h1 style="color:white">Ventas</h1>
 <h1 style="color:white">Ventas</h1>
 
-    <table style="width:100%;">
+<table style="width:100%;">
     <?php  while($row=mysqli_fetch_assoc($encabezadoOrden)){?>
     <tr>    
-        <th style="margin-left:50px;">Cliente : <?php echo $row["nombreC"] ?></th>
+        <th colspan="3"><?php echo $row["nombreC"] ?></th>
         <th>Fecha: <?php echo $row["fechaFactura"] ?></th>
     </tr>
     <tr>
-    <th colspan="2">Direccion: <?php echo utf8_decode($row["direccion"]) ?></th>
-    
+    <th colspan="3">Direccion: <?php echo utf8_decode($row["direccion"]) ?></th>
+    <th>Registro No:</th>
+    </tr>
+
+    <tr>
+    <th colspan="3">Municipio: </th>
+    <th>Giro: <?php echo utf8_decode($row["giro"]) ?></th>
+    </tr>
+
+    <tr>
+    <th colspan="3">Departamento: <?php echo utf8_decode($row["departamento"]) ?></th>
+    <th>NIT: <?php echo utf8_decode($row["nit"]) ?></th>
+   
     </tr>
     <tr>
-    
-    <th>NIT: <?php echo utf8_decode($row["nit"]) ?></th>
+    <th>N CFF ajus MOD: </th>
+    <th>N remision: </th>
+    <th>F. de nota de Rem: </th>
     <th>Venta a cuenta de: </th>
     </tr>
+    
 
     <?php 
     }

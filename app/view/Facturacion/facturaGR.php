@@ -39,28 +39,22 @@ if($_GET["idOrden"]){
 <h1 style="color:white">Ventas</h1>
 <h1 style="color:white">Ventas</h1>
 
-    <table >
+    <table style="width:100%;">
     <?php  while($row=mysqli_fetch_assoc($encabezadoOrden)){?>
     <tr>    
-        <th style="margin-left:50px;"><?php echo $row["nombreC"] ?></th>
+        <th style="margin-left:50px;">Cliente : <?php echo $row["nombreC"] ?></th>
         <th>Fecha: <?php echo $row["fechaFactura"] ?></th>
     </tr>
     <tr>
-    <th>Direccion: <?php echo utf8_decode($row["direccion"]) ?></th>
-    <th>Registro No:</th>
+    <th colspan="2">Direccion: <?php echo utf8_decode($row["direccion"]) ?></th>
+    
     </tr>
     <tr>
-    <th>Departamento: <?php echo utf8_decode($row["departamento"]) ?></th>
+    
     <th>NIT: <?php echo utf8_decode($row["nit"]) ?></th>
-    </tr>
-    <tr>
     <th>Venta a cuenta de: </th>
-    <th>Cond. de la operacion:</th>
     </tr>
-    <tr>
-    <th>No de Nota remision anterior:</th>
-    <th>Fecha de nota de remision anterior</th>
-    </tr>
+    
 
     <?php 
     }
@@ -85,10 +79,10 @@ if($_GET["idOrden"]){
         <td>
         <?php echo $row["productoFin"] ?>,<?php echo $row["acabado"] ?>,<?php echo $row["color"] ?><br>
         <?php echo $row["descripciones"] ?></td>
-        <td></td>
+        <td><?php echo number_format($row["precio"] / $row["cantidad"],2)  ?></td>
         
         <?php if($row["tipoVenta"] == "Venta No Sujeta"){ ?>
-        <td><?php echo $row["precioF"] ?></td>
+        <td><?php echo $row["precio"] ?></td>
         <?php 
         }else{?>
         <td></td>
@@ -96,14 +90,14 @@ if($_GET["idOrden"]){
 
 
         <?php if($row["tipoVenta"] == "Venta Exenta"){ ?>
-        <td><?php echo $row["precioF"] ?></td>
+        <td><?php echo $row["precio"] ?></td>
         <?php 
         }else{?>
         <td></td>
         <?php }?>
 
         <?php if($row["tipoVenta"] == "Venta Gravada"){ ?>
-        <td><?php echo $row["precioF"] ?></td>
+        <td><?php echo $row["precio"] ?></td>
         <?php 
         }else{?>
         <td></td>

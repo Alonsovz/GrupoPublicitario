@@ -294,7 +294,7 @@ $("#creditoFiscal").click(function(){
                                 idOrden : idOT,
                             },
                             success: function(r) {
-                        window.location.href="./app/view/Facturacion/facturaGR.php?idOrden="+idOT;
+                        window.location.href="./app/view/Facturacion/cffGR.php?idOrden="+idOT;
                             } 
                             
                         });
@@ -335,7 +335,7 @@ $("#notaCredito").click(function(){
                                 idOrden : idOT,
                             },
                             success: function(r) {
-                        window.location.href="./app/view/Facturacion/facturaGR.php?idOrden="+idOT;
+                        window.location.href="./app/view/Facturacion/notaCreGR.php?idOrden="+idOT;
                             } 
                             
                         });
@@ -377,7 +377,7 @@ $("#otro").click(function(){
                                 idOrden : idOT,
                             },
                             success: function(r) {
-                        window.location.href="./app/view/Facturacion/facturaGR.php?idOrden="+idOT;
+                        window.location.href="./app/view/Facturacion/cffGR.php?idOrden="+idOT;
                             } 
                             
                         });
