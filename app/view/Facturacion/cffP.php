@@ -33,6 +33,9 @@ if($_GET["idOrden"]){
 	header('Content-type:application/xls');
     header('Content-Disposition: attachment; filename=ccf.xls');
    
+    $totalVentaEx =0;
+    $totalVentaGra = 0;
+    $totalVentaNo =0;
 ?>
 <h1 style="color:white">Ventas</h1>
 <h1 style="color:white">Ventas</h1>
@@ -50,8 +53,11 @@ if($_GET["idOrden"]){
     <th>Registro No:</th>
     </tr>
     <tr>
-    <th>Departamento: <?php echo utf8_decode($row["departamento"]) ?></th>
+    <th rowspan=2>Departamento: <?php echo utf8_decode($row["departamento"]) ?></th>
+    <tr>
+    <th>Giro: <?php echo utf8_decode($row["giro"]) ?></th>
     <th>NIT: <?php echo utf8_decode($row["nit"]) ?></th>
+    </tr>
     </tr>
     <tr>
     <th>Venta a cuenta de: </th>
@@ -88,7 +94,10 @@ if($_GET["idOrden"]){
         <td><?php echo number_format($row["precio"] / $row["cantidad"],2)  ?></td>
         
         <?php if($row["tipoVenta"] == "Venta No Sujeta"){ ?>
-        <td><?php echo $row["precioF"] ?></td>
+        <td><?php
+            $totalVentaNo += $row["precio"];
+            echo $row["precio"] ?></td>
+
         <?php 
         }else{?>
         <td></td>
@@ -96,14 +105,18 @@ if($_GET["idOrden"]){
 
 
         <?php if($row["tipoVenta"] == "Venta Exenta"){ ?>
-        <td><?php echo $row["precioF"] ?></td>
+        <td><?php
+            $totalVentaEx += $row["precio"];
+             echo $row["precio"] ?></td>
         <?php 
         }else{?>
         <td></td>
         <?php }?>
 
         <?php if($row["tipoVenta"] == "Venta Gravada"){ ?>
-        <td><?php echo $row["precioF"] ?></td>
+        <td><?php 
+            $totalVentaGra += $row["precio"];
+            echo $row["precio"] ?></td>
         <?php 
         }else{?>
         <td></td>
@@ -114,7 +127,13 @@ if($_GET["idOrden"]){
     }
     ?>
     </table>
-
+    <br><br>
+    <?php
+    $total = $totalVentaEx + $totalVentaGra + $totalVentaNo;
+   include("funcion.php");
+   echo $pagado =strtoupper (NumeroLetra($total));
+   
+   ?>
 <?php
 }
 ?>

@@ -32,7 +32,9 @@ if($_GET["idOrden"]){
     header("Content-Type: text/html;charset=utf-8");
 	header('Content-type:application/xls');
     header('Content-Disposition: attachment; filename=facturaConsumidor.xls');
-   
+    $totalVentaEx =0;
+    $totalVentaGra = 0;
+    $totalVentaNo =0;
 ?>
 <h1 style="color:white">Ventas</h1>
 <h1 style="color:white">Ventas</h1>
@@ -74,7 +76,7 @@ if($_GET["idOrden"]){
 
     <table >
     <?php  while($row=mysqli_fetch_assoc($detalleOrden)){?>
-    <tr>    
+        <tr>    
         <td style="margin-left:50px;"><?php echo $row["cantidad"] ?></td>
         <td>
         <?php echo $row["productoFin"] ?>,<?php echo $row["acabado"] ?>,<?php echo $row["color"] ?><br>
@@ -82,7 +84,10 @@ if($_GET["idOrden"]){
         <td><?php echo number_format($row["precio"] / $row["cantidad"],2)  ?></td>
         
         <?php if($row["tipoVenta"] == "Venta No Sujeta"){ ?>
-        <td><?php echo $row["precio"] ?></td>
+        <td><?php
+            $totalVentaNo += $row["precio"];
+            echo $row["precio"] ?></td>
+
         <?php 
         }else{?>
         <td></td>
@@ -90,14 +95,18 @@ if($_GET["idOrden"]){
 
 
         <?php if($row["tipoVenta"] == "Venta Exenta"){ ?>
-        <td><?php echo $row["precio"] ?></td>
+        <td><?php
+            $totalVentaEx += $row["precio"];
+             echo $row["precio"] ?></td>
         <?php 
         }else{?>
         <td></td>
         <?php }?>
 
         <?php if($row["tipoVenta"] == "Venta Gravada"){ ?>
-        <td><?php echo $row["precio"] ?></td>
+        <td><?php 
+            $totalVentaGra += $row["precio"];
+            echo $row["precio"] ?></td>
         <?php 
         }else{?>
         <td></td>
@@ -107,7 +116,15 @@ if($_GET["idOrden"]){
     <?php 
     }
     ?>
+    
     </table>
+    <br><br>
+    <?php
+    $total = $totalVentaEx + $totalVentaGra + $totalVentaNo;
+   include("funcion.php");
+   echo $pagado =strtoupper (NumeroLetra($total));
+   
+   ?>
 
 <?php
 }
