@@ -91,7 +91,6 @@ inner join medidas m on m.idMedida = pm.idMedida where YEAR(curdate()) =
 
     <tr style="border:1px solid white;text-align:center;background-color:black;color:white;" height="40">
     <th  style="border:1px solid white;">Fecha</th>
-    <th  style="border:1px solid white;">Correlativo</th>
     <th  style="border:1px solid white;">Tipo DOC</th>
     <th  style="border:1px solid white;">Tipo PRO</th>
     <th  style="border:1px solid white;">Clasificación</th>
@@ -135,12 +134,20 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
 
             $totalNoS = $totalVentaNoS->fetch_assoc();
             $totalNoS = $totalNoS['ventasNoS'];
+  
+  			$totalVentaIVA = $mysqli -> query ("select format(sum(dp.precio) * 0.13 ,2) as ventasGR from detalleOrdenIP dp
+           inner join ordenTrabajoIP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalIVA = $totalVentaIVA->fetch_assoc();
+
+            $totalIVA = $totalIVA['ventasGR'];
 
 
     ?>
         <tr style="text-align:center;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro']; ?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['correlativo']; ?></td>
+
             <?php   
                 if($row["doc"]=="6"){
             ?>
@@ -179,7 +186,7 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
             <td style="text-align:center;border:1px solid black;"> $ <?php
                 $debitoFiscal = $totalGR * 0.01;
 
-                $total = ($totalGR + $totalEx + $totalNoS)-$debitoFiscal;
+                $total = ($totalGR + $totalEx + $totalNoS +$totalIVA)-$debitoFiscal;
 
                 echo number_format($total,2);
             ?></td>
@@ -189,7 +196,7 @@ while ($row=mysqli_fetch_assoc($listadoIP)) {
                 
             ?>
             <td style="text-align:center;border:1px solid black;">$ <?php 
-           $total = $totalGR + $totalEx + $totalNoS;
+           $total = $totalGR + $totalEx + $totalNoS +$totalIVA;
 
             echo number_format($total,2);?></td>
             <?php
@@ -321,10 +328,18 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
 
             $totalNoS = $totalVentaNoS->fetch_assoc();
             $totalNoS = $totalNoS['ventasNoS'];
+  
+  $totalVentaIVA = $mysqli -> query ("select format(sum(dp.precio) * 0.13 ,2) as ventasGR from detalleOrdenGR dp
+           inner join ordenTrabajoGR op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalIVA = $totalVentaIVA->fetch_assoc();
+
+            $totalIVA = $totalIVA['ventasGR'];
     ?>
         <tr style="text-align:center;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro']; ?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['correlativo']; ?></td>
+
             <?php   
                 if($row["doc"]=="6"){
             ?>
@@ -360,7 +375,7 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
             <td style="text-align:center;border:1px solid black;"> $ <?php
                 $debitoFiscal = $totalGR * 0.01;
 
-                $total = ($totalGR + $totalEx + $totalNoS)-$debitoFiscal;
+                $total = ($totalGR + $totalEx + $totalNoS +$totalIVA)-$debitoFiscal;
 
                 echo number_format($total,2);
             ?></td>
@@ -370,7 +385,7 @@ while ($row=mysqli_fetch_assoc($listadoGF)) {
                 
             ?>
             <td style="text-align:center;border:1px solid black;">$ <?php 
-           $total = $totalGR + $totalEx + $totalNoS;
+           $total = $totalGR + $totalEx + $totalNoS +$totalIVA;
 
             echo number_format($total,2);?></td>
             <?php
@@ -502,10 +517,18 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
 
             $totalNoS = $totalVentaNoS->fetch_assoc();
             $totalNoS = $totalNoS['ventasNoS'];
+  
+  $totalVentaIVA = $mysqli -> query ("select format(sum(dp.precio) * 0.13 ,2) as ventasGR from detalleOrdenP dp
+           inner join ordenTrabajoP op on op.idOrden = dp.idOrden
+            where dp.tipoVenta='Venta Gravada' and dp.idOrden =".$idOrden." group by dp.idOrden");
+
+            $totalIVA = $totalVentaIVA->fetch_assoc();
+
+            $totalIVA = $totalIVA['ventasGR'];
     ?>
         <tr style="text-align:center;">
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaCobro']; ?></td>
-            <td style="text-align:center;border:1px solid black;"><?php echo $row['correlativo']; ?></td>
+
             <?php   
                 if($row["doc"]=="6"){
             ?>
@@ -539,7 +562,7 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
             <td style="text-align:center;border:1px solid black;"> $ <?php
                 $debitoFiscal = $totalGR * 0.01;
 
-                $total = ($totalGR + $totalEx + $totalNoS)-$debitoFiscal;
+                $total = ($totalGR + $totalEx + $totalNoS +$totalIVA)-$debitoFiscal;
 
                 echo number_format($total,2);
             ?></td>
@@ -549,7 +572,7 @@ while ($row=mysqli_fetch_assoc($listadoP)) {
                 
             ?>
             <td style="text-align:center;border:1px solid black;">$ <?php 
-           $total = $totalGR + $totalEx + $totalNoS;
+           $total = $totalGR + $totalEx + $totalNoS +$totalIVA;
 
             echo number_format($total,2);?></td>
             <?php
@@ -793,9 +816,6 @@ var enviarLibro=(ele)=>{
         
     }
     else if(tipoFa=="8"){
-        $("#tipoLibro").text("Enviar a libro de Contribuyentes");
-    }
-    else if(tipoFa=="9"){
         $("#tipoLibro").text("Enviar a libro de Contribuyentes");
     }
 

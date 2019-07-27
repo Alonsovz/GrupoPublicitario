@@ -217,7 +217,7 @@ while ($row=mysqli_fetch_assoc($result1)) {
             <td style="text-align:center;border:1px solid black;"> $ <?php
                 $debitoFiscal = $totalGR * 0.01;
 
-                $total = ($totalGR + $totalEx + $totalNoS)-$debitoFiscal;
+                $total = ($totalGR + $totalEx + $totalNoS + $totalIVA )-$debitoFiscal;
 
                 echo number_format($total,2);
             ?></td>
@@ -227,7 +227,7 @@ while ($row=mysqli_fetch_assoc($result1)) {
                 
             ?>
             <td style="text-align:center;border:1px solid black;">$ <?php 
-           $total = $totalGR + $totalEx + $totalNoS;
+           $total = $totalGR + $totalEx + $totalNoS + $totalIVA;
 
             echo number_format($total,2);?></td>
             <?php
@@ -423,7 +423,7 @@ while ($row=mysqli_fetch_assoc($result3)) {
             <td style="text-align:center;border:1px solid black;"> $ <?php
                 $debitoFiscal = $totalGR * 0.01;
 
-                $total = ($totalGR + $totalEx + $totalNoS)-$debitoFiscal;
+                $total = ($totalGR + $totalEx + $totalNoS + $totalIVA)-$debitoFiscal;
 
                 echo number_format($total,2);
             ?></td>
@@ -433,7 +433,7 @@ while ($row=mysqli_fetch_assoc($result3)) {
                 
             ?>
             <td style="text-align:center;border:1px solid black;">$ <?php 
-           $total = $totalGR + $totalEx + $totalNoS;
+           $total = $totalGR + $totalEx + $totalNoS + $totalIVA;
 
             echo number_format($total,2);?></td>
             <?php
@@ -631,7 +631,7 @@ while ($row=mysqli_fetch_assoc($result2)) {
             <td style="text-align:center;border:1px solid black;"> $ <?php
                 $debitoFiscal = $totalGR * 0.01;
 
-                $total = ($totalGR + $totalEx + $totalNoS)-$debitoFiscal;
+                $total = ($totalGR + $totalEx + $totalNoS + $totalIVA)-$debitoFiscal;
 
                 echo number_format($total,2);
             ?></td>
@@ -641,7 +641,7 @@ while ($row=mysqli_fetch_assoc($result2)) {
                 
             ?>
             <td style="text-align:center;border:1px solid black;">$ <?php 
-           $total = $totalGR + $totalEx + $totalNoS;
+           $total = $totalGR + $totalEx + $totalNoS + $totalIVA;
 
             echo number_format($total,2);?></td>
             <?php

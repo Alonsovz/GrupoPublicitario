@@ -364,7 +364,7 @@ class RequisicionController extends ControladorBase {
        
         
         echo $dao->recibir();
-        echo $dao->agregarInventario();
+       
     }
 
 

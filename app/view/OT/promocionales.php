@@ -184,9 +184,7 @@
             <label><i class="dollar icon"></i>Total sugerido:</label>
             <input type="text" name="precioTo" id="precioTo" placeholder="Total Sugerido">
 
-            <br><br>
-              <a class="ui green button" id="calcIva"><i class="plus icon"></i> IVA</a>
-            
+          
             </div>
 
             <div class="four wide field">

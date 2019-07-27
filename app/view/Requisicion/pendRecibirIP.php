@@ -256,7 +256,7 @@ $(document).ready(function(){
                 idD :$("#idD").val(),
             },
         success:function(r){
-            if(r == 11) {
+            if(r == 1) {
                 $('#detalles').html('');
                         $('#modalRecibir').modal('hide');
                         swal({

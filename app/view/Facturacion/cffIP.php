@@ -4,7 +4,7 @@ if($_GET["idOrden"]){
 
     $idOrden = $_GET["idOrden"];
 
-    $mysqli = new mysqli('localhost','root','','grupopublicitario');
+    $mysqli = new mysqli("shareddb-o.hosting.stackcp.net","grupoPub","12345678*","grupoPublicitario-313039a314");
 
     $encabezadoOrden = $mysqli -> query ("
     select o.*,o.idOrden, o.correlativo,DATE_FORMAT(o.fechaOT, '%d/%m/%Y') as fechaOT,DATE_FORMAT(o.fechaEntrega, '%d/%m/%Y') as fechaEntrega,
@@ -25,6 +25,14 @@ if($_GET["idOrden"]){
    inner join acabados a on a.idAcabado = d.idAcabado
    inner join colores c on c.idColor = d.idColor
     where o.idOrden=".$idOrden."");
+
+    $tipoCliente =  $mysqli -> query  ("select c.categoria as categoria from clientes c
+    inner join ordenTrabajoIP o on o.cliente = c.idCliente
+    where o.idOrden  =".$idOrden."");
+
+    $cliente = $tipoCliente->fetch_assoc();
+
+    $cliente = $cliente['categoria'];
 
     header("Content-Type: text/html;charset=utf-8");
 	header('Content-type:application/xls');
@@ -124,13 +132,87 @@ if($_GET["idOrden"]){
     }
     ?>
     </table>
+    </table>
     <br><br>
-    <?php
-    $total = $totalVentaEx + $totalVentaGra + $totalVentaNo;
-   include("funcion.php");
-   echo $pagado =strtoupper (NumeroLetra($total));
+    <table>
+    <tr>
+    <th style="width:50%">
+    
+ 
+   </th>
+
+   <th>
+   <th>
+   <table>
+        <tr>
+            <td>Sumas-Venta GR</td><td><?php echo  "$". number_format($totalVentaGra,2)?></td>
+            
+        </tr>
+
+        <tr>
+        <td>13% IVA</td><td><?php
+        $iva = $totalVentaGra  * 0.13;
+        echo "$". number_format($iva,2)?></td>
+        </tr>
+
+        <tr>
+            <td>Sub-Total</td><td>
+            <?php echo "$". number_format( $iva +$totalVentaGra,2)?>
+            </td>
+            
+        </tr>
+        
+        <tr>
+        <?php
+            if($cliente == "Gran Contribuyente" && $totalVentaGra>=100.00){
+        ?>
+        <?php
+        $ivaRet = $totalVentaGra * 0.01;
+        ?>
+        <td>(-)IVA RETENIDO</td><td><?php echo "$". number_format( $ivaRet,2)?></td>
+
+        <?php
+            }else{
+                $ivaRet =0;
+        ?>
+            <td>(-)IVA RETENIDO</td><td><?php echo "$". number_format( $ivaRet,2)?></td>
+            <?php } ?>
+        </tr>
+
+        <tr>
+        <td>Ventas No Sujetas</td><td><?php echo "$". number_format($totalVentaNo,2)?></td>
+        </tr>
+
+        <tr>
+            <td>Ventas Exentas</td><td><?php echo "$". number_format($totalVentaEx,2)?></td>
+        </tr>
+        
+        <tr>
+        <td>Total</td><td><?php 
+        $totalFac = ($totalVentaGra + $totalVentaEx + $totalVentaNo +$iva) - $ivaRet;
+         echo "$". number_format($totalFac,2) ?></td>
+
+
+        </tr>
+
+    
+    </table>
    
-   ?>
+   <tr>
+   <tr>
+   </th>
+   <th style="width:50%">
+   <?php
+   include("funcion.php");
+ echo $pagado =strtoupper (NumeroLetra($totalFac));
+
+?>
+ 
+   </th>
+   </tr>
+   </table>
+   
+
 <?php
 }
 ?>
