@@ -28,7 +28,7 @@
  <?php
 
  if($_SESSION["descRol"] == 'Administrador/a') {
-     require_once 'dashboardProp.php';
+     require_once 'dashboardAdmin.php';
  } else if($_SESSION["descRol"] == 'Produccion') {
     require_once 'dashboardProduccion.php';
 }else if($_SESSION["descRol"] == 'Propietario') {
