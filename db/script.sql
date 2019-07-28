@@ -298,6 +298,7 @@ tipoDoc varchar(50),
 idClasificacion int,
 fechaEntrega date,
 estado int,
+tipoPago varchar(500),
 idEliminado int
 );
 
@@ -319,6 +320,8 @@ idEliminado int
 );
 
 
+
+
 create table gastosOficina(
 idGasto int primary key auto_increment,
 nombre varchar(100),
@@ -336,8 +339,11 @@ idGasto int,
 descripcion varchar(500),
 precio double,
 fecha date,
+tipoPago varchar(500),
 estado int
 );
+
+
 
 
 create table notaCredito(
@@ -365,10 +371,25 @@ ventasEx double,
 ventasGra double
 );
 
+create table banco(
+id int  primary key auto_increment,
+monto double,
+tipoTramite varchar(100),
+fecha date
+);
+
+create table remanente(
+id int primary key auto_increment,
+monto double,
+tipo int
+);
+
+create table presupuesto(
+id int primary key auto_increment,
+monto double
+);
 
 
-
-alter table usuario add constraint fk_usuario_rol foreign key (codigoRol) references rol(codigoRol);
 
  insert into rol values(1,'Administrador/a');
 insert into rol values(2,'Produccion');
@@ -466,9 +487,9 @@ insert into productoFinal values(null,'Seleccione una opcion',0);
 
 
 
-insert into ordenTrabajoGR values(null,'OTGF00',curdate(),1,1,1,1,curdate(),'',9,'',1);
-insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,1,1,curdate(),'',9,'',1);
-insert into ordenTrabajoP values(null,'OTPR00',curdate(),1,1,1,1,curdate(),'',9,'',1);
+insert into ordenTrabajoGR values(null,'OTGF00',curdate(),1,1,1,1,curdate(),'',20,'',1);
+insert into ordenTrabajoIP values(null,'OTIP00',curdate(),1,1,1,1,curdate(),'',20,'',1);
+insert into ordenTrabajoP values(null,'OTPR00',curdate(),1,1,1,1,curdate(),'',20,'',1);
 
 insert into gastosOficina values(null,'Internet',1);
 	
@@ -526,5 +547,3 @@ begin
 end
 $$
 
-
-select * from ordenTrabajoP
