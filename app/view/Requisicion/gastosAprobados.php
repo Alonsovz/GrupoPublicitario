@@ -87,6 +87,12 @@
                         
                     </div>
 
+                    <div class="eight wide field">
+                        <label><i class="user icon"></i><i class="dollar icon"></i>Tipo Pago:</label>
+                        <input type="text" name="tipoPago" id="tipoPago"  readonly>
+                        
+                    </div>
+
                     
 
                 </div>
@@ -107,6 +113,41 @@
     </div>
 </div>
 
+<div class="ui tiny modal" id="modalFinalizar">
+        <div class="header" style="color:white;background-color:black;">
+            Pagar gasto
+        </div>
+        <div class="content">
+            <input type="hidden" id="idRe" name="idRe">
+            
+            <h3>¿Completar gasto?</h3>
+
+            <form class="ui form">
+                <div class="field">
+                <div class="fields">
+                <div class="eight wide field">
+            <label><i class="dollar icon"></i>Tipo de pago</label>
+            <select class="ui dropdown" id="tipoPago" name="tipoPago">
+            <option value="seleccione" set selected>Seleccione una forma de pago</option>
+            <option value="Efectivo">Efectivo</option>
+            <option value="Cheque">Cheque</option>
+            <option value="Tarjeta de credito">Tarjeta de credito</option>
+            <option value="Patrocinio">Patrocinio</option>
+            <option value="Comision">Comisión</option>
+            <option value="Otros">Otros</option>
+            </select>
+        </div>
+                </div>
+                </div>
+                
+            </form>
+        </div>
+        <div class="actions">
+            <button  class="ui red deny button">Cancelar</button>
+            <button id="btnCom" class="ui black button">Completar</button>
+        </div>
+    </div>
+
 </div>
 <script src="./res/tablas/tablaGastosAprobados.js"></script>
 <script>
@@ -126,9 +167,55 @@
        $("#proveedor").val($(ele).attr("proveedor"));
        $("#idRequisicion").val($(ele).attr("id"));
 
+       $("#tipoPago").val($(ele).attr("tipoPago"));
+
        
        $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
     }
+
+
+    var finalizar=(ele)=>{
+       var id= $(ele).attr("id");
+    
+       $("#idRe").val(id);
+       
+       $('#modalFinalizar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+    }
+
+    $("#btnCom").click(function(){
+
+
+
+$.ajax({
+      type:"POST",
+      url:"?1=RequisicionController&2=finalizarGasto",
+      data:{
+          idRe:$("#idRe").val(),
+          tipoPago:$("#tipoPago").val(),
+      },
+  success:function(r){
+      if(r == 1) {
+         
+                  $('#modalFinalizar').modal('hide');
+                  swal({
+                      title: 'Gasto pagado',
+                      type: 'success',
+                      showConfirmButton: true
+
+                  }).then((result) => {
+                      if(result.value){
+                        $('#dtPenPagoGF').DataTable().ajax.reload();
+                    }
+                     
+                   
+                  }); 
+                  
+                  
+              } 
+      }
+  });
+
+});
 
    
     </script>

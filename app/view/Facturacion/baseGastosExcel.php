@@ -26,6 +26,7 @@ header("Content-Type: text/html;charset=utf-8");
     <th style="border:1px solid white;">Cod. Proveedor</th>
     <th style="border:1px solid white;">Tipo Compra</th>
     <th style="border:1px solid white;">Tipo Doc</th>
+    <th style="border:1px solid white;">Tipo Pago</th>
     <th style="border:1px solid white;">Condicion</th>
     <th style="border:1px solid white;">Descripcion</th>
     <th style="border:1px solid white;">Precio</th>
@@ -57,6 +58,7 @@ while ($row=mysqli_fetch_assoc($result)) {
             }
 
             ?>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['tipoPago']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['condicionCredito'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['descripcion'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['precio'];?></td>

@@ -22,7 +22,7 @@
 
 <?php
 require_once './vendor/autoload.php';
-$mysqli = new mysqli('localhost','root','','grupoPublicitario');
+$mysqli = new mysqli("shareddb-o.hosting.stackcp.net","grupoPub","12345678*","grupoPublicitario-313039a314");
 $listado = $mysqli -> query ("
 select r.*, d.* ,p.*,DATE_FORMAT(r.fecha, '%d/%m/%Y') as fecha,format(d.total,2) as total,
 format(d.total * 0.13,2) as iva, format((d.total * 0.13)+d.total,2) as totalCompra
@@ -44,6 +44,7 @@ $totalVentas=0;
     <th rowspan="2" style="border:1px solid white;">Fecha</th>
     <th rowspan="2" style="border:1px solid white;">Proveedor</th>
     <th rowspan="2" style="border:1px solid white;">Tipo Doc</th>
+    <th rowspan="2" style="border:1px solid white;">Tipo Pago</th>
     <th colspan="3" style="text-align:center;border:1px solid white;">Compras Exentas</th>
     <th colspan="3" style="text-align:center;border:1px solid white;">Compras Gravadas</th>
     <th rowspan="2" style="text-align:center;border:1px solid white;">Iva Crédito Fiscal</th>
@@ -73,6 +74,7 @@ while ($row=mysqli_fetch_assoc($listado)) {
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fecha'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['nombre'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['tipoDoc'];?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['tipoPago'];?></td>
             <?php
                 if($row["tipoCompra"]=="Exenta"){
                     $totalVentExe =$row['total'];
@@ -154,7 +156,7 @@ while ($row=mysqli_fetch_assoc($listado)) {
 
 ?>
 <tfoot>
-<td style="text-align:center;border:1px solid black; background-color:#8EF777;font-weight:bold;" colspan="4">Totales</td>
+<td style="text-align:center;border:1px solid black; background-color:#8EF777;font-weight:bold;" colspan="5">Totales</td>
 
 <td style="text-align:center;border:1px solid black;background-color:#DEE1DE;font-weight:bold;">$<?php echo number_format($totalVentEx,2);?></td>
 <td style="text-align:center;border:1px solid black;background-color:#DEE1DE;font-weight:bold;">--</td>

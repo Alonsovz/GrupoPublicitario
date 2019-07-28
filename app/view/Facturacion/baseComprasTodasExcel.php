@@ -39,6 +39,7 @@ where r.estado=5 group by d.idDetalle  order by d.idDetalle desc;";
 
     <th  style="text-align:center;border:1px solid white;">Tipo Compra</th>
     <th  style="text-align:center;border:1px solid white;">Tipo Doc</th>
+    <th  style="text-align:center;border:1px solid white;">Tipo Pago</th>
     <th  style="text-align:center;border:1px solid white;">Condicion</th>
     <th  style="text-align:center;border:1px solid white;">Fecha de entrega</th>
     <th  style="text-align:center;border:1px solid white;">Clasificacion</th>
@@ -91,6 +92,7 @@ while ($row=mysqli_fetch_assoc($result)) {
             <td style="text-align:center;border:1px solid black;"><?php echo $row['idProveedor'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['tipoCompra'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['tipoDoc'];?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['tipoPago'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['condicionCredito'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['fechaEntrega'];?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['clasificacion'];?></td>

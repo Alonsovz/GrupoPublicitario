@@ -27,7 +27,7 @@ where r.estado=5 and r.tipoDoc = 'CCF' order by d.idDetalle desc;";
     <th rowspan="2" style="border:1px solid white;">N de registro</th>
     <th rowspan="2" style="border:1px solid white;">Ident. de Excel</th>
     <th rowspan="2" style="border:1px solid white;">Proveedor</th>
-
+    <th rowspan="2" style="border:1px solid white;">Tipo Pago</th>
 
     <th colspan="3" style="text-align:center;border:1px solid white;">Compras Exentas</th>
     <th colspan="3" style="text-align:center;border:1px solid white;">Compras Gravadas</th>
@@ -61,6 +61,7 @@ while ($row=mysqli_fetch_assoc($result)) {
             <td style="text-align:center;border:1px solid black;"></td>
             <td style="text-align:center;border:1px solid black;"></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['nombre'];?></td>
+            <td style="text-align:center;border:1px solid black;"><?php echo $row['tipoPago'];?></td>
             <?php
                 if($row["tipoCompra"]=="Exenta"){
             ?>
@@ -107,14 +108,8 @@ while ($row=mysqli_fetch_assoc($result)) {
            
             
         </tr>	
-
-    <?php
-}
-
-
-?>
-<tfoot>
-<td style="text-align:center;border:1px solid black; background-color:#8EF777;font-weight:bold;" colspan="3">Totales</td>
+        <tfoot>
+<td style="text-align:center;border:1px solid black; background-color:#8EF777;font-weight:bold;" colspan="7">Totales</td>
 
 <td style="text-align:center;border:1px solid black;background-color:#DEE1DE;font-weight:bold;">$<?php echo number_format($totalVentEx,2);?></td>
 <td style="text-align:center;border:1px solid black;background-color:#DEE1DE;font-weight:bold;">--</td>
@@ -128,5 +123,11 @@ while ($row=mysqli_fetch_assoc($result)) {
 <td style="text-align:center;border:1px solid black;background-color:#DEE1DE;font-weight:bold;"></td>
 <td style="text-align:center;border:1px solid black;background-color:#DEE1DE;font-weight:bold;"></td>
 <td style="text-align:center;border:1px solid black;background-color:#DEE1DE;font-weight:bold;">$<?php echo number_format($totalVentas,2);?></td>
-</tfoot>
+</tfoot> 
+    <?php
+}
+
+
+?>
+
 </table>

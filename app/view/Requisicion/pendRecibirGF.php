@@ -152,6 +152,26 @@
             <input type="hidden" id="idRe" name="idRe">
             
             <h3>¿Completar requisción?</h3>
+
+            <form class="ui form">
+                <div class="field">
+                <div class="fields">
+                <div class="eight wide field">
+            <label><i class="dollar icon"></i>Tipo de pago</label>
+            <select class="ui dropdown" id="tipoPago" name="tipoPago">
+            <option value="seleccione" set selected>Seleccione una forma de pago</option>
+            <option value="Efectivo">Efectivo</option>
+            <option value="Cheque">Cheque</option>
+            <option value="Tarjeta de credito">Tarjeta de credito</option>
+            <option value="Patrocinio">Patrocinio</option>
+            <option value="Comision">Comisión</option>
+            <option value="Otros">Otros</option>
+            </select>
+        </div>
+                </div>
+                </div>
+                
+            </form>
         </div>
         <div class="actions">
             <button  class="ui red deny button">Cancelar</button>
@@ -307,7 +327,7 @@ $.ajax({
       url:"?1=RequisicionController&2=finalizarRe",
       data:{
           idRe:$("#idRe").val(),
-
+          tipoPago:$("#tipoPago").val(),
       },
   success:function(r){
       if(r == 1) {

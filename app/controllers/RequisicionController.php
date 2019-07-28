@@ -372,9 +372,18 @@ class RequisicionController extends ControladorBase {
         $dao = new DaoRequisicion();
 
         $dao->objeto->setIdOrden($_REQUEST["idRe"]);
-       
+        $dao->objeto->setTipoDocumento($_REQUEST["tipoPago"]);
         
         echo $dao->finalizarRe();
+    }
+
+    public function finalizarGasto(){
+        $dao = new DaoRequisicion();
+
+        $dao->objeto->setIdOrden($_REQUEST["idRe"]);
+        $dao->objeto->setTipoDocumento($_REQUEST["tipoPago"]);
+        
+        echo $dao->finalizarGasto();
     }
 
     public function cobrarIP(){

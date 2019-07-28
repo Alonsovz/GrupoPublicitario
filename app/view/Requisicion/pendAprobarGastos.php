@@ -98,7 +98,7 @@
     </div>
     <div class="actions">
     
-    <?php if($_SESSION["descRol"] == 'Propietario' || $_SESSION["descRol"] == 'Administrador') { ?>
+    <?php if($_SESSION["descRol"] == 'Propietario' || $_SESSION["descRol"] == 'Administrador/a' ) { ?>
     <button class="ui red button" id="btnAprobar">Aprobar</button>
     <button class="ui grey  button" id="btnRechazar">Rechazar</button>
     

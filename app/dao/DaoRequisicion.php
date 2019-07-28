@@ -10,7 +10,7 @@ class DaoRequisicion extends DaoBase {
     public function guardarReq() {
         $_query = "insert into requisiciones values(null,'".$this->objeto->getFechaReq()."','".$this->objeto->getIdResponsable()."'
         ,'".$this->objeto->getTipoCompra()."','".$this->objeto->getIdProveedor()."','".$this->objeto->getTipoDocumento()."'
-        ,'".$this->objeto->getIdClasificacion()."','".$this->objeto->getFechaEn()."',1,1)";
+        ,'".$this->objeto->getIdClasificacion()."','".$this->objeto->getFechaEn()."',1,'',1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -172,7 +172,7 @@ class DaoRequisicion extends DaoBase {
                inner join gastosOficina go on go.idGasto = g.idGasto
                inner join proveedoresGastos p on p.idGasto = g.idGasto
                inner join usuario u on u.codigoUsuario = g.reponsable
-                where g.estado=2 group by g.idGasto";
+                where g.estado=2";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -182,10 +182,15 @@ class DaoRequisicion extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnEditar = '<button id=\"'.$fila["idDetalle"].'\" fecha=\"'.$fila["fecha"].'\" proveedor=\"'.$fila["proveedor"].'\" responsable=\"'.$fila["nombre"].'\" precio=\"'.$fila["precio"].'\" gasto=\"'.$fila["gasto"].'\" descripcion=\"'.$fila["descripcion"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
-            $btnEliminar = '<button id=\"'.$fila["idDetalle"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
+            $btnEditar = '<button id=\"'.$fila["idDetalle"].'\" fecha=\"'.$fila["fecha"].'\" proveedor=\"'.$fila["proveedor"].'\" tipoPago=\"'.$fila["tipoPago"].'\" responsable=\"'.$fila["nombre"].'\" precio=\"'.$fila["precio"].'\" gasto=\"'.$fila["gasto"].'\" descripcion=\"'.$fila["descripcion"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEliminar = '<button id=\"'.$fila["idDetalle"].'\"  class=\"ui  icon negative small button\" onclick=\"finalizar(this)\"><i class=\"dollar icon\"></i> Pagar</button>';
 
-            $acciones = ', "Acciones": "'.$btnEditar.'"';
+            if($fila["tipoPago"] == " "){
+                $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
+            }else{
+                $acciones = ', "Acciones": "'.$btnEditar.'"';
+            }
+           
 
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
@@ -430,7 +435,7 @@ class DaoRequisicion extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnEditar = '<button id=\"'.$fila["idRequisicion"].'\" fecha=\"'.$fila["fecha"].'\" responsable=\"'.$fila["nombre"].'\" tipoCompra=\"'.$fila["tipoCompra"].'\" proveedor=\"'.$fila["proveedor"].'\" tipoDoc=\"'.$fila["tipoDoc"].'\" condicionCredito=\"'.$fila["condicionCredito"].'\" fechaEntrega=\"'.$fila["fechaEntrega"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEditar = '<button id=\"'.$fila["idRequisicion"].'\" tipoPago=\"'.$fila["tipoPago"].'\" fecha=\"'.$fila["fecha"].'\" responsable=\"'.$fila["nombre"].'\" tipoCompra=\"'.$fila["tipoCompra"].'\" proveedor=\"'.$fila["proveedor"].'\" tipoDoc=\"'.$fila["tipoDoc"].'\" condicionCredito=\"'.$fila["condicionCredito"].'\" fechaEntrega=\"'.$fila["fechaEntrega"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
             $btnEliminar = '<button id=\"'.$fila["idRequisicion"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.'"';
@@ -460,7 +465,7 @@ class DaoRequisicion extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnEditar = '<button id=\"'.$fila["idRequisicion"].'\" fecha=\"'.$fila["fecha"].'\" responsable=\"'.$fila["nombre"].'\" tipoCompra=\"'.$fila["tipoCompra"].'\" proveedor=\"'.$fila["proveedor"].'\" tipoDoc=\"'.$fila["tipoDoc"].'\" condicionCredito=\"'.$fila["condicionCredito"].'\" fechaEntrega=\"'.$fila["fechaEntrega"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEditar = '<button id=\"'.$fila["idRequisicion"].'\" tipoPago=\"'.$fila["tipoPago"].'\" fecha=\"'.$fila["fecha"].'\" responsable=\"'.$fila["nombre"].'\" tipoCompra=\"'.$fila["tipoCompra"].'\" proveedor=\"'.$fila["proveedor"].'\" tipoDoc=\"'.$fila["tipoDoc"].'\" condicionCredito=\"'.$fila["condicionCredito"].'\" fechaEntrega=\"'.$fila["fechaEntrega"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
             $btnEliminar = '<button id=\"'.$fila["idRequisicion"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.'"';
@@ -490,7 +495,7 @@ class DaoRequisicion extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnEditar = '<button id=\"'.$fila["idRequisicion"].'\" fecha=\"'.$fila["fecha"].'\" responsable=\"'.$fila["nombre"].'\" tipoCompra=\"'.$fila["tipoCompra"].'\" proveedor=\"'.$fila["proveedor"].'\" tipoDoc=\"'.$fila["tipoDoc"].'\" condicionCredito=\"'.$fila["condicionCredito"].'\" fechaEntrega=\"'.$fila["fechaEntrega"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEditar = '<button id=\"'.$fila["idRequisicion"].'\" tipoPago=\"'.$fila["tipoPago"].'\" fecha=\"'.$fila["fecha"].'\" responsable=\"'.$fila["nombre"].'\" tipoCompra=\"'.$fila["tipoCompra"].'\" proveedor=\"'.$fila["proveedor"].'\" tipoDoc=\"'.$fila["tipoDoc"].'\" condicionCredito=\"'.$fila["condicionCredito"].'\" fechaEntrega=\"'.$fila["fechaEntrega"].'\"  class=\"ui icon black small button\" onclick=\"detalles(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
             $btnEliminar = '<button id=\"'.$fila["idRequisicion"].'\"  class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.'"';
@@ -573,8 +578,21 @@ class DaoRequisicion extends DaoBase {
     }
 
     public function finalizarRe() {
-        $_query = "update requisiciones set estado=5       
+        $_query = "update requisiciones set estado=5, tipoPago = '".$this->objeto->getTipoDocumento()."'      
         where idRequisicion=".$this->objeto->getIdOrden();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function finalizarGasto() {
+        $_query = "update gastos set tipoPago = '".$this->objeto->getTipoDocumento()."'      
+        where idGasto=".$this->objeto->getIdOrden();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -614,7 +632,7 @@ class DaoRequisicion extends DaoBase {
         $_query = "insert into gastos values(null,'".$this->objeto->getIdResponsable()."',
         '".$this->objeto->getTipoCompra()."','".$this->objeto->getTipoDocumento()."',
         '".$this->objeto->getIdOrden()."','".$this->objeto->getDescripciones()."',
-        '".$this->objeto->getPrecio()."','".$this->objeto->getFechaReq()."',1)";
+        '".$this->objeto->getPrecio()."','".$this->objeto->getFechaReq()."','',1)";
 
         $resultado = $this->con->ejecutar($_query);
 

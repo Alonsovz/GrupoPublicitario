@@ -89,7 +89,11 @@
 
                             <div class="four wide field">
                                 <label><i class="calendar icon"></i>Fecha de entrega</label>
-                                <input type="text" name="fechaEntrega" id="fechaEntrega">
+                                <input type="text" name="fechaEntrega" id="fechaEntrega" readonly>
+                            </div>
+                            <div class="four wide field">
+                                <label><i class="dollar icon"></i>Tipo de pago</label>
+                                <input type="text" name="tipoPago" id="tipoPago" readonly>
                             </div>
 
                 </div>
@@ -174,7 +178,7 @@
        $("#tipoDocumento").val($(ele).attr("tipoDoc"));
        $("#condicionCredito").val($(ele).attr("condicionCredito"));
        $("#fechaEntrega").val($(ele).attr("fechaEntrega"));
-
+       $("#tipoPago").val($(ele).attr("tipoPago"));
 
        $.ajax({
 			type:"POST",

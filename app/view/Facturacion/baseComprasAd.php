@@ -22,7 +22,7 @@
 
 <?php
 require_once './vendor/autoload.php';
-$mysqli = new mysqli('localhost','root','','grupoPublicitario');
+$mysqli = new mysqli("shareddb-o.hosting.stackcp.net","grupoPub","12345678*","grupoPublicitario-313039a314");
 $listado = $mysqli -> query ("select g.*,DATE_FORMAT(g.fecha, '%d/%m/%Y') as fecha, CONCAT('$',format(g.precio,2)) as precio,
 go.nombre as gasto,p.nombre as proveedor,p.idProveedor as idP,p.condicionCredito,concat(u.nombre,' ', u.apellido) as nombre from gastos g
        inner join gastosOficina go on go.idGasto = g.idGasto
@@ -41,6 +41,7 @@ go.nombre as gasto,p.nombre as proveedor,p.idProveedor as idP,p.condicionCredito
     <th style="border:1px solid white;">Cód. Proveedor</th>
     <th style="border:1px solid white;">Tipo Compra</th>
     <th style="border:1px solid white;">Tipo Doc</th>
+    <th style="border:1px solid white;">Tipo Pago</th>
     <th style="border:1px solid white;">Condición</th>
     <th style="border:1px solid white;">Descripción</th>
     <th style="border:1px solid white;">Precio</th>
@@ -72,6 +73,7 @@ while ($row=mysqli_fetch_assoc($listado)) {
             }
 
             ?>
+            <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['tipoPago']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['condicionCredito']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo utf8_encode($row['descripcion']);?></td>
             <td style="text-align:center;border:1px solid black;"><?php echo $row['precio'];?></td>
