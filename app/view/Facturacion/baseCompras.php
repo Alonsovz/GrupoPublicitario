@@ -22,7 +22,7 @@
 
 <?php
 require_once './vendor/autoload.php';
-$mysqli = new mysqli("shareddb-o.hosting.stackcp.net","grupoPub","12345678*","grupoPublicitario-313039a314");
+$mysqli = new mysqli('localhost','root','','grupoPublicitario');
 $listado = $mysqli -> query ("
 select r.*, d.* ,p.*,DATE_FORMAT(r.fecha, '%d/%m/%Y') as fecha,format(d.total,2) as total,
 format(d.total * 0.13,2) as iva, format((d.total * 0.13)+d.total,2) as totalCompra
