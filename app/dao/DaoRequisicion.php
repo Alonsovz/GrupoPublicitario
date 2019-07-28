@@ -141,7 +141,7 @@ class DaoRequisicion extends DaoBase {
                inner join gastosOficina go on go.idGasto = g.idGasto
                inner join proveedoresGastos p on p.idGasto = g.idGasto
                inner join usuario u on u.codigoUsuario = g.reponsable
-                where g.estado=1";
+                where g.estado=1 group by g.idGasto ";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -172,7 +172,7 @@ class DaoRequisicion extends DaoBase {
                inner join gastosOficina go on go.idGasto = g.idGasto
                inner join proveedoresGastos p on p.idGasto = g.idGasto
                inner join usuario u on u.codigoUsuario = g.reponsable
-                where g.estado=2";
+                where g.estado=2 group by g.idGasto";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -532,8 +532,7 @@ class DaoRequisicion extends DaoBase {
 
 
     public function agregarInventario() {
-        $_query = "update inventario set cantidadExistencia = cantidadExistencia +".$this->objeto->getCantidad().",
-            precioUnitario = ".$this->objeto->getPrecio()."        
+        $_query = "update inventario set cantidadExistencia = cantidadExistencia +".$this->objeto->getCantidad()."       
         where idProducto=".$this->objeto->getIdProductoFinal()." and idColor=".$this->objeto->getColor()." and
         idAcabado = ".$this->objeto->getAcabado();
 
