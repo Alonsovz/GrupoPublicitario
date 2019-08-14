@@ -749,8 +749,11 @@ class DaoRequisicion extends DaoBase {
     }
 
     public function registrarPagoGF(){
+        date_default_timezone_set("America/el_salvador");
+
+        $fecha= date("Y-m-d");
         $_query = "insert into pagos values(null, 1, ".$this->objeto->getIdOrden().",".$this->objeto->getPrecio().",
-        '".$this->objeto->getTipoDocumento()."',curdate() )";
+        '".$this->objeto->getTipoDocumento()."','$fecha' )";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -762,8 +765,11 @@ class DaoRequisicion extends DaoBase {
     }
 
     public function registrarPagoIP(){
+        date_default_timezone_set("America/el_salvador");
+
+        $fecha= date("Y-m-d");
         $_query = "insert into pagos values(null, 2, ".$this->objeto->getIdOrden().",".$this->objeto->getPrecio().",
-        '".$this->objeto->getTipoDocumento()."',curdate() )";
+        '".$this->objeto->getTipoDocumento()."','$fecha' )";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -775,8 +781,11 @@ class DaoRequisicion extends DaoBase {
     }
 
     public function banco(){
+        date_default_timezone_set("America/el_salvador");
+
+        $fecha= date("Y-m-d");
         $_query = "insert into banco values(null,".$this->objeto->getPrecio().",
-        '".$this->objeto->getTipoDocumento()."',curdate() )";
+        '".$this->objeto->getTipoDocumento()."','$fecha' )";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -788,8 +797,12 @@ class DaoRequisicion extends DaoBase {
     }
 
     public function registrarPagoP(){
+        date_default_timezone_set("America/el_salvador");
+
+        $fecha= date("Y-m-d");
+
         $_query = "insert into pagos values(null, 3, ".$this->objeto->getIdOrden().",".$this->objeto->getPrecio().",
-        '".$this->objeto->getTipoDocumento()."',curdate() )";
+        '".$this->objeto->getTipoDocumento()."', '$fecha' )";
 
         $resultado = $this->con->ejecutar($_query);
 

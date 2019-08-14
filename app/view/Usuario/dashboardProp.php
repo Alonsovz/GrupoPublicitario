@@ -11,6 +11,9 @@ $(function() {
 </script>
 
 <?php
+date_default_timezone_set("America/el_salvador");
+
+$fecha= date("Y-m-d");
   require_once './vendor/autoload.php';
   $mysqli = new mysqli('localhost','root','','grupopublicitario');
   $ordenGRC = $mysqli -> query ("select count(idOrden) as total from ordenTrabajoGR where estado=1 and idOrden!=1 ");
@@ -80,52 +83,52 @@ $(function() {
       $totalReqRe = $require;
 
 
-      $pagosEf = $mysqli -> query ("select format(sum(monto),2) as pago from pagos where tipoPago='Efectivo' and fechaPago=curdate()");
+      $pagosEf = $mysqli -> query ("select format(sum(monto),2) as pago from pagos where tipoPago='Efectivo' and fechaPago='$fecha'");
       $fila14 = $pagosEf->fetch_assoc();
       $pagosEfectivo = $fila14['pago'];
 
-      $gastosEf = $mysqli -> query ("select format(sum(precio),2) as gasto from gastos where estado=2 and fecha=curdate()");
+      $gastosEf = $mysqli -> query ("select format(sum(precio),2) as gasto from gastos where estado=2 and fecha='$fecha'");
       $fila15 = $gastosEf->fetch_assoc();
       $gastos = $fila15['gasto'];
 
 
       $com = $mysqli -> query ("select format(sum(total),2) as compras from detalleRequisicion d
       inner join requisiciones r on r.idRequisicion = d.idRequisicion
-      where r.fechaEntrega=curdate() and d.estado=2");
+      where r.fechaEntrega='$fecha' and d.estado=2");
       $fila16 = $com->fetch_assoc();
       $compras = $fila16['compras'];
 
       $totalDia =  $pagosEfectivo - ($gastos + $compras) ;
 
-      $cobro = $mysqli -> query ("select format(sum(monto),2) as pago from pagos where fechaPago=curdate()");
+      $cobro = $mysqli -> query ("select format(sum(monto),2) as pago from pagos where fechaPago='$fecha'");
       $fila17 = $cobro->fetch_assoc();
       $cobrado = $fila17['pago'];
 
-      $cobroMes = $mysqli -> query ("select format(sum(monto),2) as cobros  from pagos where YEAR(curdate()) = YEAR(NOW())
-      AND MONTH(curdate()) = MONTH(NOW())");
+      $cobroMes = $mysqli -> query ("select format(sum(monto),2) as cobros  from pagos where YEAR('$fecha') = YEAR(NOW())
+      AND MONTH('$fecha') = MONTH(NOW())");
       $fila18 = $cobroMes->fetch_assoc();
       $cobradoMes = $fila18['cobros'];
 
-      $patroMes = $mysqli -> query ("select format(sum(monto),2) as cobros  from pagos where YEAR(curdate()) = YEAR(NOW())
-      AND MONTH(curdate()) = MONTH(NOW()) and tipoPago = 'Patrocinio'");
+      $patroMes = $mysqli -> query ("select format(sum(monto),2) as cobros  from pagos where YEAR('$fecha') = YEAR(NOW())
+      AND MONTH('$fecha') = MONTH(NOW()) and tipoPago = 'Patrocinio'");
       $fila19 = $patroMes->fetch_assoc();
       $patrocinioMes = $fila19['cobros'];
 
       $cffGr = $mysqli -> query ("select format(sum(precio),2) as ventaCFF from detalleOrdenGR d
       inner join ordenTrabajoGR o on o.idOrden = d.idOrden 
-      where o.estado = 7  and d.fechaFactura = curdate()");
+      where o.estado = 7  and d.fechaFactura = '$fecha'");
       $fila20 = $cffGr->fetch_assoc();
       $cffGrT = $fila20['ventaCFF'];
 
       $cffIP = $mysqli -> query ("select format(sum(precio),2) as ventaCFF from detalleOrdenIP d
       inner join ordenTrabajoIP o on o.idOrden = d.idOrden 
-      where o.estado = 7  and d.fechaFactura = curdate()");
+      where o.estado = 7  and d.fechaFactura = '$fecha'");
       $fila21 = $cffIP->fetch_assoc();
       $cffIPT = $fila21['ventaCFF'];
 
       $cffP = $mysqli -> query ("select format(sum(precio),2) as ventaCFF from detalleOrdenP d
       inner join ordenTrabajoP o on o.idOrden = d.idOrden 
-      where o.estado = 7  and d.fechaFactura = curdate()");
+      where o.estado = 7  and d.fechaFactura = '$fecha'");
       $fila21 = $cffP->fetch_assoc();
       $cffPT = $fila21['ventaCFF'];
 
@@ -133,64 +136,64 @@ $(function() {
 
       $facGr = $mysqli -> query ("select format(sum(precio),2) as ventaCFF from detalleOrdenGR d
       inner join ordenTrabajoGR o on o.idOrden = d.idOrden 
-      where o.estado = 6  and d.fechaFactura = curdate()");
+      where o.estado = 6  and d.fechaFactura = '$fecha'");
       $fila20 = $facGr->fetch_assoc();
       $facGrT = $fila20['ventaCFF'];
 
       $facIP = $mysqli -> query ("select format(sum(precio),2) as ventaCFF from detalleOrdenIP d
       inner join ordenTrabajoIP o on o.idOrden = d.idOrden 
-      where o.estado = 6  and d.fechaFactura = curdate()");
+      where o.estado = 6  and d.fechaFactura = '$fecha'");
       $fila21 = $facIP->fetch_assoc();
       $facIPT = $fila21['ventaCFF'];
 
       $facP = $mysqli -> query ("select format(sum(precio),2) as ventaCFF from detalleOrdenP d
       inner join ordenTrabajoP o on o.idOrden = d.idOrden 
-      where o.estado = 6  and d.fechaFactura = curdate()");
+      where o.estado = 6  and d.fechaFactura = '$fecha'");
       $fila21 = $facP->fetch_assoc();
       $facPT = $fila21['ventaCFF'];
 
       $totalVentasFac = $facGrT + $facIPT + $facPT;
 
 
-      $ret = $mysqli -> query ("select format(sum(monto),2) as retiro from banco where fecha = curdate() and tipoTramite='Retiro'");
+      $ret = $mysqli -> query ("select format(sum(monto),2) as retiro from banco where fecha = '$fecha' and tipoTramite='Retiro'");
       $fila22 = $ret->fetch_assoc();
       $retiro = $fila22['retiro'];
 
-      $rem = $mysqli -> query ("select format(sum(monto),2) as remesa from banco where fecha = curdate() and tipoTramite='Remesa'");
+      $rem = $mysqli -> query ("select format(sum(monto),2) as remesa from banco where fecha = '$fecha' and tipoTramite='Remesa'");
       $fila23 = $rem->fetch_assoc();
       $remesa = $fila23['remesa'];
 
-      $com = $mysqli -> query ("select format(sum(monto),2) as comision from banco where fecha = curdate()
+      $com = $mysqli -> query ("select format(sum(monto),2) as comision from banco where fecha = '$fecha'
        and tipoTramite='Comision de cuenta por tarjeta de credito'");
       $fila24 = $com->fetch_assoc();
       $comision = $fila24['comision'];
 
 
-      $cobroTarjeta = $mysqli -> query ("select format(sum(monto),2) as cobros  from pagos where fechaPago= curdate()
+      $cobroTarjeta = $mysqli -> query ("select format(sum(monto),2) as cobros  from pagos where fechaPago= '$fecha'
        and tipoPago = 'Tarjeta de credito'");
       $fila25 = $cobroTarjeta->fetch_assoc();
       $cobroTarjetaT = $fila25['cobros'];
 
-      $cobroCheque= $mysqli -> query ("select format(sum(monto),2) as cobros  from pagos where fechaPago= curdate()
+      $cobroCheque= $mysqli -> query ("select format(sum(monto),2) as cobros  from pagos where fechaPago= '$fecha'
        and tipoPago = 'Cheque'");
       $fila26 = $cobroCheque->fetch_assoc();
       $cobroChequeT = $fila26['cobros'];
 
       $otroGR = $mysqli -> query ("select format(sum(precio),2) as ventaOtro from detalleOrdenGR d
       inner join ordenTrabajoGR o on o.idOrden = d.idOrden 
-      where o.estado = 9  and d.fechaFactura = curdate()");
+      where o.estado = 9  and d.fechaFactura = '$fecha'");
       $fila27 = $otroGR->fetch_assoc();
       $otroGRT = $fila27['ventaOtro'];
 
       $otroIP = $mysqli -> query ("select format(sum(precio),2) as ventaOtro from detalleOrdenIP d
       inner join ordenTrabajoIP o on o.idOrden = d.idOrden 
-      where o.estado = 9  and d.fechaFactura = curdate()");
+      where o.estado = 9  and d.fechaFactura = '$fecha'");
       $fila28 = $otroIP->fetch_assoc();
       $otroIPT = $fila28['ventaOtro'];
 
       $otroP = $mysqli -> query ("select format(sum(precio),2) as ventaOtro from detalleOrdenP d
       inner join ordenTrabajoP o on o.idOrden = d.idOrden 
-      where o.estado = 9  and d.fechaFactura = curdate()");
+      where o.estado = 9  and d.fechaFactura = '$fecha'");
       $fila29 = $otroP->fetch_assoc();
       $otroPT = $fila29['ventaOtro'];
 
@@ -210,20 +213,20 @@ $(function() {
 
 
       $ventasGF = $mysqli -> query ("select format(sum(precio),2) as ventaGR from detalleOrdenGR 
-      where YEAR(curdate()) = YEAR(NOW())
-      AND MONTH(curdate()) = MONTH(NOW())");
+      where YEAR('$fecha') = YEAR(NOW())
+      AND MONTH('$fecha') = MONTH(NOW())");
       $fila32 = $ventasGF->fetch_assoc();
       $ventasGFTotal = $fila32['ventaGR'];
 
       $ventasP = $mysqli -> query ("select format(sum(precio),2) as ventaP from detalleOrdenP
-      where YEAR(curdate()) = YEAR(NOW())
-      AND MONTH(curdate()) = MONTH(NOW())");
+      where YEAR('$fecha') = YEAR(NOW())
+      AND MONTH('$fecha') = MONTH(NOW())");
       $fila33 = $ventasP->fetch_assoc();
       $ventasPTotal = $fila33['ventaP'];
 
       $ventasIP = $mysqli -> query ("select format(sum(precio),2) as ventaIP from detalleOrdenIP
-      where YEAR(curdate()) = YEAR(NOW())
-      AND MONTH(curdate()) = MONTH(NOW())");
+      where YEAR('$fecha') = YEAR(NOW())
+      AND MONTH('$fecha') = MONTH(NOW())");
       $fila34 = $ventasIP->fetch_assoc();
       $ventasIPTotal = $fila34['ventaIP'];
 
@@ -239,6 +242,7 @@ $(function() {
 
       $diferencia = $presupuesto - $totalVentasFinal;
    ?>
+
 
 
     <div class="row tiles" id="contenedor-tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">

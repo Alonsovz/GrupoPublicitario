@@ -320,8 +320,8 @@ alertify.confirm("¿Desea emitar la nota de crédito?",
                 }).then((result) => {
                     if (result.value) {
                         location.reload();
-                        window.open('?1=FacturacionController&2=imprimirNota','_blank');
-                                return false;
+                        window.location.href="./app/view/Facturacion/notaCreditoExcel.php";
+                             
                     }
                 }); 
                 
