@@ -9,20 +9,29 @@ class DaoProveedores extends DaoBase {
 
     public function mostrarProveedores() {
         $_query = "
-            select p.*,t.nombre as producto,c.clasificacion as clasificacion from proveedores p
-            inner join  tipoProductos c on c.idClasificacion = p.tipoSuministro
-            inner join clasificacionProductos t on t.idProducto = p.idClasificacion
-            where p.idEliminado=1 group by p.idProveedor;";
+                select p.*,t.nombre as producto,c.clasificacion as clasificacion,
+                CAST(p.direccion AS CHAR) as direccion from proveedores p
+                inner join  tipoProductos c on c.idClasificacion = p.tipoSuministro
+                inner join clasificacionProductos t on t.idProducto = p.idClasificacion
+                where p.idEliminado=1 group by p.idProveedor;";
 
         $resultado = $this->con->ejecutar($_query);
 
         $_json = '';
-
+       
         while($fila = $resultado->fetch_assoc()) {
+            $btnEditar ='';
+            $object = json_encode($fila, JSON_UNESCAPED_UNICODE);
 
-            $object = json_encode($fila);
-
-            $btnEditar = '<button id=\"'.$fila["idProveedor"].'\" nombre=\"'.$fila["nombre"].'\" tipoSuministro=\"'.$fila["tipoSuministro"].'\" idClasificacion=\"'.$fila["idClasificacion"].'\"  telefono=\"'.$fila["telefono"].'\" correo=\"'.$fila["correo"].'\" direccion=\"'.$fila["direccion"].'\" nit=\"'.$fila["nit"].'\" nrc=\"'.$fila["nrc"].'\" giro=\"'.$fila["giro"].'\" celular=\"'.$fila["celular"].'\" categoria=\"'.$fila["categoria"].'\" condicion=\"'.$fila["condicionCredito"].'\" clasificacion=\"'.$fila["clasificacion"].'\" producto=\"'.$fila["producto"].'\" categoria=\"'.$fila["categoria"].'\" contacto=\"'.$fila["contacto"].'\" departamento=\"'.$fila["departamento"].'\" class=\"ui btnEditar icon black small button\" onclick=\"editarProveedor(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEditar .= '<button id=\"'.$fila["idProveedor"].'\" nombre=\"'.$fila["nombre"].'\" '; 
+            $btnEditar .= 'tipoSuministro=\"'.$fila["tipoSuministro"].'\" idClasificacion=\"'.$fila["idClasificacion"].'\" ';
+            $btnEditar .= 'telefono=\"'.$fila["telefono"].'\" correo=\"'.$fila["correo"].'\" direccion=\"'.$fila["direccion"].'\" ';
+            $btnEditar .= 'nit=\"'.$fila["nit"].'\" nrc=\"'.$fila["nrc"].'\" giro=\"'.$fila["giro"].'\" celular=\"'.$fila["celular"].'\"';
+            $btnEditar .= 'categoria=\"'.$fila["categoria"].'\" condicion=\"'.$fila["condicionCredito"].'\"';
+            $btnEditar .= 'clasificacion=\"'.$fila["clasificacion"].'\" producto=\"'.$fila["producto"].'\" categoria=\"'.$fila["categoria"].'\" ';
+            $btnEditar .= 'contacto=\"'.$fila["contacto"].'\" departamento=\"'.$fila["departamento"].'\" ';
+            $btnEditar .= 'class=\"ui btnEditar icon black small button\" ';
+            $btnEditar .= 'onclick=\"editarProveedor(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
             $btnEliminar = '<button id=\"'.$fila["idProveedor"].'\" nombre=\"'.$fila["nombre"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
@@ -49,10 +58,16 @@ class DaoProveedores extends DaoBase {
         $_json = '';
 
         while($fila = $resultado->fetch_assoc()) {
+            $btnEditar = '';
+            $object = json_encode($fila ,JSON_UNESCAPED_UNICODE);
 
-            $object = json_encode($fila);
-
-            $btnEditar = '<button id=\"'.$fila["idProveedor"].'\" nombre=\"'.$fila["nombre"].'\" gasto=\"'.$fila["gasto"].'\" idGasto=\"'.$fila["idGasto"].'\"  telefono=\"'.$fila["telefono"].'\" correo=\"'.$fila["correo"].'\" direccion=\"'.$fila["direccion"].'\" nit=\"'.$fila["nit"].'\" nrc=\"'.$fila["nrc"].'\" giro=\"'.$fila["giro"].'\" celular=\"'.$fila["celular"].'\" categoria=\"'.$fila["categoria"].'\" condicion=\"'.$fila["condicionCredito"].'\"   categoria=\"'.$fila["categoria"].'\" contacto=\"'.$fila["contacto"].'\" departamento=\"'.$fila["departamento"].'\" class=\"ui btnEditar icon black small button\" onclick=\"editarProveedor(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
+            $btnEditar .= '<button id=\"'.$fila["idProveedor"].'\" nombre=\"'.$fila["nombre"].'\" ';
+            $btnEditar .= ' gasto=\"'.$fila["gasto"].'\" idGasto=\"'.$fila["idGasto"].'\"  telefono=\"'.$fila["telefono"].'\" ';
+            $btnEditar .= ' correo=\"'.$fila["correo"].'\" direccion=\"'.$fila["direccion"].'\" nit=\"'.$fila["nit"].'\" ';
+            $btnEditar .= ' nrc=\"'.$fila["nrc"].'\" giro=\"'.$fila["giro"].'\" celular=\"'.$fila["celular"].'\" ';
+            $btnEditar .= ' categoria=\"'.$fila["categoria"].'\" condicion=\"'.$fila["condicionCredito"].'\" contacto=\"'.$fila["contacto"].'\" ';
+            $btnEditar .= ' departamento=\"'.$fila["departamento"].'\" class=\"ui btnEditar icon black small button\"';
+            $btnEditar .= '  onclick=\"editarProveedor(this)\"><i class=\"edit icon\"></i> Ver Detalles</button>';
             $btnEliminar = '<button id=\"'.$fila["idProveedor"].'\" nombre=\"'.$fila["nombre"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';

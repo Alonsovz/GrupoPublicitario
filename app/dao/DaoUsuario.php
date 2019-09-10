@@ -180,7 +180,10 @@ class DaoUsuario extends DaoBase {
     }
 
     public function cambiarDatos() {
-        $_query = "update usuario set nombre = '".$this->objeto->getNombre()."', apellido='".$this->objeto->getApellido()."' where codigoUsuario = ".$this->objeto->getCodigoUsuario();
+        $_query = "update usuario set nombre = '".$this->objeto->getNombre()."', apellido='".$this->objeto->getApellido()."',
+        telefono='".$this->objeto->getTelefono()."',dui='".$this->objeto->getDui()."',direccion='".$this->objeto->getDireccion()."',
+        email='".$this->objeto->getEmail()."'
+         where codigoUsuario = ".$this->objeto->getCodigoUsuario();
         $resultado = $this->con->ejecutar($_query);
 
         if($resultado) {

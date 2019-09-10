@@ -321,6 +321,12 @@ class UsuarioController extends ControladorBase {
 
         $dao->objeto->setNombre($nomUser);
         $dao->objeto->setApellido($ape);
+        $dao->objeto->setDui($_REQUEST["dui"]);
+       
+        $dao->objeto->setTelefono($_REQUEST["telefono"]);
+       
+        $dao->objeto->setEmail($_REQUEST["email"]);
+        $dao->objeto->setDireccion($_REQUEST["direccion"]);
         $dao->objeto->setCodigoUsuario($id);
         echo $dao->cambiarDatos();
     }
